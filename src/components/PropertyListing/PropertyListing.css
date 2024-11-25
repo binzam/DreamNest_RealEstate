@@ -1,0 +1,13 @@
+.listing_section {
+  padding: 1rem 5rem 3rem;
+}
+.listing_ttl {
+  color: #333;
+  font-size: 1.4rem;
+}
+.listing {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 2rem;
+  padding: 1rem 0;
+}

@@ -1,0 +1,148 @@
+.pty_box {
+  border-radius: 5px;
+  position: relative;
+}
+.wish_btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #ffffff56;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ffffff;
+}
+.icon_heart {
+  width: 24px;
+  height: 24px;
+  fill: #ffffff;
+  stroke-width: 5px;
+  stroke: #000000;
+}
+.wish_btn:hover {
+  border: 2px solid rgb(255, 167, 167);
+  background-color: #ffffff;
+}
+.wish_btn:hover .icon_heart {
+  fill: red;
+}
+.pty_img {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  height: 200px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.pty_img img {
+  border-radius: inherit;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.pty_box_body {
+  padding: 1rem 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 0px 1px 12px #33333370;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.pty_purpose {
+  display: flex;
+  align-items: center;
+  color: #000000;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.dot {
+  border-radius: 50%;
+  height: 12px;
+  width: 12px;
+  background-color: rgb(10, 128, 31);
+  margin-right: 4px;
+}
+.pty_price {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #333;
+}
+
+.pty_specs {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.pty_spec {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.3rem;
+  padding: 0.3rem 1rem;
+  background-color: #353535;
+  /* border: 1px solid rgb(0, 128, 28); */
+  border-radius: 4px;
+  color: #fff;
+}
+.spec {
+  line-height: 1;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+.pty_box_btm {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+.pty_location {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  margin-top: 0.5rem;
+}
+.pty_loc_detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.pty_street {
+  color: #333;
+  font-weight: 800;
+  line-height: 1;
+  /* font-size: 0.8rem; */
+}
+.pty_state {
+  color: #000000;
+  line-height: 1;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+.contact_btn {
+  position: absolute;
+  bottom: 1rem;
+  right: 0.3rem;
+  border-radius: 100vw;
+  border: 2px solid #000000;
+  /* height: 35px; */
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  background-color: #ffffff;
+  color: #333;
+  text-align: center;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-shadow: 0px 8px 15px -7px #33333383;
+}
+.contact_btn:hover {
+  border: 2px solid rgb(0, 0, 0);
+  background-color: #000000;
+  color: #fff;
+}

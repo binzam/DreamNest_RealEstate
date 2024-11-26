@@ -1,0 +1,12 @@
+.location_highlights {
+  width: 100%;
+  /* padding: 4rem; */
+  height: 500px;
+  margin: 2rem 0;
+  background-color: #ffffff00;
+
+}
+
+.leaflet-container{
+    height: 100%;
+}

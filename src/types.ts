@@ -15,3 +15,10 @@ export interface PropertyCategoryType {
   count: number;
   image: string;
 }
+export interface TestimonialType {
+  id: number;
+  name: string;
+  image: string;
+  message: string;
+  role: string;
+}

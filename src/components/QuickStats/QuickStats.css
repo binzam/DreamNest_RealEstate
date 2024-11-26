@@ -1,0 +1,35 @@
+.quick_stats {
+  text-align: center;
+  padding: 4rem 2rem;
+  width: 100%;
+}
+
+.quick_stats h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.stats_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat_card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stat_card h3 {
+  font-size: 1.8rem;
+  color: #242d52;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+.stat_card p {
+  font-size: 1.2rem;
+  color: #555;
+  font-weight: 500;
+}

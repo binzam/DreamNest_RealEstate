@@ -4,6 +4,10 @@ import ImgOpenHouse from './assets/images/open-house-small.jpg';
 import ImgSold from './assets/images/sold-small.jpg';
 import ImgPriceReduced from './assets/images/price-reduced-small.jpg';
 import ImgLand from './assets/images/land-small.jpg';
+import AvatarAli from './assets/images/avatar-ali.png';
+import AvatarAnisha from './assets/images/avatar-anisha.png';
+import AvatarShanai from './assets/images/avatar-shanai.png';
+import AvatarRichard from './assets/images/avatar-richard.png';
 export const FAKEDATA = [
   {
     id: 1,
@@ -44,97 +48,97 @@ export const FAKEDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
   },
-  {
-    id: 4,
-    street: '18015 Independence Road',
-    city: 'West Palm Beach',
-    country: 'United States',
-    state: 'Florida',
-    price: 3046491,
-    bed: 4,
-    bath: 5,
-    sqft: 1376,
-    image:
-      'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
-  },
-  {
-    id: 5,
-    street: '8 Hanson Avenue',
-    city: 'Wichita Falls',
-    country: 'United States',
-    state: 'Texas',
-    price: 7227390,
-    bed: 2,
-    bath: 1,
-    sqft: 2681,
-    image:
-      'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
-  },
-  {
-    id: 6,
-    street: '5 Golden Leaf Park',
-    city: 'Torrance',
-    country: 'United States',
-    state: 'California',
-    price: 5963167,
-    bed: 5,
-    bath: 1,
-    sqft: 3578,
-    image:
-      'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
-  },
-  {
-    id: 7,
-    street: '03409 Ronald Regan Alley',
-    city: 'Lawrenceville',
-    country: 'United States',
-    state: 'Georgia',
-    price: 159234,
-    bed: 5,
-    bath: 2,
-    sqft: 3023,
-    image:
-      'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
-  },
-  {
-    id: 8,
-    street: '7 Iowa Alley',
-    city: 'Northridge',
-    country: 'United States',
-    state: 'California',
-    price: 5393588,
-    bed: 1,
-    bath: 2,
-    sqft: 2294,
-    image:
-      'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
-  },
-  {
-    id: 9,
-    street: '2107 Lukken Drive',
-    city: 'Norwalk',
-    country: 'United States',
-    state: 'Connecticut',
-    price: 2251622,
-    bed: 2,
-    bath: 5,
-    sqft: 5112,
-    image:
-      'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
-  },
-  {
-    id: 10,
-    street: '3161 Claremont Drive',
-    city: 'New York City',
-    country: 'United States',
-    state: 'New York',
-    price: 623049,
-    bed: 4,
-    bath: 3,
-    sqft: 3423,
-    image:
-      'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
-  },
+  // {
+  //   id: 4,
+  //   street: '18015 Independence Road',
+  //   city: 'West Palm Beach',
+  //   country: 'United States',
+  //   state: 'Florida',
+  //   price: 3046491,
+  //   bed: 4,
+  //   bath: 5,
+  //   sqft: 1376,
+  //   image:
+  //     'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+  // },
+  // {
+  //   id: 5,
+  //   street: '8 Hanson Avenue',
+  //   city: 'Wichita Falls',
+  //   country: 'United States',
+  //   state: 'Texas',
+  //   price: 7227390,
+  //   bed: 2,
+  //   bath: 1,
+  //   sqft: 2681,
+  //   image:
+  //     'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+  // },
+  // {
+  //   id: 6,
+  //   street: '5 Golden Leaf Park',
+  //   city: 'Torrance',
+  //   country: 'United States',
+  //   state: 'California',
+  //   price: 5963167,
+  //   bed: 5,
+  //   bath: 1,
+  //   sqft: 3578,
+  //   image:
+  //     'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+  // },
+  // {
+  //   id: 7,
+  //   street: '03409 Ronald Regan Alley',
+  //   city: 'Lawrenceville',
+  //   country: 'United States',
+  //   state: 'Georgia',
+  //   price: 159234,
+  //   bed: 5,
+  //   bath: 2,
+  //   sqft: 3023,
+  //   image:
+  //     'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+  // },
+  // {
+  //   id: 8,
+  //   street: '7 Iowa Alley',
+  //   city: 'Northridge',
+  //   country: 'United States',
+  //   state: 'California',
+  //   price: 5393588,
+  //   bed: 1,
+  //   bath: 2,
+  //   sqft: 2294,
+  //   image:
+  //     'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+  // },
+  // {
+  //   id: 9,
+  //   street: '2107 Lukken Drive',
+  //   city: 'Norwalk',
+  //   country: 'United States',
+  //   state: 'Connecticut',
+  //   price: 2251622,
+  //   bed: 2,
+  //   bath: 5,
+  //   sqft: 5112,
+  //   image:
+  //     'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+  // },
+  // {
+  //   id: 10,
+  //   street: '3161 Claremont Drive',
+  //   city: 'New York City',
+  //   country: 'United States',
+  //   state: 'New York',
+  //   price: 623049,
+  //   bed: 4,
+  //   bath: 3,
+  //   sqft: 3423,
+  //   image:
+  //     'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+  // },
   // {
   //   id: 11,
   //   street: '6688 Monica Court',
@@ -1345,4 +1349,49 @@ export const PROPERTYCATEGORY = [
     count: 200,
     image: ImgLand,
   },
+];
+export const TESTIMONIALS = [
+  {
+    id: 1,
+    name: 'Anisha Li',
+    image: AvatarAnisha,
+    message: `“This website made finding our dream home so easy. The team was supportive every step of the way. Highly recommend!”`,
+    role: 'Happy Homeowner',
+  },
+  {
+    id: 2,
+    name: 'Ali Bravo',
+    image: AvatarAli,
+    message: `“Selling my property was effortless. My listing looked great, and I got multiple offers in no time. Fantastic experience!”`,
+    role: 'Satisfied Seller',
+  },
+  {
+    id: 3,
+    name: 'Richard Watts',
+    image: AvatarRichard,
+    message: `“We quickly found a beautiful rental home that matched our needs. The process was smooth and stress-free!”`,
+    role: 'Tenant',
+  },
+  {
+    id: 4,
+    name: 'Shanai Gough',
+    image: AvatarShanai,
+    message: `“The experts helped me find the perfect commercial property and guided me through the process. Couldn’t be happier!”`,
+    role: 'Commercial Property Investor',
+  },
+];
+
+export const STATS = [
+  { id: 1, value: '1000+', label: 'Happy Homeowners' },
+  { id: 2, value: '500+', label: 'Properties Sold' },
+  { id: 3, value: '50+', label: 'Locations Covered' },
+];
+export const MAPMARKERS: {
+  id: number;
+  geocode: [number, number];
+  popup: string;
+}[] = [
+  { id: 1, geocode: [48.86, 2.3522], popup: 'pop up 1' },
+  { id: 2, geocode: [48.85, 2.3522], popup: 'pop up 2' },
+  { id: 3, geocode: [48.855, 2.34], popup: 'pop up 3' },
 ];

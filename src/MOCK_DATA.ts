@@ -1,4 +1,9 @@
 import ImgRecommended from './assets/images/recommeded-small.jpg';
+import ImgPropertyFront from './assets/images/property-image-1.webp';
+import ImgPropertySide from './assets/images/property-image-2.webp';
+import ImgPropertyRear from './assets/images/property-image-3.webp';
+import ImgPropertyYard from './assets/images/property-image-4.webp';
+
 import ImgNewLisings from './assets/images/new-listing-small.jpg';
 import ImgOpenHouse from './assets/images/open-house-small.jpg';
 import ImgSold from './assets/images/sold-small.jpg';
@@ -21,6 +26,12 @@ export const FAKEDATA = [
     sqft: 4508,
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+    photos: [
+      { id: 1, title: 'front', image: ImgPropertyFront },
+      { id: 2, title: 'side', image: ImgPropertySide },
+      { id: 3, title: 'rear', image: ImgPropertyRear },
+      { id: 4, title: 'yard', image: ImgPropertyYard },
+    ],
   },
   {
     id: 2,
@@ -34,6 +45,12 @@ export const FAKEDATA = [
     sqft: 4523,
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+    photos: [
+      { id: 1, title: 'front', image: ImgPropertyFront },
+      { id: 2, title: 'side', image: ImgPropertySide },
+      { id: 3, title: 'rear', image: ImgPropertyRear },
+      { id: 4, title: 'yard', image: ImgPropertyYard },
+    ],
   },
   {
     id: 3,
@@ -47,6 +64,12 @@ export const FAKEDATA = [
     sqft: 4897,
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+    photos: [
+      { id: 1, title: 'front', image: ImgPropertyFront },
+      { id: 2, title: 'side', image: ImgPropertySide },
+      { id: 3, title: 'rear', image: ImgPropertyRear },
+      { id: 4, title: 'yard', image: ImgPropertyYard },
+    ],
   },
   // {
   //   id: 4,
@@ -60,6 +83,12 @@ export const FAKEDATA = [
   //   sqft: 1376,
   //   image:
   //     'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+  //   photos: [
+  //     { id: 1, title: 'front', image: ImgPropertyFront },
+  //     { id: 2, title: 'side', image: ImgPropertySide },
+  //     { id: 3, title: 'rear', image: ImgPropertyRear },
+  //     { id: 4, title: 'yard', image: ImgPropertyYard },
+  //   ],
   // },
   // {
   //   id: 5,
@@ -73,6 +102,12 @@ export const FAKEDATA = [
   //   sqft: 2681,
   //   image:
   //     'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+  //   photos: [
+  //     { id: 1, title: 'front', image: ImgPropertyFront },
+  //     { id: 2, title: 'side', image: ImgPropertySide },
+  //     { id: 3, title: 'rear', image: ImgPropertyRear },
+  //     { id: 4, title: 'yard', image: ImgPropertyYard },
+  //   ],
   // },
   // {
   //   id: 6,
@@ -86,6 +121,12 @@ export const FAKEDATA = [
   //   sqft: 3578,
   //   image:
   //     'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+  //   photos: [
+  //     { id: 1, title: 'front', image: ImgPropertyFront },
+  //     { id: 2, title: 'side', image: ImgPropertySide },
+  //     { id: 3, title: 'rear', image: ImgPropertyRear },
+  //     { id: 4, title: 'yard', image: ImgPropertyYard },
+  //   ],
   // },
   // {
   //   id: 7,
@@ -99,6 +140,12 @@ export const FAKEDATA = [
   //   sqft: 3023,
   //   image:
   //     'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+  //   photos: [
+  //     { id: 1, title: 'front', image: ImgPropertyFront },
+  //     { id: 2, title: 'side', image: ImgPropertySide },
+  //     { id: 3, title: 'rear', image: ImgPropertyRear },
+  //     { id: 4, title: 'yard', image: ImgPropertyYard },
+  //   ],
   // },
   // {
   //   id: 8,
@@ -112,6 +159,12 @@ export const FAKEDATA = [
   //   sqft: 2294,
   //   image:
   //     'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+  //   photos: [
+  //     { id: 1, title: 'front', image: ImgPropertyFront },
+  //     { id: 2, title: 'side', image: ImgPropertySide },
+  //     { id: 3, title: 'rear', image: ImgPropertyRear },
+  //     { id: 4, title: 'yard', image: ImgPropertyYard },
+  //   ],
   // },
   // {
   //   id: 9,
@@ -125,6 +178,12 @@ export const FAKEDATA = [
   //   sqft: 5112,
   //   image:
   //     'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+  //   photos: [
+  //     { id: 1, title: 'front', image: ImgPropertyFront },
+  //     { id: 2, title: 'side', image: ImgPropertySide },
+  //     { id: 3, title: 'rear', image: ImgPropertyRear },
+  //     { id: 4, title: 'yard', image: ImgPropertyYard },
+  //   ],
   // },
   // {
   //   id: 10,
@@ -138,6 +197,12 @@ export const FAKEDATA = [
   //   sqft: 3423,
   //   image:
   //     'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+  //   photos: [
+  //     { id: 1, title: 'front', image: ImgPropertyFront },
+  //     { id: 2, title: 'side', image: ImgPropertySide },
+  //     { id: 3, title: 'rear', image: ImgPropertyRear },
+  //     { id: 4, title: 'yard', image: ImgPropertyYard },
+  //   ],
   // },
   // {
   //   id: 11,
@@ -1313,18 +1378,21 @@ export const FAKEDATA = [
 
 export const PROPERTYCATEGORY = [
   {
+    categoryName: 'recommended',
     id: 1,
     title: 'Recommended',
     count: 20,
     image: ImgRecommended,
   },
   {
+    categoryName: 'new-listings',
     id: 2,
     title: 'New Listings',
     count: 1400,
     image: ImgNewLisings,
   },
   {
+    categoryName: 'price-reduced',
     id: 3,
     title: 'Price Reduced',
     count: 440,
@@ -1332,18 +1400,21 @@ export const PROPERTYCATEGORY = [
   },
 
   {
+    categoryName: 'open-houses',
     id: 4,
     title: 'Open Houses',
     count: 64,
     image: ImgOpenHouse,
   },
   {
+    categoryName: 'recently-sold',
     id: 5,
     title: 'Recently Sold',
     count: 40,
     image: ImgSold,
   },
   {
+    categoryName: 'land',
     id: 6,
     title: 'Land',
     count: 200,
@@ -1390,8 +1461,24 @@ export const MAPMARKERS: {
   id: number;
   geocode: [number, number];
   popup: string;
+  popupImg: string;
 }[] = [
-  { id: 1, geocode: [48.86, 2.3522], popup: 'pop up 1' },
-  { id: 2, geocode: [48.85, 2.3522], popup: 'pop up 2' },
-  { id: 3, geocode: [48.855, 2.34], popup: 'pop up 3' },
+  {
+    id: 1,
+    geocode: [48.86, 2.3522],
+    popup: 'Hot Property',
+    popupImg: ImgPropertyFront,
+  },
+  {
+    id: 2,
+    geocode: [48.85, 2.3522],
+    popup: 'Hot Property',
+    popupImg: ImgPropertyFront,
+  },
+  {
+    id: 3,
+    geocode: [48.855, 2.34],
+    popup: 'Hot Property',
+    popupImg: ImgPropertyFront,
+  },
 ];

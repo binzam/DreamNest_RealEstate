@@ -27,10 +27,10 @@
 .tst_box {
   width: 100%;
   background-color: hsl(0, 0%, 95%);
+  background-color: hsl(0, 100%, 92%);
   padding: 2.25rem 1rem 2.625rem;
   position: relative;
-  box-shadow: 1px 0px 0px hsla(0, 0%, 77%, 0.6),
-    -1px 0px 0px hsla(0, 0%, 71%, 0.6);
+  box-shadow: 0px 1px 5px -1px #0056b3;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -46,6 +46,9 @@
   top: -36px;
   left: 50%;
   transform: translateX(-50%);
+  border: 3px solid #0056b3;
+  border: 3px solid #b30c00;
+  object-fit: cover;
 }
 .tst_box h3 {
   margin-block: 1.5rem 1rem;
@@ -56,8 +59,9 @@
 }
 .tst_box p {
   color: hsl(227, 12%, 61%);
+  color: hsl(0, 0%, 39%);
   font-size: 0.9rem;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.5;
 }
 .tst_box strong {

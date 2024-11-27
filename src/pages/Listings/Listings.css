@@ -1,0 +1,48 @@
+.listing_page {
+  width: 100%;
+  margin: auto;
+  padding: 1rem 5rem;
+  background-color: #fff;
+}
+.lising_pge_hdr {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+.back_btn {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: underline;
+  margin-bottom: 0.5rem;
+}
+.icon_left {
+  width: 14px;
+  height: 14px;
+}
+.btn_txt {
+  display: inline-block;
+  padding: 0.5rem;
+}
+.list_ttl {
+  letter-spacing: 1px;
+  color: #333;
+  text-transform: capitalize;
+}
+.count_sort {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 0.8rem;
+  color: #a3a3a3;
+  font-weight: 500;
+}
+.listing_pge_content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+
+  gap: 2rem;
+}

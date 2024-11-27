@@ -12,10 +12,10 @@ const Home = () => {
     <>
       <Hero />
       <PropertyCategory />
-      <PropertyListing />
-      <QuickStats />
-      <LocationHighlights />
       <CallToAction />
+      <PropertyListing />
+      <LocationHighlights />
+      <QuickStats />
       <Testimonials />
       <NewsletterSignup />
     </>

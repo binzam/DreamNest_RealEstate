@@ -1,0 +1,61 @@
+.property-detail {
+  /* max-width: 900px; */
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.property-title {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.property-price {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.property-info {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.property-photos {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 10px;
+}
+
+.main-photo {
+  grid-column: 1 / 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-photo img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.small-photos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.photo-box {
+  flex: 1;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.photo-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}

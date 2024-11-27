@@ -8,12 +8,15 @@ export interface PropertyDataType {
   street: string;
   city: string;
   state: string;
+  uniqueId: string;
+  category: string;
 }
 export interface PropertyCategoryType {
   id: number;
   title: string;
   count: number;
   image: string;
+  categoryName: string;
 }
 export interface TestimonialType {
   id: number;

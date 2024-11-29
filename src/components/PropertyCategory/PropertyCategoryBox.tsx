@@ -2,12 +2,18 @@ import { Link } from 'react-router-dom';
 import './PropertyCategory.css';
 import { PropertyCategoryType } from '../../types';
 
-const PropertyCategoryBox: React.FC<{ property: PropertyCategoryType }> = ({
+const PropertyCategoryBox = ({
   property,
+}: {
+  property: PropertyCategoryType;
 }) => {
   return (
     <article>
-      <Link to={`/listings/${property.categoryName}`} className="pty_category_link" key={property.id}>
+      <Link
+        to={`/listings/${property.categoryName}`}
+        className="pty_category_link"
+        key={property.id}
+      >
         <div className="pty_catg_info">
           <h3 className="pty_cat_ttl">{property.title}</h3>
 

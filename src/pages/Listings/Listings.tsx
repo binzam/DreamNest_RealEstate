@@ -1,9 +1,9 @@
-import { FaChevronLeft } from 'react-icons/fa6';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { PROPERTIESDATA } from '../../propertiesData';
 import { PropertyDataType } from '../../types';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
 import './Listings.css';
+import BackButton from '../../components/BackButton/BackButton';
 const Listings = () => {
   const { category } = useParams<{ category: string }>();
   const filteredProperties = PROPERTIESDATA.filter(
@@ -12,10 +12,8 @@ const Listings = () => {
   return (
     <div className="listing_page">
       <div className="lising_pge_hdr">
-        <Link className="back_btn" to={'/'}>
-          <FaChevronLeft className="icon_left" />
-          <span className="btn_txt">Back</span>
-        </Link>
+      <BackButton />
+
         <h2 className="list_ttl">{category}</h2>
         <div className="count_sort">
           <div className="count">{filteredProperties.length} properties</div>

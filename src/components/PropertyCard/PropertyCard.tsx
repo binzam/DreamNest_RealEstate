@@ -9,7 +9,7 @@ import { PropertyDataType } from '../../types';
 import './PropertyCard.css';
 import { Link } from 'react-router-dom';
 
-const PropertyCard: React.FC<{ data: PropertyDataType }> = ({ data }) => {
+const PropertyCard = ({ data }: { data: PropertyDataType }) => {
   return (
     <article className="pty_box">
       <button className="wish_btn">
@@ -17,7 +17,7 @@ const PropertyCard: React.FC<{ data: PropertyDataType }> = ({ data }) => {
       </button>
       <Link to={`/property-detail/${data.uniqueId}`}>
         <div className="pty_img">
-          <img width={400} height={400} src={data.image} alt="" />
+          <img width={400} height={250} src={data.image} alt="" />
         </div>
       </Link>
       <div>

@@ -9,24 +9,7 @@
   flex-direction: column;
   margin-bottom: 1rem;
 }
-.back_btn {
-  width: fit-content;
-  display: flex;
-  align-items: center;
-  color: #333;
-  font-size: 1rem;
-  font-weight: 500;
-  text-decoration: underline;
-  margin-bottom: 0.5rem;
-}
-.icon_left {
-  width: 14px;
-  height: 14px;
-}
-.btn_txt {
-  display: inline-block;
-  padding: 0.5rem;
-}
+
 .list_ttl {
   letter-spacing: 1px;
   color: #333;

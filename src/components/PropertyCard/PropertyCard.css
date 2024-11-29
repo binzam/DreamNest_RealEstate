@@ -1,4 +1,5 @@
 .pty_box {
+  max-width: 400px;
   border-radius: 5px;
   position: relative;
 }
@@ -104,7 +105,6 @@
   display: flex;
   align-items: center;
   gap: 0.2rem;
-  margin-top: 0.5rem;
 }
 .pty_loc_detail {
   display: flex;

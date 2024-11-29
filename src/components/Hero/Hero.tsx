@@ -7,7 +7,7 @@ import './Hero.css'
 const Hero = () => {
   return (
     <section className="hero">
-      <picture>
+      <picture className='hero_bg'>
         <source srcSet={heroMobile} media="(max-width: 480px)" />
         <source srcSet={heroTablet} media="(max-width: 768px)" />
         <source srcSet={heroDesktop} media="(max-width: 996px)" />

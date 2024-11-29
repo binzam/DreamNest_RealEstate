@@ -12,7 +12,6 @@ const Testimonials = () => {
           <TestimonialCard key={testimony.id} testimony={testimony} />
         ))}
       </div>
-
       <button className="btn">Browse Properties</button>
     </section>
   );

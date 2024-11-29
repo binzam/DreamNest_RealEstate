@@ -13,7 +13,7 @@ const Home = () => {
       <Hero />
       <PropertyCategory />
       <CallToAction />
-      <PropertyListing />
+      <PropertyListing category="recommended" title="recommended homes" />
       <LocationHighlights />
       <QuickStats />
       <Testimonials />

@@ -1,16 +1,25 @@
+export interface PhotoType {
+  id: number;
+  title: string;
+  image: string;
+}
+
 export interface PropertyDataType {
   id: number;
-  image: string;
+  street: string;
+  city: string;
+  state: string;
+  country: string;
   price: number;
   bed: number;
   bath: number;
   sqft: number;
-  street: string;
-  city: string;
-  state: string;
   uniqueId: string;
+  image: string;
+  photos: PhotoType[];
   category: string;
 }
+
 export interface PropertyCategoryType {
   id: number;
   title: string;

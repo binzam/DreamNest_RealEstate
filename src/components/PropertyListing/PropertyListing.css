@@ -4,6 +4,7 @@
 .listing_ttl {
   color: #333;
   font-size: 1.4rem;
+  text-transform: uppercase;
 }
 .listing {
   display: grid;

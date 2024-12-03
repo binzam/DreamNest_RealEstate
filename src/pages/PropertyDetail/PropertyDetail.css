@@ -7,10 +7,30 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: 5rem;
+  gap: 1rem;
   margin-bottom: 0.6rem;
+  position: relative;
 }
-
+.pty_page_contact_btn {
+  /* position: absolute;
+  top: -0.5rem;
+  left: 3rem; */
+  border-radius: 100vw;
+  border: 3px solid #000000;
+  /* height: 35px; */
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  background-color: #ffffff;
+  color: #333;
+  text-align: center;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0px 8px 15px -7px #33333383;
+}
+.pty_page_contact_btn:hover {
+  background-color: #000000;
+  color: #fff;
+}
 .pty_detail_hdr .pty_location {
   gap: 0.5rem;
   align-items: flex-start;
@@ -27,8 +47,10 @@
 }
 .pty_detail_hdr .pty_street {
   font-size: 1.5rem;
+  line-height: normal;
 }
 .pty_detail_hdr .pty_state {
+  line-height: normal;
   font-size: 1rem;
   justify-content: center;
 }
@@ -92,11 +114,10 @@
   cursor: pointer;
 }
 .pty_desc_main {
-  margin: 3rem 0;
+  margin: 3rem 0 1rem;
   display: flex;
   align-items: center;
   gap: 4rem;
-  border-bottom: 1px solid #ddd;
   border-top: 1px solid #ddd;
   padding: 1rem 0;
 }
@@ -170,9 +191,20 @@
   font-weight: 500;
   line-height: 1;
 }
-
-
-.pty_declars button {
+.pty_desc_second {
+  padding: 1rem 0;
+  border-top: 1px solid #ddd;
+}
+.pty_desc_thrid {
+  padding: 1rem 0;
+  border-top: 1px solid #ddd;
+}
+.pty_actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.pty_actn_btn {
   border-radius: 100vw;
   border: 2px solid #000000;
   /* height: 35px; */
@@ -185,21 +217,36 @@
   transition: all 0.3s ease;
   box-shadow: 0px 8px 15px -7px #33333383;
 }
-.pty_declars button:hover {
+.pty_actn_btn:hover {
   border: 2px solid rgb(0, 0, 0);
   background-color: #000000;
   color: #fff;
 }
-
-
-
-
-
-
-
-
-
-
+.pty_detail {
+  max-width: 600px;
+}
+.pty_detail h2 {
+  max-width: 600px;
+  color: #333;
+}
+.pty_detail_title {
+  display: flex;
+  align-items: center;
+}
+.pty_detail p {
+  color: #888888;
+  font-size: 0.8rem;
+}
+.pty_detail svg {
+  color: #888888;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  font-size: 24px;
+  color: #000;
+  margin-right: 0.5rem;
+  fill: #333;
+}
 
 /* Modal container */
 .modal {

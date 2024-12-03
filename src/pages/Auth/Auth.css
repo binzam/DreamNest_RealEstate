@@ -1,0 +1,158 @@
+.auth_page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background-color: rgb(53, 53, 53);
+  padding: 2rem;
+}
+
+.auth_wrapper {
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+  max-height: 800px;
+}
+.auth_graphics {
+  width: 40%;
+  /* height: calc(100vh - 4rem); */
+  max-height: 800px;
+  position: relative;
+  background-color: #16222A;  
+}
+
+.slider_image {
+  width: 100%;
+  height: 100%;
+  max-height: 800px;
+  object-fit: cover;
+  object-position: center;
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.backto_home_btn {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  border: 2px solid #ffffff;
+  border-radius: 100vw;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  color: black;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.backto_home_btn:hover {
+  background-color: #ffffff;
+  color: #333;
+}
+.icon_back {
+  width: 22px;
+  height: 22px;
+}
+.form_wrapper {
+  width: 60%;
+  height: auto;
+  padding: 2rem;
+  padding-top: 4rem;
+  background-image: url(../../assets/images/workspace-with-computer.png);
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: 110% -10%;
+  background-color: #16222A;  
+background-color: -webkit-linear-gradient(to right, #3A6073, #16222A);  
+background-color: linear-gradient(to right, #3A6073, #16222A); 
+
+}
+.form_hdr {
+  max-width: 400px;
+  margin: 0 auto 2rem;
+}
+.form_hdr h2 {
+  font-size: 2rem;
+  color: #ffffff;
+  text-align: left;
+  letter-spacing: 2px;
+}
+.form_hdr span {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #8f8f8f;
+  text-align: left;
+}
+.form_hdr_link {
+  color: #00458f;
+  text-decoration: underline;
+  font-weight: 600;
+}
+.auth_form {
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+.form_row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.form_input {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+.form_input.chkbox {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+}
+
+.form_input .input_spc {
+  width: 100%;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 0.7rem 1rem;
+}
+.input_spc:focus {
+  outline: 2px solid blue;
+  outline-offset: 2px;
+}
+
+.checkbox_label {
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.checkbox_input {
+  width: 18px;
+  height: 18px;
+  appearance: auto;
+}
+.txt_underline {
+  color: #2e6bac;
+  text-decoration: underline;
+  margin: 0 1px;
+}
+.auth_form button {
+  padding: 0.6rem 1.5rem;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  border-radius: 100vw;
+  text-align: center;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  font-weight: 500;
+}

@@ -18,6 +18,7 @@ export interface PropertyDataType {
   image: string;
   photos: PhotoType[];
   category: string;
+  detail: string;
 }
 
 export interface PropertyCategoryType {

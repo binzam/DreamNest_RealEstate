@@ -2,6 +2,10 @@
   text-align: center;
   padding: 4rem 2rem;
   width: 100%;
+  background-image: url(../../assets/bg-dots.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom;
 }
 
 .quick_stats h2 {

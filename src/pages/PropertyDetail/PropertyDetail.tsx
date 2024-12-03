@@ -25,7 +25,7 @@ const PropertyDetail = () => {
   if (!selectedProperty) {
     return <p>Property not found.</p>;
   }
-  const { street, city, state, price, bed, bath, sqft, photos } =
+  const { street, city, state, price, bed, bath, sqft, photos, detail } =
     selectedProperty;
 
   const openModal = (image: string) => {
@@ -49,6 +49,7 @@ const PropertyDetail = () => {
               {city}, {state}
             </div>
           </div>
+          <button className="pty_page_contact_btn">Contact Seller</button>
         </div>
       </div>
       <div className="property_photos">
@@ -137,16 +138,24 @@ const PropertyDetail = () => {
                 <span>Price per sqft</span>
               </div>
             </div>
-            <div className="pty_type">
-              <button>Ask a Question</button>
-            </div>
-            <div className="pty_type">
-              <button>Schedule Tour</button>
-            </div>
           </div>
         </div>
-        <div className="pty_desc_second">
-          <div className="pty_declars"></div>
+        <div className="pty_desc_thrid">
+          <div className="pty_actions">
+            <button className="pty_actn_btn">Ask a Question</button>
+            <button className="pty_actn_btn">Schedule Tour</button>
+          </div>
+        </div>
+        <div className="pty_detail">
+          <div className="pty_detail_title">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M20 4a1 1 0 1 0-2 0v2.4L14.916 4a4.75 4.75 0 0 0-5.832 0L2.386 9.21a1 1 0 1 0 1.228 1.578l.386-.3V20a1 1 0 1 0 2 0V9c0-.022 0-.043-.002-.065l4.314-3.355a2.75 2.75 0 0 1 3.376 0l6.698 5.21a1 1 0 0 0 1.228-1.58L20 7.956V4Z"></path>
+              <path d="M13.707 11.293a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414 0l-1-1a1 1 0 1 1 1.414-1.414l.293.293 2.293-2.293a1 1 0 0 1 1.414 0Zm0 5a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414 0l-1-1a1 1 0 1 1 1.414-1.414l.293.293 2.293-2.293a1 1 0 0 1 1.414 0ZM15 14a1 1 0 0 1 1-1h5a1 1 0 1 1 0 2h-5a1 1 0 0 1-1-1Zm0 5a1 1 0 0 1 1-1h5a1 1 0 1 1 0 2h-5a1 1 0 0 1-1-1Z"></path>
+            </svg>
+            <h2>Property Detail</h2>
+          </div>
+
+          <p>{detail}</p>
         </div>
       </div>
       {isModalOpen && (

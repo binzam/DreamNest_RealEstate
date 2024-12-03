@@ -2,9 +2,9 @@ import { useParams } from 'react-router-dom';
 import { PROPERTIESDATA } from '../../propertiesData';
 import { PropertyDataType } from '../../types';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
-import './Listings.css';
+import './CategorisedListing.css';
 import BackButton from '../../components/BackButton/BackButton';
-const Listings = () => {
+const CategorisedListing = () => {
   const { category } = useParams<{ category: string }>();
   const filteredProperties = PROPERTIESDATA.filter(
     (property: PropertyDataType) => property.category === category
@@ -12,7 +12,7 @@ const Listings = () => {
   return (
     <div className="listing_page">
       <div className="lising_pge_hdr">
-      <BackButton />
+        <BackButton />
 
         <h2 className="list_ttl">{category}</h2>
         <div className="count_sort">
@@ -29,4 +29,4 @@ const Listings = () => {
   );
 };
 
-export default Listings;
+export default CategorisedListing;

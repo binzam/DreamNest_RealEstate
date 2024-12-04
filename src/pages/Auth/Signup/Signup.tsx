@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import './Auth.css';
+import './Signup.css';
 import { Link } from 'react-router-dom';
-import RealEstateImageOne from '../../assets/images/realestate-image-1.jpg';
-import RealEstateImageTwo from '../../assets/images/realestate-image-2.jpg';
-import RealEstateImageThree from '../../assets/images/realestate-image-3.jpg';
-import RealEstateImageFour from '../../assets/images/realestate-image-4.jpg';
+import RealEstateImageOne from '../../../assets/images/realestate-image-1.jpg';
+import RealEstateImageTwo from '../../../assets/images/realestate-image-2.jpg';
+import RealEstateImageThree from '../../../assets/images/realestate-image-3.jpg';
+import RealEstateImageFour from '../../../assets/images/realestate-image-4.jpg';
+// import SignUpIcon from '../../../assets/images/workspace-with-computer.png';
 import { IoArrowBackCircleSharp } from 'react-icons/io5';
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -89,6 +90,7 @@ const Signup = () => {
   return (
     <div className="auth_page">
       <div className="auth_wrapper">
+ 
         <div className="auth_graphics">
           <Link className="backto_home_btn" to={'/'}>
             <IoArrowBackCircleSharp className="icon_back" />

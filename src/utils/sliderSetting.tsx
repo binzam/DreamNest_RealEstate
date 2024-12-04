@@ -13,7 +13,7 @@ export const settings: Settings = {
   initialSlide: 0,
   responsive: [
     {
-      breakpoint: 1200,
+      breakpoint: 1360,
       settings: {
         slidesToShow: 3,
         slidesToScroll: 3,
@@ -44,14 +44,14 @@ export const settingsForProperty: Settings = {
   dots: true,
   infinite: true,
   speed: 500,
-  slidesToShow: 2,
+  slidesToShow: 4,
   nextArrow: <SliderArrow icon={RightArrow} />,
   prevArrow: <SliderArrow icon={LeftArrow} />,
   slidesToScroll: 4,
   initialSlide: 0,
   responsive: [
     {
-      breakpoint: 1350,
+      breakpoint: 1400,
       settings: {
         slidesToShow: 3,
         slidesToScroll: 3,
@@ -60,10 +60,10 @@ export const settingsForProperty: Settings = {
       },
     },
     {
-      breakpoint: 1200,
+      breakpoint: 1100,
       settings: {
-        slidesToShow: 3,
-        slidesToScroll: 3,
+        slidesToShow: 2,
+        slidesToScroll: 2,
         infinite: true,
         dots: true,
       },

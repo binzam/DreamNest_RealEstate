@@ -5,10 +5,15 @@
   color: #333;
   font-size: 1.4rem;
   text-transform: uppercase;
+  padding: 0.5rem 2rem;
+  border-bottom: 1px solid #ddd;
 }
 .listing {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 2rem;
   padding: 1rem 0;
+}
+.listing .pty_box {
+  width: 100%;
 }

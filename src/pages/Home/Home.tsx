@@ -1,7 +1,6 @@
 import PropertyListing from '../../components/PropertyListing/PropertyListing';
 import PropertyCategory from '../../components/PropertyCategory/PropertyCategory';
 import Hero from '../../components/Hero/Hero';
-import './Home.css';
 import Testimonials from '../../components/Testimonials/Testimonials';
 import CallToAction from '../../components/CallToAction/CallToAction';
 import QuickStats from '../../components/QuickStats/QuickStats';

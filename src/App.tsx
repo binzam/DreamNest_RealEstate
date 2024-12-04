@@ -5,10 +5,11 @@ import PropertyDetail from './pages/PropertyDetail/PropertyDetail';
 import About from './pages/About';
 import Layout from './Layout/Layout';
 import NotFound from './pages/NotFound/NotFound';
-import Login from './pages/Auth/Login';
-import Signup from './pages/Auth/Signup';
+import Login from './pages/Auth/Login/Login';
+import Signup from './pages/Auth/Signup/Signup';
 import ScrollToTop from './components/ScrollToTop';
 import CategorisedListing from './pages/CategorisedListing/CategorisedListing';
+import Listings from './pages/Listings/Listings';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="signup" element={<Signup />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="listings" element={<Listings />} />
           <Route path="listings/:category" element={<CategorisedListing />} />
           <Route path="property-detail/:id" element={<PropertyDetail />} />
           <Route path="about" element={<About />} />

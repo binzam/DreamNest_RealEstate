@@ -33,10 +33,6 @@ const Login = () => {
               required
             />
           </div>
-          <div className="form_group chkbox">
-            <input className="checkbox_input" type="checkbox" id="remember" />
-            <label htmlFor="remember">Remember Me</label>
-          </div>
           <button className="login_btn" type="submit">
             Login
           </button>

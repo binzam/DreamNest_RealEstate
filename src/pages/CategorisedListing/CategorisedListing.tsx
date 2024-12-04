@@ -13,7 +13,6 @@ const CategorisedListing = () => {
     <div className="listing_page">
       <div className="lising_pge_hdr">
         <BackButton />
-
         <h2 className="list_ttl">{category}</h2>
         <div className="count_sort">
           <div className="count">{filteredProperties.length} properties</div>

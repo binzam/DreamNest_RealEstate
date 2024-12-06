@@ -1,9 +1,10 @@
 import Navbar from './Navbar';
 import './Header.css';
+import { Link } from 'react-router-dom';
 const Header = () => {
   return (
     <header className="header">
-      <div className="logo">DreamNest</div>
+      <Link className="logo" to={'/'}>DreamNest</Link>
       <Navbar />
 
       

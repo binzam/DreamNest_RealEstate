@@ -41,6 +41,8 @@
   font-size: 3rem;
   line-height: 1.1;
   margin-bottom: 1rem;
+  letter-spacing: 1px;
+  min-height: 105px;
 }
 .hero_sub_ttl {
   color: #fff;

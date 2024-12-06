@@ -3,11 +3,12 @@ import heroMobile from '../../assets/images/hp-hero-mobile.jpg';
 import heroTablet from '../../assets/images/hp-hero-tablet.jpg';
 import heroDesktopXL from '../../assets/images/hp-hero-desktop-xl.jpg';
 import { Link } from 'react-router-dom';
-import './Hero.css'
+import { TypeAnimation } from 'react-type-animation';
+import './Hero.css';
 const Hero = () => {
   return (
     <section className="hero">
-      <picture className='hero_bg'>
+      <picture className="hero_bg">
         <source srcSet={heroMobile} media="(max-width: 480px)" />
         <source srcSet={heroTablet} media="(max-width: 768px)" />
         <source srcSet={heroDesktop} media="(max-width: 996px)" />
@@ -20,9 +21,22 @@ const Hero = () => {
       </picture>
       <div className="hero_overlay">
         <div className="hero_message">
-          <h1 className="hero_ttl">
-            The #1 site real estate professionals trust*
-          </h1>
+          <TypeAnimation
+          className='hero_ttl'
+            sequence={[
+              'The #1 site real estate   Professionals trust*',
+              1000,
+              'The #1 site real estate   Sellers trust*',
+              1000,
+              'The #1 site real estate   Buyers trust*',
+              1000,
+              'The #1 site real estate   Agents trust*',
+              1000,
+            ]}
+            wrapper="h1"
+            speed={50}
+            repeat={3}
+          />
           <p className="hero_sub_ttl">
             With the most complete source of homes for sale & real estate near
             you.

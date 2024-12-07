@@ -24,7 +24,7 @@ const PropertyCard = ({ data }: { data: PropertyDataType }) => {
         <Link to={`/property-detail/${data.uniqueId}`}>
           <div className="pty_box_body">
             <div className="pty_purpose">
-              <span className="dot"></span>Listing for Sell
+              <span className="dot"></span>Listing for {data.propertyFor}
             </div>
             <div className="pty_price">${data.price.toLocaleString()}</div>
             <div className="pty_specs">

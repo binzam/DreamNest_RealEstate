@@ -19,6 +19,7 @@ export interface PropertyDataType {
   photos: PhotoType[];
   category: string;
   detail: string;
+  propertyFor: string;
 }
 
 export interface PropertyCategoryType {

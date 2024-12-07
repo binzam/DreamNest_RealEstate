@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import PropertySlider from '../../components/PropertySlider/PropertySlider';
 import { PROPERTIESDATA } from '../../propertiesData';
 import './Listings.css';
-import Loading from '../../components/Loading/Loading';
+import LoadingSkeleton from '../../components/Loading/LoadingSkeleton/LoadingSkeleton';
+
 const Listings = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [uniqueCategories, setUniqueCategories] = useState<string[]>([]);
 
   useEffect(() => {
@@ -13,28 +14,29 @@ const Listings = () => {
         new Set(PROPERTIESDATA.map((property) => property.category))
       );
       setUniqueCategories(categories);
-      setIsLoading(false);
-    }, 1000); 
+      setLoading(false)
+    }, 1000);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, []);
 
-  if (isLoading) {
-    return <Loading />; 
-  }
-
-  // const uniqueCategories = Array.from(
-  //   new Set(PROPERTIESDATA.map((property) => property.category))
-  // );
   return (
     <div className="all_listings">
-      {uniqueCategories.map((category) => (
-        <PropertySlider
-          key={category}
-          title={category}
-          propertyCategory={category}
-        />
-      ))}
+      {loading ? (
+        <>
+          <LoadingSkeleton />
+          <LoadingSkeleton />
+          <LoadingSkeleton />
+        </>
+      ) : (
+        uniqueCategories.map((category) => (
+          <PropertySlider
+            key={category}
+            title={category}
+            propertyCategory={category}
+          />
+        ))
+      )}
     </div>
   );
 };

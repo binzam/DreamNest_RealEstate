@@ -1,5 +1,6 @@
 .pty_box {
-  width: 300px;
+  min-width: 300px;
+  max-width: 96%;
   border-radius: 5px;
   margin: 5px auto;
   position: relative;
@@ -84,6 +85,7 @@
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  max-width: 400px;
 }
 .pty_spec {
   display: flex;

@@ -3,7 +3,6 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 5rem;
-  /* background-color: #333; */
   background-color: #ffffff;
   height: 50px;
   position: sticky;
@@ -13,11 +12,18 @@
   backdrop-filter: blur(10px);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+.header.static {
+  position: static;
+}
 .logo {
   color: #444;
   font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .navbar {
@@ -34,7 +40,7 @@
   list-style: none;
   height: 100%;
 }
-.nav_list li{
+.nav_list li {
   height: 100%;
 }
 .hdr_nav_link {
@@ -92,5 +98,46 @@
 .login_link:hover {
   border: 2px dashed #4ec200;
   color: #333;
+}
+.hamburger {
+  display: none;
+  cursor: pointer;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+}
+.icon_hamburger {
+  font-size: 24px;
+  color: #000000;
+  fill: #000000;
+}
 
+@media (max-width: 1030px) {
+  .header {
+    padding: 0 2rem;
+  }
+  .nav_list {
+    gap: 1rem;
+  }
+  .navbar {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    height: 54px;
+  }
+  .navbar {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+}
+@media (max-width: 500px) {
+  .header {
+    padding: 0 1rem;
+  }
 }

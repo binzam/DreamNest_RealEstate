@@ -5,6 +5,7 @@ import PropertyCard from '../../components/PropertyCard/PropertyCard';
 import './CategorisedListing.css';
 import BackButton from '../../components/BackButton/BackButton';
 import { useState } from 'react';
+import PropertyFilterBar from '../../components/PropertyFilterBar/PropertyFilterBar';
 const CategorisedListing = () => {
   const { filter } = useParams<{ filter?: string }>();
   const propertyCategories = [
@@ -61,10 +62,12 @@ const CategorisedListing = () => {
   const toggleSortOrder = () => {
     setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
   };
+
   return (
     <div className="listing_page">
+      <BackButton />
+      <PropertyFilterBar />
       <div className="lising_pge_hdr">
-        <BackButton />
         <h2 className="list_ttl">{title}</h2>
         <div className="count_sort">
           <div className="count">{filteredProperties.length} properties</div>
@@ -77,10 +80,11 @@ const CategorisedListing = () => {
               onChange={handleSortChange}
             >
               <option value="relevance">Relevance</option>
-              <option value="price">Price</option>
-              <option value="bed">Bedrooms</option>
-              <option value="bath">Bathrooms</option>
-              <option value="sqft">Square Footage</option>
+              <option value="price">Newest Lisiting</option>
+              <option value="price">Lowest Price</option>
+              <option value="bed">Highest Price</option>
+              <option value="bath">Newly Built</option>
+              <option value="sqft">Largest Sqft.</option>
             </select>
             <button onClick={toggleSortOrder}>
               {sortOrder === 'asc' ? 'Ascending' : 'Descending'}

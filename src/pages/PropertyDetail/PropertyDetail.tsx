@@ -169,6 +169,9 @@ const PropertyDetail = () => {
             </div>
           </div>
           <div className="pty_map">
+            <div className="pty_map_hdr">
+              <FaLocationDot className="icon_location" /> View on Google Maps
+            </div>
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3316.6708991587166!2d-84.41467560446833!3d33.76916922076559!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f50499b8d2e28b%3A0x6b3ebde7a1b735b0!2s534%20English%20Ave%20NW%2C%20Atlanta%2C%20GA%2030318%2C%20USA!5e0!3m2!1sen!2set!4v1733268745109!5m2!1sen!2set"
               width="300"

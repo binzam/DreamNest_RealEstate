@@ -273,6 +273,19 @@
   border: 1px solid #ddd;
   border-radius: 5px;
 }
+.pty_map_hdr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: 3px;
+  background-color: #000;
+}
 /* Modal container */
 .modal {
   position: fixed;

@@ -1,0 +1,150 @@
+.lp_room_sorter {
+  position: relative;
+  height: inherit;
+  display: block;
+}
+.room_filter_btn {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background-color: #fff;
+  padding: 0 0.5rem;
+  min-width: 70px;
+  border-radius: 0.6rem;
+  border: 1px solid #1a1816;
+  border: 2px solid #4b4bff;
+}
+.sorting_btn_txt {
+  color: #000000;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.btn_icon {
+  font-size: 1rem;
+}
+.room_dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  z-index: 10;
+  width: 300px;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+.room_dd_hdr {
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #000000;
+  padding: 0.4rem 1rem;
+}
+.done_btn {
+  text-decoration: underline;
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.rooms_dropdown_inner {
+  width: 100%;
+  padding: 0.5rem 0.5rem 1.2rem;
+  background-color: #fff;
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background-color: #fff;
+  border: 1px solid #000000;
+}
+.room_dropdown_btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem 0.5rem 1.5rem;
+  width: 47%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #000000;
+  box-shadow: 0px 1px 2px #333;
+  transition: all 0.3s ease;
+}
+.room_dropdown_btn.active {
+  box-shadow: none;
+  border: 1px solid #000;
+}
+.room_ttl {
+  color: #333;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1;
+  /* margin-bottom: 0.5rem; */
+}
+.room_ttl.mg-t {
+  margin-top: 0.5rem;
+}
+.room_inner_dropdowns {
+  width: 100%;
+  display: block;
+  position: relative;
+}
+.inner_bed_dropdowns,
+.inner_bath_dropdowns {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  position: absolute;
+  padding: 0 0.5rem;
+  z-index: 20;
+}
+.inner_bed_dropdowns {
+  top: -94px;
+}
+.inner_bath_dropdowns {
+  top: -17px;
+}
+.bed_min_dd,
+.bed_max_dd,
+.bath_min_dd,
+.bath_max_dd {
+  width: 46%;
+}
+
+.dropdown_values {
+  box-shadow: 0px 1px 10px #00000075;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  padding: 0.4rem 0;
+}
+
+.room_value_btn {
+  width: 100%;
+  display: block;
+  padding: 0.4rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.room_value_btn:hover {
+  background: #f0f0f0;
+}

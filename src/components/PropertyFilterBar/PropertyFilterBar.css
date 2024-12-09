@@ -1,201 +1,30 @@
 /* SORTING HEADER */
 .sorting_bar {
-  padding: 1rem;
+  padding: 0.5rem;
   position: sticky;
   top: 0;
-  background-color: #dddddd81;
   z-index: 1030;
   width: 100%;
-  border-radius: 100vw;
+  /* border-radius: 0 100vw 100vw 0; */
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 2px dashed #3333337c;
 }
 .sorting_bar_comps {
   width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-.listing_pge_search_form {
-  width: 30%;
-  height: 48px;
-  position: relative;
-}
-.lp_search_input {
-  padding: 0.5rem 3.1rem 0.5rem 1rem;
-  width: 100%;
-  height: 100%;
-  background-color: #fff;
-  border-radius: 100vw;
-  outline: 2px solid rgb(75, 75, 255);
-}
-
-.lp_search_input:focus {
-  outline: 2px solid blue;
-}
-.lp_search_btn {
-  position: absolute;
-  top: 4px;
-  right: 4px;
+  /* height: 100%; */
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  height: 40px;
-  width: 40px;
-  background-color: black;
+  gap: 1rem;
+  height: 48px;
 }
-.lp_search_btn:hover {
-  background-color: #333;
-}
-.lp_search_btn svg {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  color: inherit;
-  fill: #ffffff;
-}
+
 .main_filters {
   display: flex;
-  min-height: 48px;
-}
-.lp_price_sorter {
-  position: relative;
-}
-.price_filter_btn {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  height: 100%;
-  background-color: #fff;
-  padding: 0 0.5rem;
-  min-width: 70px;
-  border-radius: 0.6rem;
-  border: 1px solid #1a1816;
-}
-.sorting_btn_txt {
-  color: #000000;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-.btn_icon {
-  font-size: 1rem;
-}
-.price_dropdown {
-  position: absolute;
-  top: 110%;
-  left: 0;
-  z-index: 10;
-  width: 200px;
-  box-sizing: border-box;
-  background-color: #fff;
-  border: 1px solid #000000;
-  border-radius: 10px;
-}
-.price_dd_hdr {
-  border-radius: 10px 10px 0 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #ffffff;
-  background-color: #000000;
-  padding: 0.4rem;
-}
-.done_btn {
-  text-decoration: underline;
-  font-size: 0.76rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-.price_dropdown_inner {
-  width: 100%;
-  padding: 0.5rem 0.5rem 1rem;
-  background-color: #fff;
-  border-radius: 10px;
-}
-.inner_btns {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #fff;
-}
-.divider {
-  font-size: 0.8rem;
-  font-weight: 800;
-  color: #000000;
-  margin: 0.5rem;
-}
-.dropdown_btn {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 0.3rem;
-  width: 100%;
-  height: 100%;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #000000;
-  box-shadow: 0px 3px 5px #333;
-  transition: all 0.3s ease;
-}
-.dropdown_btn .btn_icon {
-  font-size: 0.8rem;
-}
-.dropdown_btn.active {
-  box-shadow: 0px 0px 1px #333;
-  border: 1px solid #000000;
-
-}
-.inner_dropdowns {
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
   gap: 1rem;
-  background-color: #ffffff;
-}
-.min_values,
-.max_values {
-  width: 50%;
-  position: relative;
 }
 
-.min_inner_dropdown,
-.max_inner_dropdown {
-  width: 100%;
-  position: absolute;
-  top: 10px;
-  left: 0;
-  border: 1px solid #000000;
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.value_btn {
-  width: 100%;
-  display: block;
-  /* max-width: 100px; */
-  padding: 0.5rem 0;
-  font-size: 0.8rem;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
-  text-align: center;
-}
-
-.value_btn:hover {
-  background: #f0f0f0;
-}
 /* END SORTING HEADER */

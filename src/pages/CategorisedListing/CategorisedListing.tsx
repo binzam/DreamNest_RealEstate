@@ -16,7 +16,7 @@ const CategorisedListing = () => {
     'recently-sold',
     'land',
   ];
-  const propertyTypes = ['sale', 'rent'];
+  const propertyTypes = ['for-sale', 'rent'];
   // default value for filter
   const filterValue = filter || '';
   const isCategory = propertyCategories.includes(filterValue);
@@ -46,14 +46,13 @@ const CategorisedListing = () => {
       case 'sqft':
         return (a.sqft - b.sqft) * order;
       default:
-        // Relevance (default order of data)
         return 0;
     }
   });
   const title = isCategory
     ? `Category: ${filterValue.replace('-', ' ')}`
     : isType
-    ? `Properties for ${filterValue.replace('-', ' ')}`
+    ? `Properties ${filterValue.replace('-', ' ')}`
     : 'No matching properties';
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSortParam(e.target.value);

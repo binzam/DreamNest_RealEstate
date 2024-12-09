@@ -1,8 +1,8 @@
 .listing_page {
   width: 100%;
   margin: auto;
-  padding: 1rem 5rem;
-  background-color: #fff;
+  padding: 0.5rem 3rem 2rem;
+  background-color: #fcfdfd;
 }
 .lising_pge_hdr {
   display: flex;

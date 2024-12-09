@@ -24,7 +24,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ onCloseModal }) => {
               <Link
                 onClick={onCloseModal}
                 className="mob_nav_link"
-                to={'/listings/sale'}
+                to={'/listings/for-sale'}
               >
                 Buy
               </Link>

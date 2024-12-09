@@ -12,7 +12,7 @@ const Header = () => {
     setIsModalOpen(!isModalOpen);
   };
   const disableHeaderStickyness =
-    location.pathname.startsWith('/listings/sale') ||
+    location.pathname.startsWith('/listings/for-sale') ||
     location.pathname.startsWith('/listings/rent');
   return (
     <header className={`header ${disableHeaderStickyness ? 'static' : ''}`}>

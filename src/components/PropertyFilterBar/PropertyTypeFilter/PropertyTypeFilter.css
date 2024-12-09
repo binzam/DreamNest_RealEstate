@@ -1,0 +1,95 @@
+.lp_pty_type_sorter {
+  position: relative;
+  height: inherit;
+  display: block;
+}
+
+.type_filter_btn {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background-color: #fff;
+  padding: 0 0.5rem;
+  min-width: 70px;
+  border-radius: 0.6rem;
+  border: 1px solid #1a1816;
+  border: 2px solid #4b4bff;
+}
+.sorting_btn_txt {
+  color: #000000;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.btn_icon {
+  font-size: 1rem;
+}
+.type_dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  z-index: 10;
+  width: 374px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  border: 1px solid #000000;
+  border-radius: 10px;
+}
+.type_dd_hdr {
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #000000;
+  padding: 0.5rem 1rem;
+}
+.done_btn {
+  text-decoration: underline;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.dd_types {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 0.5rem;
+  gap: 0.5rem;
+}
+.dd_type {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  font-size: 0.9rem;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  font-weight: 500;
+  margin: 0 auto;
+  min-height: 48px;
+  padding: 0.6rem 0;
+  border: 1px solid #333;
+  transition: all 0.2s ease;
+}
+.dd_type:hover {
+  background-color: #f1f1f1;
+}
+.type_icon svg {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  font-size: 24px;
+  color: inherit;
+  fill: currentColor;
+}
+.dd_type.active {
+  background-color: #000000;
+  color: #fff;
+}

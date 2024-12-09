@@ -22,7 +22,7 @@ const Hero = () => {
       <div className="hero_overlay">
         <div className="hero_message">
           <TypeAnimation
-          className='hero_ttl'
+            className="hero_ttl"
             sequence={[
               'The #1 site real estate   Professionals trust*',
               1000,
@@ -44,7 +44,7 @@ const Hero = () => {
         </div>
         <div className="hero_actions">
           <nav className="hero_nav">
-            <Link className="hero_nav_link" to="/listings/sale">
+            <Link className="hero_nav_link" to="/listings/for-sale">
               Buy
             </Link>
             <Link className="hero_nav_link" to="/sell">

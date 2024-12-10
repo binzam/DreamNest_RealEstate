@@ -49,7 +49,7 @@ export const PROPERTIESDATA = [
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
-    category: 'open-houses',
+    category: 'price-reduced',
     propertyFor: 'for-sale',
   },
   {
@@ -97,7 +97,7 @@ export const PROPERTIESDATA = [
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
-    category: 'open-houses',
+    category: 'price-reduced',
     propertyFor: 'for-sale',
   },
   {
@@ -145,8 +145,8 @@ export const PROPERTIESDATA = [
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
-    category: 'open-houses',
-    propertyFor: 'for-sale',
+    category: 'price-reduced',
+    propertyFor: 'rent',
   },
   {
     id: 7,

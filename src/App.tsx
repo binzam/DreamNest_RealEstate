@@ -10,6 +10,7 @@ import Signup from './pages/Auth/Signup/Signup';
 import ScrollToTop from './components/ScrollToTop';
 import CategorisedListing from './pages/CategorisedListing/CategorisedListing';
 import Listings from './pages/Listings/Listings';
+import PropertyList from './pages/PropertyList/PropertyList';
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="listings" element={<Listings />} />
-          <Route path="listings/:filter" element={<CategorisedListing />} />
+          <Route path="listings/:category" element={<CategorisedListing />} />
+          <Route path="listings/:filter" element={<PropertyList />} />
           <Route path="property-detail/:id" element={<PropertyDetail />} />
           <Route path="about" element={<About />} />
         </Route>

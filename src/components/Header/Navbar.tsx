@@ -5,19 +5,24 @@ const Navbar = () => {
     <nav className="navbar">
       <ul className="nav_list">
         <li>
-          <Link className="hdr_nav_link" to="/">
-            Home
+          <Link className="hdr_nav_link" to="/listings/for-sale">
+            Buy
           </Link>
         </li>
         <li>
-          <Link className="hdr_nav_link" to="/listings">
-            Properties
+          <Link className="hdr_nav_link" to="/listings/sell">
+            Sell
           </Link>
         </li>
 
         <li>
-          <Link className="hdr_nav_link" to="/">
-            Contact Us
+          <Link className="hdr_nav_link" to="/listings/rent">
+            Rent
+          </Link>
+        </li>
+        <li>
+          <Link className="hdr_nav_link" to="/listings">
+            Listings
           </Link>
         </li>
       </ul>

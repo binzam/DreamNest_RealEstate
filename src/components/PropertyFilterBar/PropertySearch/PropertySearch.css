@@ -1,5 +1,6 @@
 .listing_pge_search_form {
-  width: 30%;
+  flex: 1;
+  max-width: 50%;
   height: 48px;
   position: relative;
 }

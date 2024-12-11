@@ -44,13 +44,13 @@ const Hero = () => {
         </div>
         <div className="hero_actions">
           <nav className="hero_nav">
-            <Link className="hero_nav_link" to="/listings/for-sale">
+            <Link className="hero_nav_link" to="/properties/sale">
               Buy
             </Link>
             <Link className="hero_nav_link" to="/sell">
               Sell
             </Link>
-            <Link className="hero_nav_link" to="/listings/rent">
+            <Link className="hero_nav_link" to="/properties/rent">
               Rent
             </Link>
           </nav>

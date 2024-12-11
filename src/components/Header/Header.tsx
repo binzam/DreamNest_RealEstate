@@ -12,8 +12,8 @@ const Header = () => {
     setIsModalOpen(!isModalOpen);
   };
   const disableHeaderStickyness =
-    location.pathname.startsWith('/listings/for-sale') ||
-    location.pathname.startsWith('/listings/rent');
+    location.pathname.startsWith('/properties/sale') ||
+    location.pathname.startsWith('/properties/rent');
   return (
     <header className={`header ${disableHeaderStickyness ? 'static' : ''}`}>
       <button className="hamburger" onClick={toggleModal}>

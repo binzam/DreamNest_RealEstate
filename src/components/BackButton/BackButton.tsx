@@ -1,12 +1,17 @@
 import { FaChevronLeft } from 'react-icons/fa6';
-import { Link } from 'react-router-dom';
-import './BackButton.css'
+import { useNavigate } from 'react-router-dom';
+import './BackButton.css';
 const BackButton = () => {
+  const navigate = useNavigate();
+
+  const handleBackClick = () => {
+    navigate(-1);
+  };
   return (
-    <Link className="back_btn" to={'/'}>
+    <button className="back_btn" onClick={handleBackClick}>
       <FaChevronLeft className="icon_left" />
       <span className="btn_txt">Back</span>
-    </Link>
+    </button>
   );
 };
 

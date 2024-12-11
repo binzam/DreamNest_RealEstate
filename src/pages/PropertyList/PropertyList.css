@@ -1,0 +1,19 @@
+.property_listing_page {
+  width: 100%;
+  background-color: #fff;
+  padding: 0rem 5rem 2rem;
+}
+.pty_listing_ttl {
+  color: #333;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+}
+.pty_listing_contnt {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1rem;
+  padding: 0.5rem 0;
+}
+.pty_listing_contnt .pty_box {
+  width: 100%;
+}

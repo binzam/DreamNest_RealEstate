@@ -8,99 +8,91 @@ import {
 import './PropertyRoomFilter.css';
 import { useState } from 'react';
 import { FaChevronCircleDown, FaChevronCircleUp } from 'react-icons/fa';
+const roomValues = ['No Min', '1', '2', '3', '4', '5', '6+'];
+type DropdownState = {
+  bedroomMin: boolean;
+  bedroomMax: boolean;
+  bathroomMin: boolean;
+  bathroomMax: boolean;
+};
 
 const PropertyRoomFilter = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
-  const [isBedroomMinOpen, setBedroomMinOpen] = useState(false);
-  const [isBedroomMaxOpen, setBedroomMaxOpen] = useState(false);
-  const [isBathroomMinOpen, setBathroomMinOpen] = useState(false);
-  const [isBathroomMaxOpen, setBathroomMaxOpen] = useState(false);
+  const [dropdownState, setDropdownState] = useState({
+    bedroomMin: false,
+    bedroomMax: false,
+    bathroomMin: false,
+    bathroomMax: false,
+  });
 
-  const [selectedBedroomMin, setSelectedBedroomMin] = useState<number | null>(
-    null
-  );
-  const [selectedBedroomMax, setSelectedBedroomMax] = useState<number | null>(
-    null
-  );
-  const [selectedBathroomMin, setSelectedBathroomMin] = useState<number | null>(
-    null
-  );
-  const [selectedBathroomMax, setSelectedBathroomMax] = useState<number | null>(
-    null
-  );
+  const [selectedValues, setSelectedValues] = useState({
+    bedroomMin: null,
+    bedroomMax: null,
+    bathroomMin: null,
+    bathroomMax: null,
+  });
+
   const [displayText, setDisplayText] = useState('Rooms');
-  const roomValues = ['No Min', '1', '2', '3', '4', '5', '6+'];
+
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
-  const toggleBedroomMin = () => setBedroomMinOpen((prev) => !prev);
-  const toggleBedroomMax = () => setBedroomMaxOpen((prev) => !prev);
-  const toggleBathroomMin = () => setBathroomMinOpen((prev) => !prev);
-  const toggleBathroomMax = () => setBathroomMaxOpen((prev) => !prev);
+  const toggleSpecificDropdown = (key: keyof DropdownState) =>
+    setDropdownState((prev) => ({ ...prev, [key]: !prev[key] }));
 
   const clearSelection = () => {
-    setSelectedBedroomMin(null);
-    setSelectedBedroomMax(null);
-    setSelectedBathroomMin(null);
-    setSelectedBathroomMax(null);
-    setDropdownOpen(!isDropdownOpen);
+    setSelectedValues({
+      bedroomMin: null,
+      bedroomMax: null,
+      bathroomMin: null,
+      bathroomMax: null,
+    });
+    setDropdownOpen(false);
     setDisplayText('Rooms');
   };
 
   const handleDone = () => {
     const bedroomText =
-      selectedBedroomMin || selectedBedroomMax
-        ? `${selectedBedroomMin || 'No Min'} - ${
-            selectedBedroomMax || 'No Max'
+      selectedValues.bedroomMin || selectedValues.bedroomMax
+        ? `${selectedValues.bedroomMin || 'No Min'} - ${
+            selectedValues.bedroomMax || 'No Max'
           } Bed`
         : '';
+
     const bathroomText =
-      selectedBathroomMin || selectedBathroomMax
-        ? `${selectedBathroomMin || 'No Min'} - ${
-            selectedBathroomMax || 'No Max'
+      selectedValues.bathroomMin || selectedValues.bathroomMax
+        ? `${selectedValues.bathroomMin || 'No Min'} - ${
+            selectedValues.bathroomMax || 'No Max'
           } Bath`
         : '';
+
     const text = [bedroomText, bathroomText].filter(Boolean).join(' / ');
 
     setDisplayText(text || 'Rooms');
     setDropdownOpen(false);
   };
 
-  const selectValue = (
-    type: 'bedroomMin' | 'bedroomMax' | 'bathroomMin' | 'bathroomMax',
-    value: string
-  ) => {
-    const parsedValue =
-      value === 'No Min' || value === 'No Max' ? null : parseInt(value);
-    switch (type) {
-      case 'bedroomMin':
-        setSelectedBedroomMin(parsedValue);
-        setBedroomMinOpen(false);
-        break;
-      case 'bedroomMax':
-        setSelectedBedroomMax(parsedValue);
-        setBedroomMaxOpen(false);
-        break;
-      case 'bathroomMin':
-        setSelectedBathroomMin(parsedValue);
-        setBathroomMinOpen(false);
-        break;
-      case 'bathroomMax':
-        setSelectedBathroomMax(parsedValue);
-        setBathroomMaxOpen(false);
-        break;
-      default:
-        break;
-    }
+  const selectValue = (key: string, value: string) => {
+    const parsedValue = value === 'No Min' || value === 'No Max' ? null : value;
+    setSelectedValues((prev) => ({ ...prev, [key]: parsedValue }));
+    setDropdownState((prev) => ({ ...prev, [key]: false }));
   };
+
+  const renderDropdownOptions = (key: string) =>
+    roomValues.map((value, index) => (
+      <button
+        key={index}
+        className="room_value_btn"
+        onClick={() => selectValue(key, value)}
+      >
+        {value}
+      </button>
+    ));
 
   return (
     <div className="lp_room_sorter">
       <button className="room_filter_btn" onClick={toggleDropdown}>
         <span className="sorting_btn_txt">{displayText}</span>
         <span className="btn_icon">
-          {selectedBedroomMin ||
-          selectedBedroomMax ||
-          selectedBathroomMin ||
-          selectedBathroomMax ? (
+          {Object.values(selectedValues).some((value) => value) ? (
             <FaCircleXmark onClick={clearSelection} />
           ) : isDropdownOpen ? (
             <FaChevronCircleUp />
@@ -125,26 +117,36 @@ const PropertyRoomFilter = () => {
 
             <div className="inner_btns">
               <button
+                onClick={() => toggleSpecificDropdown('bedroomMin')}
                 className={`room_dropdown_btn ${
-                  isBedroomMinOpen ? 'active' : ''
+                  dropdownState.bedroomMin ? 'active' : ''
                 }`}
-                onClick={toggleBedroomMin}
               >
-                {selectedBedroomMin || 'No Min'}
-                <span className="btn_icon">
-                  {isBedroomMinOpen ? <FaChevronUp /> : <FaChevronDown />}
+                {selectedValues.bedroomMin || 'No Min'}
+                <span>
+                  {dropdownState.bedroomMin ? (
+                    <FaChevronUp />
+                  ) : (
+                    <FaChevronDown />
+                  )}
                 </span>
               </button>
-              <div className="divider">-</div>
+
+              <span className="divider">-</span>
+
               <button
+                onClick={() => toggleSpecificDropdown('bedroomMax')}
                 className={`room_dropdown_btn ${
-                  isBedroomMaxOpen ? 'active' : ''
+                  dropdownState.bedroomMax ? 'active' : ''
                 }`}
-                onClick={toggleBedroomMax}
               >
-                {selectedBedroomMax || 'No Max'}
-                <span className="btn_icon">
-                  {isBedroomMaxOpen ? <FaChevronUp /> : <FaChevronDown />}
+                {selectedValues.bedroomMax || 'No Max'}
+                <span>
+                  {dropdownState.bedroomMax ? (
+                    <FaChevronUp />
+                  ) : (
+                    <FaChevronDown />
+                  )}
                 </span>
               </button>
             </div>
@@ -153,27 +155,36 @@ const PropertyRoomFilter = () => {
             </label>
             <div className="inner_btns">
               <button
+                onClick={() => toggleSpecificDropdown('bathroomMin')}
                 className={`room_dropdown_btn ${
-                  isBathroomMinOpen ? 'active' : ''
+                  dropdownState.bathroomMin ? 'active' : ''
                 }`}
-                onClick={toggleBathroomMin}
               >
-                {selectedBathroomMin || 'No Min'}
-                <span className="btn_icon">
-                  {isBathroomMinOpen ? <FaChevronUp /> : <FaChevronDown />}
+                {selectedValues.bathroomMin || 'No Min'}
+                <span>
+                  {dropdownState.bathroomMin ? (
+                    <FaChevronUp />
+                  ) : (
+                    <FaChevronDown />
+                  )}
                 </span>
               </button>
-              <div className="divider">-</div>
+
+              <span className="divider">-</span>
 
               <button
+                onClick={() => toggleSpecificDropdown('bathroomMax')}
                 className={`room_dropdown_btn ${
-                  isBathroomMaxOpen ? 'active' : ''
+                  dropdownState.bathroomMax ? 'active' : ''
                 }`}
-                onClick={toggleBathroomMax}
               >
-                {selectedBathroomMax || 'No Max'}
-                <span className="btn_icon">
-                  {isBathroomMaxOpen ? <FaChevronUp /> : <FaChevronDown />}
+                {selectedValues.bathroomMax || 'No Max'}
+                <span>
+                  {dropdownState.bathroomMax ? (
+                    <FaChevronUp />
+                  ) : (
+                    <FaChevronDown />
+                  )}
                 </span>
               </button>
             </div>
@@ -181,64 +192,32 @@ const PropertyRoomFilter = () => {
           <div className="room_inner_dropdowns">
             <div className="inner_bed_dropdowns">
               <div className="bed_min_dd">
-                {isBedroomMinOpen && (
+                {dropdownState.bedroomMin && (
                   <div className="dropdown_values">
-                    {roomValues.map((value, index) => (
-                      <button
-                        key={index}
-                        className="room_value_btn"
-                        onClick={() => selectValue('bedroomMin', value)}
-                      >
-                        {value}
-                      </button>
-                    ))}
+                    {renderDropdownOptions('bedroomMin')}
                   </div>
                 )}
               </div>
               <div className="bed_max_dd">
-                {isBedroomMaxOpen && (
+                {dropdownState.bedroomMax && (
                   <div className="dropdown_values">
-                    {roomValues.map((value, index) => (
-                      <button
-                        key={index}
-                        className="room_value_btn"
-                        onClick={() => selectValue('bedroomMax', value)}
-                      >
-                        {value}
-                      </button>
-                    ))}
+                    {renderDropdownOptions('bedroomMax')}
                   </div>
                 )}
               </div>
             </div>
             <div className="inner_bath_dropdowns">
               <div className="bath_min_dd">
-                {isBathroomMinOpen && (
+                {dropdownState.bathroomMin && (
                   <div className="dropdown_values">
-                    {roomValues.map((value, index) => (
-                      <button
-                        key={index}
-                        className="room_value_btn"
-                        onClick={() => selectValue('bathroomMin', value)}
-                      >
-                        {value}
-                      </button>
-                    ))}
+                    {renderDropdownOptions('bathroomMin')}
                   </div>
                 )}
               </div>
               <div className="bath_max_dd">
-                {isBathroomMaxOpen && (
+                {dropdownState.bathroomMax && (
                   <div className="dropdown_values">
-                    {roomValues.map((value, index) => (
-                      <button
-                        key={index}
-                        className="room_value_btn"
-                        onClick={() => selectValue('bathroomMax', value)}
-                      >
-                        {value}
-                      </button>
-                    ))}
+                    {renderDropdownOptions('bathroomMax')}
                   </div>
                 )}
               </div>

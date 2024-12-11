@@ -2,48 +2,54 @@ import { useState } from 'react';
 import './PropertyPriceFilter.css';
 import { FaChevronCircleDown, FaChevronCircleUp } from 'react-icons/fa';
 import { FaChevronDown, FaChevronUp, FaCircleXmark } from 'react-icons/fa6';
+type PriceOption = {
+  display: string;
+  value: number;
+};
 const PropertyPriceFilter = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isMinDropdownOpen, setMinDropdownOpen] = useState(false);
   const [isMaxDropdownOpen, setMaxDropdownOpen] = useState(false);
-  const [selectedMin, setSelectedMin] = useState<number | null>(null);
-  const [selectedMax, setSelectedMax] = useState<number | null>(null);
+  const [selectedMin, setSelectedMin] = useState<PriceOption | null>(null);
+  const [selectedMax, setSelectedMax] = useState<PriceOption | null>(null);
   const [displayText, setDisplayText] = useState('Price');
-  const minValues = [
-    'No min',
-    '$100K',
-    '$200K',
-    '$300K',
-    '$400K',
-    '$500K',
-    '$600K',
-    '$700K',
+
+  const minValues: PriceOption[] = [
+    { display: 'No Min', value: 0 },
+    { display: '$100K', value: 100000 },
+    { display: '$200K', value: 200000 },
+    { display: '$300K', value: 300000 },
+    { display: '$400K', value: 400000 },
+    { display: '$500K', value: 500000 },
+    { display: '$600K', value: 600000 },
+    { display: '$700K', value: 700000 },
   ];
-  const maxValues = [
-    'No max',
-    '$180K',
-    '$350K',
-    '$500K',
-    '$700K',
-    '$900K',
-    '$1M',
-    '$1.2M',
+
+  const maxValues: PriceOption[] = [
+    { display: 'No Max', value: Infinity },
+    { display: '$180K', value: 180000 },
+    { display: '$350K', value: 350000 },
+    { display: '$500K', value: 500000 },
+    { display: '$700K', value: 700000 },
+    { display: '$900K', value: 900000 },
+    { display: '$1M', value: 1000000 },
+    { display: '$1.2M', value: 1200000 },
   ];
 
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
   const toggleMinDropdown = () => setMinDropdownOpen((prev) => !prev);
   const toggleMaxDropdown = () => setMaxDropdownOpen((prev) => !prev);
 
-  const selectMinValue = (value: number) => {
-    if (selectedMax && value >= selectedMax) {
+  const selectMinValue = (value: PriceOption) => {
+    if (selectedMax && value.value >= selectedMax.value) {
       setSelectedMax(null);
     }
     setSelectedMin(value);
     setMinDropdownOpen(false);
   };
 
-  const selectMaxValue = (value: number) => {
-    if (selectedMin && value <= selectedMin) {
+  const selectMaxValue = (value: PriceOption) => {
+    if (selectedMin && value.value <= selectedMin.value) {
       setSelectedMin(null);
     }
     setSelectedMax(value);
@@ -53,12 +59,16 @@ const PropertyPriceFilter = () => {
   const clearSelection = () => {
     setSelectedMin(null);
     setSelectedMax(null);
-    setDropdownOpen(!isDropdownOpen);
     setDisplayText('Price');
+    setDropdownOpen(!isDropdownOpen);
   };
   const handleDone = () => {
     if (selectedMin || selectedMax) {
-      setDisplayText(`${selectedMin || 'No Min'} - ${selectedMax || 'No Max'}`);
+      setDisplayText(
+        `${selectedMin?.display || 'No Min'} - ${
+          selectedMax?.display || 'No Max'
+        }`
+      );
     } else {
       setDisplayText('Price');
     }
@@ -93,7 +103,7 @@ const PropertyPriceFilter = () => {
                 className={`dropdown_btn ${isMinDropdownOpen ? 'active' : ''}`}
                 onClick={toggleMinDropdown}
               >
-                {selectedMin || 'No Min'}
+                {selectedMin?.display || 'No Min'}
                 <span className="btn_icon">
                   {isMinDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
                 </span>
@@ -104,7 +114,7 @@ const PropertyPriceFilter = () => {
                 className={`dropdown_btn ${isMaxDropdownOpen ? 'active' : ''}`}
                 onClick={toggleMaxDropdown}
               >
-                {selectedMax || 'No Max'}
+                {selectedMax?.display || 'No Max'}
                 <span className="btn_icon">
                   {isMaxDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
                 </span>
@@ -121,7 +131,7 @@ const PropertyPriceFilter = () => {
                         className="value_btn"
                         onClick={() => selectMinValue(value)}
                       >
-                        {value}
+                        {value.display}
                       </button>
                     ))}
                   </div>
@@ -136,7 +146,7 @@ const PropertyPriceFilter = () => {
                         className="value_btn"
                         onClick={() => selectMaxValue(value)}
                       >
-                        {value}
+                        {value.display}
                       </button>
                     ))}
                   </div>

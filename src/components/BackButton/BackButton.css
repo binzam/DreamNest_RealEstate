@@ -4,7 +4,11 @@
   align-items: center;
   color: #333;
   text-decoration: underline;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
+  transition: all 0.2s ease;
+}
+.back_btn:hover {
+  color: #c2a500;
 }
 .icon_left {
   width: 14px;

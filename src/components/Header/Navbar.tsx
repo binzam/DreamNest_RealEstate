@@ -5,7 +5,7 @@ const Navbar = () => {
     <nav className="navbar">
       <ul className="nav_list">
         <li>
-          <Link className="hdr_nav_link" to="/listings/for-sale">
+          <Link className="hdr_nav_link" to="/properties/sale">
             Buy
           </Link>
         </li>
@@ -16,7 +16,7 @@ const Navbar = () => {
         </li>
 
         <li>
-          <Link className="hdr_nav_link" to="/listings/rent">
+          <Link className="hdr_nav_link" to="/properties/rent">
             Rent
           </Link>
         </li>

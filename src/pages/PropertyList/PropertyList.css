@@ -17,3 +17,9 @@
 .pty_listing_contnt .pty_box {
   width: 100%;
 }
+.no_properties_found {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+  margin-top: 3rem;
+}

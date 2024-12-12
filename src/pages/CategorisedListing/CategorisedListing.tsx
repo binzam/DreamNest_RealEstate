@@ -66,17 +66,15 @@ const CategorisedListing = () => {
           onSortOrderToggle={toggleSortOrder}
         />
       </div>
-      <div className="cat_listing_pge_content">
-        {filteredProperties.length === 0 ? (
-          <div className="no_properties_found">
-            No matching properties found.
-          </div>
-        ) : (
-          sortedProperties.map((property: PropertyDataType) => (
+      {filteredProperties.length === 0 ? (
+        <div className="cat_no_properties_found">No matching properties found.</div>
+      ) : (
+        <div className="cat_listing_pge_content">
+          {sortedProperties.map((property: PropertyDataType) => (
             <PropertyCard key={property.id} data={property} />
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

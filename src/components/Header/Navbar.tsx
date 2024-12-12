@@ -10,7 +10,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link className="hdr_nav_link" to="/listings/sell">
+          <Link className="hdr_nav_link" to="/sell">
             Sell
           </Link>
         </li>

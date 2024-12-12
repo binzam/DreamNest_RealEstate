@@ -3,12 +3,11 @@ import {
   FaBed,
   FaChevronDown,
   FaChevronUp,
-  FaCircleXmark,
+  FaXmark,
 } from 'react-icons/fa6';
 import './PropertyRoomFilter.css';
 import { useState } from 'react';
-import { FaChevronCircleDown, FaChevronCircleUp } from 'react-icons/fa';
-const roomValues = ['No Min', '1', '2', '3', '4', '5', '6+'];
+const roomValues = ['No Min', '1', '2', '3', '4', '5', '6'];
 type DropdownState = {
   bedroomMin: boolean;
   bedroomMax: boolean;
@@ -16,7 +15,18 @@ type DropdownState = {
   bathroomMax: boolean;
 };
 
-const PropertyRoomFilter = () => {
+type PropertyRoomsFilterProps = {
+  onRoomsRangeChange: (
+    bedroomMin: number,
+    bedroomMax: number,
+    bathroomMin: number,
+    bathroomMax: number
+  ) => void;
+};
+
+const PropertyRoomFilter: React.FC<PropertyRoomsFilterProps> = ({
+  onRoomsRangeChange,
+}) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownState, setDropdownState] = useState({
     bedroomMin: false,
@@ -26,13 +36,14 @@ const PropertyRoomFilter = () => {
   });
 
   const [selectedValues, setSelectedValues] = useState({
-    bedroomMin: null,
-    bedroomMax: null,
-    bathroomMin: null,
-    bathroomMax: null,
+    bedroomMin: 0,
+    bedroomMax: 0,
+    bathroomMin: 0,
+    bathroomMax: 0,
   });
 
   const [displayText, setDisplayText] = useState('Rooms');
+  const [isRangeSelected, setIsRangeSelected] = useState(false);
 
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
   const toggleSpecificDropdown = (key: keyof DropdownState) =>
@@ -40,13 +51,15 @@ const PropertyRoomFilter = () => {
 
   const clearSelection = () => {
     setSelectedValues({
-      bedroomMin: null,
-      bedroomMax: null,
-      bathroomMin: null,
-      bathroomMax: null,
+      bedroomMin: 0,
+      bedroomMax: 0,
+      bathroomMin: 0,
+      bathroomMax: 0,
     });
-    setDropdownOpen(false);
+    onRoomsRangeChange(0, Infinity, 0, Infinity);
+    setDropdownOpen(!isDropdownOpen);
     setDisplayText('Rooms');
+    setIsRangeSelected(false);
   };
 
   const handleDone = () => {
@@ -68,6 +81,12 @@ const PropertyRoomFilter = () => {
 
     setDisplayText(text || 'Rooms');
     setDropdownOpen(false);
+    const bedroomMin = selectedValues?.bedroomMin || 0;
+    const bedroomMax = selectedValues?.bedroomMax || Infinity;
+    const bathroomMin = selectedValues?.bathroomMin || 0;
+    const bathroomMax = selectedValues?.bathroomMax || Infinity;
+    onRoomsRangeChange(bedroomMin, bedroomMax, bathroomMin, bathroomMax);
+    setIsRangeSelected(true);
   };
 
   const selectValue = (key: string, value: string) => {
@@ -89,15 +108,20 @@ const PropertyRoomFilter = () => {
 
   return (
     <div className="lp_room_sorter">
-      <button className="room_filter_btn" onClick={toggleDropdown}>
-        <span className="sorting_btn_txt">{displayText}</span>
-        <span className="btn_icon">
+      <button
+        className={`room_filter_btn ${isRangeSelected ? 'selected' : ''} `}
+        onClick={toggleDropdown}
+      >
+        <span className="room_sorting_btn_txt">{displayText}</span>
+        <span className="room_btn_icon">
           {Object.values(selectedValues).some((value) => value) ? (
-            <FaCircleXmark onClick={clearSelection} />
+            <span className="clear_room_btn" onClick={clearSelection}>
+              <FaXmark className="icon_clear" />
+            </span>
           ) : isDropdownOpen ? (
-            <FaChevronCircleUp />
+            <FaChevronUp />
           ) : (
-            <FaChevronCircleDown />
+            <FaChevronDown />
           )}
         </span>
       </button>

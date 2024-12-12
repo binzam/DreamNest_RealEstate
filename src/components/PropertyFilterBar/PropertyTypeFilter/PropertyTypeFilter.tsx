@@ -1,6 +1,10 @@
-import { FaCircleXmark, FaTrailer } from 'react-icons/fa6';
+import {
+  FaChevronDown,
+  FaChevronUp,
+  FaTrailer,
+  FaXmark,
+} from 'react-icons/fa6';
 import './PropertyTypeFilter.css';
-import { FaChevronCircleDown, FaChevronCircleUp } from 'react-icons/fa';
 import { useState } from 'react';
 import { MdCabin, MdTerrain } from 'react-icons/md';
 import { PiFarm } from 'react-icons/pi';
@@ -8,14 +12,15 @@ import { HiHomeModern } from 'react-icons/hi2';
 import { BiSolidBuildingHouse } from 'react-icons/bi';
 import { LiaCitySolid } from 'react-icons/lia';
 import { BsFillHousesFill } from 'react-icons/bs';
+type PropertyType = {
+  title: string;
+  icon: JSX.Element;
+};
 const PropertyTypeFilter = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedType, setSelectedType] = useState('Any');
   const [displayedType, setDisplayedType] = useState('Any');
-  type PropertyType = {
-    title: string;
-    icon: JSX.Element;
-  };
+  const [isTypeSelected, setIsTypeSelected] = useState(false);
 
   const propertyTypes: PropertyType[] = [
     {
@@ -60,30 +65,33 @@ const PropertyTypeFilter = () => {
     setSelectedType('Any');
     setDisplayedType('Any');
     setIsDropdownOpen(!isDropdownOpen);
+    setIsTypeSelected(false);
   };
   const handleDone = () => {
     setDisplayedType(selectedType);
     setIsDropdownOpen(false);
+    setIsTypeSelected(true);
   };
 
   return (
     <div className="lp_pty_type_sorter">
       <button
-        className="type_filter_btn"
+        className={`type_filter_btn ${isTypeSelected ? 'selected' : ''}`}
         onClick={toggleDropdown}
         aria-expanded={isDropdownOpen}
       >
-        <span className="sorting_btn_txt">
-          
+        <span className="type_sorting_btn_txt">
           {displayedType === 'Any' ? 'Property type' : displayedType}
         </span>
-        <span className="btn_icon">
+        <span className="type_btn_icon">
           {displayedType !== 'Any' ? (
-            <FaCircleXmark onClick={clearSelection} />
+            <span className="clear_type_btn" onClick={clearSelection}>
+              <FaXmark className="icon_clear" />
+            </span>
           ) : isDropdownOpen ? (
-            <FaChevronCircleUp />
+            <FaChevronUp />
           ) : (
-            <FaChevronCircleDown />
+            <FaChevronDown />
           )}
         </span>
       </button>

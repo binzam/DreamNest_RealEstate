@@ -1,18 +1,24 @@
 import { useState } from 'react';
 import './PropertyPriceFilter.css';
-import { FaChevronCircleDown, FaChevronCircleUp } from 'react-icons/fa';
-import { FaChevronDown, FaChevronUp, FaCircleXmark } from 'react-icons/fa6';
+import { FaChevronDown, FaChevronUp, FaXmark } from 'react-icons/fa6';
 type PriceOption = {
   display: string;
   value: number;
 };
-const PropertyPriceFilter = () => {
+type PropertyPriceFilterProps = {
+  onPriceRangeChange: (minPrice: number, maxPrice: number) => void;
+};
+
+const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({
+  onPriceRangeChange,
+}) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isMinDropdownOpen, setMinDropdownOpen] = useState(false);
   const [isMaxDropdownOpen, setMaxDropdownOpen] = useState(false);
   const [selectedMin, setSelectedMin] = useState<PriceOption | null>(null);
   const [selectedMax, setSelectedMax] = useState<PriceOption | null>(null);
   const [displayText, setDisplayText] = useState('Price');
+  const [isRangeSelected, setIsRangeSelected] = useState(false);
 
   const minValues: PriceOption[] = [
     { display: 'No Min', value: 0 },
@@ -61,6 +67,8 @@ const PropertyPriceFilter = () => {
     setSelectedMax(null);
     setDisplayText('Price');
     setDropdownOpen(!isDropdownOpen);
+    onPriceRangeChange(0, Infinity);
+    setIsRangeSelected(false);
   };
   const handleDone = () => {
     if (selectedMin || selectedMax) {
@@ -69,6 +77,10 @@ const PropertyPriceFilter = () => {
           selectedMax?.display || 'No Max'
         }`
       );
+      const minPrice = selectedMin?.value || 0;
+      const maxPrice = selectedMax?.value || Infinity;
+      onPriceRangeChange(minPrice, maxPrice);
+      setIsRangeSelected(true);
     } else {
       setDisplayText('Price');
     }
@@ -76,15 +88,20 @@ const PropertyPriceFilter = () => {
   };
   return (
     <div className="lp_price_sorter">
-      <button className="price_filter_btn" onClick={toggleDropdown}>
-        <span className="sorting_btn_txt">{displayText}</span>
-        <span className="btn_icon">
+      <button
+        className={`price_filter_btn ${isRangeSelected ? 'selected' : ''}`}
+        onClick={toggleDropdown}
+      >
+        <span className="price_sorting_btn_txt">{displayText}</span>
+        <span className="price_btn_icon">
           {selectedMin || selectedMax ? (
-            <FaCircleXmark onClick={clearSelection} />
+            <span className="clear_price_btn" onClick={clearSelection}>
+              <FaXmark className="icon_clear" />
+            </span>
           ) : isDropdownOpen ? (
-            <FaChevronCircleUp />
+            <FaChevronUp />
           ) : (
-            <FaChevronCircleDown />
+            <FaChevronDown />
           )}
         </span>
       </button>
@@ -104,7 +121,7 @@ const PropertyPriceFilter = () => {
                 onClick={toggleMinDropdown}
               >
                 {selectedMin?.display || 'No Min'}
-                <span className="btn_icon">
+                <span className="inner_btn_icon">
                   {isMinDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
                 </span>
               </button>
@@ -115,7 +132,7 @@ const PropertyPriceFilter = () => {
                 onClick={toggleMaxDropdown}
               >
                 {selectedMax?.display || 'No Max'}
-                <span className="btn_icon">
+                <span className="inner_btn_icon">
                   {isMaxDropdownOpen ? <FaChevronUp /> : <FaChevronDown />}
                 </span>
               </button>

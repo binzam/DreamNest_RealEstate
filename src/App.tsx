@@ -11,6 +11,7 @@ import ScrollToTop from './components/ScrollToTop';
 import CategorisedListing from './pages/CategorisedListing/CategorisedListing';
 import Listings from './pages/Listings/Listings';
 import PropertyList from './pages/PropertyList/PropertyList';
+import SellProperty from './pages/SellProperty/SellProperty';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="properties/:type" element={<PropertyList />} />
           <Route path="property-detail/:id" element={<PropertyDetail />} />
           <Route path="about" element={<About />} />
+          <Route path="sell" element={<SellProperty />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

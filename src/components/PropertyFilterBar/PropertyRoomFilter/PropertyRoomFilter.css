@@ -15,14 +15,43 @@
   border-radius: 0.6rem;
   border: 1px solid #1a1816;
   border: 2px solid #4b4bff;
+  color: #000;
 }
-.sorting_btn_txt {
-  color: #000000;
+.room_filter_btn.selected {
+  background-color: #1b1bd4;
+  border: 2px solid #ddd;
+  color: #fff;
+}
+.room_sorting_btn_txt {
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
+  color: inherit;
 }
-.btn_icon {
-  font-size: 1rem;
+.room_btn_icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 100%;
+}
+.room_btn_icon svg {
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  fill: inherit;
+}
+.clear_room_btn {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.room_btn_icon svg.icon_clear {
+  width: 100%;
+  height: 100%;
+  color: #ff6969;
+  fill: #ff6969;
 }
 .room_dropdown {
   position: absolute;

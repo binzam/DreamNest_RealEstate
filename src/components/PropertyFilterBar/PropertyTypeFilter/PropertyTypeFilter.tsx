@@ -5,86 +5,75 @@ import {
   FaXmark,
 } from 'react-icons/fa6';
 import './PropertyTypeFilter.css';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { MdCabin, MdTerrain } from 'react-icons/md';
 import { PiFarm } from 'react-icons/pi';
 import { HiHomeModern } from 'react-icons/hi2';
 import { BiSolidBuildingHouse } from 'react-icons/bi';
 import { LiaCitySolid } from 'react-icons/lia';
 import { BsFillHousesFill } from 'react-icons/bs';
-type PropertyType = {
-  title: string;
-  icon: JSX.Element;
+import { useSearchParams } from 'react-router-dom';
+
+type PropertyTypeFilterProps = {
+  onPropertyTypeChange: (propertyType: string) => void;
 };
-const PropertyTypeFilter = () => {
+
+const PropertyTypeFilter: React.FC<PropertyTypeFilterProps> = ({
+  onPropertyTypeChange,
+}) => {
+  const [searchParams] = useSearchParams();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedType, setSelectedType] = useState('Any');
-  const [displayedType, setDisplayedType] = useState('Any');
   const [isTypeSelected, setIsTypeSelected] = useState(false);
+  const propertyTypes = useMemo(
+    () => [
+      { title: 'Any', icon: <BiSolidBuildingHouse /> },
+      { title: 'House', icon: <HiHomeModern /> },
+      { title: 'Condo', icon: <LiaCitySolid /> },
+      { title: 'Townhome', icon: <MdCabin /> },
+      { title: 'Multi family', icon: <BsFillHousesFill /> },
+      { title: 'Farm', icon: <PiFarm /> },
+      { title: 'Mobile', icon: <FaTrailer /> },
+      { title: 'Land', icon: <MdTerrain /> },
+    ],
+    []
+  );
+  const displayedType = selectedType === 'Any' ? 'Property type' : selectedType;
+  useEffect(() => {
+    const urlType = searchParams.get('propertyType') || 'Any';
+    setSelectedType(urlType);
+    setIsTypeSelected(urlType !== 'Any');
+  }, [searchParams]);
 
-  const propertyTypes: PropertyType[] = [
-    {
-      title: 'Any',
-      icon: <BiSolidBuildingHouse />,
-    },
-    {
-      title: 'House',
-      icon: <HiHomeModern />,
-    },
-    {
-      title: 'Condo',
-      icon: <LiaCitySolid />,
-    },
-    {
-      title: 'Townhome',
-      icon: <MdCabin />,
-    },
-    {
-      title: 'Multi family',
-      icon: <BsFillHousesFill />,
-    },
-    {
-      title: 'Farm',
-      icon: <PiFarm />,
-    },
-    {
-      title: 'Mobile',
-      icon: <FaTrailer />,
-    },
-    {
-      title: 'Land',
-      icon: <MdTerrain />,
-    },
-  ];
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
-  const handleSelect = (type: PropertyType['title']) => {
+  const handleSelect = (type: string) => {
     setSelectedType(type);
+  };
+
+  const handleDone = () => {
+    const type = selectedType === 'Any' ? '' : selectedType;
+    setIsDropdownOpen(false);
+    setIsTypeSelected(true);
+    if (onPropertyTypeChange) onPropertyTypeChange(type);
   };
   const clearSelection = () => {
     setSelectedType('Any');
-    setDisplayedType('Any');
     setIsDropdownOpen(!isDropdownOpen);
     setIsTypeSelected(false);
+    onPropertyTypeChange('');
   };
-  const handleDone = () => {
-    setDisplayedType(selectedType);
-    setIsDropdownOpen(false);
-    setIsTypeSelected(true);
-  };
-
   return (
     <div className="lp_pty_type_sorter">
       <button
         className={`type_filter_btn ${isTypeSelected ? 'selected' : ''}`}
         onClick={toggleDropdown}
         aria-expanded={isDropdownOpen}
+        aria-label="Property type filter"
       >
-        <span className="type_sorting_btn_txt">
-          {displayedType === 'Any' ? 'Property type' : displayedType}
-        </span>
+        <span className="type_sorting_btn_txt">{displayedType}</span>
         <span className="type_btn_icon">
-          {displayedType !== 'Any' ? (
+          {isTypeSelected ? (
             <span className="clear_type_btn" onClick={clearSelection}>
               <FaXmark className="icon_clear" />
             </span>

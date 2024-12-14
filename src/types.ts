@@ -20,6 +20,7 @@ export interface PropertyDataType {
   category: string;
   detail: string;
   propertyFor: string;
+  propertyType: string;
 }
 
 export interface PropertyCategoryType {

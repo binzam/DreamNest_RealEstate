@@ -49,8 +49,8 @@
 .price_btn_icon svg.icon_clear {
   width: 100%;
   height: 100%;
-  color: red;
-  fill: red;
+  color: #ff6969;
+  fill: #ff6969;
 }
 .price_dropdown {
   position: absolute;

@@ -34,7 +34,7 @@ const SellProperty = () => {
       <div className="sell_page_cntnt">
         <div className="sell_form">
           {step === 1 && (
-            <div className="form_group">
+            <div className="sl_form_group">
               <h2>Enter Property Address</h2>
               <input
                 className="address_input"
@@ -50,7 +50,7 @@ const SellProperty = () => {
           )}
 
           {step === 2 && (
-            <div className="form_group">
+            <div className="sl_form_group">
               <h2>How soon are you looking to sell?</h2>
               <label>
                 <input
@@ -104,7 +104,7 @@ const SellProperty = () => {
           )}
 
           {step === 3 && (
-            <div className="form_group">
+            <div className="sl_form_group">
               <h2>How much do you think your home will sell for?</h2>
               <label>
                 <input
@@ -126,7 +126,6 @@ const SellProperty = () => {
                 />
                 $1.1M - $1.4M
               </label>
-              {/* Add more price range options */}
               <div className="form_btns">
                 <button className="previous_btn" onClick={handlePrevious}>
                   Previous
@@ -139,7 +138,7 @@ const SellProperty = () => {
           )}
 
           {step === 4 && (
-            <div className="form_group">
+            <div className="sl_form_group">
               <h2>What kind of home are you looking to sell in {address}?</h2>
               <label>
                 <input

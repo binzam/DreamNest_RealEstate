@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import './PropertyPriceFilter.css';
 import { FaChevronDown, FaChevronUp, FaXmark } from 'react-icons/fa6';
 type PriceOption = {
@@ -20,28 +20,34 @@ const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({
   const [displayText, setDisplayText] = useState('Price');
   const [isRangeSelected, setIsRangeSelected] = useState(false);
 
-  const minValues: PriceOption[] = [
-    { display: 'No Min', value: 0 },
-    { display: '$100K', value: 100000 },
-    { display: '$200K', value: 200000 },
-    { display: '$300K', value: 300000 },
-    { display: '$400K', value: 400000 },
-    { display: '$500K', value: 500000 },
-    { display: '$600K', value: 600000 },
-    { display: '$700K', value: 700000 },
-  ];
+  const minValues = useMemo(
+    () => [
+      { display: 'No Min', value: 0 },
+      { display: '$100K', value: 100000 },
+      { display: '$200K', value: 200000 },
+      { display: '$300K', value: 300000 },
+      { display: '$400K', value: 400000 },
+      { display: '$500K', value: 500000 },
+      { display: '$600K', value: 600000 },
+      { display: '$700K', value: 700000 },
+    ],
+    []
+  );
 
-  const maxValues: PriceOption[] = [
-    { display: 'No Max', value: Infinity },
-    { display: '$180K', value: 180000 },
-    { display: '$350K', value: 350000 },
-    { display: '$500K', value: 500000 },
-    { display: '$700K', value: 700000 },
-    { display: '$900K', value: 900000 },
-    { display: '$1M', value: 1000000 },
-    { display: '$1.2M', value: 1200000 },
-  ];
-
+  const maxValues = useMemo(
+    () => [
+      { display: 'No Max', value: Infinity },
+      { display: '$180K', value: 180000 },
+      { display: '$350K', value: 350000 },
+      { display: '$500K', value: 500000 },
+      { display: '$700K', value: 700000 },
+      { display: '$900K', value: 900000 },
+      { display: '$1M', value: 1000000 },
+      { display: '$1.2M', value: 1200000 },
+    ],
+    []
+  );
+  
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
   const toggleMinDropdown = () => setMinDropdownOpen((prev) => !prev);
   const toggleMaxDropdown = () => setMaxDropdownOpen((prev) => !prev);

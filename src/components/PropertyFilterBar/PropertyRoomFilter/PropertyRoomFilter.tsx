@@ -52,9 +52,9 @@ const PropertyRoomFilter: React.FC<PropertyRoomsFilterProps> = ({
   const clearSelection = () => {
     setSelectedValues({
       bedroomMin: 0,
-      bedroomMax: 0,
+      bedroomMax: Infinity,
       bathroomMin: 0,
-      bathroomMax: 0,
+      bathroomMax: Infinity,
     });
     onRoomsRangeChange(0, Infinity, 0, Infinity);
     setDropdownOpen(!isDropdownOpen);
@@ -81,12 +81,19 @@ const PropertyRoomFilter: React.FC<PropertyRoomsFilterProps> = ({
 
     setDisplayText(text || 'Rooms');
     setDropdownOpen(false);
-    const bedroomMin = selectedValues?.bedroomMin || 0;
-    const bedroomMax = selectedValues?.bedroomMax || Infinity;
-    const bathroomMin = selectedValues?.bathroomMin || 0;
-    const bathroomMax = selectedValues?.bathroomMax || Infinity;
-    onRoomsRangeChange(bedroomMin, bedroomMax, bathroomMin, bathroomMax);
-    setIsRangeSelected(true);
+    // const bedroomMin = selectedValues?.bedroomMin || 0;
+    // const bedroomMax = selectedValues?.bedroomMax || Infinity;
+    // const bathroomMin = selectedValues?.bathroomMin || 0;
+    // const bathroomMax = selectedValues?.bathroomMax || Infinity;
+    // onRoomsRangeChange(bedroomMin, bedroomMax, bathroomMin, bathroomMax);
+    onRoomsRangeChange(
+      selectedValues.bedroomMin,
+      selectedValues.bedroomMax,
+      selectedValues.bathroomMin,
+      selectedValues.bathroomMax
+    );
+    // setIsRangeSelected(true);
+    setIsRangeSelected(!!text);
   };
 
   const selectValue = (key: string, value: string) => {
@@ -114,7 +121,8 @@ const PropertyRoomFilter: React.FC<PropertyRoomsFilterProps> = ({
       >
         <span className="room_sorting_btn_txt">{displayText}</span>
         <span className="room_btn_icon">
-          {Object.values(selectedValues).some((value) => value) ? (
+          {/* {Object.values(selectedValues).some((value) => value) ? ( */}
+          {isRangeSelected ? (
             <span className="clear_room_btn" onClick={clearSelection}>
               <FaXmark className="icon_clear" />
             </span>

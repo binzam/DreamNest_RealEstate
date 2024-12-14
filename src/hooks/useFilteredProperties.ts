@@ -8,6 +8,7 @@ interface Filters {
   bedroomMax?: number;
   bathroomMin?: number;
   bathroomMax?: number;
+  propertyType?: string;
 }
 export const useFilteredProperties = (
   properties: PropertyDataType[],
@@ -21,6 +22,7 @@ export const useFilteredProperties = (
     bedroomMax = Infinity,
     bathroomMin = 0,
     bathroomMax = Infinity,
+    propertyType,
   } = filters;
   const propertyCategories = ['sale', 'rent'];
   const isCategory = propertyCategories.includes(type || '');
@@ -35,7 +37,11 @@ export const useFilteredProperties = (
         property.bed <= bedroomMax &&
         property.bath >= bathroomMin &&
         property.bath <= bathroomMax;
-      return matchesCategory && matchesPrice && matchesRooms;
+      const matchesPropertyType =
+        !propertyType || property.propertyType === propertyType;
+      return (
+        matchesCategory && matchesPrice && matchesRooms && matchesPropertyType
+      );
     });
   }, [
     properties,
@@ -47,5 +53,6 @@ export const useFilteredProperties = (
     bedroomMax,
     bathroomMin,
     bathroomMax,
+    propertyType,
   ]);
 };

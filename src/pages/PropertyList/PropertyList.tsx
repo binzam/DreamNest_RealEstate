@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import './PropertyList.css';
 import { PROPERTIESDATA } from '../../propertiesData';
 import { useEffect, useState } from 'react';
@@ -12,20 +12,29 @@ import { useSortedProperties } from '../../hooks/useSortedProperties';
 
 const PropertyList = () => {
   const { type } = useParams<{ type?: string }>();
-  const [sortParam, setSortParam] = useState<string>('relevance');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [sortParam, setSortParam] = useState(
+    searchParams.get('sort') || 'relevance'
+  );
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>(
+    (searchParams.get('order') as 'asc' | 'desc') || 'asc'
+  );
   const [priceRange, setPriceRange] = useState({
-    minPrice: 0,
-    maxPrice: Infinity,
+    minPrice: Number(searchParams.get('minPrice')) || 0,
+    maxPrice: Number(searchParams.get('maxPrice')) || Infinity,
   });
   const [roomsRange, setRoomsRange] = useState({
-    bedroomMin: 0,
-    bedroomMax: Infinity,
-    bathroomMin: 0,
-    bathroomMax: Infinity,
+    bedroomMin: Number(searchParams.get('bedroomMin')) || 0,
+    bedroomMax: Number(searchParams.get('bedroomMax')) || Infinity,
+    bathroomMin: Number(searchParams.get('bathroomMin')) || 0,
+    bathroomMax: Number(searchParams.get('bathroomMax')) || Infinity,
   });
+  const [propertyType, setPropertyType] = useState(
+    searchParams.get('propertyType') || ''
+  );
   const handlePriceRangeChange = (minPrice: number, maxPrice: number) => {
     setPriceRange({ minPrice, maxPrice });
+    updateSearchParams({ minPrice, maxPrice });
   };
   const handleRoomsRangeChange = (
     bedroomMin: number,
@@ -34,10 +43,39 @@ const PropertyList = () => {
     bathroomMax: number
   ) => {
     setRoomsRange({ bedroomMin, bedroomMax, bathroomMin, bathroomMax });
+    updateSearchParams({ bedroomMin, bedroomMax, bathroomMin, bathroomMax });
   };
-  console.log('price range', priceRange);
-  console.log('rooms range', roomsRange);
+  const handlePropertyTypeChange = (propertyType: string) => {
+    setPropertyType(propertyType);
+    updateSearchParams({ propertyType });
+  };
+  // console.log('price range', priceRange);
+  // console.log('rooms range', roomsRange);
 
+  useEffect(() => {
+    document.title = `Property Listings - ${type || 'All'}`;
+  }, [type]);
+
+  const handleSortChange = (param: string) => {
+    setSortParam(param);
+    updateSearchParams({ sort: param });
+  };
+
+  const toggleSortOrder = () => {
+    const newOrder: 'asc' | 'desc' = sortOrder === 'asc' ? 'desc' : 'asc';
+    setSortOrder(newOrder);
+    updateSearchParams({ order: newOrder });
+  };
+  const updateSearchParams = (newParams: Record<string, string | number>) => {
+    const updatedParams = {
+      ...Object.fromEntries(searchParams.entries()),
+      ...Object.entries(newParams).reduce(
+        (acc, [key, value]) => ({ ...acc, [key]: String(value) }),
+        {}
+      ),
+    };
+    setSearchParams(updatedParams);
+  };
   const filteredProperties = useFilteredProperties(PROPERTIESDATA, {
     type,
     minPrice: priceRange.minPrice,
@@ -46,24 +84,13 @@ const PropertyList = () => {
     bedroomMax: roomsRange.bedroomMax,
     bathroomMin: roomsRange.bathroomMin,
     bathroomMax: roomsRange.bathroomMax,
+    propertyType: propertyType,
   });
   const sortedProperties = useSortedProperties(
     filteredProperties,
     sortParam,
     sortOrder
   );
-
-  useEffect(() => {
-    document.title = `Property Listings - ${type || 'All'}`;
-  }, [type]);
-
-  const handleSortChange = (param: string) => {
-    setSortParam(param);
-  };
-
-  const toggleSortOrder = () => {
-    setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
-  };
   return (
     <div className="property_listing_page">
       <BackButton />
@@ -73,6 +100,7 @@ const PropertyList = () => {
       <PropertyFilterBar
         onPriceRangeChange={handlePriceRangeChange}
         onRoomsRangeChange={handleRoomsRangeChange}
+        onPropertyTypeChange={handlePropertyTypeChange}
       />
 
       <SortingControl

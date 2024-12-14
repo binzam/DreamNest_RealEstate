@@ -7,6 +7,7 @@
   color: #333;
   text-transform: capitalize;
   letter-spacing: 1px;
+  text-align: center;
 }
 .pty_listing_contnt {
   display: grid;

@@ -23,7 +23,7 @@ const SortingControl: React.FC<SortingControlProps> = ({
   onSortParamChange,
   onSortOrderToggle,
 }) => {
-  console.log(sortParam);
+  // console.log(sortParam);
 
   const getSortIcon = () => {
     switch (sortParam) {

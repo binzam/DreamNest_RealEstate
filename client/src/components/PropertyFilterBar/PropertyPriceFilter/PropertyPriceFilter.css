@@ -1,0 +1,183 @@
+.lp_price_sorter {
+  position: relative;
+  height: inherit;
+  display: block;
+}
+.price_filter_btn {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  background-color: #fff;
+  padding: 0 0.5rem;
+  min-width: 70px;
+  border-radius: 0.6rem;
+  border: 2px solid #4b4bff;
+  color: #000000;
+}
+.price_sorting_btn_txt {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: inherit;
+}
+.price_filter_btn.selected {
+  background-color: #4b4bff;
+  border: 2px solid #ddd;
+  color: #fff;
+}
+.price_btn_icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 100%;
+}
+.price_btn_icon svg {
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  fill: inherit;
+}
+.clear_price_btn {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.price_btn_icon svg.icon_clear {
+  width: 100%;
+  height: 100%;
+  color: #ff6969;
+  fill: #ff6969;
+}
+.price_dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  z-index: 10;
+  width: 200px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  background-color: #fff;
+  border: 1px solid #000000;
+  border-radius: 10px;
+}
+
+.price_dd_hdr {
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #000000;
+  padding: 0 0 0 1rem;
+
+}
+.done_btn {
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem;
+  background-color: #ffffff;
+  color: #000000;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 2px solid #000000;
+  border-radius: inherit;
+}
+.price_dropdown_inner {
+  width: 100%;
+  padding: 0.5rem 0.5rem 1rem;
+  background-color: #fff;
+  border-radius: 10px;
+}
+.inner_btns {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #fff;
+}
+.divider {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #000000;
+  margin: 0.5rem;
+}
+.dropdown_btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.3rem;
+  width: 47%;
+  height: 100%;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #000000;
+  box-shadow: 0px 1px 2px #33333375;
+  transition: all 0.3s ease;
+}
+.inner_btn_icon {
+  font-size: 0.8rem;
+}
+.dropdown_btn.active {
+  box-shadow: none;
+  border: 1px solid #000000;
+  background-color: #333;
+  color: #fff;
+}
+.inner_dropdowns {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  background-color: #ffffff;
+}
+.min_values,
+.max_values {
+  width: 50%;
+  position: relative;
+}
+
+.min_inner_dropdown,
+.max_inner_dropdown {
+  width: 100%;
+  position: absolute;
+  top: 10px;
+  left: 0;
+  border: 1px solid #000000;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.value_btn {
+  width: 100%;
+  display: block;
+  /* max-width: 100px; */
+  padding: 0.5rem 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.value_btn:hover {
+  background: #f0f0f0;
+}

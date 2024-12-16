@@ -18,7 +18,7 @@ import PropertySlider from '../../components/PropertySlider/PropertySlider';
 const PropertyDetail = () => {
   const { id } = useParams<{ id: string }>();
   const selectedProperty = PROPERTIESDATA.find(
-    (property: PropertyDataType) => property.uniqueId === id
+    (property: PropertyDataType) => property._id === id
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState<string | null>(null);

@@ -112,6 +112,128 @@
   color: #000000;
   fill: #000000;
 }
+.hdr_user_profile {
+  position: relative;
+}
+.hdr_profile_btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #3a6ba1;
+  display: flex;
+  border: none;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #333;
+  overflow: hidden;
+}
+.hdr_profile_btn:hover {
+  background-color: #333;
+  border: 1px solid #3a6ba1;
+}
+.icon_profile {
+  font-size: 24px;
+  color: #fff;
+  fill: #fff;
+  display: inline-block;
+}
+
+.profile_dropdown {
+  position: absolute;
+  top: 110%;
+  right: 2%;
+  background-color: #fff;
+  color: #333;
+  border: 1px solid #ccc;
+  min-height: 150px;
+  min-width: 180px;
+  /* padding: 1.4rem 1rem; */
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 5px 5px 5px #333;
+  border-top-left-radius: 30px;
+  border-left: 1px solid #3a6ba1;
+  border-top: 1px solid #3a6ba1;
+  border-bottom: 1px solid #3a6ba1;
+}
+
+.profile_dropdown_content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  height: auto;
+}
+.usr_pr_dd_user_link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* margin-bottom: 1rem; */
+  width: 100%;
+  padding: 1rem;
+  border-bottom: 2px solid #000;
+}
+
+.usr_pr_dd_icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  color: #333;
+  background-color: #333;
+  color: #ffffff;
+  border: 2px solid transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user_info_wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  gap: 5px;
+}
+
+.dd_user_name {
+  font-size: 1rem;
+  color: #000;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 1px;
+}
+.dd_user_email {
+  color: #333;
+  line-height: 1;
+  font-size: 0.7rem;
+}
+.usr_dd_links {
+  padding-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f8f8;
+}
+.usr_dd_link {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  padding: 8px 10px;
+  height: auto;
+}
+.usr_dd_link:hover {
+  background-color: #000;
+  color: #ffffff;
+}
+.usr_dd_link.logout_btn {
+  margin-top: 1rem;
+  color: white;
+  background-color: rgb(107, 0, 0);
+}
+.usr_dd_link.logout_btn:hover {
+  background-color: red;
+  color: white;
+}
 
 @media (max-width: 1030px) {
   .header {

@@ -1,7 +1,6 @@
 import { useParams, useSearchParams } from 'react-router-dom';
 import './PropertyList.css';
-import { PROPERTIESDATA } from '../../propertiesData';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { PropertyDataType } from '../../types';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
 import PropertyFilterBar from '../../components/PropertyFilterBar/PropertyFilterBar';
@@ -9,8 +8,29 @@ import BackButton from '../../components/BackButton/BackButton';
 import SortingControl from '../../components/SortingControl/SortingControl';
 import { useFilteredProperties } from '../../hooks/useFilteredProperties';
 import { useSortedProperties } from '../../hooks/useSortedProperties';
+import { axiosInstance } from '../../api/axiosInstance';
 
 const PropertyList = () => {
+  const [propertiesData, setPropertiesData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getPropertyList = useCallback(async () => {
+    try {
+      setLoading(true);
+
+      const response = await axiosInstance.get(`/properties/list`);
+      console.log(response);
+      setPropertiesData(response.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+  useEffect(() => {
+    getPropertyList();
+  }, [getPropertyList]);
+
   const { type } = useParams<{ type?: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
   const [sortParam, setSortParam] = useState(
@@ -76,7 +96,7 @@ const PropertyList = () => {
     };
     setSearchParams(updatedParams);
   };
-  const filteredProperties = useFilteredProperties(PROPERTIESDATA, {
+  const filteredProperties = useFilteredProperties(propertiesData, {
     type,
     minPrice: priceRange.minPrice,
     maxPrice: priceRange.maxPrice,
@@ -91,6 +111,13 @@ const PropertyList = () => {
     sortParam,
     sortOrder
   );
+  if (loading) {
+    return (
+      <div>
+        <h1>LOADING...</h1>
+      </div>
+    );
+  }
   return (
     <div className="property_listing_page">
       <BackButton />
@@ -115,7 +142,7 @@ const PropertyList = () => {
       ) : (
         <div className="pty_listing_contnt">
           {sortedProperties.map((property: PropertyDataType) => (
-            <PropertyCard key={property.id} data={property} />
+            <PropertyCard key={property._id} data={property} />
           ))}
         </div>
       )}

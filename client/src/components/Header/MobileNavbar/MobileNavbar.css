@@ -62,7 +62,7 @@
   height: 100%;
   padding: 0.5rem 1rem;
 }
-.profile_btn {
+.mob_profile_btn {
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -86,7 +86,7 @@
   .nav_modal.open {
     transform: translateX(0);
   }
-  .profile_btn {
+  .mob_profile_btn {
     display: flex;
   }
 }

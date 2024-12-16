@@ -1,11 +1,6 @@
-import ImgPropertyFront from './assets/images/property-image-1.webp';
-import ImgPropertySide from './assets/images/property-image-2.webp';
-import ImgPropertyRear from './assets/images/property-image-3.webp';
-import ImgPropertyYard from './assets/images/property-image-4.webp';
-
-export const PROPERTIESDATA = [
+import { Property } from '../models/propertyModel.js';
+const PROPERTIESDATA = [
   {
-    id: 1,
     street: '29 Becker Center',
     city: 'Louisville',
     country: 'United States',
@@ -17,10 +12,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -29,7 +36,6 @@ export const PROPERTIESDATA = [
     propertyType: 'House',
   },
   {
-    id: 2,
     street: '8 Bobwhite Center',
     city: 'Dallas',
     country: 'United States',
@@ -41,10 +47,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -53,7 +71,6 @@ export const PROPERTIESDATA = [
     propertyType: 'Townhome',
   },
   {
-    id: 3,
     street: '8189 Delladonna Street',
     city: 'Rochester',
     country: 'United States',
@@ -65,10 +82,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -77,7 +106,6 @@ export const PROPERTIESDATA = [
     propertyType: 'Townhome',
   },
   {
-    id: 4,
     street: '3936 Doe Crossing Parkway',
     city: 'Richmond',
     country: 'United States',
@@ -89,10 +117,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -101,7 +141,6 @@ export const PROPERTIESDATA = [
     propertyType: 'Multi family',
   },
   {
-    id: 5,
     street: '08828 Lakewood Terrace',
     city: 'Salt Lake City',
     country: 'United States',
@@ -113,10 +152,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -125,7 +176,6 @@ export const PROPERTIESDATA = [
     propertyType: 'Farm',
   },
   {
-    id: 6,
     street: '5494 Mccormick Center',
     city: 'Hollywood',
     country: 'United States',
@@ -137,10 +187,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -149,7 +211,6 @@ export const PROPERTIESDATA = [
     propertyType: 'Moblie',
   },
   {
-    id: 7,
     street: '14 Southridge Street',
     city: 'Fort Worth',
     country: 'United States',
@@ -161,10 +222,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -173,7 +246,6 @@ export const PROPERTIESDATA = [
     propertyType: 'Land',
   },
   {
-    id: 8,
     street: '829 Little Fleur Terrace',
     city: 'Saint Louis',
     country: 'United States',
@@ -185,10 +257,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -197,7 +281,6 @@ export const PROPERTIESDATA = [
     propertyType: 'Condo',
   },
   {
-    id: 9,
     street: '6464 Elgar Court',
     city: 'Sandy',
     country: 'United States',
@@ -209,10 +292,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -221,7 +316,6 @@ export const PROPERTIESDATA = [
     propertyType: 'Condo',
   },
   {
-    id: 10,
     street: '567 Arapahoe Drive',
     city: 'Portland',
     country: 'United States',
@@ -233,10 +327,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -245,7 +351,6 @@ export const PROPERTIESDATA = [
     propertyType: 'Condo',
   },
   {
-    id: 11,
     street: '86 Mcbride Parkway',
     city: 'Jackson',
     country: 'United States',
@@ -257,10 +362,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -269,7 +386,6 @@ export const PROPERTIESDATA = [
     propertyType: 'Multi family',
   },
   {
-    id: 12,
     street: '52 Crescent Oaks Parkway',
     city: 'Miami',
     country: 'United States',
@@ -281,10 +397,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -293,7 +421,6 @@ export const PROPERTIESDATA = [
     propertyType: 'House',
   },
   {
-    id: 13,
     street: '200 Lakeland Center',
     city: 'Des Moines',
     country: 'United States',
@@ -305,10 +432,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -317,7 +456,6 @@ export const PROPERTIESDATA = [
     propertyType: 'Condo',
   },
   {
-    id: 14,
     street: '1981 1st Junction',
     city: 'Seattle',
     country: 'United States',
@@ -329,10 +467,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -341,7 +491,6 @@ export const PROPERTIESDATA = [
     propertyType: 'Townhome',
   },
   {
-    id: 15,
     street: '70239 Farwell Parkway',
     city: 'Lincoln',
     country: 'United States',
@@ -353,10 +502,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -365,7 +526,6 @@ export const PROPERTIESDATA = [
     propertyType: 'Multi family',
   },
   {
-    id: 16,
     street: '552 Memorial Junction',
     city: 'Pueblo',
     country: 'United States',
@@ -377,10 +537,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -389,7 +561,6 @@ export const PROPERTIESDATA = [
     propertyType: 'House',
   },
   {
-    id: 17,
     street: '3355 Donald Trail',
     city: 'Pinellas Park',
     country: 'United States',
@@ -401,10 +572,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -413,7 +596,6 @@ export const PROPERTIESDATA = [
     propertyType: 'Condo',
   },
   {
-    id: 18,
     street: '815 Parkside Park',
     city: 'Philadelphia',
     country: 'United States',
@@ -425,10 +607,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -437,7 +631,6 @@ export const PROPERTIESDATA = [
     propertyType: 'Land',
   },
   {
-    id: 19,
     street: '72 Continental Park',
     city: 'Richmond',
     country: 'United States',
@@ -449,10 +642,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -461,7 +666,6 @@ export const PROPERTIESDATA = [
     propertyType: 'Farm',
   },
   {
-    id: 20,
     street: '80 Service Way',
     city: 'Baltimore',
     country: 'United States',
@@ -473,10 +677,22 @@ export const PROPERTIESDATA = [
     image:
       'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
     photos: [
-      { title: 'front', image: ImgPropertyFront },
-      { title: 'side', image: ImgPropertySide },
-      { title: 'rear', image: ImgPropertyRear },
-      { title: 'yard', image: ImgPropertyYard },
+      {
+        title: 'front',
+        image: `http://localhost:5555/uploads/properties/property-image-1.webp`,
+      },
+      {
+        title: 'side',
+        image: `http://localhost:5555/uploads/properties/property-image-2.webp`,
+      },
+      {
+        title: 'rear',
+        image: `http://localhost:5555/uploads/properties/property-image-3.webp`,
+      },
+      {
+        title: 'yard',
+        image: `http://localhost:5555/uploads/properties/property-image-4.webp`,
+      },
     ],
     detail:
       'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Qualifies for AHA program that allows $2700 month rent. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room. Outside storage building 10X15 great for storage. Located close to new public park at end of street. ',
@@ -485,3 +701,19 @@ export const PROPERTIESDATA = [
     propertyType: 'Mobile',
   },
 ];
+
+// Function to upload properties
+export const uploadProperties = async () => {
+  try {
+    for (const property of PROPERTIESDATA) {
+      const newProperty = new Property(property);
+      await newProperty.save();
+      console.log(`Property with ID ${property.price} uploaded`);
+    }
+    console.log('All properties uploaded successfully');
+    // const result = await Property.deleteMany({});
+    // console.log(`Deleted ${result.deletedCount} Properties.`);
+  } catch (err) {
+    console.error('Error uploading properties:', err);
+  }
+};

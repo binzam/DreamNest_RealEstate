@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import './App.css';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const Home = lazy(() => import('./pages/Home/Home'));
 const PropertyDetail = lazy(
@@ -18,6 +19,7 @@ const CategorisedListing = lazy(
 const Listings = lazy(() => import('./pages/Listings/Listings'));
 const PropertyList = lazy(() => import('./pages/PropertyList/PropertyList'));
 const SellProperty = lazy(() => import('./pages/SellProperty/SellProperty'));
+const UserListings = lazy(() => import('./pages/UserListings/UserListings'));
 function App() {
   return (
     <BrowserRouter>
@@ -33,7 +35,12 @@ function App() {
             <Route path="properties/:type" element={<PropertyList />} />
             <Route path="property-detail/:id" element={<PropertyDetail />} />
             <Route path="about" element={<About />} />
-            <Route path="sell" element={<SellProperty />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="sell" element={<SellProperty />} />
+            </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="my-listings" element={<UserListings />} />
+            </Route>
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>

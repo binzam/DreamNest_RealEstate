@@ -5,7 +5,7 @@ export interface PhotoType {
 }
 
 export interface PropertyDataType {
-  id: number;
+  _id: string;
   street: string;
   city: string;
   state: string;
@@ -36,4 +36,11 @@ export interface TestimonialType {
   image: string;
   message: string;
   role: string;
+}
+export interface UserType {
+  firstName: string;
+  email: string;
+  role: string;
+  profilePicture: string;
+  id: string;
 }

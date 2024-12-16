@@ -24,7 +24,7 @@ const Header = () => {
         DreamNest
       </Link>
       <Navbar />
-      <button className="profile_btn">
+      <button className="mob_profile_btn">
         <RiUser3Line className="icon_profile" />
       </button>
       {isModalOpen && <MobileNavbar onCloseModal={toggleModal} />}

@@ -1,12 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import './Signup.css';
-import { Link } from 'react-router-dom';
-import RealEstateImageOne from '../../../assets/images/realestate-image-1.jpg';
+import { Link, useNavigate } from 'react-router-dom';
 import RealEstateImageTwo from '../../../assets/images/realestate-image-2.jpg';
-import RealEstateImageThree from '../../../assets/images/realestate-image-3.jpg';
-import RealEstateImageFour from '../../../assets/images/realestate-image-4.jpg';
 // import SignUpIcon from '../../../assets/images/workspace-with-computer.png';
 import { IoArrowBackCircleSharp } from 'react-icons/io5';
+import { axiosInstance } from '../../../api/axiosInstance';
 const Signup = () => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -16,43 +14,10 @@ const Signup = () => {
     confirmPassword: '',
     agreeToTerms: false,
   });
-  const images = useMemo(
-    () => [
-      RealEstateImageOne,
-      RealEstateImageTwo,
-      RealEstateImageThree,
-      RealEstateImageFour,
-    ],
-    []
-  );
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [allImagesLoaded, setAllImagesLoaded] = useState(false);
-  // Preload images
-  useEffect(() => {
-    let loadedImages = 0;
-
-    images.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => {
-        loadedImages += 1;
-        if (loadedImages === images.length) {
-          setAllImagesLoaded(true);
-        }
-      };
-    });
-  }, [images]);
-
-  useEffect(() => {
-    if (!allImagesLoaded) return;
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [images.length, allImagesLoaded]);
-  const [error, setError] = useState('');
-  const { firstName, lastName, email, password, confirmPassword } = formData;
+  const navigate = useNavigate();
+  // const [error, setError] = useState('');
+  // const [loading, setLoading] = useState('');
+  // const { firstName, lastName, email, password, confirmPassword } = formData;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -61,7 +26,7 @@ const Signup = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const {
       firstName,
@@ -71,23 +36,32 @@ const Signup = () => {
       confirmPassword,
       agreeToTerms,
     } = formData;
-
-    if (!firstName || !lastName || !email || !password || !confirmPassword) {
-      setError('Please fill in all fields.');
+    if (!agreeToTerms) {
+      alert('You must agree to the terms and conditions');
       return;
     }
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match.');
+      alert('Passwords do not match');
       return;
     }
 
-    if (!agreeToTerms) {
-      setError('You must agree to the terms and conditions.');
-      return;
+    try {
+      const response = await axiosInstance.post(
+        `${import.meta.env.VITE_BASE_URL}/auth/register`,
+        { firstName, lastName, email, password }
+      );
+      console.log(response);
+      if (response.status === 201) {
+        navigate('/login');
+      }
+    } catch (error) {
+      console.error('Error registering user:', error);
+      alert('Server error. Please try again later.');
     }
-    await signup(formData);
   };
+  console.log(formData);
+
   return (
     <div className="auth_page">
       <div className="auth_wrapper">
@@ -97,10 +71,8 @@ const Signup = () => {
             Back to website
           </Link>
           <img
-            src={images[currentIndex]}
-            alt={`Slide ${currentIndex + 1}`}
+            src={RealEstateImageTwo}
             className="slider_image"
-            style={{ transition: 'opacity 1s ease-in-out' }}
             loading="lazy"
           />
         </div>
@@ -113,8 +85,6 @@ const Signup = () => {
                 Login in
               </Link>
             </span>
-
-            {error && <p style={{ color: 'red' }}>{error}</p>}
           </div>
           <form className="auth_form" onSubmit={handleSubmit}>
             <div className="form_row">

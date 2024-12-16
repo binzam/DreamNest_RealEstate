@@ -1,8 +1,21 @@
 import { User } from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import validator from 'validator';
+// import validator from 'validator';
 
+const generateAccessToken = (user) => {
+  return jwt.sign(
+    { userId: user._id, email: user.email },
+    process.env.JWT_SECRET,
+    { expiresIn: '15m' }
+  );
+};
+
+const generateRefreshToken = (user) => {
+  return jwt.sign({ userId: user._id }, process.env.JWT_REFRESH_SECRET, {
+    expiresIn: '7d',
+  });
+};
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -10,151 +23,98 @@ const login = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({ message: 'All fields must be filled' });
     }
-    const foundUser = await User.findOne({ email });
+    const user = await User.findOne({ email });
 
-    if (!foundUser) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    const match = await bcrypt.compare(password, foundUser.password);
+    const match = await bcrypt.compare(password, user.password);
     if (!match) {
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(400).json({ message: 'Invalid credentials' });
     }
-    const user = {
-      firstName: foundUser.firstName,
-      id: foundUser._id,
-      email: foundUser.email,
-      role: foundUser.role,
-      profilePicture: foundUser.profilePicture,
-    };
-    const accessToken = jwt.sign(
-      {
-        UserInfo: {
-          _id: foundUser._id,
-          role: foundUser.role,
-        },
-      },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '1d' }
-    );
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
 
-    const refreshToken = jwt.sign(
-      { _id: foundUser._id },
-      process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: '7d' }
-    );
-    res.cookie('jwt', refreshToken, {
+    res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: false,
-      // secure: process.env.NODE_ENV === 'production',
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'Lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    return res.status(200).json({ accessToken, user });
+    return res.json({
+      accessToken,
+      user: {
+        email: user.email,
+        role: user.role,
+        profilePicture: user.profilePicture,
+        firstName: user.firstName,
+      },
+    });
   } catch (error) {
     console.log(error);
 
     res.status(400).json({ message: error.message });
   }
 };
-const refresh = (req, res) => {
-  const refreshToken = req.cookies.jwt;
+const refresh = async (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
 
-  if (!refreshToken) return res.status(401).json({ message: 'Unauthorized' });
+  // if (!refreshToken) return res.status(401).json({ message: 'Unauthorized' });
+  if (!refreshToken)
+    return res.status(401).json({ message: 'No refresh token provided' });
 
-  jwt.verify(
-    refreshToken,
-    process.env.REFRESH_TOKEN_SECRET,
-    async (err, decoded) => {
-      if (err) return res.status(403).json({ message: 'Forbidden' });
+  try {
+    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET); // Verify refresh token
+    const user = await User.findById(decoded.userId);
+    if (!user) return res.status(404).json({ message: 'User not found' });
 
-      const foundUser = await User.findOne({
-        _id: decoded._id,
-      }).exec();
-
-      if (!foundUser) return res.status(401).json({ message: 'Unauthorized' });
-      const accessToken = jwt.sign(
-        {
-          UserInfo: {
-            _id: foundUser._id,
-            role: foundUser.role,
-          },
-        },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '1d' }
-      );
-      res.json({ accessToken });
-    }
-  );
+    const newAccessToken = generateAccessToken(user);
+    return res.json({ accessToken: newAccessToken });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(403)
+      .json({ message: 'Invalid or expired refresh token' });
+  }
 };
 
 const registerUser = async (req, res) => {
   try {
-    const { formData } = req.body;
-    console.log('fd>>', formData);
+    const { firstName, lastName, email, password } = req.body;
+    console.log('register', firstName, lastName, email, password);
 
-    const { firstName, lastName, email, password } = formData;
-
-    if (!email || !password || !firstName || !lastName) {
-      throw Error('All fields must be filled');
-    }
-    if (!validator.isEmail(email)) {
-      throw Error('Email not valid');
-    }
-    // if (!validator.isLength(6)) {
-    //   throw Error('Password must be atleast 6');
-    // }
-    const exists = await User.findOne({ email });
-
-    if (exists) {
-      throw Error('Email already in use');
+    // Check for required fields
+    if (!firstName || !lastName || !email || !password) {
+      return res.status(400).json({ message: 'All fields are required' });
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    // Check if the user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email already in use' });
+    }
 
-    const newUser = await User.create({
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Create a new user
+    const newUser = new User({
       firstName,
       lastName,
       email,
       password: hashedPassword,
     });
 
-    const accessToken = jwt.sign(
-      {
-        UserInfo: {
-          _id: newUser._id,
-          role: newUser.role,
-        },
-      },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: '1d' }
-    );
+    // Save the user to the database
+    await newUser.save();
 
-    const refreshToken = jwt.sign(
-      { _id: newUser._id },
-      process.env.REFRESH_TOKEN_SECRET,
-      { expiresIn: '7d' }
-    );
-    res.cookie('jwt', refreshToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'None',
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
-    const user = {
-      firstName: newUser.firstName,
-      id: newUser._id,
-      email: newUser.email,
-      role: newUser.role,
-      profilePicture: newUser.profilePicture,
-    };
-    res.json({ accessToken, user });
-  } catch (error) {
-    console.log(error.message);
-
-    res.status(400).json({ message: error.message });
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
   }
 };
 

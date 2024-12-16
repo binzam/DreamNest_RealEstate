@@ -15,13 +15,13 @@ const PropertyCard = ({ data }: { data: PropertyDataType }) => {
       <button className="wish_btn">
         <FaHeart className="icon_heart" />
       </button>
-      <Link to={`/property-detail/${data.uniqueId}`}>
+      <Link to={`/property-detail/${data._id}`}>
         <div className="pty_img">
           <img width={400} height={250} src={data.image} alt="" loading="lazy" />
         </div>
       </Link>
       <div>
-        <Link to={`/property-detail/${data.uniqueId}`}>
+        <Link to={`/property-detail/${data._id}`}>
           <div className="pty_box_body">
             <div className="pty_purpose">
               <span className="dot"></span>Listing for {data.propertyFor}

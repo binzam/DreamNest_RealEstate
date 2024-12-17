@@ -14,7 +14,8 @@
   border-bottom: 1px solid #ddd;
 }
 .header.static {
-  position: static;
+  position: relative;
+  z-index: 1035;
 }
 .logo {
   color: #444;
@@ -140,17 +141,17 @@
 
 .profile_dropdown {
   position: absolute;
-  top: 110%;
-  right: 2%;
-  background-color: #fff;
+  top: 46px;
+  right: 20px;
+  background-color: #f8f8f8;
   color: #333;
   border: 1px solid #ccc;
   min-height: 150px;
   min-width: 180px;
-  /* padding: 1.4rem 1rem; */
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
   box-shadow: 5px 5px 5px #333;
   border-top-left-radius: 30px;
+  border-bottom-left-radius: 3px;
   border-left: 1px solid #3a6ba1;
   border-top: 1px solid #3a6ba1;
   border-bottom: 1px solid #3a6ba1;
@@ -162,6 +163,12 @@
   gap: 10px;
   width: 100%;
   height: auto;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.prf_dd_hdr {
+  border-radius: inherit;
+  overflow: hidden;
 }
 .usr_pr_dd_user_link {
   display: flex;
@@ -171,6 +178,7 @@
   width: 100%;
   padding: 1rem;
   border-bottom: 2px solid #000;
+  background-color: #fff;
 }
 
 .usr_pr_dd_icon {
@@ -211,7 +219,6 @@
   padding-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
-  background-color: #f8f8f8;
 }
 .usr_dd_link {
   display: block;

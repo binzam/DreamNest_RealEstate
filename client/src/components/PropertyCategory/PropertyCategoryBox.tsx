@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import './PropertyCategory.css';
-import { PropertyCategoryType } from '../../types';
+import { PropertyCategoryType } from '../../types/propertyTypes';
 
 const PropertyCategoryBox = ({
   property,

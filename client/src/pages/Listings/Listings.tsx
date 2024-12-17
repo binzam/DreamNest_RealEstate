@@ -1,42 +1,53 @@
 import { useEffect, useState } from 'react';
 import PropertySlider from '../../components/PropertySlider/PropertySlider';
-import { PROPERTIESDATA } from '../../propertiesData';
 import './Listings.css';
 import LoadingSkeleton from '../../components/Loading/LoadingSkeleton/LoadingSkeleton';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { fetchProperties } from '../../store/slices/propertySlice';
+import { AppDispatch, RootState } from '../../store/store';
 
 const Listings = () => {
-  const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch<AppDispatch>();
+  const { properties, loading, error } = useSelector((state: RootState) => state.properties);
   const [uniqueCategories, setUniqueCategories] = useState<string[]>([]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    // Dispatch action to fetch properties
+    dispatch(fetchProperties());
+  }, [dispatch]);
+  useEffect(() => {
+    if (!loading && properties.length > 0) {
+      // Extract unique categories from properties once loaded
       const categories = Array.from(
-        new Set(PROPERTIESDATA.map((property) => property.category))
+        new Set(properties.map((property) => property.category))
       );
       setUniqueCategories(categories);
-      setLoading(false)
-    }, 1000);
+    }
+  }, [loading, properties]);
+  if (loading) {
+    return (
+      <div className="all_listings">
+        <LoadingSkeleton />
+        <LoadingSkeleton />
+        <LoadingSkeleton />
+      </div>
+    );
+  }
 
-    return () => clearTimeout(timer);
-  }, []);
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
 
   return (
     <div className="all_listings">
-      {loading ? (
-        <>
-          <LoadingSkeleton />
-          <LoadingSkeleton />
-          <LoadingSkeleton />
-        </>
-      ) : (
-        uniqueCategories.map((category) => (
-          <PropertySlider
-            key={category}
-            title={category}
-            propertyCategory={category}
-          />
-        ))
-      )}
+      {uniqueCategories.map((category, index) => (
+        <PropertySlider
+          key={index}
+          title={category}
+          propertyCategory={category}
+        />
+      ))}
     </div>
   );
 };

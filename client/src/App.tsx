@@ -2,13 +2,15 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import './App.css';
 import ProtectedRoute from './components/ProtectedRoute';
+import { GridLoader } from 'react-spinners';
+import PropertyList from './pages/PropertyList/PropertyList';
+import Layout from './Layout/Layout';
+import Home from './pages/Home/Home';
 
-const Home = lazy(() => import('./pages/Home/Home'));
 const PropertyDetail = lazy(
   () => import('./pages/PropertyDetail/PropertyDetail')
 );
 const About = lazy(() => import('./pages/About'));
-const Layout = lazy(() => import('./Layout/Layout'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 const Login = lazy(() => import('./pages/Auth/Login/Login'));
 const Signup = lazy(() => import('./pages/Auth/Signup/Signup'));
@@ -17,14 +19,21 @@ const CategorisedListing = lazy(
   () => import('./pages/CategorisedListing/CategorisedListing')
 );
 const Listings = lazy(() => import('./pages/Listings/Listings'));
-const PropertyList = lazy(() => import('./pages/PropertyList/PropertyList'));
 const SellProperty = lazy(() => import('./pages/SellProperty/SellProperty'));
 const UserListings = lazy(() => import('./pages/UserListings/UserListings'));
 function App() {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
-        <ScrollToTop />
+      <ScrollToTop />
+      <Suspense
+        fallback={
+          <GridLoader
+            color="#13ccbb"
+            margin={10}
+            size={25}
+          />
+        }
+      >
         <Routes>
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />

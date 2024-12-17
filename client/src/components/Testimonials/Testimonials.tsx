@@ -1,7 +1,7 @@
 import TestimonialCard from './TestimonialCard';
 import { TESTIMONIALS } from '../../MOCK_DATA';
 import './Testimonials.css';
-import { TestimonialType } from '../../types';
+import { TestimonialType } from '../../types/PropTypes';
 
 const Testimonials = () => {
   return (
@@ -9,7 +9,7 @@ const Testimonials = () => {
       <h1 className="testi_ttl">What they’ve said</h1>
       <div className="testimonials_grid">
         {TESTIMONIALS.map((testimony: TestimonialType) => (
-          <TestimonialCard key={testimony.id} testimony={testimony} />
+          <TestimonialCard key={testimony.id} testimony={testimony}  />
         ))}
       </div>
       <button className="btn">Browse Properties</button>

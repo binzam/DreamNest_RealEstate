@@ -1,6 +1,4 @@
 import { useParams } from 'react-router-dom';
-import { PROPERTIESDATA } from '../../propertiesData';
-import { PropertyDataType } from '../../types';
 import './PropertyDetail.css';
 import BackButton from '../../components/BackButton/BackButton';
 import {
@@ -11,19 +9,32 @@ import {
   FaRulerCombined,
   FaXmark,
 } from 'react-icons/fa6';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaHome } from 'react-icons/fa';
 import { TbDimensions } from 'react-icons/tb';
 import PropertySlider from '../../components/PropertySlider/PropertySlider';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import { fetchPropertyById } from '../../store/slices/propertySlice';
 const PropertyDetail = () => {
   const { id } = useParams<{ id: string }>();
-  const selectedProperty = PROPERTIESDATA.find(
-    (property: PropertyDataType) => property._id === id
+  const dispatch = useDispatch<AppDispatch>();
+  // const property = useSelector(
+  //   (state: RootState) => state.properties.propertiesById[id]
+  // );
+  const property = useSelector((state: RootState) =>
+    id ? state.properties.propertiesById[id] : null
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState<string | null>(null);
 
-  if (!selectedProperty) {
+  useEffect(() => {
+    if (!property && id) {
+      dispatch(fetchPropertyById(id));
+    }
+  }, [dispatch, id, property]);
+  if (!property) {
     return <p>Property not found.</p>;
   }
   const {
@@ -34,10 +45,10 @@ const PropertyDetail = () => {
     bed,
     bath,
     sqft,
-    photos,
+    photos = [],
     detail,
     category,
-  } = selectedProperty;
+  } = property;
 
   const openModal = (image: string) => {
     setModalImage(image);
@@ -66,32 +77,34 @@ const PropertyDetail = () => {
       <div className="property_photos">
         <div className="main_photo">
           <span className="photo_info">front</span>
-          <img
-            src={
-              photos.find((photo) => photo.title === 'front')?.image ||
-              photos[0]?.image
-            }
-            alt="Front view"
-            loading="lazy"
-            onClick={() => {
-              const frontPhoto = photos.find(
-                (photo) => photo.title === 'front'
-              );
-              if (frontPhoto) {
-                openModal(frontPhoto.image);
-              } else if (photos[0]) {
-                openModal(photos[0].image);
+          {photos.length > 0 && (
+            <img
+              src={
+                photos.find((photo) => photo.title === 'front')?.image ||
+                photos[0].image
               }
-            }}
-          />
+              alt="Front view"
+              loading="lazy"
+              onClick={() => {
+                const frontPhoto = photos.find(
+                  (photo) => photo.title === 'front'
+                );
+                if (frontPhoto) {
+                  openModal(frontPhoto.image);
+                } else if (photos[0]) {
+                  openModal(photos[0].image);
+                }
+              }}
+            />
+          )}
         </div>
 
         <div className="small_photos">
           {photos
             .filter((photo) => photo.title !== 'front')
-            .map((photo) => (
+            .map((photo, index) => (
               <div
-                key={photo.id}
+                key={index}
                 className="photo_box"
                 onClick={() => openModal(photo.image)}
               >
@@ -107,13 +120,13 @@ const PropertyDetail = () => {
             <div className="pty_purpose">
               <span className="dot"></span>House for Sell
             </div>
-            <div className="pty_price">${price.toLocaleString()}</div>
+            <div className="pty_price">${price?.toLocaleString()}</div>
           </div>
           <div className="pty_info">
             <div className="info">
               <FaBed className="icon_info" />
               <span className="info_ttl">{bed}</span>
-              {bed > 1 ? 'Beds' : 'Bed'}
+              {bed && bed > 1 ? 'Beds' : 'Bed'}
             </div>
             <div className="info">
               <FaBath className="icon_info" />
@@ -122,7 +135,7 @@ const PropertyDetail = () => {
             </div>
             <div className="info">
               <FaRulerCombined className="icon_info" />
-              <span className="info_ttl">{sqft.toLocaleString()}</span>
+              <span className="info_ttl">{sqft?.toLocaleString()}</span>
               sqft
             </div>
           </div>
@@ -185,7 +198,7 @@ const PropertyDetail = () => {
           </div>
         </div>
       </div>
-      {isModalOpen && (
+      {isModalOpen && modalImage && (
         <div className="modal">
           <div className="modal_content">
             <button className="close_button" onClick={closeModal}>

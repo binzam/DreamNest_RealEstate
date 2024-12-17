@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { PropertyDataType } from '../types';
+import { PropertyDataType } from '../types/propertyTypes';
 interface Filters {
   type?: string;
   minPrice?: number;

@@ -1,27 +1,40 @@
 import Slider from 'react-slick';
 import { settingsForProperty as settings } from '../../utils/sliderSetting';
-import { PropertyDataType } from '../../types';
-import { PROPERTIESDATA } from '../../propertiesData';
+import {
+  PropertyDataType,
+  PropertySliderProps,
+} from '../../types/propertyTypes';
 import PropertyCard from '../PropertyCard/PropertyCard';
 import './PropertySlider.css';
-interface PropertySliderProps {
-  title: string;
-  propertyCategory: string;
-}
-const PropertySlider: React.FC<PropertySliderProps> = ({
-  title,
-  propertyCategory,
-}) => {
-  const filteredProperties = PROPERTIESDATA.filter(
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { GridLoader } from 'react-spinners';
+
+const PropertySlider = ({ title, propertyCategory }: PropertySliderProps) => {
+  const { properties, loading } = useSelector(
+    (state: RootState) => state.properties
+  );
+  const filteredProperties = properties.filter(
     (property: PropertyDataType) => property.category === propertyCategory
   );
+  console.log(filteredProperties);
+
   return (
     <section className="slider_section">
+      {loading && (
+        <GridLoader
+          color="#13ccbb"
+          margin={10}
+          size={25}
+          className="slider_loading"
+        />
+      )}
+
       <h1>{title}</h1>
       <div className="property_slider">
         <Slider {...settings}>
-          {filteredProperties.map((property: PropertyDataType) => (
-            <PropertyCard key={property.id} data={property} />
+          {filteredProperties?.map((property: PropertyDataType) => (
+            <PropertyCard key={property._id} data={property} />
           ))}
         </Slider>
       </div>

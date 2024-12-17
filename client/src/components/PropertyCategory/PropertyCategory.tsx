@@ -1,5 +1,5 @@
 import { PROPERTYCATEGORY } from '../../MOCK_DATA';
-import { PropertyCategoryType } from '../../types';
+import { PropertyCategoryType } from '../../types/propertyTypes';
 import PropertyCategoryBox from './PropertyCategoryBox';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';

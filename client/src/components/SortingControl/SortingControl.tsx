@@ -1,4 +1,3 @@
-import React from 'react';
 import './SortingControl.css';
 import {
   FaBed,
@@ -8,21 +7,15 @@ import {
   FaArrowTrendDown,
   FaSackDollar,
 } from 'react-icons/fa6';
-interface SortingControlProps {
-  count: number;
-  sortParam: string;
-  sortOrder: 'asc' | 'desc';
-  onSortParamChange: (param: string) => void;
-  onSortOrderToggle: () => void;
-}
+import { SortingControlProps } from '../../types/PropTypes';
 
-const SortingControl: React.FC<SortingControlProps> = ({
+const SortingControl = ({
   count,
   sortParam,
   sortOrder,
   onSortParamChange,
   onSortOrderToggle,
-}) => {
+}: SortingControlProps) => {
   // console.log(sortParam);
 
   const getSortIcon = () => {

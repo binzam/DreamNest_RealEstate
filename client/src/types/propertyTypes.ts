@@ -1,5 +1,4 @@
 export interface PhotoType {
-  id: number;
   title: string;
   image: string;
 }
@@ -30,17 +29,12 @@ export interface PropertyCategoryType {
   image: string;
   categoryName: string;
 }
-export interface TestimonialType {
-  id: number;
-  name: string;
-  image: string;
-  message: string;
-  role: string;
+
+export interface PropertySliderProps {
+  title: string;
+  propertyCategory: string;
 }
-export interface UserType {
-  firstName: string;
-  email: string;
-  role: string;
-  profilePicture: string;
-  id: string;
+export interface PropertyListingProps {
+  category: string;
+  title: string;
 }

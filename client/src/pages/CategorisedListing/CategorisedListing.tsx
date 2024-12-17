@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { PROPERTIESDATA } from '../../propertiesData';
-import { PropertyDataType } from '../../types';
+import { PropertyDataType } from '../../types/propertyTypes';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
 import './CategorisedListing.css';
 import BackButton from '../../components/BackButton/BackButton';

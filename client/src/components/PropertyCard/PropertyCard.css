@@ -6,6 +6,9 @@
   position: relative;
   background-color: #fff;
 }
+.pty_box a{
+  user-select: none;
+}
 .wish_btn {
   position: absolute;
   top: 1rem;

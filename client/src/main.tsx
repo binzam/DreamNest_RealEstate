@@ -4,6 +4,9 @@ import './index.css';
 import App from './App.tsx';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import { fetchProperties } from './store/slices/propertySlice.ts';
+
+store.dispatch(fetchProperties());
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

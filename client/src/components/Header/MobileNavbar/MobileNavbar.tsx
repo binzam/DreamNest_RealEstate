@@ -1,12 +1,9 @@
 import { AiFillCloseSquare } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import './MobileNavbar.css';
+import { MobileNavbarProps } from '../../../types/PropTypes';
 
-interface MobileNavbarProps {
-  onCloseModal: () => void;
-}
-
-const MobileNavbar: React.FC<MobileNavbarProps> = ({ onCloseModal }) => {
+const MobileNavbar = ({ onCloseModal }: MobileNavbarProps) => {
   return (
     <div className="nav_modal open">
       <div className="nav_modal_content">

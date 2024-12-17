@@ -1,22 +1,26 @@
-import { PROPERTIESDATA } from '../../propertiesData';
-import { PropertyDataType } from '../../types';
+import { useSelector } from 'react-redux';
+import {
+  PropertyDataType,
+  PropertyListingProps,
+} from '../../types/propertyTypes';
 import PropertyCard from '../PropertyCard/PropertyCard';
 import './PropertyListing.css';
-interface PropertyListingProps {
-  category: string;
-  title: string;
-}
+import { RootState } from '../../store/store';
 
 const PropertyListing = ({ category, title }: PropertyListingProps) => {
-  const filteredProperties = PROPERTIESDATA.filter(
-    (data: PropertyDataType) => data.category === category
-  ).slice(0, 3);
+  const properties = useSelector(
+    (state: RootState) => state.properties.properties
+  );
+
+  const filteredProperties = properties.filter(
+    (property: PropertyDataType) => property.category === category
+  );
   return (
     <section className="listing_section">
       <h1 className="listing_ttl">{title}</h1>
       <div className="listing">
         {filteredProperties.map((data: PropertyDataType) => (
-          <PropertyCard key={data.id} data={data} />
+          <PropertyCard key={data._id} data={data} />
         ))}
       </div>
     </section>

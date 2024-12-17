@@ -1,17 +1,14 @@
-import { TestimonialType } from '../../types';
+import { TestimonialType } from '../../types/PropTypes';
 import './Testimonials.css';
 
-interface TestimonialCardProps {
-  testimony: TestimonialType;
-}
-
-const TestimonialCard: React.FC<TestimonialCardProps> = ({ testimony }) => {
+const TestimonialCard = ({ testimony }: { testimony: TestimonialType }) => {
+  const { image, name, message, role } = testimony;
   return (
     <article className="tst_box">
-      <img src={testimony.image} alt={testimony.name} loading="lazy" />
-      <h3>{testimony.name}</h3>
-      <p>{testimony.message}</p>
-      <strong>- {testimony.role}</strong>
+      <img src={image} alt={name} loading="lazy" />
+      <h3>{name}</h3>
+      <p>{message}</p>
+      <strong>- {role}</strong>
     </article>
   );
 };

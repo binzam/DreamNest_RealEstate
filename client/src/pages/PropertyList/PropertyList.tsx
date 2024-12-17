@@ -1,35 +1,24 @@
 import { useParams, useSearchParams } from 'react-router-dom';
 import './PropertyList.css';
-import { useCallback, useEffect, useState } from 'react';
-import { PropertyDataType } from '../../types';
+import { useEffect, useState } from 'react';
+import { PropertyDataType } from '../../types/propertyTypes';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
 import PropertyFilterBar from '../../components/PropertyFilterBar/PropertyFilterBar';
 import BackButton from '../../components/BackButton/BackButton';
 import SortingControl from '../../components/SortingControl/SortingControl';
 import { useFilteredProperties } from '../../hooks/useFilteredProperties';
 import { useSortedProperties } from '../../hooks/useSortedProperties';
-import { axiosInstance } from '../../api/axiosInstance';
+import { AppDispatch, RootState } from '../../store/store';
+import { useSelector } from 'react-redux';
+import { GridLoader } from 'react-spinners';
+import { useDispatch } from 'react-redux';
+import { fetchProperties } from '../../store/slices/propertySlice';
 
 const PropertyList = () => {
-  const [propertiesData, setPropertiesData] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  const getPropertyList = useCallback(async () => {
-    try {
-      setLoading(true);
-
-      const response = await axiosInstance.get(`/properties/list`);
-      console.log(response);
-      setPropertiesData(response.data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-  useEffect(() => {
-    getPropertyList();
-  }, [getPropertyList]);
+  const dispatch = useDispatch<AppDispatch>();
+  const { properties, loading, error } = useSelector(
+    (state: RootState) => state.properties
+  );
 
   const { type } = useParams<{ type?: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -69,12 +58,13 @@ const PropertyList = () => {
     setPropertyType(propertyType);
     updateSearchParams({ propertyType });
   };
-  // console.log('price range', priceRange);
-  // console.log('rooms range', roomsRange);
 
   useEffect(() => {
     document.title = `Property Listings - ${type || 'All'}`;
-  }, [type]);
+    if (!properties) {
+      dispatch(fetchProperties());
+    }
+  }, [type, properties, dispatch]);
 
   const handleSortChange = (param: string) => {
     setSortParam(param);
@@ -96,7 +86,7 @@ const PropertyList = () => {
     };
     setSearchParams(updatedParams);
   };
-  const filteredProperties = useFilteredProperties(propertiesData, {
+  const filteredProperties = useFilteredProperties(properties, {
     type,
     minPrice: priceRange.minPrice,
     maxPrice: priceRange.maxPrice,
@@ -111,15 +101,11 @@ const PropertyList = () => {
     sortParam,
     sortOrder
   );
-  if (loading) {
-    return (
-      <div>
-        <h1>LOADING...</h1>
-      </div>
-    );
-  }
+
+  if (error) return <p>Error: {error}</p>;
   return (
     <div className="property_listing_page">
+      {loading && <GridLoader color="#13ccbb" margin={10} size={25} className='listing_p_loading' />}
       <BackButton />
       <h2 className="pty_listing_ttl">
         Listings for {type ? type.toUpperCase() : 'All'}
@@ -137,7 +123,7 @@ const PropertyList = () => {
         onSortParamChange={handleSortChange}
         onSortOrderToggle={toggleSortOrder}
       />
-      {sortedProperties.length === 0 ? (
+      {!loading && sortedProperties.length === 0 ? (
         <div className="no_properties_found">No matching properties found.</div>
       ) : (
         <div className="pty_listing_contnt">

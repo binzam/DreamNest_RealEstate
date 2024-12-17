@@ -8,4 +8,35 @@ const getProperties = async (req, res) => {
     console.log(error);
   }
 };
-export { getProperties };
+const getPropertyById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const property = await Property.findById(id);
+    if (!property) {
+      return res.status(400).json({
+        message: 'property not found',
+      });
+    }
+    return res.status(200).json(property);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+};
+const getPropertiesByCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const property = await Property.findById(id);
+    if (!property) {
+      return res.status(400).json({
+        message: 'property not found',
+      });
+    }
+    return res.status(200).json(property);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export { getProperties, getPropertyById, getPropertiesByCategory };

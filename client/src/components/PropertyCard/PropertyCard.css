@@ -22,20 +22,26 @@
   justify-content: center;
   border: 2px solid #ffffff;
 }
+
 .icon_heart {
   width: 24px;
   height: 24px;
   fill: #ffffff;
-  stroke-width: 5px;
   stroke: #000000;
+  color: #fff;
 }
-.wish_btn:hover {
+.icon_heart.filled{
+  color: red;
+  fill: red;
+  stroke: red;
+}
+/* .wish_btn:hover {
   border: 2px solid rgb(255, 167, 167);
   background-color: #ffffff;
 }
 .wish_btn:hover .icon_heart {
   fill: red;
-}
+} */
 .pty_img {
   width: 100%;
   border: 1px solid #ddd;

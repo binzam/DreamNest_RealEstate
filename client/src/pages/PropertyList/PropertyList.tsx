@@ -128,7 +128,7 @@ const PropertyList = () => {
       ) : (
         <div className="pty_listing_contnt">
           {sortedProperties.map((property: PropertyDataType) => (
-            <PropertyCard key={property._id} data={property} />
+            <PropertyCard key={property._id} property={property} />
           ))}
         </div>
       )}

@@ -113,8 +113,41 @@
   color: #000000;
   fill: #000000;
 }
-.hdr_user_profile {
+.hdr_user_profile_wl {
   position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.hdr_wl_link {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: #333; */
+  position: relative;
+  border: 2px solid #ddd;
+}
+.hdr_wl_link svg {
+ color: red;
+ fill: red;
+ width: 16px;
+ height: 16px;
+}
+.wl_counter {
+  position: absolute;
+  top: -9px;
+  right: -12px;
+  padding: 1px 3px;
+  text-align: center;
+  border-radius: 3px;
+  background-color: rgba(214, 0, 0, 0.747);
+  color: #ffffff;
+  font-size: 0.65rem;
+  min-width: 20px;
+  font-weight: 500;
+  border: 1px solid #ddd;
 }
 .hdr_profile_btn {
   width: 36px;

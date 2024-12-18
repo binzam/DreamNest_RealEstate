@@ -1,19 +1,20 @@
 import { RiUser3Line } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { RootState } from '../../store/store';
+import { AppDispatch, RootState } from '../../store/store';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/slices/authSlice';
 import './Header.css';
 import { removeUser } from '../../utils/authUtils';
-import { FaUser } from 'react-icons/fa6';
+import { FaHeart, FaUser } from 'react-icons/fa6';
 const Navbar = () => {
   const { isAuthenticated, user } = useSelector(
     (state: RootState) => state.auth
   );
+  const dispatch = useDispatch<AppDispatch>();
+  const { wishlist } = useSelector((state: RootState) => state.user);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const dispatch = useDispatch();
 
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
@@ -21,7 +22,7 @@ const Navbar = () => {
     dispatch(logout());
     removeUser();
     setIsDropdownOpen(false);
-    toggleDropdown()
+    toggleDropdown();
   };
   return (
     <nav className="navbar">
@@ -49,11 +50,14 @@ const Navbar = () => {
         </li>
       </ul>
       {isAuthenticated ? (
-        <div className="hdr_user_profile">
+        <div className="hdr_user_profile_wl">
+          <Link className="hdr_wl_link" to="/wishlist">
+            <span className="wl_counter">{wishlist.length}</span>
+            <FaHeart />
+          </Link>
           <button className="hdr_profile_btn" onClick={toggleDropdown}>
             <RiUser3Line className="icon_profile" />
           </button>
-
           {isDropdownOpen && (
             <div className="profile_dropdown">
               <div className="profile_dropdown_content">
@@ -96,6 +100,13 @@ const Navbar = () => {
                     to="/my-listings"
                   >
                     My Properties
+                  </Link>
+                  <Link
+                    onClick={toggleDropdown}
+                    className="usr_dd_link"
+                    to="/wishlist"
+                  >
+                    Wishlist
                   </Link>
                   <Link
                     onClick={toggleDropdown}

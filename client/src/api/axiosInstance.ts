@@ -29,12 +29,12 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const { data } = await axios.post(
+        const { data } = await axios.get(
           `${import.meta.env.VITE_BASE_URL}/auth/refresh-token`,
-          {},
           { withCredentials: true }
         );
         const newAccessToken = data.accessToken;
+        // console.log('REFRESH TOKEN API', data);
 
         setAccessToken(newAccessToken);
 
@@ -42,7 +42,7 @@ axiosInstance.interceptors.response.use(
         return axiosInstance(originalRequest);
       } catch (error) {
         console.error('Refresh token failed', error);
-        window.location.href = '/login';
+        // window.location.href = '/login';
       }
     }
 

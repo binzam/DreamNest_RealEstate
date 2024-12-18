@@ -38,3 +38,7 @@ export interface PropertyListingProps {
   category: string;
   title: string;
 }
+export interface CategorizedProperty {
+  category: string;
+  properties: PropertyDataType[];
+}

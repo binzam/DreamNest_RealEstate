@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
 import propertyRoutes from './routes/propertyRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 import path from 'path';
 
 const app = express();
@@ -26,6 +27,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/properties', propertyRoutes);
+app.use('/api/user', userRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)

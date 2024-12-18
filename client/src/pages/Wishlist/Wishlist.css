@@ -1,0 +1,29 @@
+.wl_pge {
+  width: 100%;
+  min-height: calc(100vh - 50px);
+  background-color: #fff;
+  position: relative;
+}
+.wl_hdr {
+  padding: 1rem 4rem;
+  color: #fff;
+  background-color: rgb(255, 156, 156);
+}
+.wl_cntnt {
+  padding: 1rem 4rem;
+}
+.wishlist_items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1rem;
+}
+.wishlist_items .pty_box {
+  width: 100%;
+}
+.wl_loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1111;
+}

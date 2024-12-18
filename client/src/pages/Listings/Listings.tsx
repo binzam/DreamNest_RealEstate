@@ -1,30 +1,44 @@
 import { useEffect, useState } from 'react';
-import PropertySlider from '../../components/PropertySlider/PropertySlider';
 import './Listings.css';
 import LoadingSkeleton from '../../components/Loading/LoadingSkeleton/LoadingSkeleton';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { fetchProperties } from '../../store/slices/propertySlice';
-import { AppDispatch, RootState } from '../../store/store';
+import { axiosInstance } from '../../api/axiosInstance';
+import Slider from 'react-slick';
+import {
+  CategorizedProperty,
+  PropertyDataType,
+} from '../../types/propertyTypes';
+import PropertyCard from '../../components/PropertyCard/PropertyCard';
+import { settingsForProperty as settings } from '../../utils/sliderSetting';
 
 const Listings = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { properties, loading, error } = useSelector((state: RootState) => state.properties);
-  const [uniqueCategories, setUniqueCategories] = useState<string[]>([]);
+  const [categoriedProperties, setCategoriedProperties] = useState<
+    CategorizedProperty[]
+  >([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Dispatch action to fetch properties
-    dispatch(fetchProperties());
-  }, [dispatch]);
-  useEffect(() => {
-    if (!loading && properties.length > 0) {
-      // Extract unique categories from properties once loaded
-      const categories = Array.from(
-        new Set(properties.map((property) => property.category))
-      );
-      setUniqueCategories(categories);
-    }
-  }, [loading, properties]);
+    const fetchCategorizedProperties = async () => {
+      try {
+        const response = await axiosInstance.get(
+          '/properties/list/categorized'
+        );
+        console.log(response);
+
+        setCategoriedProperties(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching properties:', error);
+        setError('Failed to load properties');
+        setLoading(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCategorizedProperties();
+  }, []);
+
   if (loading) {
     return (
       <div className="all_listings">
@@ -41,13 +55,22 @@ const Listings = () => {
 
   return (
     <div className="all_listings">
-      {uniqueCategories.map((category, index) => (
-        <PropertySlider
-          key={index}
-          title={category}
-          propertyCategory={category}
-        />
-      ))}
+      <section className="slider_section">
+        {categoriedProperties.map((category) => (
+          <div key={category.category} className="property_slider">
+            <h1>{category.category.split('-').join(' ')}</h1>
+            {category.properties && category.properties.length > 0 && (
+              <div>
+                <Slider  {...settings}>
+                  {category.properties.map((property: PropertyDataType) => (
+                    <PropertyCard key={property._id} property={property} />
+                  ))}
+                </Slider>
+              </div>
+            )}
+          </div>
+        ))}
+      </section>
     </div>
   );
 };

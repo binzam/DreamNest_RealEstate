@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Types } from 'mongoose';
 
 const userSchema = new Schema(
   {
@@ -38,6 +38,12 @@ const userSchema = new Schema(
     resetToken: {
       type: String,
     },
+    wishlist: [
+      {
+        type: Types.ObjectId,
+        ref: 'Property',
+      },
+    ],
   },
   {
     timestamps: true,

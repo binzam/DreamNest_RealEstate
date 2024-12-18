@@ -19,8 +19,8 @@ const PropertyListing = ({ category, title }: PropertyListingProps) => {
     <section className="listing_section">
       <h1 className="listing_ttl">{title}</h1>
       <div className="listing">
-        {filteredProperties.map((data: PropertyDataType) => (
-          <PropertyCard key={data._id} data={data} />
+        {filteredProperties.map((property: PropertyDataType) => (
+          <PropertyCard key={property._id} property={property} />
         ))}
       </div>
     </section>

@@ -1,6 +1,23 @@
 .all_listings {
   width: 100%;
+  min-height: 100vh;
   background-color: #ffffff;
-  padding: 2rem 5rem 4rem;
+  padding: 0.5rem 5rem 4rem;
+}
+.slider_section {
+  width: 100%;
+  margin: 0 auto 2rem;
   overflow: hidden;
+  position: relative;
+}
+.property_slider {
+  width: 100%;
+  margin: 2rem auto 5rem;
+  max-height: 500px;
+}
+.property_slider h1 {
+  color: #333;
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  padding: 0.2rem 2rem;
 }

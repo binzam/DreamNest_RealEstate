@@ -8,8 +8,16 @@ import {
 import { PropertyDataType } from '../../types/propertyTypes';
 import './PropertyCard.css';
 import { Link } from 'react-router-dom';
-
-const PropertyCard = ({ data }: { data: PropertyDataType }) => {
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import {
+  addToWishlistThunk,
+  removeFromWishlistThunk,
+} from '../../store/slices/userSlice';
+import './PropertyCard.css';
+import { useMemo } from 'react';
+const PropertyCard = ({ property }: { property: PropertyDataType }) => {
   const {
     _id,
     image,
@@ -21,11 +29,29 @@ const PropertyCard = ({ data }: { data: PropertyDataType }) => {
     street,
     city,
     state,
-  } = data;
+  } = property;
+
+  const dispatch = useDispatch<AppDispatch>();
+  const { wishlist } = useSelector((state: RootState) => state.user);
+  const isInWishlist = useMemo(
+    () => wishlist.some((wishlistItem) => wishlistItem.toString() === _id),
+    [wishlist, _id]
+  );
+
+  const handleAddToWish = () => {
+    if (isInWishlist) {
+      dispatch(removeFromWishlistThunk(_id));
+    } else {
+      dispatch(addToWishlistThunk(_id));
+    }
+  };
+
   return (
-    <article className="pty_box">
-      <button className="wish_btn">
-        <FaHeart className="icon_heart" />
+    <article className="pty_box" key={_id}>
+      <button className="wish_btn" onClick={handleAddToWish}>
+        <FaHeart
+          className={isInWishlist ? 'icon_heart filled' : 'icon_heart'}
+        />
       </button>
       <Link to={`/property-detail/${_id}`}>
         <div className="pty_img">
@@ -38,7 +64,7 @@ const PropertyCard = ({ data }: { data: PropertyDataType }) => {
             <div className="pty_purpose">
               <span className="dot"></span>Listing for {propertyFor}
             </div>
-            <div className="pty_price">${price.toLocaleString()}</div>
+            <div className="pty_price">${price?.toLocaleString()}</div>
             <div className="pty_specs">
               <div className="pty_spec">
                 <FaBed />
@@ -50,7 +76,7 @@ const PropertyCard = ({ data }: { data: PropertyDataType }) => {
               </div>
               <div className="pty_spec">
                 <FaRulerCombined />
-                <span className="spec">{sqft.toLocaleString()} sqft</span>
+                <span className="spec">{sqft?.toLocaleString()} sqft</span>
               </div>
             </div>
             <div className="pty_box_btm">

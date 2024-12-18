@@ -6,6 +6,7 @@ import { GridLoader } from 'react-spinners';
 import PropertyList from './pages/PropertyList/PropertyList';
 import Layout from './Layout/Layout';
 import Home from './pages/Home/Home';
+import Wishlist from './pages/Wishlist/Wishlist';
 
 const PropertyDetail = lazy(
   () => import('./pages/PropertyDetail/PropertyDetail')
@@ -49,6 +50,9 @@ function App() {
             </Route>
             <Route element={<ProtectedRoute />}>
               <Route path="my-listings" element={<UserListings />} />
+            </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="wishlist" element={<Wishlist />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

@@ -1,13 +1,21 @@
 import { useParams } from 'react-router-dom';
-import { PROPERTIESDATA } from '../../propertiesData';
 import { PropertyDataType } from '../../types/propertyTypes';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
 import './CategorisedListing.css';
 import BackButton from '../../components/BackButton/BackButton';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import SortingControl from '../../components/SortingControl/SortingControl';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import { fetchProperties } from '../../store/slices/propertySlice';
+import { GridLoader } from 'react-spinners';
 const CategorisedListing = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const { category } = useParams<{ category?: string }>();
+  const { properties, loading, error } = useSelector(
+    (state: RootState) => state.properties
+  );
   const propertyCategories = [
     'recommended',
     'open-houses',
@@ -20,11 +28,16 @@ const CategorisedListing = () => {
   const isCategory = propertyCategories.includes(categoryValue);
   const [sortParam, setSortParam] = useState<string>('relevance');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  useEffect(() => {
+    if (properties.length === 0) {
+      dispatch(fetchProperties());
+    }
+  }, [dispatch, properties.length]);
   const filteredProperties = useMemo(() => {
-    return PROPERTIESDATA.filter((property: PropertyDataType) => {
+    return properties.filter((property: PropertyDataType) => {
       return isCategory ? property.category === categoryValue : true;
     });
-  }, [categoryValue, isCategory]);
+  }, [categoryValue, isCategory, properties]);
   const sortedProperties = useMemo(() => {
     return [...filteredProperties].sort((a, b) => {
       const order = sortOrder === 'asc' ? 1 : -1;
@@ -52,6 +65,20 @@ const CategorisedListing = () => {
   const toggleSortOrder = () => {
     setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
   };
+  if (loading) {
+    return (
+      <GridLoader
+        color="#13ccbb"
+        margin={10}
+        size={25}
+        className="listing_loading"
+      />
+    );
+  }
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
+
   return (
     <div className="cat_listing_page">
       <BackButton />
@@ -67,11 +94,13 @@ const CategorisedListing = () => {
         />
       </div>
       {filteredProperties.length === 0 ? (
-        <div className="cat_no_properties_found">No matching properties found.</div>
+        <div className="cat_no_properties_found">
+          No matching properties found.
+        </div>
       ) : (
         <div className="cat_listing_pge_content">
           {sortedProperties.map((property: PropertyDataType) => (
-            <PropertyCard key={property.id} data={property} />
+            <PropertyCard key={property._id} property={property} />
           ))}
         </div>
       )}

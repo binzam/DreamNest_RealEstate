@@ -5,7 +5,7 @@ import App from './App.tsx';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { fetchProperties } from './store/slices/propertySlice.ts';
-import { fetchWishlistThunk } from './store/slices/userSlice.ts';
+import { fetchWishlistThunk } from './store/slices/wishlistThunks.ts';
 
 store.dispatch(fetchProperties());
 store.dispatch(fetchWishlistThunk());

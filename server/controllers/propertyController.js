@@ -29,7 +29,7 @@ const getPropertiesByCategory = async (req, res) => {
   try {
     const allProperties = await Property.find({});
     const categorizedProperties = categorizeProperties(allProperties)
-    console.log("categorized properties",categorizedProperties);
+    // console.log("categorized properties",categorizedProperties);
     
     return res.status(200).json(categorizedProperties);
   } catch (error) {

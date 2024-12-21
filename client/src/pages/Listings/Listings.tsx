@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './Listings.css';
 import LoadingSkeleton from '../../components/Loading/LoadingSkeleton/LoadingSkeleton';
-import { axiosInstance } from '../../api/axiosInstance';
+import {  axiosPublic } from '../../api/axiosInstance';
 import Slider from 'react-slick';
 import {
   CategorizedProperty,
@@ -20,7 +20,7 @@ const Listings = () => {
   useEffect(() => {
     const fetchCategorizedProperties = async () => {
       try {
-        const response = await axiosInstance.get(
+        const response = await axiosPublic.get(
           '/properties/list/categorized'
         );
         console.log(response);

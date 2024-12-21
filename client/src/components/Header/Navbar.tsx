@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 import { AppDispatch, RootState } from '../../store/store';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../store/slices/authSlice';
+import { logout } from '../../store/slices/userSlice';
 import './Header.css';
 import { removeUser } from '../../utils/authUtils';
 import { FaHeart, FaUser } from 'react-icons/fa6';
 const Navbar = () => {
   const { isAuthenticated, user } = useSelector(
-    (state: RootState) => state.auth
+    (state: RootState) => state.user
   );
   const dispatch = useDispatch<AppDispatch>();
   const { wishlist } = useSelector((state: RootState) => state.user);

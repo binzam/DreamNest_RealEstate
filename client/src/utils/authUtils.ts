@@ -1,7 +1,8 @@
 import { UserDataType } from '../types/userTypes';
 
 export const getAccessToken = (): string | null => {
-  return localStorage.getItem('DNat');
+  const token  = localStorage.getItem('DNat')
+  return token ? token : null;
 };
 
 export const setAccessToken = (token: string) => {

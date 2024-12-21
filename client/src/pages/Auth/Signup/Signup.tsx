@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import RealEstateImageTwo from '../../../assets/images/realestate-image-2.jpg';
 // import SignUpIcon from '../../../assets/images/workspace-with-computer.png';
 import { IoArrowBackCircleSharp } from 'react-icons/io5';
-import { axiosInstance } from '../../../api/axiosInstance';
+import { axiosPublic } from '../../../api/axiosInstance';
 const Signup = () => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -47,8 +47,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await axiosInstance.post(
-        `${import.meta.env.VITE_BASE_URL}/auth/register`,
+      const response = await axiosPublic.post('/auth/register',
         { firstName, lastName, email, password }
       );
       console.log(response);
@@ -57,10 +56,8 @@ const Signup = () => {
       }
     } catch (error) {
       console.error('Error registering user:', error);
-      alert('Server error. Please try again later.');
     }
   };
-  console.log(formData);
 
   return (
     <div className="auth_page">

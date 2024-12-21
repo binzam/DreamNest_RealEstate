@@ -2,13 +2,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Login.css';
 import { IoArrowBackCircleSharp } from 'react-icons/io5';
 import { useState } from 'react';
-import { axiosInstance } from '../../../api/axiosInstance';
 import { useDispatch } from 'react-redux';
-import { login, setLoading, setError } from '../../../store/slices/authSlice';
+import { login, setLoading, setError } from '../../../store/slices/userSlice';
 import { setAccessToken, setUser } from '../../../utils/authUtils';
 import { AxiosError } from 'axios';
+import { axiosPublic } from '../../../api/axiosInstance';
+import { fetchWishlistThunk } from '../../../store/slices/wishlistThunks';
+import { AppDispatch } from '../../../store/store';
 const Login = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -30,18 +32,20 @@ const Login = () => {
       setLoadingState(true);
       setErrorState('');
       dispatch(setLoading());
-      const response = await axiosInstance.post(
-        `${import.meta.env.VITE_BASE_URL}/auth/login`,
+      const response = await axiosPublic.post(
+        '/auth/login',
         {
           email,
           password,
-        }
+        },
+        { withCredentials: true }
       );
       console.log('login', response);
 
       const { accessToken, user } = response.data;
       if (accessToken && user) {
         dispatch(login({ user, accessToken }));
+        dispatch(fetchWishlistThunk());
         setAccessToken(accessToken);
         setUser(user);
         if (user.role === 'admin') {

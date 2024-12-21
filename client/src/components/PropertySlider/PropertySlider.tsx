@@ -16,8 +16,6 @@ const PropertySlider = ({ title, propertyCategory }: PropertySliderProps) => {
   const filteredProperties = properties.filter(
     (property: PropertyDataType) => property.category === propertyCategory
   );
-  console.log('Property Category:', propertyCategory);
-  console.log('Filtered Properties:', filteredProperties);
   
   return (
     <section className="slider_section">

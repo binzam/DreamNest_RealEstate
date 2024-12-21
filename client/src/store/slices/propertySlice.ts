@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { axiosInstance } from '../../api/axiosInstance';
+import { axiosPublic } from '../../api/axiosInstance';
 import { PropertyDataType } from '../../types/propertyTypes';
 
 interface PropertyState {
@@ -21,7 +21,7 @@ export const fetchProperties = createAsyncThunk(
   'properties/fetchProperties',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`/properties/list`);
+      const response = await axiosPublic.get(`/properties/list`);
       console.log('PROPERTIES API CALL', response);
 
       return response.data;
@@ -39,7 +39,7 @@ export const fetchPropertyById = createAsyncThunk(
   'properties/fetchPropertyById',
   async (id: string, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`/properties/list/${id}`);
+      const response = await axiosPublic.get(`/properties/list/${id}`);
       console.log('PROPERTY BY ID API CALL');
 
       return response.data;

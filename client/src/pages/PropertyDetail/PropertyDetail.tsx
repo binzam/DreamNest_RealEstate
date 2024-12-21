@@ -17,16 +17,18 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { fetchPropertyById } from '../../store/slices/propertySlice';
+import ShareProperty from '../../components/ShareProperty/ShareProperty';
+import ScheduleTourModal from '../../components/ScheduleTourModal/ScheduleTourModal';
 const PropertyDetail = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
-  // const property = useSelector(
-  //   (state: RootState) => state.properties.propertiesById[id]
-  // );
+  const { isAuthenticated } = useSelector((state: RootState) => state.user);
+
   const property = useSelector((state: RootState) =>
     id ? state.properties.propertiesById[id] : null
   );
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isImgModalOpen, setIsImgModalOpen] = useState(false);
+  const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -52,11 +54,13 @@ const PropertyDetail = () => {
 
   const openModal = (image: string) => {
     setModalImage(image);
-    setIsModalOpen(true);
+    setIsImgModalOpen(true);
+    setIsImgModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    setIsImgModalOpen(false);
+    setIsImgModalOpen(false);
     setModalImage(null);
   };
   return (
@@ -73,6 +77,7 @@ const PropertyDetail = () => {
           </div>
         </div>
         <button className="pty_page_contact_btn">Contact Seller</button>
+        <ShareProperty propertyId={property._id} />
       </div>
       <div className="property_photos">
         <div className="main_photo">
@@ -173,13 +178,20 @@ const PropertyDetail = () => {
                   <path d="M20 4a1 1 0 1 0-2 0v2.4L14.916 4a4.75 4.75 0 0 0-5.832 0L2.386 9.21a1 1 0 1 0 1.228 1.578l.386-.3V20a1 1 0 1 0 2 0V9c0-.022 0-.043-.002-.065l4.314-3.355a2.75 2.75 0 0 1 3.376 0l6.698 5.21a1 1 0 0 0 1.228-1.58L20 7.956V4Z"></path>
                   <path d="M13.707 11.293a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414 0l-1-1a1 1 0 1 1 1.414-1.414l.293.293 2.293-2.293a1 1 0 0 1 1.414 0Zm0 5a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414 0l-1-1a1 1 0 1 1 1.414-1.414l.293.293 2.293-2.293a1 1 0 0 1 1.414 0ZM15 14a1 1 0 0 1 1-1h5a1 1 0 1 1 0 2h-5a1 1 0 0 1-1-1Zm0 5a1 1 0 0 1 1-1h5a1 1 0 1 1 0 2h-5a1 1 0 0 1-1-1Z"></path>
                 </svg>
-                <h2>Property Detail</h2>
+                <h2>Property Detail </h2>
               </div>
               <p>{detail}</p>
             </div>
             <div className="pty_actions">
               <button className="pty_actn_btn">Ask a Question</button>
-              <button className="pty_actn_btn">Schedule Tour</button>
+              {isAuthenticated && (
+                <button
+                  className="pty_actn_btn"
+                  onClick={() => setIsScheduleModalOpen(true)}
+                >
+                  Schedule Tour
+                </button>
+              )}
             </div>
           </div>
           <div className="pty_map">
@@ -198,9 +210,9 @@ const PropertyDetail = () => {
           </div>
         </div>
       </div>
-      {isModalOpen && modalImage && (
-        <div className="modal">
-          <div className="modal_content">
+      {isImgModalOpen && modalImage && (
+        <div className="pty_img_modal">
+          <div className="pty_img_modal_content">
             <button className="close_button" onClick={closeModal}>
               <FaXmark />
             </button>
@@ -212,6 +224,12 @@ const PropertyDetail = () => {
             />
           </div>
         </div>
+      )}
+      {isScheduleModalOpen && (
+        <ScheduleTourModal
+          propertyId={property._id}
+          onClose={() => setIsScheduleModalOpen(false)}
+        />
       )}
       <PropertySlider title="Similar Homes" propertyCategory={category} />
     </div>

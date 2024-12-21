@@ -38,7 +38,6 @@ const login = async (req, res) => {
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
-      secure: false,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'Lax',
       maxAge: 7 * 24 * 60 * 60 * 1000,
@@ -62,7 +61,6 @@ const login = async (req, res) => {
 const refresh = async (req, res) => {
   const refreshToken = req.cookies.refreshToken;
 
-  // if (!refreshToken) return res.status(401).json({ message: 'Unauthorized' });
   if (!refreshToken)
     return res.status(401).json({ message: 'No refresh token provided' });
 
@@ -72,9 +70,12 @@ const refresh = async (req, res) => {
     if (!user) return res.status(404).json({ message: 'User not found' });
 
     const newAccessToken = generateAccessToken(user);
-    return res.json({ accessToken: newAccessToken });
+    return res.status(200).json({ accessToken: newAccessToken });
   } catch (error) {
     console.error(error);
+    if (error.name === 'TokenExpiredError') {
+      return res.status(403).json({ message: 'Refresh token expired' });
+    }
     return res
       .status(403)
       .json({ message: 'Invalid or expired refresh token' });

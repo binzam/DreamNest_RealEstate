@@ -1,15 +1,36 @@
 import axios from 'axios';
-import { getAccessToken, setAccessToken } from '../utils/authUtils';
+import { getAccessToken, removeUser, setAccessToken } from '../utils/authUtils';
 
-export const axiosInstance = axios.create({
+export const axiosPublic = axios.create({
   baseURL: `${import.meta.env.VITE_BASE_URL}`,
   headers: {
     'Content-Type': 'application/json',
   },
+});
+export const axiosPrivate = axios.create({
+  baseURL: `${import.meta.env.VITE_BASE_URL}`,
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${getAccessToken()}`,
+  },
   withCredentials: true,
 });
+const refreshAccessToken = async () => {
+  try {
+    const response = await axiosPublic.get('/auth/refresh-token', {
+      withCredentials: true,
+    });
 
-axiosInstance.interceptors.request.use(
+    const newAccessToken = response.data.accessToken;
+    setAccessToken(newAccessToken);
+    return newAccessToken;
+  } catch (error) {
+    removeUser();
+    window.location.href = '/login';
+    throw error;
+  }
+};
+axiosPrivate.interceptors.request.use(
   (config) => {
     const accessToken = getAccessToken();
     if (accessToken) {
@@ -20,7 +41,7 @@ axiosInstance.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-axiosInstance.interceptors.response.use(
+axiosPrivate.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
@@ -29,23 +50,16 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const { data } = await axios.get(
-          `${import.meta.env.VITE_BASE_URL}/auth/refresh-token`,
-          { withCredentials: true }
-        );
-        const newAccessToken = data.accessToken;
-        // console.log('REFRESH TOKEN API', data);
-
-        setAccessToken(newAccessToken);
-
+        const newAccessToken = await refreshAccessToken();
         originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-        return axiosInstance(originalRequest);
-      } catch (error) {
-        console.error('Refresh token failed', error);
-        // window.location.href = '/login';
+        return axiosPrivate(originalRequest);
+      } catch (refreshError) {
+        console.error('Refresh failed:', refreshError);
+        removeUser();
+        window.location.href = '/login';
+        return Promise.reject(refreshError);
       }
     }
-
     return Promise.reject(error);
   }
 );

@@ -1,110 +1,71 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { PropertyDataType } from '../../types/propertyTypes';
-import axios from 'axios';
-import { axiosInstance } from '../../api/axiosInstance';
-import { getAccessToken } from '../../utils/authUtils';
+import { getAccessToken, getUser } from '../../utils/authUtils';
+import {
+  addToWishlistThunk,
+  fetchWishlistThunk,
+  removeFromWishlistThunk,
+} from './wishlistThunks';
+
+interface User {
+  email: string;
+  firstName: string;
+  role: string;
+  profilePicture?: string;
+}
 
 interface UserState {
+  user: User | null;
+  accessToken: string | null;
+  isAuthenticated: boolean;
   wishlist: PropertyDataType[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: UserState = {
+  user: null,
+  accessToken: null,
+  isAuthenticated: false,
   wishlist: [],
   loading: false,
   error: null,
 };
-
-export const addToWishlistThunk = createAsyncThunk(
-  'user/addToWishlist',
-  async (propertyId: string, { rejectWithValue }) => {
-    const token = getAccessToken();
-    try {
-      const response = await axiosInstance.post(
-        '/user/add-to-wishlist',
-        { propertyId },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log('ADD TO WISH API', response);
-
-      return response.data.wishlist;
-    } catch (error) {
-      console.log(error);
-
-      if (axios.isAxiosError(error)) {
-        return rejectWithValue(
-          error.response?.data?.message || 'Failed to add to wishlist'
-        );
-      }
-      return rejectWithValue('An unexpected error occurred');
-    }
-  }
-);
-
-export const removeFromWishlistThunk = createAsyncThunk(
-  'user/removeFromWishlist',
-  async (propertyId: string, { rejectWithValue }) => {
-    const token = getAccessToken();
-
-    try {
-      const response = await axiosInstance.post(
-        '/user/remove-from-wishlist',
-        { propertyId },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log('Remove api', response);
-
-      return response.data.wishlist;
-    } catch (error) {
-      console.log(error);
-
-      if (axios.isAxiosError(error)) {
-        return rejectWithValue(
-          error.response?.data?.message || 'Failed to remove from wishlist'
-        );
-      }
-      return rejectWithValue('An unexpected error occurred');
-    }
-  }
-);
-
-export const fetchWishlistThunk = createAsyncThunk(
-  'user/fetchWishlist',
-  async (_, { rejectWithValue }) => {
-    const token = getAccessToken();
-    try {
-      const response = await axiosInstance.get('/user/wishlist', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log('WISHLIST ALL', response);
-
-      return response.data.wishlist;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        return rejectWithValue(
-          error.response?.data?.message || 'Failed to fetch wishlist'
-        );
-      }
-      return rejectWithValue('An unexpected error occurred');
-    }
-  }
-);
+const savedUser = getUser();
+const savedToken = getAccessToken();
+if (savedUser && savedToken) {
+  initialState.isAuthenticated = true;
+  initialState.user = savedUser;
+  initialState.accessToken = savedToken;
+}
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    login(state, action: PayloadAction<{ user: User; accessToken: string }>) {
+      state.user = action.payload.user;
+      state.accessToken = action.payload.accessToken;
+      state.isAuthenticated = true;
+      state.loading = false;
+      state.error = null;
+    },
+    logout(state) {
+      state.user = null;
+      state.accessToken = null;
+      state.isAuthenticated = false;
+      state.wishlist = [];
+      state.loading = false;
+      state.error = null;
+    },
+    setLoading(state) {
+      state.loading = true;
+    },
+    setError(state, action: PayloadAction<string>) {
+      state.error = action.payload;
+      state.loading = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchWishlistThunk.pending, (state) => {
@@ -145,5 +106,5 @@ const userSlice = createSlice({
       });
   },
 });
-
+export const { login, logout, setLoading, setError } = userSlice.actions;
 export default userSlice.reducer;

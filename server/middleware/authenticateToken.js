@@ -22,12 +22,13 @@ const authenticateToken = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    console.error('Token verification failed:', error);
+    console.error('Token verification failed:', error.message);
 
     if (error.name === 'TokenExpiredError') {
+      
       return res
         .status(401)
-        .json({ message: 'Token expired, please log in again' });
+        .json({ message: 'Token expired' });
     }
 
     res.status(401).json({ message: 'Invalid or expired token' });

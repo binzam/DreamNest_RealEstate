@@ -120,17 +120,14 @@ const registerUser = async (req, res) => {
 };
 
 const logout = (req, res) => {
-  const cookies = req.cookies;
   try {
-    if (!cookies?.jwt) return res.sendStatus(204);
-    res.clearCookie('jwt', {
+    res.clearCookie('refreshToken', {
       httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'Lax',
-      maxAge: 0,
-      secure: false,
-      // secure: process.env.NODE_ENV === 'production',
+      maxAge: 0, 
     });
-    res.status(200).json({ message: 'Cookie cleared' });
+    return res.status(200).json({ message: 'Logged out successfully' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'An error occurred while logging out' });

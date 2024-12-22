@@ -1,7 +1,8 @@
+import { axiosPublic } from '../api/axiosInstance';
 import { UserDataType } from '../types/userTypes';
 
 export const getAccessToken = (): string | null => {
-  const token  = localStorage.getItem('DNat')
+  const token = localStorage.getItem('DNat');
   return token ? token : null;
 };
 
@@ -20,4 +21,11 @@ export const setUser = (user: UserDataType): void => {
 export const removeUser = (): void => {
   localStorage.removeItem('DNuser');
   localStorage.removeItem('DNat');
+};
+export const logoutUser = async () => {
+  try {
+    await axiosPublic.post('/auth/logout', {}, { withCredentials: true });
+  } catch (error) {
+    console.error('Failed to logout:', error);
+  }
 };

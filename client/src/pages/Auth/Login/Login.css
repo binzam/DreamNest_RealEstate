@@ -49,8 +49,15 @@
   margin: auto;
   color: #fff;
   text-align: center;
+  position: relative;
 }
-
+.auth_loading {
+  position: absolute;
+  top: 50%;
+  color: #ffffff91;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .login_form h2 {
   font-size: 2rem;
   margin-bottom: 1.5rem;

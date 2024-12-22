@@ -6,8 +6,9 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../../store/slices/userSlice';
 import './Header.css';
-import { removeUser } from '../../utils/authUtils';
+import { logoutUser, removeUser } from '../../utils/authUtils';
 import { FaHeart, FaUser } from 'react-icons/fa6';
+import { BsHouseAdd } from 'react-icons/bs';
 const Navbar = () => {
   const { isAuthenticated, user } = useSelector(
     (state: RootState) => state.user
@@ -18,23 +19,25 @@ const Navbar = () => {
 
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     dispatch(logout());
     removeUser();
     setIsDropdownOpen(false);
     toggleDropdown();
+    await logoutUser();
+
   };
   return (
     <nav className="navbar">
       <ul className="nav_list">
         <li>
-          <Link className="hdr_nav_link" to="/properties/sale">
-            Buy
+          <Link className="hdr_nav_link add" to="/add-property">
+          <BsHouseAdd className='add_icon' />   Add Property
           </Link>
         </li>
         <li>
-          <Link className="hdr_nav_link" to="/sell">
-            Sell
+          <Link className="hdr_nav_link" to="/properties/sale">
+            Buy
           </Link>
         </li>
 

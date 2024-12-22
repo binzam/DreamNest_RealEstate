@@ -69,9 +69,9 @@ const PropertyCard = ({ property }: { property: PropertyDataType }) => {
     <article className={`pty_box ${isInWishlist ? 'wishlisted' : ''}`}>
        {loadingProperty === _id && (
         <GridLoader
-          color="#13ccbb"
-          margin={10}
-          size={15}
+          color="#f38b8b"
+          margin={30}
+          size={25}
           className="pty_box_loading"
         />
       )}

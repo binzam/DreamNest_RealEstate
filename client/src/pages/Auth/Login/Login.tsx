@@ -9,15 +9,16 @@ import { AxiosError } from 'axios';
 import { axiosPublic } from '../../../api/axiosInstance';
 import { fetchWishlistThunk } from '../../../store/slices/wishlistThunks';
 import { AppDispatch } from '../../../store/store';
+import { GridLoader } from 'react-spinners';
 const Login = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-  const [loading, setLoadingState] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setErrorState] = useState('');
-  const navigate = useNavigate();
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -29,7 +30,7 @@ const Login = () => {
       return;
     }
     try {
-      setLoadingState(true);
+      setIsLoading(true);
       setErrorState('');
       dispatch(setLoading());
       const response = await axiosPublic.post(
@@ -65,7 +66,7 @@ const Login = () => {
         dispatch(setError('An unexpected error occurred.'));
       }
     } finally {
-      setLoadingState(false);
+      setIsLoading(false);
     }
   };
   return (
@@ -75,6 +76,14 @@ const Login = () => {
         Back to website
       </Link>
       <div className="login_form">
+        {isLoading && (
+          <GridLoader
+            color="#333"
+            margin={30}
+            size={50}
+            className="auth_loading"
+          />
+        )}
         <h2>Welcome back!</h2>
         {error && <div className="error_message">{error}</div>}
         <form onSubmit={handleSubmit}>
@@ -100,8 +109,8 @@ const Login = () => {
               required
             />
           </div>
-          <button className="login_btn" type="submit" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+          <button className="login_btn" type="submit" disabled={isLoading}>
+            Login
           </button>
           <span className="form_option">
             Don't have an Account?{' '}

@@ -1,0 +1,66 @@
+.add_property {
+  width: 100%;
+  background-color: #ffffff;
+  min-height: 100vh;
+}
+.add_pty_hdr {
+  padding: 0.5rem 5rem;
+  height: 60px;
+  display: flex;
+  background: #00c9ff; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #92fe9d,
+    #00c9ff
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #92fe9d,
+    #00c9ff
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  align-items: center;
+  justify-content: space-between;
+  color: #ffffff;
+  border-bottom: 2px solid #333;
+}
+.add_pty_hdr svg.add_icon {
+  width: 50px;
+  color: green;
+  fill: green;
+  height: 50px;
+}
+.add_pty_hdr h2 {
+  font-size: 2rem;
+  color: #ffffff;
+  letter-spacing: 3px;
+  /* margin: 0 1rem 0 5rem; */
+  text-transform: uppercase;
+}
+.progress-bar-container {
+  height: 10px;
+  background-color: #f0f0f0;
+  /* margin-bottom: 20px; */
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4caf50;
+  transition: width 0.3s ease-in-out;
+}
+.add_pty_ctnt {
+  padding: 1rem 5rem;
+  width: 100%;
+  height: calc(100vh - 70px);
+  position: relative;
+}
+.add_pty_form_navigation {
+  position: absolute;
+  bottom: 1rem;
+  width: 100%;
+  left: 0;
+  padding: 0 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

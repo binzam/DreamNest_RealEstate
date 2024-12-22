@@ -56,7 +56,24 @@
   align-items: center;
   justify-content: center;
 }
-
+.hdr_nav_link.add {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #000000;
+  line-height: 1;
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  /* padding-right: 5px; */
+  /* border-right: 1px solid #ddd; */
+}
+.add_icon{
+  width: 20px;
+  height: 20px;
+}
 .hdr_nav_link:hover {
   color: #333;
 }

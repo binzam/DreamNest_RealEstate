@@ -16,12 +16,9 @@
   position: relative;
   max-width: 90%;
   max-height: 90%;
-  display: flex;
   background-color: #fff;
-
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding: 2rem 1.5rem;
+  border-radius: 10px;
 }
 .close_button {
   position: absolute;
@@ -39,36 +36,81 @@
   justify-content: center;
   align-items: center;
 }
+.schedule_hdr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: #007bff;
+  width: 100%;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 1rem;
+}
+.scedule_ttl {
+  font-size: 1.5rem;
+  letter-spacing: 2px;
+  text-align: center;
+  color: #007bff;
+}
 .scheduling_form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 1rem;
 }
-.scheduling_form input[type='checkbox'] {
+.date_time_label {
+  color: #000000;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.date_time_input {
+  padding: 0.6rem 1rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  width: 100%;
+  color: #333;
+}
+.date_time_input:focus {
+  border-color: #007bff;
+}
+
+.virtual_checkbox_label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #000000;
+}
+.virtual_checkbox {
   appearance: auto;
-  width: 15px;
-  height: 15px;
+  /* width: 15px; */
+  /* height: 15px; */
 }
+
 .schedule_btn {
-  background-color: #000000;
+  background-color: #13ccbb;
   color: white;
-  padding: 0.3rem 1.2rem;
+  padding: 0.5rem 1.2rem;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1.5rem;
   font-weight: 500;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
+  margin-top: 1rem;
+  border-radius: 100vw;
 }
 .schedule_btn:hover {
-  background-color: #13ccbb;
+  background-color: #000000;
 }
-.schedule_btn:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-.schedule_btn:disabled:hover {
-  background-color: #ccc;
-}
-

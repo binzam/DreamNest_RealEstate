@@ -7,6 +7,7 @@ import PropertyList from './pages/PropertyList/PropertyList';
 import Layout from './Layout/Layout';
 import Home from './pages/Home/Home';
 import Wishlist from './pages/Wishlist/Wishlist';
+import AddProperty from './pages/AddProperty/AddProperty';
 
 const PropertyDetail = lazy(
   () => import('./pages/PropertyDetail/PropertyDetail')
@@ -26,18 +27,13 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Suspense
-        fallback={
-          <GridLoader
-            color="#13ccbb"
-            margin={10}
-            size={25}
-          />
-        }
-      >
+      <Suspense fallback={<GridLoader color="#13ccbb" margin={10} size={25} />}>
         <Routes>
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="add-property" element={<AddProperty />} />
+          </Route>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="listings" element={<Listings />} />
@@ -48,6 +44,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="sell" element={<SellProperty />} />
             </Route>
+
             <Route element={<ProtectedRoute />}>
               <Route path="my-listings" element={<UserListings />} />
             </Route>

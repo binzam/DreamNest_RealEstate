@@ -12,8 +12,8 @@ import { HiHomeModern } from 'react-icons/hi2';
 import { BiSolidBuildingHouse } from 'react-icons/bi';
 import { LiaCitySolid } from 'react-icons/lia';
 import { BsFillHousesFill } from 'react-icons/bs';
-import { useSearchParams } from 'react-router-dom';
 import { IoSearch } from 'react-icons/io5';
+import { useSearchParams } from 'react-router-dom';
 
 type PropertyTypeFilterProps = {
   onPropertyTypeChange: (propertyType: string) => void;

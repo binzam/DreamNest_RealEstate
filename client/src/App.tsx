@@ -21,7 +21,6 @@ const CategorisedListing = lazy(
   () => import('./pages/CategorisedListing/CategorisedListing')
 );
 const Listings = lazy(() => import('./pages/Listings/Listings'));
-const SellProperty = lazy(() => import('./pages/SellProperty/SellProperty'));
 const UserListings = lazy(() => import('./pages/UserListings/UserListings'));
 function App() {
   return (
@@ -41,9 +40,6 @@ function App() {
             <Route path="properties/:type" element={<PropertyList />} />
             <Route path="property-detail/:id" element={<PropertyDetail />} />
             <Route path="about" element={<About />} />
-            <Route element={<ProtectedRoute />}>
-              <Route path="sell" element={<SellProperty />} />
-            </Route>
 
             <Route element={<ProtectedRoute />}>
               <Route path="my-listings" element={<UserListings />} />

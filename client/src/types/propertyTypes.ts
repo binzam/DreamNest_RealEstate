@@ -42,3 +42,21 @@ export interface CategorizedProperty {
   category: string;
   properties: PropertyDataType[];
 }
+export interface PropertyFormData {
+  name: string;
+  street: string;
+  city: string;
+  state: string;
+  country: string;
+  price: number;
+  bed: number | null;
+  bath: number | null;
+  sqft: number | null;
+  image: string;
+  latitude?: number;
+  longitude?: number;
+  category: string;
+  propertyFor: string;
+  propertyType: string;
+  detail: string;
+}

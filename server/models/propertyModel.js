@@ -6,10 +6,11 @@ const addressSchema = new Schema(
     city: { type: String, required: true },
     state: { type: String, required: true },
     country: { type: String, required: true },
-    postalCode: { type: String, required: false }, // Optional postal code field
+    latitude: { type: Number, required: true },
+    longitude: { type: Number, required: true },
   },
   { _id: false }
-); // This makes it a subdocument without its own ID
+);
 
 const photoSchema = new Schema({
   title: { type: String, required: true },
@@ -31,10 +32,6 @@ const reviewSchema = new Schema({
 const propertySchema = new Schema(
   {
     name: { type: String, required: true },
-    // street: { type: String, required: true },
-    // city: { type: String, required: true },
-    // country: { type: String, required: true },
-    // state: { type: String, required: true },
     address: addressSchema,
     price: { type: Number, required: true },
     bed: { type: Number, required: true },
@@ -63,11 +60,10 @@ const propertySchema = new Schema(
       min: 1,
       max: 5,
     },
-    latitude: { type: Number, required: true },
-    longitude: { type: Number, required: true },
-    featured: { type: Boolean, default: false }, // Optional: Featured property flag
-    amenities: [{ type: String }], // Optional: Array for amenities like Pool, Gym, etc.
-    views: { type: Number, default: 0 }, // O
+    featured: { type: Boolean, default: false },
+    amenities: [{ type: String }],
+    views: { type: Number, default: 0 },
+    discount: { type: Number, default: 0 },
   },
   {
     timestamps: true,

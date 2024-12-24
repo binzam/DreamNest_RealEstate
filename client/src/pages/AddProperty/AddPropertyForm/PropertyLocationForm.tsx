@@ -29,6 +29,7 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
     iconUrl: LocationIcon,
     iconSize: [38, 38],
   });
+  const { street, city, state, country } = formData.address;
   const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -37,7 +38,7 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
     });
   };
   const confirmAddress = async () => {
-    const { city, country } = formData;
+    const { city, country } = formData.address;
     const address = city && country ? `${city}, ${country}` : city || country;
 
     if (address) {
@@ -53,8 +54,11 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
         if (location) {
           setFormData({
             ...formData,
-            latitude: parseFloat(location.lat),
-            longitude: parseFloat(location.lon),
+            address: {
+              ...formData.address,
+              latitude: parseFloat(location.lat),
+              longitude: parseFloat(location.lon),
+            },
           });
           setMapVisible(true);
         } else {
@@ -80,15 +84,18 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
         const { lat, lng } = event.latlng;
         setFormData({
           ...formData,
-          latitude: lat,
-          longitude: lng,
+          address: {
+            ...formData.address,
+            latitude: lat,
+            longitude: lng,
+          },
         });
       },
     });
     return null;
   };
-  const latitude = formData.latitude ?? 51.505;
-  const longitude = formData.longitude ?? -0.09;
+  const latitude = formData.address.latitude ?? 51.505;
+  const longitude = formData.address.longitude ?? -0.09;
   //   const isFormValid =
   //     formData.city && formData.country && formData.street && formData.state;
 
@@ -101,10 +108,11 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
           <div className="add_form_group">
             <label htmlFor="street">Street</label>
             <input
+              className="wide_rounded_input"
               type="text"
               id="street"
               name="street"
-              value={formData.street}
+              value={street}
               onChange={handleLocationChange}
               placeholder="Enter Street Address"
               required
@@ -114,10 +122,11 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
           <div className="add_form_group">
             <label htmlFor="city">City</label>
             <input
+              className="wide_rounded_input"
               type="text"
               id="city"
               name="city"
-              value={formData.city}
+              value={city}
               onChange={handleLocationChange}
               placeholder="Enter City"
               required
@@ -127,10 +136,11 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
           <div className="add_form_group">
             <label htmlFor="state">State</label>
             <input
+              className="wide_rounded_input"
               type="text"
               id="state"
               name="state"
-              value={formData.state}
+              value={state}
               onChange={handleLocationChange}
               placeholder="Enter State"
               required
@@ -140,10 +150,11 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
           <div className="add_form_group">
             <label htmlFor="country">Country</label>
             <input
+              className="wide_rounded_input"
               type="text"
               id="country"
               name="country"
-              value={formData.country}
+              value={country}
               onChange={handleLocationChange}
               placeholder="Enter Country"
               required

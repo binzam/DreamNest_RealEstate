@@ -12,31 +12,37 @@ import PropertyInfoForm from './AddPropertyForm/PropertyInfoForm';
 
 const AddProperty = () => {
   const [formData, setFormData] = useState<PropertyFormData>({
-    name: '',
-    street: '',
-    city: '',
-    state: '',
-    country: '',
-    price: 0,
-    bed: null,
-    bath: null,
-    sqft: null,
-    image: '',
-    latitude: 0,
-    longitude: 0,
-    category: '',
-    propertyFor: '',
-    propertyType: '',
-    detail: '',
+    title: 'A Cozy 3 bedroom apartment',
+    address: {
+      street: '123 Main St',
+      city: 'Stockholm',
+      state: 'Stockholm',
+      country: 'Sweden',
+      latitude: 59.325180462950215,
+      longitude: 18.07158439781698,
+    },
+    price: 120000,
+    bed: 5,
+    bath: 3,
+    sqft: 1200,
+    propertyFor: 'sale',
+    propertyType: 'Condo',
+    detail:
+      'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room.',
+    yearBuilt: 2001,
+    currency: 'SEK',
+    features: ['pool', 'garage'],
+    isAvailable: true,
+    videoUrl: 'http://example.com/video-tour',
+    contactInfo: 'John Doe, 123-456-7890',
   });
 
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  console.log('formdata value long', formData.longitude);
-  console.log('formdata value lat', formData.latitude);
 
-  
+  console.log(formData);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -48,7 +54,6 @@ const AddProperty = () => {
         '/properties/add-property',
         formData
       );
-
       console.log(response);
     } catch (err) {
       console.log(err);
@@ -90,8 +95,7 @@ const AddProperty = () => {
       <div className="add_pty_ctnt">
         <form onSubmit={handleSubmit} className="add_pty_form">
           {currentStep === 1 && (
-            // <PropertyDetailForm formData={formData} setFormData={setFormData} />
-            <PropertyDetailForm />
+            <PropertyDetailForm formData={formData} setFormData={setFormData} />
           )}
 
           {currentStep === 2 && (
@@ -124,7 +128,7 @@ const AddProperty = () => {
                 Previous
               </button>
             )}
-            {currentStep === 6 ? (
+            {currentStep === 5 ? (
               <button type="submit" disabled={loading}>
                 {loading ? 'Submitting...' : 'Add Property'}
               </button>

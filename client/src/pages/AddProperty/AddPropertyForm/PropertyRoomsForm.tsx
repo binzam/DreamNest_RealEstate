@@ -1,11 +1,11 @@
 import React from 'react';
 import { PropertyFormData } from '../../../types/propertyTypes';
 import { FaBath, FaBed, FaRulerCombined } from 'react-icons/fa6';
-interface PropertyLocationFormProps {
+interface PropertyRoomsFormProps {
   formData: PropertyFormData;
   setFormData: React.Dispatch<React.SetStateAction<PropertyFormData>>;
 }
-const PropertyRoomsForm: React.FC<PropertyLocationFormProps> = ({
+const PropertyRoomsForm: React.FC<PropertyRoomsFormProps> = ({
   formData,
   setFormData,
 }) => {
@@ -25,6 +25,7 @@ const PropertyRoomsForm: React.FC<PropertyLocationFormProps> = ({
           <div className="add_form_group">
             <label htmlFor="bed"><FaBed />Bedrooms</label>
             <input
+            className='wide_rounded_input'
               type="number"
               id="bed"
               name="bed"
@@ -39,6 +40,7 @@ const PropertyRoomsForm: React.FC<PropertyLocationFormProps> = ({
           <div className="add_form_group">
             <label htmlFor="bath"><FaBath /> Bathrooms</label>
             <input
+            className='wide_rounded_input'
               type="number"
               id="bath"
               name="bath"
@@ -53,6 +55,7 @@ const PropertyRoomsForm: React.FC<PropertyLocationFormProps> = ({
           <div className="add_form_group">
             <label htmlFor="sqft"><FaRulerCombined />Total Square Footage</label>
             <input
+            className='wide_rounded_input'
               type="number"
               id="sqft"
               name="sqft"

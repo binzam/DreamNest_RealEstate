@@ -260,7 +260,6 @@
   margin-bottom: 0.5rem;
 }
 .wide_textarea {
-  width: 100%;
   padding: 0.5rem 1rem;
   font-size: 1rem;
   font-weight: 500;
@@ -268,10 +267,10 @@
   border: 1px solid #006986;
   border-radius: 10px;
   min-width: 100%;
+  max-width: 100%;
   min-height: 100px;
-  background-color: #ffffff;
-  height: 100px;
   max-height: 200px;
+  background-color: #ffffff;
 }
 .wide_textarea:focus {
   outline: none;

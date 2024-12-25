@@ -2,6 +2,7 @@ import { Property } from '../models/propertyModel.js';
 import { TourSchedule } from '../models/TourScheduleModel.js';
 import { sendEmail } from '../utils/notificationsUtil.js';
 import { categorizeProperties } from '../utils/propertyUtils.js';
+import path from 'path';
 
 const getProperties = async (req, res) => {
   try {
@@ -110,84 +111,29 @@ const schedulePropertyTour = async (req, res) => {
 
 const addProperty = async (req, res) => {
   try {
-    const {
-      name,
-      street,
-      city,
-      state,
-      country,
-      price,
-      bed,
-      bath,
-      sqft,
-      image,
-      photos,
-      detail,
-      category,
-      propertyFor,
-      propertyType,
-      latitude,
-      longitude,
-    } = req.body;
+    const propertyData = req.body;
+    const photos = req.files.map((file, index) => {
+      const filePath = path.join('uploads', file.filename);
+      const imageUrl = `${req.protocol}://${req.get('host')}/${filePath}`;
+      return {
+        title: propertyData[`photos${index}`].title,
+        image: imageUrl,
+      };
+    });
 
-    // Validate that the required fields are provided
-    if (
-      !name ||
-      !street ||
-      !city ||
-      !state ||
-      !country ||
-      !price ||
-      !bed ||
-      !bath ||
-      !sqft ||
-      !image ||
-      !latitude ||
-      !longitude ||
-      !category ||
-      !propertyFor ||
-      !propertyType ||
-      !detail
-    ) {
-      return res.status(400).json({ message: 'All fields are required' });
-    }
-
-    // Assuming the user is authenticated and the user's ID is in req.user._id
-    const owner = req.user._id; // This is how you access the authenticated user's ID
 
     const newProperty = new Property({
-      name,
-      street,
-      city,
-      state,
-      country,
-      price,
-      bed,
-      bath,
-      sqft,
-      image,
+      ...propertyData,
       photos,
-      detail,
-      category,
-      propertyFor,
-      propertyType,
-      owner,
-      latitude,
-      longitude,
     });
 
-    const savedProperty = await newProperty.save();
-
-    res.status(201).json({
-      message: 'Property added successfully',
-      property: savedProperty,
-    });
+    await newProperty.save();
+    res.status(201).json(newProperty);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Failed to add property', error });
   }
 };
-
 export {
   getProperties,
   getPropertyById,

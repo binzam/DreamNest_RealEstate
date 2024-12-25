@@ -12,29 +12,33 @@ import PropertyInfoForm from './AddPropertyForm/PropertyInfoForm';
 
 const AddProperty = () => {
   const [formData, setFormData] = useState<PropertyFormData>({
-    title: 'A Cozy 3 bedroom apartment',
+    title: '',
     address: {
-      street: '123 Main St',
-      city: 'Stockholm',
-      state: 'Stockholm',
-      country: 'Sweden',
-      latitude: 59.325180462950215,
-      longitude: 18.07158439781698,
+      street: '',
+      city: '',
+      state: '',
+      country: '',
+      latitude: 0,
+      longitude: 0,
     },
-    price: 120000,
-    bed: 5,
-    bath: 3,
-    sqft: 1200,
+    photos: [
+      { title: 'Main', image: null },
+      { title: 'Front', image: null },
+      { title: 'Side', image: null },
+      { title: 'Back', image: null },
+      { title: 'Bedroom 1', image: null },
+    ],
+    price: 0,
+    bed: 0,
+    bath: 0,
+    sqft: 0,
     propertyFor: 'sale',
-    propertyType: 'Condo',
-    detail:
-      'The house has 4 bedrooms and 2 bathrooms with ample rental potential. Spacious room sizes, separate laundry room, huge deck on rear, additional den/office room.',
-    yearBuilt: 2001,
-    currency: 'SEK',
-    features: ['pool', 'garage'],
+    propertyType: '',
+    detail: '',
+    yearBuilt: 0,
+    currency: 'USD',
+    features: ['', ''],
     isAvailable: true,
-    videoUrl: 'http://example.com/video-tour',
-    contactInfo: 'John Doe, 123-456-7890',
   });
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -49,17 +53,54 @@ const AddProperty = () => {
     setLoading(true);
     setError(null);
 
+    const formDataWithFiles = new FormData();
+    formDataWithFiles.append('title', formData.title);
+    formDataWithFiles.append('address[street]', formData.address.street);
+    formDataWithFiles.append('address[city]', formData.address.city);
+    formDataWithFiles.append('address[state]', formData.address.state);
+    formDataWithFiles.append('address[country]', formData.address.country);
+    formDataWithFiles.append(
+      'address[latitude]',
+      formData.address.latitude.toString()
+    );
+    formDataWithFiles.append(
+      'address[longitude]',
+      formData.address.longitude.toString()
+    );
+    formDataWithFiles.append('price', formData.price.toString());
+    formDataWithFiles.append('bed', formData.bed.toString());
+    formDataWithFiles.append('bath', formData.bath.toString());
+    formDataWithFiles.append('sqft', formData.sqft.toString());
+    formDataWithFiles.append('propertyFor', formData.propertyFor);
+    formDataWithFiles.append('propertyType', formData.propertyType);
+    formDataWithFiles.append('detail', formData.detail);
+    formDataWithFiles.append('yearBuilt', formData.yearBuilt.toString());
+    if (formData.currency) {
+      formDataWithFiles.append('currency', formData.currency);
+    }
+    formDataWithFiles.append('isAvailable', formData.isAvailable.toString());
+
+    formData.photos.forEach((photo, index) => {
+      if (photo.image) {
+        // make a new array for formDData.photos so that the indexes match the backend
+        formDataWithFiles.append(`photos${index}[title]`, photo.title);
+        formDataWithFiles.append('photos', photo.image);
+      }
+    });
+    
     try {
       const response = await axiosPrivate.post(
         '/properties/add-property',
-        formData
+        formDataWithFiles,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
       );
       console.log(response);
-    } catch (err) {
-      console.log(err);
-
-      setError('Failed to add property. Please try again.');
-      console.error(err);
+    } catch (error) {
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -78,7 +119,12 @@ const AddProperty = () => {
   };
 
   const progressBarWidth = (currentStep / 5) * 100;
-
+  const updateFormData = (newData: Partial<PropertyFormData>) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      ...newData,
+    }));
+  };
   return (
     <div className="add_property">
       <div className="add_pty_hdr">
@@ -95,26 +141,37 @@ const AddProperty = () => {
       <div className="add_pty_ctnt">
         <form onSubmit={handleSubmit} className="add_pty_form">
           {currentStep === 1 && (
-            <PropertyDetailForm formData={formData} setFormData={setFormData} />
+            <PropertyDetailForm
+              formData={formData}
+              updateFormData={updateFormData}
+            />
           )}
 
           {currentStep === 2 && (
             <PropertyLocationForm
               formData={formData}
-              setFormData={setFormData}
+              updateFormData={updateFormData}
             />
           )}
 
           {currentStep === 3 && (
-            <PropertyRoomsForm formData={formData} setFormData={setFormData} />
+            <PropertyRoomsForm
+              formData={formData}
+              updateFormData={updateFormData}
+            />
           )}
 
           {currentStep === 4 && (
-            <PropertyImageForm formData={formData} setFormData={setFormData} />
+            <PropertyInfoForm
+              formData={formData}
+              updateFormData={updateFormData}
+            />
           )}
-
           {currentStep === 5 && (
-            <PropertyInfoForm formData={formData} setFormData={setFormData} />
+            <PropertyImageForm
+              formData={formData}
+              updateFormData={updateFormData}
+            />
           )}
 
           <div className="add_pty_form_navigation">
@@ -138,6 +195,13 @@ const AddProperty = () => {
               </button>
             )}
           </div>
+          <button
+            type="submit"
+            onClick={(e) => handleSubmit(e)}
+            className="add_pty_submit"
+          >
+            Add Property
+          </button>
         </form>
       </div>
     </div>

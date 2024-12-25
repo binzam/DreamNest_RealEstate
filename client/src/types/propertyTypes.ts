@@ -14,7 +14,6 @@ export interface PropertyDataType {
   bath: number;
   sqft: number;
   uniqueId: string;
-  image: string;
   photos: PhotoType[];
   category: string;
   detail: string;
@@ -56,12 +55,8 @@ export interface PropertyFormData {
   bed: number;
   bath: number;
   sqft: number;
-  // image: string;
-  // photos: { title: string; image: string }[];
-  // photos: Array<{
-    // title: string;
-    // image: string;
-  // }>;
+  photos: { title: string; image: File | null}[];
+
   propertyFor: 'sale' | 'rent';
   propertyType: string;
   detail: string;

@@ -12,7 +12,10 @@ import path from 'path';
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
-app.use('/uploads', express.static(path.resolve('public/uploads')));
+
+
+app.use('/uploads', express.static(path.resolve('uploads')));
+
 const corsOptions = {
   origin: process.env.ALLOWED_ORIGIN,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],

@@ -3,6 +3,8 @@ import './Listings.css';
 import LoadingSkeleton from '../../components/Loading/LoadingSkeleton/LoadingSkeleton';
 import {  axiosPublic } from '../../api/axiosInstance';
 import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import {
   CategorizedProperty,
   PropertyDataType,

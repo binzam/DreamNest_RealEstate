@@ -7,11 +7,11 @@ import { FaTrailer } from 'react-icons/fa6';
 import { PropertyFormData } from '../../../types/propertyTypes';
 interface PropertyDetailFormProps {
   formData: PropertyFormData;
-  setFormData: React.Dispatch<React.SetStateAction<PropertyFormData>>;
+  updateFormData: (data: Partial<PropertyFormData>) => void;
 }
 const PropertyDetailForm: React.FC<PropertyDetailFormProps> = ({
   formData,
-  setFormData,
+  updateFormData,
 }) => {
   const propertyTypes = [
     { title: 'House', icon: <HiHomeModern /> },
@@ -24,14 +24,13 @@ const PropertyDetailForm: React.FC<PropertyDetailFormProps> = ({
   ];
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
+    updateFormData({
       [name]: value,
     });
   };
+
   const handlePropertyTypeSelect = (title: string) => {
-    setFormData({
-      ...formData,
+    updateFormData({
       propertyType: title,
     });
   };
@@ -67,6 +66,7 @@ const PropertyDetailForm: React.FC<PropertyDetailFormProps> = ({
           id="propertyFor"
           name="propertyFor"
           className="add_pty_select"
+          value={formData.propertyFor}
           onChange={handleChange}
         >
           <option value="">Listing Purpose</option>

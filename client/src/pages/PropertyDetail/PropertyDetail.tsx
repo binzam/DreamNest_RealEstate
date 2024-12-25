@@ -40,9 +40,7 @@ const PropertyDetail = () => {
     return <p>Property not found.</p>;
   }
   const {
-    street,
-    city,
-    state,
+    address ,
     price,
     bed,
     bath,
@@ -51,7 +49,7 @@ const PropertyDetail = () => {
     detail,
     category,
   } = property;
-
+  const { street, state, city,  } = address;
   const openModal = (image: string) => {
     setModalImage(image);
     setIsImgModalOpen(true);
@@ -85,7 +83,7 @@ const PropertyDetail = () => {
           {photos.length > 0 && (
             <img
               src={
-                photos.find((photo) => photo.title === 'front')?.image ||
+                // photos.find((photo) => photo.title === 'front')?.image ||
                 photos[0].image
               }
               alt="Front view"

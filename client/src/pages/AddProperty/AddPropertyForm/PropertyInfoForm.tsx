@@ -2,11 +2,12 @@ import React from 'react';
 import { PropertyFormData } from '../../../types/propertyTypes';
 interface PropertyInfoFormProps {
   formData: PropertyFormData;
-  setFormData: React.Dispatch<React.SetStateAction<PropertyFormData>>;
+  updateFormData: (data: Partial<PropertyFormData>) => void;
 }
+
 const PropertyInfoForm: React.FC<PropertyInfoFormProps> = ({
   formData,
-  setFormData,
+  updateFormData,
 }) => {
   const handleChange = (
     e: React.ChangeEvent<
@@ -15,12 +16,13 @@ const PropertyInfoForm: React.FC<PropertyInfoFormProps> = ({
   ) => {
     const { name, value, type } = e.target;
     if (type === 'checkbox' && e.target instanceof HTMLInputElement) {
-      setFormData({
+      const { checked } = e.target;
+      updateFormData({
         ...formData,
-        [name]: e.target.checked,
+        [name]: checked,
       });
     } else {
-      setFormData({
+      updateFormData({
         ...formData,
         [name]: value,
       });
@@ -31,7 +33,7 @@ const PropertyInfoForm: React.FC<PropertyInfoFormProps> = ({
       <legend>Property Lisitng Information</legend>
       <div className="pty_ttl_detail_inputs">
         <div className="add_form_group">
-          <label htmlFor="name" className="pty_ttl_label">
+          <label htmlFor="title" className="pty_ttl_label">
             Write a short title for your property.
             <br />
             <small>Make the title short and descriptive for the viewers.</small>
@@ -39,8 +41,8 @@ const PropertyInfoForm: React.FC<PropertyInfoFormProps> = ({
           <input
             className="wide_rounded_input"
             type="text"
-            id="name"
-            name="name"
+            id="title"
+            name="title"
             value={formData.title}
             onChange={handleChange}
             placeholder='example: "3 bedroom apartment with a beautiful view"'

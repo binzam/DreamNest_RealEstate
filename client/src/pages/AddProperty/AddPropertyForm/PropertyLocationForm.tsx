@@ -16,11 +16,12 @@ import ErrorDisplay from '../../../components/ErrorDisplay';
 import { PropertyFormData } from '../../../types/propertyTypes';
 interface PropertyLocationFormProps {
   formData: PropertyFormData;
-  setFormData: React.Dispatch<React.SetStateAction<PropertyFormData>>;
+  updateFormData: (data: Partial<PropertyFormData>) => void;
 }
+
 const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
   formData,
-  setFormData,
+  updateFormData,
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>('');
@@ -30,11 +31,14 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
     iconSize: [38, 38],
   });
   const { street, city, state, country } = formData.address;
+
   const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
+    updateFormData({
+      address: {
+        ...formData.address,
+        [name]: value,
+      },
     });
   };
   const confirmAddress = async () => {
@@ -52,8 +56,7 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
 
         const location = response.data[0];
         if (location) {
-          setFormData({
-            ...formData,
+          updateFormData({
             address: {
               ...formData.address,
               latitude: parseFloat(location.lat),
@@ -82,8 +85,7 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
     const map = useMapEvents({
       click(event) {
         const { lat, lng } = event.latlng;
-        setFormData({
-          ...formData,
+        updateFormData({
           address: {
             ...formData.address,
             latitude: lat,

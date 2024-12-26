@@ -16,7 +16,7 @@ const PropertyDetailForm: React.FC<PropertyDetailFormProps> = ({
   const propertyTypes = [
     { title: 'House', icon: <HiHomeModern /> },
     { title: 'Condo', icon: <LiaCitySolid /> },
-    { title: 'Townhome', icon: <MdCabin /> },
+    { title: 'Town house', icon: <MdCabin /> },
     { title: 'Multi family', icon: <BsFillHousesFill /> },
     { title: 'Farm', icon: <PiFarm /> },
     { title: 'Mobile', icon: <FaTrailer /> },
@@ -37,7 +37,7 @@ const PropertyDetailForm: React.FC<PropertyDetailFormProps> = ({
   return (
     <fieldset>
       <legend>Property Basic Details</legend>
-      <div className="add_form_group pty_type">
+      <div className="add_form_group add_pty_pty_type">
         <label htmlFor="propertyType">
           What type of property are you listing?
           <br />

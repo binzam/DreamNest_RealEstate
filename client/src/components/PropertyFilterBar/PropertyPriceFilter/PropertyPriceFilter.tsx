@@ -25,12 +25,12 @@ const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({
     () => [
       { display: 'No Min', value: 0 },
       { display: '$100K', value: 100000 },
-      { display: '$200K', value: 200000 },
       { display: '$300K', value: 300000 },
-      { display: '$400K', value: 400000 },
-      { display: '$500K', value: 500000 },
-      { display: '$600K', value: 600000 },
       { display: '$700K', value: 700000 },
+      { display: '$1M', value: 1000000 },
+      { display: '$2M', value: 2000000 },
+      { display: '$2.5M', value: 2500000 },
+      { display: '$3M', value: 3000000 },
     ],
     []
   );
@@ -38,17 +38,17 @@ const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({
   const maxValues = useMemo(
     () => [
       { display: 'No Max', value: Infinity },
-      { display: '$180K', value: 180000 },
-      { display: '$350K', value: 350000 },
-      { display: '$500K', value: 500000 },
-      { display: '$700K', value: 700000 },
-      { display: '$900K', value: 900000 },
+      { display: '$250K', value: 250000 },
+      { display: '$550K', value: 550000 },
       { display: '$1M', value: 1000000 },
-      { display: '$1.2M', value: 1200000 },
+      { display: '$2.5M', value: 2500000 },
+      { display: '$4M', value: 4000000 },
+      { display: '$7M', value: 7000000 },
+      { display: '$10M', value: 10000000 },
     ],
     []
   );
-  
+
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
   const toggleMinDropdown = () => setMinDropdownOpen((prev) => !prev);
   const toggleMaxDropdown = () => setMaxDropdownOpen((prev) => !prev);

@@ -5,10 +5,15 @@ export interface PhotoType {
 
 export interface PropertyDataType {
   _id: string;
-  street: string;
-  city: string;
-  state: string;
-  country: string;
+  owner: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    country: string;
+    longitude: number;
+    latitude: number;
+  };
   price: number;
   bed: number;
   bath: number;
@@ -18,7 +23,9 @@ export interface PropertyDataType {
   category: string;
   detail: string;
   propertyFor: string;
+  yearBuilt: number;
   propertyType: string;
+  title: string;
 }
 
 export interface PropertyCategoryType {
@@ -55,7 +62,7 @@ export interface PropertyFormData {
   bed: number;
   bath: number;
   sqft: number;
-  photos: { title: string; image: File | null}[];
+  photos: { title: string; image: File | null }[];
 
   propertyFor: 'sale' | 'rent';
   propertyType: string;

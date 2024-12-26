@@ -9,6 +9,17 @@ import { PropertyFormData } from '../../types/propertyTypes';
 import PropertyRoomsForm from './AddPropertyForm/PropertyRoomsForm';
 import PropertyImageForm from './AddPropertyForm/PropertyImageForm';
 import PropertyInfoForm from './AddPropertyForm/PropertyInfoForm';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { GridLoader } from 'react-spinners';
+import ErrorDisplay from '../../components/ErrorDisplay';
+const stepTitles = [
+  'Property Type',
+  'Property Location',
+  'Property Specs',
+  'Property Info',
+  'Property Images',
+];
 
 const AddProperty = () => {
   const [formData, setFormData] = useState<PropertyFormData>({
@@ -21,13 +32,7 @@ const AddProperty = () => {
       latitude: 0,
       longitude: 0,
     },
-    photos: [
-      { title: 'Main', image: null },
-      { title: 'Front', image: null },
-      { title: 'Side', image: null },
-      { title: 'Back', image: null },
-      { title: 'Bedroom 1', image: null },
-    ],
+    photos: [{ title: 'Main', image: null }],
     price: 0,
     bed: 0,
     bath: 0,
@@ -44,8 +49,7 @@ const AddProperty = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  console.log(formData);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -82,13 +86,15 @@ const AddProperty = () => {
 
     formData.photos.forEach((photo, index) => {
       if (photo.image) {
-        // make a new array for formDData.photos so that the indexes match the backend
         formDataWithFiles.append(`photos${index}[title]`, photo.title);
         formDataWithFiles.append('photos', photo.image);
       }
     });
-    
+    console.log(formData);
+
     try {
+      console.log(formDataWithFiles);
+
       const response = await axiosPrivate.post(
         '/properties/add-property',
         formDataWithFiles,
@@ -99,8 +105,23 @@ const AddProperty = () => {
         }
       );
       console.log(response);
+      if (response.status === 201) {
+        navigate('/my-properties', {
+          state: { message: 'Congratulations! Property added successfully!' },
+        });
+      }
     } catch (error) {
       console.log(error);
+
+      if (axios.isAxiosError(error)) {
+        if (error.response?.data?.message === 'Validation Error') {
+          return setError('Please fill all required fields');
+        }
+        return setError(
+          error.response?.data?.message || 'Failed to add Property'
+        );
+      }
+      setError('Something went wrong! Please try again.');
     } finally {
       setLoading(false);
     }
@@ -108,35 +129,58 @@ const AddProperty = () => {
 
   const nextStep = () => {
     if (currentStep < 5) {
-      setCurrentStep(currentStep + 1);
+      setCurrentStep((prev) => prev + 1);
     }
   };
 
   const prevStep = () => {
     if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
+      setCurrentStep((prev) => prev - 1);
     }
+    setError(null);
   };
+  console.log(formData);
 
-  const progressBarWidth = (currentStep / 5) * 100;
   const updateFormData = (newData: Partial<PropertyFormData>) => {
     setFormData((prevData) => ({
       ...prevData,
       ...newData,
     }));
+    setError(null);
   };
+
+  const progressBarWidth = (currentStep / 5) * 100;
   return (
     <div className="add_property">
+      {loading && (
+        <GridLoader
+          color="#13ccbb"
+          margin={40}
+          size={75}
+          className="add_pty_loading"
+        />
+      )}
       <div className="add_pty_hdr">
         <BackButton /> <h2>Add New Property</h2>
         <MdAddHomeWork className="add_icon" />
       </div>
-      {error && <div className="error">{error}</div>}
       <div className="progress-bar-container">
         <div
           className="progress-bar"
           style={{ width: `${progressBarWidth}%` }}
         ></div>
+        <div className="step-titles">
+          {stepTitles.map((title, index) => (
+            <span
+              key={index}
+              className={`step-title ${
+                currentStep === index + 1 ? 'active' : ''
+              }`}
+            >
+              {title}
+            </span>
+          ))}
+        </div>
       </div>
       <div className="add_pty_ctnt">
         <form onSubmit={handleSubmit} className="add_pty_form">
@@ -185,24 +229,24 @@ const AddProperty = () => {
                 Previous
               </button>
             )}
-            {currentStep === 5 ? (
-              <button type="submit" disabled={loading}>
-                {loading ? 'Submitting...' : 'Add Property'}
-              </button>
-            ) : (
-              <button className="next_btn" type="button" onClick={nextStep}>
+            {currentStep < 5 && (
+              <button
+                disabled={loading}
+                className="next_btn"
+                type="button"
+                onClick={nextStep}
+              >
                 Next
               </button>
             )}
+            {currentStep === 5 && (
+              <button type="submit" disabled={loading}>
+                {loading ? 'Submitting...' : 'Add Property'}
+              </button>
+            )}
           </div>
-          <button
-            type="submit"
-            onClick={(e) => handleSubmit(e)}
-            className="add_pty_submit"
-          >
-            Add Property
-          </button>
         </form>
+        {error && <ErrorDisplay message={error} />}
       </div>
     </div>
   );

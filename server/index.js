@@ -8,6 +8,8 @@ import authRoutes from './routes/authRoutes.js';
 import propertyRoutes from './routes/propertyRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import path from 'path';
+import { clearAllProperties } from './utils/clearAllProperties.js';
+import { uploadProperties } from './utils/propertiesDataExporter.js';
 
 const app = express();
 app.use(express.json());

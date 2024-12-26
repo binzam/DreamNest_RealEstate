@@ -3,7 +3,7 @@ import { FaUpload, FaXmark } from 'react-icons/fa6';
 
 interface PropertyImageFormProps {
   formData: {
-    photos: { title: string; image:  File | null }[];
+    photos: { title: string; image: File | null }[];
   };
 
   updateFormData: (
@@ -15,7 +15,6 @@ const PropertyImageForm: React.FC<PropertyImageFormProps> = ({
   formData,
   updateFormData,
 }) => {
-  
   const [previewPhotos, setPreviewPhotos] = useState<string[]>([]);
 
   const handleImageChange = (
@@ -56,9 +55,6 @@ const PropertyImageForm: React.FC<PropertyImageFormProps> = ({
     updateFormData({ photos: newPhotos });
     setPreviewPhotos([...previewPhotos, '']);
   };
-
-  console.log(formData);
-  console.log(previewPhotos);
 
   return (
     <fieldset>
@@ -113,12 +109,12 @@ const PropertyImageForm: React.FC<PropertyImageFormProps> = ({
                     {photo.image ? 'Change Image' : 'Choose Image'}
                   </label>
                   <input
+                  className='file_input'
                     type="file"
                     id={`image-${index}`}
                     name="image"
                     onChange={(e) => handleImageChange(index, e)}
                     accept="image/*"
-                    required
                   />
                   {previewPhotos[index] && (
                     <div className="pty_img_preview">

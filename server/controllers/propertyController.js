@@ -3,6 +3,7 @@ import { TourSchedule } from '../models/TourScheduleModel.js';
 import { sendEmail } from '../utils/notificationsUtil.js';
 import { categorizeProperties } from '../utils/propertyUtils.js';
 import path from 'path';
+import { validatePropertyData } from '../utils/propertyValidation.js';
 
 const getProperties = async (req, res) => {
   try {
@@ -111,27 +112,60 @@ const schedulePropertyTour = async (req, res) => {
 
 const addProperty = async (req, res) => {
   try {
-    const propertyData = req.body;
-    const photos = req.files.map((file, index) => {
-      const filePath = path.join('uploads', file.filename);
+    const { isValid, errors, value } = validatePropertyData(
+      req.body,
+      req.files
+    );
+
+    if (!isValid) {
+      return res.status(400).json({
+        message: 'Validation Error',
+        errors,
+      });
+    }
+
+    // Convert file paths into URLs
+    const photos = value.photos.map((photo, index) => {
+      const filePath = path.join('uploads', req.files[index].filename);
       const imageUrl = `${req.protocol}://${req.get('host')}/${filePath}`;
-      return {
-        title: propertyData[`photos${index}`].title,
-        image: imageUrl,
-      };
+      return { ...photo, image: imageUrl };
     });
 
-
+    // Create new property
+    const ownerId = req.user._id;
     const newProperty = new Property({
-      ...propertyData,
+      ...value,
       photos,
+      owner: ownerId,
     });
 
     await newProperty.save();
-    res.status(201).json(newProperty);
+
+    return res.status(201).json({
+      message: 'Property added successfully',
+      property: newProperty,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Failed to add property', error });
+  }
+};
+const getPropertiesOwnedByUser = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const properties = await Property.find({ owner: userId });
+
+    if (!properties || properties.length === 0) {
+      return res
+        .status(404)
+        .json({ message: 'No properties found for this user.' });
+    }
+
+    return res.status(200).json(properties);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Server error' });
   }
 };
 export {
@@ -140,4 +174,5 @@ export {
   getPropertiesByCategory,
   schedulePropertyTour,
   addProperty,
+  getPropertiesOwnedByUser,
 };

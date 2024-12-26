@@ -13,6 +13,12 @@
   gap: 1.4rem;
   /* position: relative; */
 }
+.pty_titl {
+  color: #333;
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
 .pty_page_contact_btn {
   border-radius: 100vw;
   border: 3px solid #000000;
@@ -274,6 +280,16 @@
 .pty_map {
   border: 1px solid #ddd;
   border-radius: 5px;
+  width: calc(100% - 640px);
+  position: relative;
+  height: 250px;
+  box-shadow: 2px 2px 2px #333;
+  overflow: hidden;
+}
+.add_pty_map_container {
+}
+.leaflet-container {
+  height: 100%;
 }
 .pty_map_hdr {
   display: flex;

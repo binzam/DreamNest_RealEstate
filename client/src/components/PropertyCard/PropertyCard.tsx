@@ -19,19 +19,9 @@ import {
 } from '../../store/slices/wishlistThunks';
 import { GridLoader } from 'react-spinners';
 const PropertyCard = ({ property }: { property: PropertyDataType }) => {
-  const {
-    _id,
-    image,
-    propertyFor,
-    price,
-    bed,
-    bath,
-    sqft,
-    street,
-    city,
-    state,
-  } = property;
-
+  const { _id, photos, propertyFor, price, bed, bath, sqft, address } =
+    property;
+  const { city, street, state } = address;
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { wishlist } = useSelector((state: RootState) => state.user);
@@ -39,6 +29,10 @@ const PropertyCard = ({ property }: { property: PropertyDataType }) => {
   const isAuthenticated = useSelector(
     (state: RootState) => state.user.isAuthenticated
   );
+  const userId = useSelector(
+    (state: RootState) => state.user.user?._id
+  );
+
   const isInWishlist = useMemo(
     () => wishlist.some((wishlistItem) => wishlistItem._id === _id),
     [wishlist, _id]
@@ -67,7 +61,7 @@ const PropertyCard = ({ property }: { property: PropertyDataType }) => {
   };
   return (
     <article className={`pty_box ${isInWishlist ? 'wishlisted' : ''}`}>
-       {loadingProperty === _id && (
+      {loadingProperty === _id && (
         <GridLoader
           color="#f38b8b"
           margin={30}
@@ -75,17 +69,25 @@ const PropertyCard = ({ property }: { property: PropertyDataType }) => {
           className="pty_box_loading"
         />
       )}
-      <button
-        className="wish_btn"
-        onClick={isInWishlist ? handleRemoveFromWish : handleAddToWish}
-      >
-        <FaHeart
-          className={isInWishlist ? 'icon_heart filled' : 'icon_heart'}
-        />
-      </button>
+      {property.owner !== userId && (
+        <button
+          className="wish_btn"
+          onClick={isInWishlist ? handleRemoveFromWish : handleAddToWish}
+        >
+          <FaHeart
+            className={isInWishlist ? 'icon_heart filled' : 'icon_heart'}
+          />
+        </button>
+      )}
       <Link to={`/property-detail/${_id}`}>
         <div className="pty_img">
-          <img width={400} height={250} src={image} alt="" loading="lazy" />
+          <img
+            width={400}
+            height={250}
+            src={photos[0].image}
+            alt=""
+            loading="lazy"
+          />
         </div>
       </Link>
       <div>

@@ -100,7 +100,7 @@ const Navbar = () => {
                   <Link
                     onClick={toggleDropdown}
                     className="usr_dd_link"
-                    to="/my-listings"
+                    to="/my-properties"
                   >
                     My Properties
                   </Link>

@@ -9,7 +9,7 @@ import {
 
 interface User {
   email: string;
-  firstName: string;
+  _id: string;
   role: string;
   profilePicture?: string;
 }

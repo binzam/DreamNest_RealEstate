@@ -38,9 +38,10 @@ const propertySchema = new Schema(
       type: String,
       enum: ['Available', 'Sold', 'Pending', 'Occupied', 'Unavailable'],
       default: 'Available',
+      required: true,
     },
-
-    discount: { type: Number, default: 0 },
+    yearBuilt: { type: Number, required: true },
+    discount: { type: Number, required: true, default: 0 },
   },
   {
     timestamps: true,

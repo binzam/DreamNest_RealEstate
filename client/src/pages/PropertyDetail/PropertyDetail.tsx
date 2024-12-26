@@ -9,6 +9,10 @@ import {
   FaRulerCombined,
   FaXmark,
 } from 'react-icons/fa6';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Icon } from 'leaflet';
+import LocationIcon from '../../assets/location-icon.png';
+import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from 'react';
 import { FaHome } from 'react-icons/fa';
 import { TbDimensions } from 'react-icons/tb';
@@ -30,7 +34,10 @@ const PropertyDetail = () => {
   const [isImgModalOpen, setIsImgModalOpen] = useState(false);
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState<string | null>(null);
-
+  const customIcon = new Icon({
+    iconUrl: LocationIcon,
+    iconSize: [38, 38],
+  });
   useEffect(() => {
     if (!property && id) {
       dispatch(fetchPropertyById(id));
@@ -40,16 +47,20 @@ const PropertyDetail = () => {
     return <p>Property not found.</p>;
   }
   const {
-    address ,
+    address,
     price,
     bed,
     bath,
+    yearBuilt,
+    // title,
     sqft,
     photos = [],
     detail,
     category,
+    propertyFor,
+    propertyType,
   } = property;
-  const { street, state, city,  } = address;
+  const { street, state, city, longitude, latitude } = address;
   const openModal = (image: string) => {
     setModalImage(image);
     setIsImgModalOpen(true);
@@ -74,6 +85,7 @@ const PropertyDetail = () => {
             </div>
           </div>
         </div>
+        {/* <div className="pty_titl">{title}</div> */}
         <button className="pty_page_contact_btn">Contact Seller</button>
         <ShareProperty propertyId={property._id} />
       </div>
@@ -90,7 +102,7 @@ const PropertyDetail = () => {
               loading="lazy"
               onClick={() => {
                 const frontPhoto = photos.find(
-                  (photo) => photo.title === 'front'
+                  (photo) => photo.title === 'main'
                 );
                 if (frontPhoto) {
                   openModal(frontPhoto.image);
@@ -121,7 +133,7 @@ const PropertyDetail = () => {
         <div className="pty_desc_main">
           <div className="pty_detail_price">
             <div className="pty_purpose">
-              <span className="dot"></span>House for Sell
+              <span className="dot"></span>House for {propertyFor}
             </div>
             <div className="pty_price">${price?.toLocaleString()}</div>
           </div>
@@ -148,21 +160,21 @@ const PropertyDetail = () => {
             <div className="pty_type">
               <FaHome />
               <div className="pty_detail_col">
-                <p>Single Family</p>
+                <p>{propertyType}</p>
                 <span>Property Type</span>
               </div>
             </div>
             <div className="pty_type">
               <FaHammer />
               <div className="pty_detail_col">
-                <p>1954</p>
+                <p>{yearBuilt}</p>
                 <span>Year Built</span>
               </div>
             </div>
             <div className="pty_type">
               <TbDimensions />
               <div className="pty_detail_col">
-                <p>$174</p>
+                <p>${(price / sqft).toFixed(1)}</p>
                 <span>Price per sqft</span>
               </div>
             </div>
@@ -193,18 +205,19 @@ const PropertyDetail = () => {
             </div>
           </div>
           <div className="pty_map">
-            <div className="pty_map_hdr">
+            {/* <div className="pty_map_hdr">
               <FaLocationDot className="icon_location" /> View on Google Maps
-            </div>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3316.6708991587166!2d-84.41467560446833!3d33.76916922076559!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f50499b8d2e28b%3A0x6b3ebde7a1b735b0!2s534%20English%20Ave%20NW%2C%20Atlanta%2C%20GA%2030318%2C%20USA!5e0!3m2!1sen!2set!4v1733268745109!5m2!1sen!2set"
-              width="300"
-              height="225"
-              style={{ border: 0 }}
-              allowFullScreen={true}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
+            </div> */}
+            <MapContainer
+              center={[latitude, longitude]}
+              zoom={13}
+              scrollWheelZoom={false}
+            >
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              <Marker icon={customIcon} position={[latitude, longitude]}>
+                <Popup>Property Location</Popup>
+              </Marker>
+            </MapContainer>
           </div>
         </div>
       </div>

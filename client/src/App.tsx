@@ -8,6 +8,7 @@ import Layout from './Layout/Layout';
 import Home from './pages/Home/Home';
 import Wishlist from './pages/Wishlist/Wishlist';
 import AddProperty from './pages/AddProperty/AddProperty';
+import MyProperties from './pages/MyProperties/MyProperties';
 
 const PropertyDetail = lazy(
   () => import('./pages/PropertyDetail/PropertyDetail')
@@ -21,7 +22,6 @@ const CategorisedListing = lazy(
   () => import('./pages/CategorisedListing/CategorisedListing')
 );
 const Listings = lazy(() => import('./pages/Listings/Listings'));
-const UserListings = lazy(() => import('./pages/UserListings/UserListings'));
 function App() {
   return (
     <BrowserRouter>
@@ -33,6 +33,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="add-property" element={<AddProperty />} />
           </Route>
+          
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="listings" element={<Listings />} />
@@ -42,8 +43,8 @@ function App() {
             <Route path="about" element={<About />} />
 
             <Route element={<ProtectedRoute />}>
-              <Route path="my-listings" element={<UserListings />} />
-            </Route>
+            <Route path="my-properties" element={<MyProperties />} />
+          </Route>
             <Route element={<ProtectedRoute />}>
               <Route path="wishlist" element={<Wishlist />} />
             </Route>

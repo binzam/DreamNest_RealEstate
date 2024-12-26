@@ -1,5 +1,5 @@
 export interface UserDataType {
-  firstName: string;
+  _id: string;
   email: string;
   role: string;
   profilePicture: string;

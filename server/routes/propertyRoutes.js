@@ -3,6 +3,7 @@ import {
   addProperty,
   getProperties,
   getPropertiesByCategory,
+  getPropertiesOwnedByUser,
   getPropertyById,
   schedulePropertyTour,
 } from '../controllers/propertyController.js';
@@ -44,7 +45,8 @@ const upload = multer({
 router.get('/list', getProperties);
 router.get('/list/categorized', getPropertiesByCategory); // should be defined frst or itll cause objid error
 router.get('/list/:id', getPropertyById);
-router.post('/schedule-tour', schedulePropertyTour);
+router.get('/my-properties', authenticateToken, getPropertiesOwnedByUser);
+router.post('/schedule-tour', authenticateToken, schedulePropertyTour);
 router.post(
   '/add-property',
   authenticateToken,

@@ -1,0 +1,17 @@
+.my_ptys_pge {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
+}
+.success-message{
+    color: green;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.my_ptys_grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+}

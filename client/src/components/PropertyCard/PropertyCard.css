@@ -75,7 +75,7 @@
   object-position: center;
 }
 .pty_box_body {
-  padding: 1rem 1rem 2rem;
+  padding: 1rem 1rem 0.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -105,6 +105,11 @@
   font-size: 1.2rem;
   font-weight: 800;
   color: #333;
+}
+.pty_price small {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #a5a5a5;
 }
 
 .pty_specs {
@@ -165,7 +170,6 @@
   right: 16px;
   border-radius: 100vw;
   border: 2px solid #000000;
-  /* height: 35px; */
   padding: 0.2rem 0.6rem;
   font-weight: 700;
   background-color: #ffffff;
@@ -179,4 +183,52 @@
   border: 2px solid rgb(0, 0, 0);
   background-color: #000000;
   color: #fff;
+}
+.pty_box_post_date {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: #000000;
+  font-weight: 700;
+  font-size: 0.9rem;
+  gap: 5px;
+}
+.owner_actions {
+  position: absolute;
+  width: 100%;
+  top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.owner_actions button {
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  width: 40%;
+}
+.edit_btn {
+  background-color: #000000b9;
+  color: #fff;
+  border: 2px solid #000000b9;
+}
+.del_btn {
+  background-color: #ff0000b9;
+  color: #fff;
+  border: 2px solid #ff0000b9;
+}
+.edit_btn:hover {
+  background-color: #000000;
+  border: 2px solid #000000;
+}
+.del_btn:hover {
+  background-color: #ff0000;
+  border: 2px solid #ff0000;
 }

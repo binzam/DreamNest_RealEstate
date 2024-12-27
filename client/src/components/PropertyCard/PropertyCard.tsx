@@ -1,6 +1,7 @@
 import {
   FaBath,
   FaBed,
+  FaDeleteLeft,
   FaHeart,
   FaLocationDot,
   FaRulerCombined,
@@ -18,9 +19,30 @@ import {
   removeFromWishlistThunk,
 } from '../../store/slices/wishlistThunks';
 import { GridLoader } from 'react-spinners';
-const PropertyCard = ({ property }: { property: PropertyDataType }) => {
-  const { _id, photos, propertyFor, price, bed, bath, sqft, address } =
-    property;
+import { formatDistance, subDays } from 'date-fns';
+import { MdOutlineBrowserUpdated } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
+interface PropertyCardProps {
+  property: PropertyDataType;
+  onEdit?: (id: string) => void;
+  onDelete?: (id: string) => void;
+}
+const PropertyCard: React.FC<PropertyCardProps> = ({
+  property,
+  onEdit,
+  onDelete,
+}) => {
+  const {
+    _id,
+    photos,
+    propertyFor,
+    price,
+    bed,
+    bath,
+    sqft,
+    address,
+    createdAt,
+  } = property;
   const { city, street, state } = address;
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
@@ -29,9 +51,7 @@ const PropertyCard = ({ property }: { property: PropertyDataType }) => {
   const isAuthenticated = useSelector(
     (state: RootState) => state.user.isAuthenticated
   );
-  const userId = useSelector(
-    (state: RootState) => state.user.user?._id
-  );
+  const userId = useSelector((state: RootState) => state.user.user?._id);
 
   const isInWishlist = useMemo(
     () => wishlist.some((wishlistItem) => wishlistItem._id === _id),
@@ -59,6 +79,7 @@ const PropertyCard = ({ property }: { property: PropertyDataType }) => {
       setLoadingProperty(null);
     });
   };
+  const formattedPrice = new Intl.NumberFormat().format(price);
   return (
     <article className={`pty_box ${isInWishlist ? 'wishlisted' : ''}`}>
       {loadingProperty === _id && (
@@ -79,6 +100,22 @@ const PropertyCard = ({ property }: { property: PropertyDataType }) => {
           />
         </button>
       )}
+      {property.owner === userId && (onEdit || onDelete) && (
+        <div className="owner_actions">
+          {onEdit && (
+            <button className="edit_btn" onClick={() => onEdit(_id)}>
+              <FaEdit />
+              Edit
+            </button>
+          )}
+          {onDelete && (
+            <button className="del_btn" onClick={() => onDelete(_id)}>
+              <FaDeleteLeft />
+              Delete
+            </button>
+          )}
+        </div>
+      )}
       <Link to={`/property-detail/${_id}`}>
         <div className="pty_img">
           <img
@@ -96,7 +133,11 @@ const PropertyCard = ({ property }: { property: PropertyDataType }) => {
             <div className="pty_purpose">
               <span className="dot"></span>Listing for {propertyFor}
             </div>
-            <div className="pty_price">${price?.toLocaleString()}</div>
+            {propertyFor === 'sale' ? (
+              <div className="pty_price">${formattedPrice}</div>
+            ) : (
+              <div className="pty_price">${formattedPrice} <small>/ monthly</small></div>
+            )}
             <div className="pty_specs">
               <div className="pty_spec">
                 <FaBed />
@@ -121,7 +162,16 @@ const PropertyCard = ({ property }: { property: PropertyDataType }) => {
                   </div>
                 </div>
               </div>
-              <button className="contact_btn">Contact Seller</button>
+              {property.owner !== userId && (
+                <button className="contact_btn">Contact Seller</button>
+              )}
+            </div>
+            <div className="pty_box_post_date">
+              <MdOutlineBrowserUpdated />
+              Posted{' '}
+              {formatDistance(subDays(new Date(createdAt), 3), new Date(), {
+                addSuffix: true,
+              })}
             </div>
           </div>
         </Link>

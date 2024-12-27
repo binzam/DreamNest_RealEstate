@@ -12,6 +12,7 @@ interface User {
   _id: string;
   role: string;
   profilePicture?: string;
+  firstName: string;
 }
 
 interface UserState {

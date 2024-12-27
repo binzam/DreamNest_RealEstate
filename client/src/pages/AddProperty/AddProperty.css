@@ -68,7 +68,7 @@
 .add_pty_ctnt {
   padding: 1rem 5rem 6rem;
   width: 100%;
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 105px);
   position: relative;
 }
 .add_pty_loading {
@@ -439,10 +439,38 @@ input.file_input {
   align-items: center;
 }
 .add_pty_form_navigation button {
-  padding: 0.5rem 1rem;
-  background-color: #00c9ff;
-  color: #ffffff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+.prev_btn {
+  background-color: #0e3b47;
+}
+.next_btn {
+  background-color: #065b00;
+  margin-left: auto;
+}
+.add_pty_form_navigation button.add_pty_btn{
+  padding: 0.5rem 2rem;
+  background-color: #00c9ff;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 2px dashed #006986;
+  border-radius: 100vw;
+  font-size: 1rem;
+  font-weight: 600;
+  width: fit-content;
+  color: #000000;
 }

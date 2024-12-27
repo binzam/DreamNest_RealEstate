@@ -4,4 +4,5 @@ export interface UserDataType {
   role: string;
   profilePicture: string;
   id: string;
+  firstName: string;
 }

@@ -71,7 +71,7 @@ const PropertyInfoForm: React.FC<PropertyInfoFormProps> = ({
               type="number"
               id="yearBuilt"
               name="yearBuilt"
-              value={formData.yearBuilt}
+              value={formData.yearBuilt !== 0 ? formData.yearBuilt : ''}
               onChange={handleChange}
               placeholder="Year built"
               required
@@ -79,15 +79,23 @@ const PropertyInfoForm: React.FC<PropertyInfoFormProps> = ({
           </div>
           <div className="add_price_curncy">
             <div className="add_form_group_split">
-              <label htmlFor="price">Property Price</label>
+              <label htmlFor="price">
+                {formData.propertyFor === 'sale'
+                  ? 'Enter total price'
+                  : 'Enter monthly rent'}
+              </label>
               <input
                 className="wide_rounded_input"
                 type="number"
                 id="price"
                 name="price"
-                value={formData.price}
+                value={formData.price !== 0 ? formData.price : ''}
                 onChange={handleChange}
-                placeholder="Asking price"
+                placeholder={
+                  formData.propertyFor === 'sale'
+                    ? 'Enter total price'
+                    : 'Enter monthly rent'
+                }
                 required
               />
             </div>

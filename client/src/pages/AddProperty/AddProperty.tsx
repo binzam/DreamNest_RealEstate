@@ -2,7 +2,7 @@ import './AddProperty.css';
 import React, { useState } from 'react';
 import { axiosPrivate } from '../../api/axiosInstance';
 import BackButton from '../../components/BackButton/BackButton';
-import { MdAddHomeWork } from 'react-icons/md';
+import { MdAddHomeWork, MdOutlineDoneOutline } from 'react-icons/md';
 import PropertyDetailForm from './AddPropertyForm/PropertyDetailForm';
 import PropertyLocationForm from './AddPropertyForm/PropertyLocationForm';
 import { PropertyFormData } from '../../types/propertyTypes';
@@ -13,6 +13,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { GridLoader } from 'react-spinners';
 import ErrorDisplay from '../../components/ErrorDisplay';
+import { GrLinkNext, GrLinkPrevious } from 'react-icons/gr';
 const stepTitles = [
   'Property Type',
   'Property Location',
@@ -226,7 +227,7 @@ const AddProperty = () => {
                 onClick={prevStep}
                 disabled={currentStep === 1}
               >
-                Previous
+                 <GrLinkPrevious />Previous
               </button>
             )}
             {currentStep < 5 && (
@@ -236,12 +237,12 @@ const AddProperty = () => {
                 type="button"
                 onClick={nextStep}
               >
-                Next
+                Next <GrLinkNext />
               </button>
             )}
             {currentStep === 5 && (
-              <button type="submit" disabled={loading}>
-                {loading ? 'Submitting...' : 'Add Property'}
+              <button className='add_pty_btn' type="submit" disabled={loading}>
+             <MdOutlineDoneOutline />   {loading ? 'Adding Property...' : 'Add Property'}
               </button>
             )}
           </div>

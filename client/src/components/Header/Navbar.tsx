@@ -25,14 +25,13 @@ const Navbar = () => {
     setIsDropdownOpen(false);
     toggleDropdown();
     await logoutUser();
-
   };
   return (
     <nav className="navbar">
       <ul className="nav_list">
         <li>
           <Link className="hdr_nav_link add" to="/add-property">
-          <BsHouseAdd className='add_icon' />   Add Property
+            <BsHouseAdd className="add_icon" /> Add Property
           </Link>
         </li>
         <li>
@@ -51,6 +50,13 @@ const Navbar = () => {
             Listings
           </Link>
         </li>
+        {isAuthenticated && (
+          <li>
+            <Link className="hdr_nav_link" to="/my-properties">
+              My Properties
+            </Link>
+          </li>
+        )}
       </ul>
       {isAuthenticated ? (
         <div className="hdr_user_profile_wl">

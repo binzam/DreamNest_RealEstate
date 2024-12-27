@@ -4,6 +4,7 @@ import { sendEmail } from '../utils/notificationsUtil.js';
 import { categorizeProperties } from '../utils/propertyUtils.js';
 import path from 'path';
 import { validatePropertyData } from '../utils/propertyValidation.js';
+import { log } from 'console';
 
 const getProperties = async (req, res) => {
   try {
@@ -168,6 +169,56 @@ const getPropertiesOwnedByUser = async (req, res) => {
     return res.status(500).json({ message: 'Server error' });
   }
 };
+const updateProperty = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+    const property = await Property.findById(id);
+    if (!property) {
+      return res.status(404).json({ message: 'Property not found' });
+    }
+
+    if (property.owner.toString() !== req.user._id.toString()) {
+      return res
+        .status(403)
+        .json({ message: 'Unauthorized to update this property' });
+    }
+
+    const updatedProperty = await Property.findByIdAndUpdate(id, updates, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json(updatedProperty);
+  } catch (error) {
+    console.error('Error updating property:', error);
+    res.status(500).json({ message: 'Failed to update property' });
+  }
+};
+const deleteProperty = async (req, res) => {
+  try {
+    const { id } = req.params; // Get property ID from request params
+
+    // Find the property by its ID
+    const property = await Property.findById(id);
+    if (!property) {
+      return res.status(404).json({ message: 'Property not found' });
+    }
+
+    if (property.owner.toString() !== req.user.id) {
+      return res
+        .status(403)
+        .json({ message: 'Unauthorized to delete this property' });
+    }
+
+    await Property.findByIdAndDelete(id);
+
+    res.status(200).json({ message: 'Property deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting property:', error);
+    res.status(500).json({ message: 'Failed to delete property' }); // Handle errors
+  }
+};
 export {
   getProperties,
   getPropertyById,
@@ -175,4 +226,6 @@ export {
   schedulePropertyTour,
   addProperty,
   getPropertiesOwnedByUser,
+  updateProperty,
+  deleteProperty,
 };

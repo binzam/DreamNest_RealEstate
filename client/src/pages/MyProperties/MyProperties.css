@@ -3,15 +3,37 @@
   min-height: 100vh;
   background-color: #fff;
 }
-.success-message{
-    color: green;
-    font-size: 1.5rem;
-    text-align: center;
+.success-message {
+  color: green;
+  font-size: 1.5rem;
+  text-align: center;
+}
+.my_ptys_hdr {
+  background-color: black;
+  padding: 1rem 5rem;
+  text-align: center;
+}
+.my_ptys_hdr h1 {
+  font-size: 1.5rem;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+.my_ptys_hdr p {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: #ccc;
+}
+.my_ptys_contnt {
+  padding: 1rem 5rem;
 }
 
-.my_ptys_grid{
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
+.my_ptys_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+.my_ptys_grid .pty_box {
+  width: 100%;
 }

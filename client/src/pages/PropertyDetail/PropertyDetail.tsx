@@ -23,14 +23,21 @@ import { AppDispatch, RootState } from '../../store/store';
 import { fetchPropertyById } from '../../store/slices/propertySlice';
 import ShareProperty from '../../components/ShareProperty/ShareProperty';
 import ScheduleTourModal from '../../components/ScheduleTourModal/ScheduleTourModal';
+import { formatDistance, subDays } from 'date-fns';
+import { MdOutlineBrowserUpdated } from 'react-icons/md';
+import { PropertyDataType } from '../../types/propertyTypes';
+import { GridLoader } from 'react-spinners';
 const PropertyDetail = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const { isAuthenticated } = useSelector((state: RootState) => state.user);
-
-  const property = useSelector((state: RootState) =>
-    id ? state.properties.propertiesById[id] : null
+  const { propertiesById, loading } = useSelector(
+    (state: RootState) => state.properties
   );
+  // const property = useSelector((state: RootState) =>
+  //   id ? state.properties.propertiesById[id] : null
+  // );
+  const property = id ? propertiesById[id] : null;
   const [isImgModalOpen, setIsImgModalOpen] = useState(false);
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState<string | null>(null);
@@ -43,10 +50,22 @@ const PropertyDetail = () => {
       dispatch(fetchPropertyById(id));
     }
   }, [dispatch, id, property]);
-  if (!property) {
+  if (!loading && !property) {
     return <p>Property not found.</p>;
   }
+  if (!property) {
+    return null; 
+  }
+  if (loading) {
+   return <GridLoader
+      color="#13ccbb"
+      margin={10}
+      size={25}
+      className="listing_p_loading"
+    />;
+  }
   const {
+    _id,
     address,
     price,
     bed,
@@ -59,7 +78,8 @@ const PropertyDetail = () => {
     category,
     propertyFor,
     propertyType,
-  } = property;
+    createdAt,
+  } = property as PropertyDataType;
   const { street, state, city, longitude, latitude } = address;
   const openModal = (image: string) => {
     setModalImage(image);
@@ -87,7 +107,7 @@ const PropertyDetail = () => {
         </div>
         {/* <div className="pty_titl">{title}</div> */}
         <button className="pty_page_contact_btn">Contact Seller</button>
-        <ShareProperty propertyId={property._id} />
+        <ShareProperty propertyId={_id} />
       </div>
       <div className="property_photos">
         <div className="main_photo">
@@ -130,6 +150,14 @@ const PropertyDetail = () => {
         </div>
       </div>
       <div className="property_descp">
+        <div className="pty_post_date">
+          <MdOutlineBrowserUpdated />
+          Posted{' '}
+          {formatDistance(subDays(new Date(createdAt), 3), new Date(), {
+            addSuffix: true,
+          })}
+        </div>
+
         <div className="pty_desc_main">
           <div className="pty_detail_price">
             <div className="pty_purpose">
@@ -238,7 +266,7 @@ const PropertyDetail = () => {
       )}
       {isScheduleModalOpen && (
         <ScheduleTourModal
-          propertyId={property._id}
+          propertyId={_id}
           onClose={() => setIsScheduleModalOpen(false)}
         />
       )}

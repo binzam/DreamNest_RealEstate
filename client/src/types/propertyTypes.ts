@@ -26,6 +26,7 @@ export interface PropertyDataType {
   yearBuilt: number;
   propertyType: string;
   title: string;
+  createdAt: string;
 }
 
 export interface PropertyCategoryType {

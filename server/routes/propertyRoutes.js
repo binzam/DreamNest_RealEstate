@@ -6,6 +6,8 @@ import {
   getPropertiesOwnedByUser,
   getPropertyById,
   schedulePropertyTour,
+  updateProperty,
+  deleteProperty,
 } from '../controllers/propertyController.js';
 import authenticateToken from '../middleware/authenticateToken.js';
 import multer from 'multer';
@@ -46,6 +48,8 @@ router.get('/list', getProperties);
 router.get('/list/categorized', getPropertiesByCategory); // should be defined frst or itll cause objid error
 router.get('/list/:id', getPropertyById);
 router.get('/my-properties', authenticateToken, getPropertiesOwnedByUser);
+router.put('/list/:id/update', authenticateToken, updateProperty);
+router.delete('/list/:id/delete', authenticateToken, deleteProperty);
 router.post('/schedule-tour', authenticateToken, schedulePropertyTour);
 router.post(
   '/add-property',

@@ -1,0 +1,101 @@
+.edit_pty_page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
+}
+.edit_pty_hdr {
+  background-color: black;
+  padding: 1rem 5rem;
+  text-align: center;
+  color: #fff;
+  display: flex;
+  align-items: flex-start;
+  gap: 4rem;
+}
+.edit_pty_hdr .back_btn {
+  color: #dbdbdb;
+}
+.edit_pty_cntnt {
+  padding: 1rem 5rem 4rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+}
+.edit_pty_cntnt .pty_box {
+  width: 300px;
+  margin: 0;
+}
+.edit_property_form {
+  width: calc(100% - 300px);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.edit_form_cntnt {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.edit_frm_grp {
+  min-width: 400px;
+  max-width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0 auto;
+}
+.edit_frm_grp label {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #333;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 1px;
+  width: 100%;
+}
+.edit_frm_grp input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-weight: 500;
+  outline: none;
+}
+.edit_frm_grp input:focus {
+  border: 1px solid green;
+  outline: 1px solid green;
+}
+.edit_frm_grp textarea {
+  width: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 100px;
+  max-height: 160px;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-weight: 500;
+}
+.update_pty_btn {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: green;
+  color: #fff;
+  font-weight: 800;
+  border: none;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0px 2px 5px #333;
+}
+.update_pty_btn:hover {
+  background-color: #333;
+}

@@ -1,21 +1,40 @@
 import './MyProperties.css';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { axiosPrivate } from '../../api/axiosInstance';
 import { PropertyDataType } from '../../types/propertyTypes';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
 import axios from 'axios';
-import DeletePropertyModal from '../../components/DeletePropertyModal/DeletePropertyModal';
+import DeletePropertyModal from '../../components/Modals/DeletePropertyModal/DeletePropertyModal';
+import ErrorDisplay from '../../components/ErrorDisplay';
+import { GridLoader } from 'react-spinners';
+import { IoHome } from 'react-icons/io5';
+import { IoMdInformationCircleOutline } from 'react-icons/io';
 
 const MyProperties = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [properties, setProperties] = useState<PropertyDataType[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [propertyToDelete, setPropertyToDelete] = useState<string | null>(null);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const message = location.state?.message;
+  const [propertyToDelete, setPropertyToDelete] = useState({
+    id: '',
+    imageUrl: '',
+  });
+  const [message, setMessage] = useState<string | null>(
+    location.state?.message || null
+  );
+
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage(null);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
 
   useEffect(() => {
     const fetchUserPropeties = async () => {
@@ -23,7 +42,6 @@ const MyProperties = () => {
         setLoading(true);
         const response = await axiosPrivate.get('/properties/my-properties');
         console.log(response);
-
         setProperties(response.data);
       } catch (error) {
         console.log(error);
@@ -57,52 +75,76 @@ const MyProperties = () => {
         );
       }
       setError('Failed to delete property');
-      setIsModalOpen(false); 
+      setIsModalOpen(false);
     } finally {
       setLoading(false);
     }
   };
 
-  const openDeleteModal = (id: string) => {
-    setPropertyToDelete(id);
+  const openDeleteModal = (id: string, imageUrl: string) => {
+    setPropertyToDelete({ id, imageUrl });
     setIsModalOpen(true);
   };
 
   const closeDeleteModal = () => {
     setIsModalOpen(false);
-    setPropertyToDelete(null);
+    setPropertyToDelete({ id: "", imageUrl: "" });
   };
   return (
     <div className="my_ptys_pge">
-      <div>{message && <div className="success-message">{message}</div>}</div>
+      {message && <div className="success-message">{message}</div>}
       <div className="my_ptys_hdr">
-        <h1>Your Listings</h1>
-        <p>
-          Here you can view all the properties you have listed. You can edit or
-          delete them as you wish.
-        </p>
+        <div className="my_ptys_ttl">Manage your properties</div>
+        <div className="my_ptys_sub_ttl">
+          <IoMdInformationCircleOutline />
+
+          <p>
+            Here you can view all the properties you have listed. <br /> 
+            <strong>You can
+            edit or delete them as you wish.</strong> 
+          </p>
+        </div>
+        {properties && properties.length > 0 && (
+          <span className="my_pty_count">
+            {properties.length}
+            <IoHome />
+          </span>
+        )}
       </div>
       <div className="my_ptys_contnt">
-        <h2>You have listed {properties.length} Properties</h2>
-        <div className="my_ptys_grid">
-          {properties.length > 0
-            ? properties.map((property) => (
-                <PropertyCard
-                  key={property._id}
-                  property={property}
-                  onEdit={handleEdit}
-                  onDelete={() => openDeleteModal(property._id)} 
-                />
-              ))
-            : !loading && <p>No properties found.</p>}
-        </div>
+        {loading ? (
+          <GridLoader
+            color="#13ccbb"
+            margin={40}
+            size={55}
+            className="add_pty_loading"
+          />
+        ) : error ? (
+          <ErrorDisplay message={error} />
+        ) : properties.length > 0 ? (
+          <div className="my_ptys_grid">
+            {properties.map((property) => (
+              <PropertyCard
+                key={property._id}
+                property={property}
+                onEdit={handleEdit}
+                onDelete={() =>
+                  openDeleteModal(property._id, property.photos[0].image)
+                }
+              />
+            ))}
+          </div>
+        ) : (
+          <Link className="add_pty_link" to="/add-property">
+            Add Property
+          </Link>
+        )}
       </div>
-      {loading && <div>Loading properties...</div>}
-      {error && <div className="error-message">{error}</div>}
       <DeletePropertyModal
         isOpen={isModalOpen}
         onClose={closeDeleteModal}
-        onConfirm={() => handleDelete(propertyToDelete!)}
+        onConfirm={() => handleDelete(propertyToDelete.id)}
+        imageUrl={propertyToDelete.imageUrl}
       />
     </div>
   );

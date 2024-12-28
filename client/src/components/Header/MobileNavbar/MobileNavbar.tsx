@@ -21,13 +21,13 @@ const MobileNavbar = ({ onCloseModal }: MobileNavbarProps) => {
               <Link
                 onClick={onCloseModal}
                 className="mob_nav_link"
-                to={'/listings/for-sale'}
+                to={'/listings/sale'}
               >
                 Buy
               </Link>
             </div>
             <div>
-              <Link onClick={onCloseModal} className="mob_nav_link" to={'/'}>
+              <Link onClick={onCloseModal} className="mob_nav_link" to={'/add-property'}>
                 Sell
               </Link>
             </div>
@@ -41,8 +41,8 @@ const MobileNavbar = ({ onCloseModal }: MobileNavbarProps) => {
               </Link>
             </div>
             <div>
-              <Link onClick={onCloseModal} className="mob_nav_link" to={'/'}>
-                Properties
+              <Link onClick={onCloseModal} className="mob_nav_link" to={'/my-properties'}>
+               My Properties
               </Link>
             </div>
             <div>

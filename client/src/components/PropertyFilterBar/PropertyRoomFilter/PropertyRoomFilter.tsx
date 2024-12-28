@@ -42,6 +42,7 @@ const PropertyRoomFilter: React.FC<PropertyRoomsFilterProps> = ({
     bathroomMin: 0,
     bathroomMax: 0,
   });
+console.log(selectedValues);
 
   const [displayText, setDisplayText] = useState('Rooms');
   const [isRangeSelected, setIsRangeSelected] = useState(false);
@@ -122,7 +123,6 @@ const PropertyRoomFilter: React.FC<PropertyRoomsFilterProps> = ({
       >
         <span className="room_sorting_btn_txt">{displayText}</span>
         <span className="room_btn_icon">
-          {/* {Object.values(selectedValues).some((value) => value) ? ( */}
           {isRangeSelected ? (
             <span className="clear_room_btn" onClick={clearSelection}>
               <FaXmark className="icon_clear" />

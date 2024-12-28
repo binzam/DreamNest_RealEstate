@@ -13,18 +13,23 @@ type PropertyFilterBarProps = {
     bathroomMax: number
   ) => void;
   onPropertyTypeChange: (propertyType: string) => void;
+  type?: string;
 };
 
 const PropertyFilterBar: React.FC<PropertyFilterBarProps> = ({
   onPriceRangeChange,
   onRoomsRangeChange,
   onPropertyTypeChange,
+  type,
 }) => {
   return (
     <div className="sorting_bar">
       <div className="sorting_bar_comps">
         <PropertySearch />
-        <PropertyPriceFilter onPriceRangeChange={onPriceRangeChange} />
+        <PropertyPriceFilter
+          onPriceRangeChange={onPriceRangeChange}
+          type={type}
+        />
         <PropertyTypeFilter onPropertyTypeChange={onPropertyTypeChange} />
         <PropertyRoomFilter onRoomsRangeChange={onRoomsRangeChange} />
       </div>

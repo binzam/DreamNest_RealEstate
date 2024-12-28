@@ -39,7 +39,10 @@ const ShareProperty = ({ propertyId }: SharePropertyProps) => {
 
   return (
     <div className="share_pty">
-      <button className="share_btn" onClick={() => setIsOpen((prev) => !prev)}>
+      <button
+        className={`share_btn ${isOpen ? 'open' : ''}`}
+        onClick={() => setIsOpen((prev) => !prev)}
+      >
         Share Property <FaShare />
       </button>
       {isOpen && (

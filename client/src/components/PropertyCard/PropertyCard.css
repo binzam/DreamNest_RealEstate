@@ -37,7 +37,10 @@
   justify-content: center;
   border: 2px solid #ffffff;
 }
-
+.wish_btn.filled {
+  background-color: rgb(255, 255, 255);
+  border: 2px solid red;
+}
 .icon_heart {
   width: 24px;
   height: 24px;
@@ -109,7 +112,7 @@
 .pty_price small {
   font-size: 0.7rem;
   font-weight: 500;
-  color: #a5a5a5;
+  color: #8f8f8f;
 }
 
 .pty_specs {
@@ -163,16 +166,17 @@
   font-weight: 500;
   display: flex;
   align-items: center;
+  text-transform: capitalize;
 }
 .contact_btn {
   position: absolute;
   top: 185px;
   right: 16px;
   border-radius: 100vw;
-  border: 2px solid #000000;
-  padding: 0.2rem 0.6rem;
+  border: 2px dashed #000000;
+  padding: 0.4rem 0.6rem;
   font-weight: 700;
-  background-color: #ffffff;
+  background-color: #ffffffda;
   color: #333;
   text-align: center;
   font-size: 0.8rem;

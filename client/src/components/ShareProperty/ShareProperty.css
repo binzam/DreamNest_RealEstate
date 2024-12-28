@@ -2,20 +2,25 @@
   position: relative;
 }
 .share_btn {
-  background-color: #000000;
-  color: white;
-  padding: 0.3rem 1.2rem;
+  background-color: #13ccbb;
+  color: rgb(255, 255, 255);
+  padding: 0.5rem 2rem;
   border: none;
   cursor: pointer;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 0.9rem;
+  font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 6px;
-  /* border-radius: 100vw; */
+  justify-content: center;
+  vertical-align: middle;
+  gap: 5px;
+  border-radius: 100vw;
+  border: 1px solid #0df5de;
 }
-
+.share_btn.open{
+  border: 1px solid #007267;
+  background-color: #007267;
+}
 .share_buttons {
   margin-top: 10px;
   z-index: 3;
@@ -30,16 +35,17 @@
 
 .share_buttons button {
   background-color: #ffffff;
-  border: 1px solid #ddd;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 5px;
   cursor: pointer;
   width: 30px;
   height: 30px;
-  font-size: 20px;
+  font-size: 1.2rem;
+  border: 1px solid #007267;
+
   transition: background-color 0.3s;
 }
 

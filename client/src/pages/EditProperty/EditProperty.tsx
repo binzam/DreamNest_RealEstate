@@ -7,6 +7,7 @@ import BackButton from '../../components/BackButton/BackButton';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
 import { MdOutlineBrowserUpdated } from 'react-icons/md';
 import axios from 'axios';
+import { GridLoader } from 'react-spinners';
 const EditProperty = () => {
   const { id } = useParams<{ id: string }>();
   const [property, setProperty] = useState<PropertyDataType | null>(null);
@@ -86,7 +87,16 @@ const EditProperty = () => {
     }));
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <GridLoader
+        color="#13ccbb"
+        margin={10}
+        size={25}
+        className="listing_p_loading"
+      />
+    );
+  }
   if (error) return <div>{error}</div>;
 
   return (

@@ -51,6 +51,7 @@ const PropertyList = () => {
     bathroomMin: number,
     bathroomMax: number
   ) => {
+    
     setRoomsRange({ bedroomMin, bedroomMax, bathroomMin, bathroomMax });
     updateSearchParams({ bedroomMin, bedroomMax, bathroomMin, bathroomMax });
   };
@@ -114,6 +115,7 @@ const PropertyList = () => {
         onPriceRangeChange={handlePriceRangeChange}
         onRoomsRangeChange={handleRoomsRangeChange}
         onPropertyTypeChange={handlePropertyTypeChange}
+        type={type}
       />
 
       <SortingControl

@@ -159,8 +159,8 @@ const getPropertiesOwnedByUser = async (req, res) => {
 
     if (!properties || properties.length === 0) {
       return res
-        .status(404)
-        .json({ message: 'No properties found for this user.' });
+        .status(200)
+        .json([]);
     }
 
     return res.status(200).json(properties);

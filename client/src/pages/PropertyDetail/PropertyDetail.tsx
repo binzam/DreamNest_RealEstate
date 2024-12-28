@@ -7,7 +7,6 @@ import {
   FaHammer,
   FaLocationDot,
   FaRulerCombined,
-  FaXmark,
 } from 'react-icons/fa6';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { Icon } from 'leaflet';
@@ -22,11 +21,13 @@ import { useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import { fetchPropertyById } from '../../store/slices/propertySlice';
 import ShareProperty from '../../components/ShareProperty/ShareProperty';
-import ScheduleTourModal from '../../components/ScheduleTourModal/ScheduleTourModal';
+import ScheduleTourModal from '../../components/Modals/ScheduleTourModal/ScheduleTourModal';
 import { formatDistance, subDays } from 'date-fns';
 import { MdOutlineBrowserUpdated } from 'react-icons/md';
 import { PropertyDataType } from '../../types/propertyTypes';
 import { GridLoader } from 'react-spinners';
+import ImagePreviewModal from '../../components/Modals/ImagePreviewModal/ImagePreviewModal';
+import ContactModal from '../../components/Modals/ContactModal/ContactModal';
 const PropertyDetail = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
@@ -41,6 +42,7 @@ const PropertyDetail = () => {
   const [isImgModalOpen, setIsImgModalOpen] = useState(false);
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState<string | null>(null);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const customIcon = new Icon({
     iconUrl: LocationIcon,
     iconSize: [38, 38],
@@ -54,16 +56,9 @@ const PropertyDetail = () => {
     return <p>Property not found.</p>;
   }
   if (!property) {
-    return null; 
+    return null;
   }
-  if (loading) {
-   return <GridLoader
-      color="#13ccbb"
-      margin={10}
-      size={25}
-      className="listing_p_loading"
-    />;
-  }
+
   const {
     _id,
     address,
@@ -75,7 +70,6 @@ const PropertyDetail = () => {
     sqft,
     photos = [],
     detail,
-    category,
     propertyFor,
     propertyType,
     createdAt,
@@ -92,6 +86,16 @@ const PropertyDetail = () => {
     setIsImgModalOpen(false);
     setModalImage(null);
   };
+  if (!property || loading) {
+    return (
+      <GridLoader
+        color="#13ccbb"
+        margin={10}
+        size={25}
+        className="listing_p_loading"
+      />
+    );
+  }
   return (
     <div className="property_detail">
       <BackButton />
@@ -106,7 +110,7 @@ const PropertyDetail = () => {
           </div>
         </div>
         {/* <div className="pty_titl">{title}</div> */}
-        <button className="pty_page_contact_btn">Contact Seller</button>
+
         <ShareProperty propertyId={_id} />
       </div>
       <div className="property_photos">
@@ -115,7 +119,7 @@ const PropertyDetail = () => {
           {photos.length > 0 && (
             <img
               src={
-                // photos.find((photo) => photo.title === 'front')?.image ||
+                photos.find((photo) => photo.title === 'main')?.image ||
                 photos[0].image
               }
               alt="Front view"
@@ -182,6 +186,12 @@ const PropertyDetail = () => {
               sqft
             </div>
           </div>
+          <button
+            className="pty_page_contact_btn"
+            onClick={() => setIsContactModalOpen(true)}
+          >
+            Contact {propertyFor === 'rent' ? ' Owner' : ' Seller'}
+          </button>
         </div>
         <div className="pty_desc_second">
           <div className="pty_declars">
@@ -221,7 +231,12 @@ const PropertyDetail = () => {
               <p>{detail}</p>
             </div>
             <div className="pty_actions">
-              <button className="pty_actn_btn">Ask a Question</button>
+              <button
+                className="pty_actn_btn"
+                onClick={() => setIsContactModalOpen(true)}
+              >
+                Ask a Question
+              </button>
               {isAuthenticated && (
                 <button
                   className="pty_actn_btn"
@@ -233,9 +248,6 @@ const PropertyDetail = () => {
             </div>
           </div>
           <div className="pty_map">
-            {/* <div className="pty_map_hdr">
-              <FaLocationDot className="icon_location" /> View on Google Maps
-            </div> */}
             <MapContainer
               center={[latitude, longitude]}
               zoom={13}
@@ -250,19 +262,7 @@ const PropertyDetail = () => {
         </div>
       </div>
       {isImgModalOpen && modalImage && (
-        <div className="pty_img_modal">
-          <div className="pty_img_modal_content">
-            <button className="close_button" onClick={closeModal}>
-              <FaXmark />
-            </button>
-            <img
-              src={modalImage!}
-              alt="Enlarged view"
-              className="modal_image"
-              loading="lazy"
-            />
-          </div>
-        </div>
+        <ImagePreviewModal imageUrl={modalImage} onClose={closeModal} />
       )}
       {isScheduleModalOpen && (
         <ScheduleTourModal
@@ -270,7 +270,17 @@ const PropertyDetail = () => {
           onClose={() => setIsScheduleModalOpen(false)}
         />
       )}
-      <PropertySlider title="Similar Homes" propertyCategory={category} />
+      {isContactModalOpen && (
+        <ContactModal
+          propertyImage={photos[0].image}
+          propertyAddress={`${address.street} ${address.city}, ${address.state}`}
+          onClose={() => setIsContactModalOpen(false)}
+        />
+      )}
+      <PropertySlider
+        title={`Similar Listings for ${propertyFor}`}
+        propertyFor={propertyFor}
+      />
     </div>
   );
 };

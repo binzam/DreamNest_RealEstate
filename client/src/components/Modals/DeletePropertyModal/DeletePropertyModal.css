@@ -1,0 +1,80 @@
+/* Modal background overlay */
+.del_pty_modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1200;
+}
+
+.del_modal_content {
+  background-color: white;
+  padding: 1rem 1rem;
+  border-radius: 8px;
+  width: 450px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+.del_modal_content svg {
+  width: 50px;
+  height: 50px;
+  fill: #f44336;
+  margin: 0 auto;
+}
+.del_modal_content h2 {
+  text-transform: uppercase;
+  line-height: 1;
+  color: #333;
+  font-size: 2rem;
+}
+.del_pty_img {
+  width: 100%;
+  height: 250px;
+  border: 2px dashed red;
+  margin: 1rem auto;
+}
+.del_pty_img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.modal_actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+
+.modal_btn {
+  padding: 0.5rem 2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  width: 30%;
+}
+
+.modal_btn.cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+.modal_btn.confirm {
+  background-color: #4caf50;
+  color: white;
+}
+.modal_btn.confirm:hover {
+  background-color: #06a80b;
+}
+.modal_btn.cancel:hover {
+  background-color: red;
+}

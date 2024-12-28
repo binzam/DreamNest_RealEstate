@@ -3,6 +3,9 @@ import './ScheduleTourModal.css';
 import { FaXmark } from 'react-icons/fa6';
 import { GrScheduleNew } from 'react-icons/gr';
 import { AiOutlineSchedule } from 'react-icons/ai';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 interface ScheduleTourModalProps {
   propertyId: string;
@@ -11,9 +14,9 @@ interface ScheduleTourModalProps {
 
 const ScheduleTourModal = ({ propertyId, onClose }: ScheduleTourModalProps) => {
   const [dateTime, setDateTime] = useState('');
-  const [isVirtual, setIsVirtual] = useState(false);
+  // const [isVirtual, setIsVirtual] = useState(false);
   console.log(dateTime);
-  
+
   const handleSchedule = () => {
     alert(`Viewing scheduled for Property ID: ${propertyId} at ${dateTime}`);
     onClose();
@@ -31,7 +34,7 @@ const ScheduleTourModal = ({ propertyId, onClose }: ScheduleTourModalProps) => {
         </div>
 
         <form className="scheduling_form">
-          <label className="date_time_label">
+          {/* <label className="date_time_label">
             Insert Date and Time
             <input
               className="date_time_input"
@@ -48,13 +51,17 @@ const ScheduleTourModal = ({ propertyId, onClose }: ScheduleTourModalProps) => {
               onChange={() => setIsVirtual(!isVirtual)}
             />
             Virtual Tour
-          </label>
+          </label> */}
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DateTimePicker label="Controlled picker" />
+          </LocalizationProvider>
           <button
             onClick={handleSchedule}
             type="submit"
             className="schedule_btn"
           >
-            Schedule<AiOutlineSchedule />
+            Schedule
+            <AiOutlineSchedule />
           </button>
         </form>
       </div>

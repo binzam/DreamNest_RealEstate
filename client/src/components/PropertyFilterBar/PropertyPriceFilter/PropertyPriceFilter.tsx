@@ -8,10 +8,12 @@ type PriceOption = {
 };
 type PropertyPriceFilterProps = {
   onPriceRangeChange: (minPrice: number, maxPrice: number) => void;
+  type?: string;
 };
 
 const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({
   onPriceRangeChange,
+  type,
 }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isMinDropdownOpen, setMinDropdownOpen] = useState(false);
@@ -20,33 +22,56 @@ const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({
   const [selectedMax, setSelectedMax] = useState<PriceOption | null>(null);
   const [displayText, setDisplayText] = useState('Price');
   const [isRangeSelected, setIsRangeSelected] = useState(false);
-
   const minValues = useMemo(
-    () => [
-      { display: 'No Min', value: 0 },
-      { display: '$100K', value: 100000 },
-      { display: '$300K', value: 300000 },
-      { display: '$700K', value: 700000 },
-      { display: '$1M', value: 1000000 },
-      { display: '$2M', value: 2000000 },
-      { display: '$2.5M', value: 2500000 },
-      { display: '$3M', value: 3000000 },
-    ],
-    []
+    () =>
+      type === 'rent'
+        ? [
+            { display: 'No Min', value: 0 },
+            { display: '$250', value: 250 },
+            { display: '$500', value: 500 },
+            { display: '$750', value: 750 },
+            { display: '$1000', value: 1000 },
+            { display: '$1250', value: 1250 },
+            { display: '$1500', value: 1500 },
+            { display: '$1750', value: 1750 },
+          ]
+        : [
+            { display: 'No Min', value: 0 },
+            { display: '$100K', value: 100000 },
+            { display: '$300K', value: 300000 },
+            { display: '$700K', value: 700000 },
+            { display: '$1M', value: 1000000 },
+            { display: '$2M', value: 2000000 },
+            { display: '$2.5M', value: 2500000 },
+            { display: '$3M', value: 3000000 },
+          ],
+    [type]
   );
 
   const maxValues = useMemo(
-    () => [
-      { display: 'No Max', value: Infinity },
-      { display: '$250K', value: 250000 },
-      { display: '$550K', value: 550000 },
-      { display: '$1M', value: 1000000 },
-      { display: '$2.5M', value: 2500000 },
-      { display: '$4M', value: 4000000 },
-      { display: '$7M', value: 7000000 },
-      { display: '$10M', value: 10000000 },
-    ],
-    []
+    () =>
+      type === 'rent'
+        ? [
+            { display: 'No Max', value: Infinity },
+            { display: '$1150', value: 1150 },
+            { display: '$1350', value: 1350 },
+            { display: '$1650', value: 1650 },
+            { display: '$1850', value: 1850 },
+            { display: '$2150', value: 2150 },
+            { display: '$2350', value: 2350 },
+            { display: '$2500', value: 2500 },
+          ]
+        : [
+            { display: 'No Max', value: Infinity },
+            { display: '$250K', value: 250000 },
+            { display: '$550K', value: 550000 },
+            { display: '$1M', value: 1000000 },
+            { display: '$2.5M', value: 2500000 },
+            { display: '$4M', value: 4000000 },
+            { display: '$7M', value: 7000000 },
+            { display: '$10M', value: 10000000 },
+          ],
+    [type]
   );
 
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);

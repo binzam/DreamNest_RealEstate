@@ -12,14 +12,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
-import './PropertyCard.css';
 import { useMemo, useState } from 'react';
 import {
   addToWishlistThunk,
   removeFromWishlistThunk,
 } from '../../store/slices/wishlistThunks';
 import { GridLoader } from 'react-spinners';
-import { formatDistance, subDays } from 'date-fns';
+import { formatDistance } from 'date-fns';
 import { MdOutlineBrowserUpdated } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 interface PropertyCardProps {
@@ -92,7 +91,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
       )}
       {property.owner !== userId && (
         <button
-          className="wish_btn"
+          className={isInWishlist ? 'wish_btn filled' : 'wish_btn'}
           onClick={isInWishlist ? handleRemoveFromWish : handleAddToWish}
         >
           <FaHeart
@@ -136,7 +135,9 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
             {propertyFor === 'sale' ? (
               <div className="pty_price">${formattedPrice}</div>
             ) : (
-              <div className="pty_price">${formattedPrice} <small>/ monthly</small></div>
+              <div className="pty_price">
+                ${formattedPrice} <small>/ month</small>
+              </div>
             )}
             <div className="pty_specs">
               <div className="pty_spec">
@@ -162,14 +163,16 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
                   </div>
                 </div>
               </div>
-              {property.owner !== userId && (
-                <button className="contact_btn">Contact Seller</button>
-              )}
+              {/* {property.owner !== userId && (
+                <button className="contact_btn">
+                  Contact{propertyFor === 'sale' ? ' Seller' : ' Manager'}
+                </button>
+              )} */}
             </div>
             <div className="pty_box_post_date">
               <MdOutlineBrowserUpdated />
               Posted{' '}
-              {formatDistance(subDays(new Date(createdAt), 3), new Date(), {
+              {formatDistance(new Date(createdAt), new Date(), {
                 addSuffix: true,
               })}
             </div>

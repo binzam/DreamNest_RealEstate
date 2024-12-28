@@ -11,12 +11,12 @@ import { RootState } from '../../store/store';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
-const PropertySlider = ({ title, propertyCategory }: PropertySliderProps) => {
+const PropertySlider = ({ title, propertyFor }: PropertySliderProps) => {
   const properties = useSelector(
     (state: RootState) => state.properties.properties
   );
   const filteredProperties = properties.filter(
-    (property: PropertyDataType) => property.category === propertyCategory
+    (property: PropertyDataType) => property.propertyFor === propertyFor
   );
   
   return (

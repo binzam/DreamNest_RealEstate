@@ -27,22 +27,6 @@
   font-size: 1.2rem;
   letter-spacing: 2px;
 }
-.pty_page_contact_btn {
-  border-radius: 100vw;
-  border: 3px solid #000000;
-  padding: 0.5rem 1rem;
-  font-weight: 700;
-  background-color: #ffffff;
-  color: #333;
-  text-align: center;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  box-shadow: 0px 8px 15px -7px #33333383;
-}
-.pty_page_contact_btn:hover {
-  background-color: #000000;
-  color: #fff;
-}
 .pty_det_hdr_location {
   display: flex;
   align-items: flex-end;
@@ -63,13 +47,16 @@
 .pty_det_street {
   color: #333;
   font-weight: 800;
-  font-size: 1.5rem;
+  font-size: 1rem;
   letter-spacing: 2px;
+  text-transform: capitalize;
 }
 .pty_det_state {
   color: #000;
   line-height: 1;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+
   font-weight: 500;
 }
 /*  END DETIAL HEADER */
@@ -132,6 +119,11 @@
   cursor: pointer;
 }
 /* DESCRTIPTION SECTION */
+.property_descp {
+  margin-bottom: 2rem;
+  padding-bottom: 4rem;
+  border-bottom: 2px solid #ddd;
+}
 .pty_post_date {
   color: #333;
   font-size: 0.8rem;
@@ -146,6 +138,7 @@
   margin: 2rem 0 1rem;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 4rem;
   border-top: 1px solid #ddd;
   padding: 1rem 0;
@@ -181,6 +174,25 @@
   position: absolute;
   top: 0.4rem;
   left: 0.4rem;
+}
+
+.pty_page_contact_btn {
+  border-radius: 100vw;
+  flex: 1;
+  min-width: 150px;
+  border: 3px solid #000000;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  background-color: #ffffff;
+  color: #333;
+  text-align: center;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0px 8px 15px -7px #33333383;
+}
+.pty_page_contact_btn:hover {
+  background-color: #000000;
+  color: #fff;
 }
 .info_ttl {
   font-weight: 800;
@@ -228,27 +240,30 @@
 .prty_desc_map {
   display: flex;
   align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
   justify-content: space-between;
-  padding: 1rem 4rem 1rem 0;
+  padding: 1rem 0;
 }
 .pty_desc_thrid {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 1rem;
-  max-width: 600px;
+  max-width: 40%;
+  min-width: 600px;
 }
-/* PROPERTY DETAIL H2, P */
+/* PROPERTY DETAIL H2, P | MAP */
 .pty_detail {
   width: 100%;
-}
-.pty_detail h2 {
-  color: #333;
-  letter-spacing: 2px;
 }
 .pty_detail_title {
   display: flex;
   align-items: center;
+}
+.pty_detail_title h2 {
+  color: #333;
+  letter-spacing: 2px;
 }
 .pty_detail p {
   color: #888888;
@@ -257,7 +272,7 @@
   line-height: 1.7;
   padding-left: 2rem;
 }
-.pty_detail svg {
+.pty_detail_title svg {
   color: #888888;
   display: inline-block;
   width: 1em;
@@ -274,7 +289,6 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
   gap: 1rem;
 }
 .pty_actn_btn {
@@ -295,77 +309,20 @@
   color: #fff;
 }
 /* END PROPERTY ACTIONS BUTTONS */
-/* embeded map, iframe */
+
+/* PROPERTY MAP*/
 .pty_map {
   border: 1px solid #ddd;
   border-radius: 5px;
-  width: calc(100% - 640px);
+  max-width: 500px;
+  min-width: 400px;
   position: relative;
   height: 250px;
   box-shadow: 2px 2px 2px #333;
   overflow: hidden;
 }
-.add_pty_map_container {
-}
 .leaflet-container {
   height: 100%;
 }
-.pty_map_hdr {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 0.3rem 0;
-  border-bottom: 1px solid #ddd;
-  text-align: center;
-  font-weight: 500;
-  color: #ffffff;
-  letter-spacing: 3px;
-  background-color: #000;
-}
-/* Modal container */
-.pty_img_modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1002;
-}
 
-/* Modal content */
-.pty_img_modal_content {
-  position: relative;
-  max-width: 90%;
-  max-height: 90%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal_image {
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 8px;
-}
-
-.close_button {
-  position: absolute;
-  top: -40px;
-  right: 0;
-  background-color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  font-size: 24px;
-  color: #9b0000;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+/* END PROPERTY MAP*/

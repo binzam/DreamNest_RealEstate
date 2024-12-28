@@ -39,7 +39,7 @@ export interface PropertyCategoryType {
 
 export interface PropertySliderProps {
   title: string;
-  propertyCategory: string;
+  propertyFor: string;
 }
 export interface PropertyListingProps {
   category: string;
@@ -75,4 +75,10 @@ export interface PropertyFormData {
   videoUrl?: string;
   contactInfo?: string;
   dateListed?: string;
+}
+export interface ContactFormData {
+  fullName: string;
+  email: string;
+  phone: string;
+  message: string;
 }

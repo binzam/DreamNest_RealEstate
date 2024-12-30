@@ -4,7 +4,7 @@ import './LoadingSkeleton.css';
 const LoadingSkeleton = () => {
   return (
     <div className="loading_skeleton">
-      <Skeleton height={60} width={250} style={{ marginBottom: '10px' }} />
+      <Skeleton height={60} width={350} style={{ marginBottom: '10px' }} />
       <div className="loading_skeleton_inner">
         <Skeleton height={300} width={`${100}%`} />
         <Skeleton height={300} width={`${100}%`} />

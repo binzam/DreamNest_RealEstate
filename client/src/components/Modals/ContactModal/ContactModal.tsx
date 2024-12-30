@@ -14,7 +14,7 @@ const ContactModal: React.FC<ContactModalProps> = ({
   propertyAddress,
   onClose,
 }) => {
-  const  email  = useSelector((state: RootState) => state.user.user?.email);
+  const email = useSelector((state: RootState) => state.user.user?.email);
   const [formData, setFormData] = useState<ContactFormData>({
     fullName: '',
     email: `${email}`,
@@ -42,7 +42,7 @@ const ContactModal: React.FC<ContactModalProps> = ({
 
     setError('');
     console.log(formData);
-    
+
     onClose();
   };
 

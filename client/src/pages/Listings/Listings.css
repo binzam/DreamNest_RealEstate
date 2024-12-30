@@ -4,6 +4,13 @@
   background-color: #ffffff;
   padding: 0.5rem 5rem 4rem;
 }
+.loading_skeletons {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #ffffff;
+  padding: 0.5rem 5rem 4rem;
+  display: grid;
+}
 .slider_section {
   width: 100%;
   margin: 0 auto 2rem;

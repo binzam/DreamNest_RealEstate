@@ -51,7 +51,6 @@ const PropertyList = () => {
     bathroomMin: number,
     bathroomMax: number
   ) => {
-    
     setRoomsRange({ bedroomMin, bedroomMax, bathroomMin, bathroomMax });
     updateSearchParams({ bedroomMin, bedroomMax, bathroomMin, bathroomMax });
   };
@@ -106,7 +105,14 @@ const PropertyList = () => {
   if (error) return <p>Error: {error}</p>;
   return (
     <div className="property_listing_page">
-      {loading && <GridLoader color="#13ccbb" margin={10} size={25} className='listing_p_loading' />}
+      {loading && (
+        <GridLoader
+          color="#13ccbb"
+          margin={10}
+          size={25}
+          className="listing_p_loading"
+        />
+      )}
       <BackButton />
       <h2 className="pty_listing_ttl">
         Listings for {type ? type.toUpperCase() : 'All'}
@@ -115,10 +121,11 @@ const PropertyList = () => {
         onPriceRangeChange={handlePriceRangeChange}
         onRoomsRangeChange={handleRoomsRangeChange}
         onPropertyTypeChange={handlePropertyTypeChange}
-        type={type}
+        type={type || ''}
       />
 
       <SortingControl
+        type={type || ""}
         count={filteredProperties.length}
         sortParam={sortParam}
         sortOrder={sortOrder}

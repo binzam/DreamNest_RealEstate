@@ -1,16 +1,18 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import './App.css';
 import ProtectedRoute from './components/ProtectedRoute';
 import { GridLoader } from 'react-spinners';
-import PropertyList from './pages/PropertyList/PropertyList';
 import Layout from './Layout/Layout';
-import Home from './pages/Home/Home';
-import Wishlist from './pages/Wishlist/Wishlist';
-import AddProperty from './pages/AddProperty/AddProperty';
-import MyProperties from './pages/MyProperties/MyProperties';
-import EditProperty from './pages/EditProperty/EditProperty';
+import UserProfile from './pages/UserProfile/UserProfile';
 
+const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
+const Home = lazy(() => import('./pages/Home/Home'));
+const PropertyList = lazy(() => import('./pages/PropertyList/PropertyList'));
+const Wishlist = lazy(() => import('./pages/Wishlist/Wishlist'));
+const AddProperty = lazy(() => import('./pages/AddProperty/AddProperty'));
+const MyProperties = lazy(() => import('./pages/MyProperties/MyProperties'));
+const EditProperty = lazy(() => import('./pages/EditProperty/EditProperty'));
 const PropertyDetail = lazy(
   () => import('./pages/PropertyDetail/PropertyDetail')
 );
@@ -18,12 +20,15 @@ const About = lazy(() => import('./pages/About'));
 const NotFound = lazy(() => import('./pages/NotFound/NotFound'));
 const Login = lazy(() => import('./pages/Auth/Login/Login'));
 const Signup = lazy(() => import('./pages/Auth/Signup/Signup'));
-const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
 const CategorisedListing = lazy(
   () => import('./pages/CategorisedListing/CategorisedListing')
 );
 const Listings = lazy(() => import('./pages/Listings/Listings'));
+
 function App() {
+  useEffect(() => {
+    import('./pages/Home/Home');
+  }, []);
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -51,6 +56,9 @@ function App() {
             </Route>
             <Route element={<ProtectedRoute />}>
               <Route path="wishlist" element={<Wishlist />} />
+            </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="user-profile" element={<UserProfile />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

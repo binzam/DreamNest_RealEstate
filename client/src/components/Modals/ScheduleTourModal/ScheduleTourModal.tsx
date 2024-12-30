@@ -1,19 +1,25 @@
 import { useState } from 'react';
 import './ScheduleTourModal.css';
-import { FaXmark } from 'react-icons/fa6';
+import { FaLocationDot, FaXmark } from 'react-icons/fa6';
 import { GrScheduleNew } from 'react-icons/gr';
 import { AiOutlineSchedule } from 'react-icons/ai';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 interface ScheduleTourModalProps {
+  propertyImage: string;
+  propertyAddress: string;
   propertyId: string;
   onClose: () => void;
 }
 
-const ScheduleTourModal = ({ propertyId, onClose }: ScheduleTourModalProps) => {
-  const [dateTime, setDateTime] = useState('');
+const ScheduleTourModal = ({
+  propertyImage,
+  propertyAddress,
+  propertyId,
+  onClose,
+}: ScheduleTourModalProps) => {
+  const now = new Date();
+  const formattedNow = now.toISOString().slice(0, 16);
+  const [dateTime, setDateTime] = useState(formattedNow);
   // const [isVirtual, setIsVirtual] = useState(false);
   console.log(dateTime);
 
@@ -32,18 +38,25 @@ const ScheduleTourModal = ({ propertyId, onClose }: ScheduleTourModalProps) => {
           <GrScheduleNew />
           <h2 className="scedule_ttl">Schedule Viewing</h2>
         </div>
-
+        <div className="schedul_pty_address">
+          <FaLocationDot />
+          <p>{propertyAddress}</p>
+        </div>
+        <div className="contact_pty_img">
+          <img src={propertyImage} alt={propertyAddress} />
+        </div>
         <form className="scheduling_form">
-          {/* <label className="date_time_label">
-            Insert Date and Time
+          <label className="date_time_label">
+            Date & Time of Viewing
             <input
               className="date_time_input"
               type="datetime-local"
               value={dateTime}
+              min={formattedNow}
               onChange={(e) => setDateTime(e.target.value)}
             />
           </label>
-          <label className="virtual_checkbox_label">
+          {/* <label className="virtual_checkbox_label">
             <input
               className="virtual_checkbox"
               type="checkbox"
@@ -52,15 +65,12 @@ const ScheduleTourModal = ({ propertyId, onClose }: ScheduleTourModalProps) => {
             />
             Virtual Tour
           </label> */}
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateTimePicker label="Controlled picker" />
-          </LocalizationProvider>
           <button
             onClick={handleSchedule}
             type="submit"
             className="schedule_btn"
           >
-            Schedule
+            Schedule Tour
             <AiOutlineSchedule />
           </button>
         </form>

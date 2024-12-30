@@ -10,6 +10,7 @@ import {
 import { SortingControlProps } from '../../types/PropTypes';
 
 const SortingControl = ({
+  type,
   count,
   sortParam,
   sortOrder,
@@ -37,7 +38,7 @@ const SortingControl = ({
     <div className="sort_control">
       <div className="pty_count">
         <span>{count}</span>
-        {count === 1 ? 'property' : 'properties'}
+        {count === 1 ? 'property' : 'properties'} for {type}
       </div>
       <div className="sort_by">
         <label htmlFor="sort-options" className="sort_by_ttl">

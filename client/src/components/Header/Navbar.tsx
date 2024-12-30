@@ -13,6 +13,11 @@ const Navbar = () => {
   const { isAuthenticated, user } = useSelector(
     (state: RootState) => state.user
   );
+  const savedPicture = useSelector(
+    (state: RootState) => state.user.user?.profilePicture
+  );
+  console.log(savedPicture);
+
   const dispatch = useDispatch<AppDispatch>();
   const { wishlist } = useSelector((state: RootState) => state.user);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -65,7 +70,11 @@ const Navbar = () => {
             <FaHeart />
           </Link>
           <button className="hdr_profile_btn" onClick={toggleDropdown}>
-            <RiUser3Line className="icon_profile" />
+            {savedPicture ? (
+              <img className="usr_ppic" src={savedPicture} alt="User Profile" />
+            ) : (
+              <RiUser3Line className="icon_profile" />
+            )}
           </button>
           {isDropdownOpen && (
             <div className="profile_dropdown">
@@ -73,15 +82,15 @@ const Navbar = () => {
                 <div className="prf_dd_hdr">
                   <Link
                     onClick={toggleDropdown}
-                    to="/profile"
+                    to="/user-profile"
                     className="usr_pr_dd_user_link"
                   >
                     <div className="usr_pr_dd_icon">
-                      {user && user?.profilePicture ? (
+                      {savedPicture ? (
                         <img
                           className="usr_ppic"
-                          src={user.profilePicture}
-                          alt={user.email}
+                          src={savedPicture}
+                          alt="User Profile"
                         />
                       ) : (
                         <div className="center">

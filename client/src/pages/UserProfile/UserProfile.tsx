@@ -1,0 +1,252 @@
+import { useSelector } from 'react-redux';
+import './UserProfile.css';
+import { RootState } from '../../store/store';
+import { FaPenToSquare, FaPhone, FaUpload, FaUser } from 'react-icons/fa6';
+import { useEffect, useState } from 'react';
+import { axiosPrivate } from '../../api/axiosInstance';
+import { MdCancel, MdOutlineAlternateEmail, MdSaveAlt } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
+const UserProfile = () => {
+  const userProfilePic = useSelector(
+    (state: RootState) => state.user.user?.profilePicture
+  );
+  const [userData, setUserData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    profilePicture: '',
+  });
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [editPhotoMode, setEditPhotoMode] = useState(false);
+  const [editProfileMode, setEditProfileMode] = useState(false);
+  const [profilePicture, setProfilePicture] = useState<File | null>(null);
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await axiosPrivate.get('/user/profile');
+        console.log(response);
+
+        setUserData(response.data);
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      }
+    };
+    fetchUserProfile();
+  }, []);
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setEditPhotoMode(true);
+      setProfilePicture(file);
+      setPreviewImage(URL.createObjectURL(file));
+    }
+  };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUserData({ ...userData, [e.target.name]: e.target.value });
+  };
+  const handleImageUpload = async () => {
+    if (!profilePicture) return;
+
+    const formData = new FormData();
+    formData.append('profilePicture', profilePicture);
+
+    try {
+      const response = await axiosPrivate.post(
+        '/user/profile/upload-picture',
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      console.log('Image uploaded successfully:', response);
+      setUserData((prev) => ({
+        ...prev,
+        profilePicture: response.data.profilePicture,
+      }));
+      setEditPhotoMode(false);
+      setPreviewImage(null);
+      const savedUserData = JSON.parse(localStorage.getItem('DNuser') || '{}');
+
+      const updatedUserData = {
+        ...savedUserData,
+        profilePicture: response.data.profilePicture,
+      };
+
+      localStorage.setItem('DNuser', JSON.stringify(updatedUserData));
+    } catch (error) {
+      console.error('Error uploading profile picture:', error);
+    }
+  };
+  const handleSaveProfile = async () => {
+    try {
+      const response = await axiosPrivate.put('/user/profile', {
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        email: userData.email,
+        phoneNumber: userData.phoneNumber,
+      });
+
+      console.log('Profile updated successfully:', response.data);
+      setUserData(response.data);
+      setEditProfileMode(false);
+      const savedUserData = JSON.parse(localStorage.getItem('DNuser') || '{}');
+
+      const updatedUserData = {
+        ...savedUserData,
+        firstName:
+          userData.firstName !== savedUserData.firstName
+            ? userData.firstName
+            : savedUserData.firstName,
+        email:
+          userData.email !== savedUserData.email
+            ? userData.email
+            : savedUserData.email,
+        profilePicture:
+          userData.profilePicture !== savedUserData.profilePicture
+            ? userData.profilePicture
+            : savedUserData.profilePicture,
+      };
+
+      localStorage.setItem('DNuser', JSON.stringify(updatedUserData));
+    } catch (error) {
+      console.error('Error saving profile:', error);
+    }
+  };
+  return (
+    <div className="usr_prfl_pge">
+      <div className="prfl_hdr">
+        <h2>Hello {userData.firstName || 'there'}!</h2>
+        <p>{userData.email}</p>
+      </div>
+      <div className="prfl_cntnt">
+        <div className="prfl_cntn_top">
+          <div className="prfl_picture">
+            {previewImage ? (
+              <img src={previewImage} alt="Preview" />
+            ) : userProfilePic ? (
+              <img src={userData.profilePicture} alt="Profile" />
+            ) : (
+              <FaUser />
+            )}
+          </div>
+          <form
+            className="upload_image_form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleImageUpload();
+            }}
+          >
+            <input id="uploadImage" type="file" onChange={handleImageChange} />
+
+            {editPhotoMode ? (
+              <button className="upload_image_btn" type="submit">
+                <FaUpload />
+                Upload
+              </button>
+            ) : (
+              <label htmlFor="uploadImage" className="select_image_label">
+                <FaPenToSquare />
+                Change photo
+              </label>
+            )}
+          </form>
+        </div>
+        <div className="prfl_cntn_btm">
+          {!editProfileMode ? (
+            <button
+              onClick={() => setEditProfileMode(true)}
+              className="edit_prfl_btn"
+            >
+              <FaEdit /> Edit Profile
+            </button>
+          ) : (
+            <button
+              onClick={() => setEditProfileMode(false)}
+              className="cancel_edit_btn"
+            >
+              <MdCancel /> Cancel
+            </button>
+          )}
+          <div className="key">
+            <label htmlFor="firstName">
+              <FaUser /> First Name
+            </label>
+            {editProfileMode ? (
+              <input
+                type="text"
+                name="firstName"
+                value={userData.firstName}
+                onChange={handleInputChange}
+              />
+            ) : (
+              <span className="value">{userData.firstName}</span>
+            )}
+          </div>
+          <div className="key">
+            <label htmlFor="lastName">
+              <FaUser /> Last Name
+            </label>
+
+            {editProfileMode ? (
+              <input
+                id="lastName"
+                type="text"
+                name="lastName"
+                value={userData.lastName}
+                onChange={handleInputChange}
+              />
+            ) : (
+              <span className="value">{userData.lastName}</span>
+            )}
+          </div>
+          <div className="key">
+            <label htmlFor="email">
+              <MdOutlineAlternateEmail />
+              Email
+            </label>
+            {editProfileMode ? (
+              <input
+                id="email"
+                type="email"
+                name="email"
+                value={userData.email}
+                onChange={handleInputChange}
+              />
+            ) : (
+              <span className="value">{userData.email}</span>
+            )}
+          </div>
+          <div className="key">
+            <label htmlFor="phoneNumber">
+              <FaPhone />
+              Phone Number
+            </label>
+            {editProfileMode ? (
+              <input
+                id="phoneNumber"
+                type="text"
+                name="phoneNumber"
+                value={userData.phoneNumber}
+                onChange={handleInputChange}
+              />
+            ) : (
+              <span className="value">{userData.phoneNumber}</span>
+            )}
+          </div>
+          <div className="prfl_actions">
+            {editProfileMode && (
+              <button onClick={handleSaveProfile} className="save_prfl_btn">
+                <MdSaveAlt /> Save Changes
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default UserProfile;

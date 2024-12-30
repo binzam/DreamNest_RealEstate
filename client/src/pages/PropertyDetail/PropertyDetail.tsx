@@ -209,13 +209,15 @@ const PropertyDetail = () => {
                 <span>Year Built</span>
               </div>
             </div>
-            <div className="pty_type">
-              <TbDimensions />
-              <div className="pty_detail_col">
-                <p>${(price / sqft).toFixed(1)}</p>
-                <span>Price per sqft</span>
+            {propertyFor === 'sale' && (
+              <div className="pty_type">
+                <TbDimensions />
+                <div className="pty_detail_col">
+                  <p>${(price / sqft).toFixed(1)}</p>
+                  <span>Price per sqft</span>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
         <div className="prty_desc_map">
@@ -266,6 +268,8 @@ const PropertyDetail = () => {
       )}
       {isScheduleModalOpen && (
         <ScheduleTourModal
+          propertyImage={photos[0].image}
+          propertyAddress={`${address.street} ${address.city}, ${address.state}`}
           propertyId={_id}
           onClose={() => setIsScheduleModalOpen(false)}
         />

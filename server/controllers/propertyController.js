@@ -4,7 +4,6 @@ import { sendEmail } from '../utils/notificationsUtil.js';
 import { categorizeProperties } from '../utils/propertyUtils.js';
 import path from 'path';
 import { validatePropertyData } from '../utils/propertyValidation.js';
-import { log } from 'console';
 
 const getProperties = async (req, res) => {
   try {

@@ -61,7 +61,7 @@ select {
   font: inherit;
   margin: 0;
   padding: 0;
-  /* border: none; */
+  border: none;
   background: none;
   /* appearance: none; */
 }

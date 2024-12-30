@@ -43,7 +43,7 @@ const Listings = () => {
 
   if (loading) {
     return (
-      <div className="all_listings">
+      <div className="loading_skeletons">
         <LoadingSkeleton />
         <LoadingSkeleton />
         <LoadingSkeleton />

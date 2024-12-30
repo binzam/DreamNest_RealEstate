@@ -8,6 +8,7 @@ export interface MobileNavbarProps {
 }
 
 export interface SortingControlProps {
+  type: string;
   count: number;
   sortParam: string;
   sortOrder: 'asc' | 'desc';

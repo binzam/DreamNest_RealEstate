@@ -52,7 +52,7 @@ router.put('/list/:id/update', authenticateToken, updateProperty);
 router.delete('/list/:id/delete', authenticateToken, deleteProperty);
 router.post('/schedule-tour', authenticateToken, schedulePropertyTour);
 router.post(
-  '/add-property',
+  '/add-property', 
   authenticateToken,
   upload.array('photos'),
   addProperty

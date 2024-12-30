@@ -114,7 +114,7 @@ const Login = () => {
           </button>
           <span className="form_option">
             Don't have an Account?{' '}
-            <Link className="form_hdr_link" to={'/signup'}>
+            <Link className="login_to_signup_link" to={'/signup'}>
               Sign up
             </Link>
           </span>

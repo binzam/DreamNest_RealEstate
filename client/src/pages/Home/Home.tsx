@@ -1,5 +1,5 @@
 import Hero from '../../components/Hero/Hero';
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { GridLoader } from 'react-spinners';
 const PropertyCategory = lazy(
   () => import('../../components/PropertyCategory/PropertyCategory')
@@ -22,6 +22,9 @@ const LocationHighlights = lazy(
 );
 
 const Home = () => {
+  useEffect(() => {
+    import('../../components/Hero/Hero');
+  }, []);
   return (
     <>
       <Hero />

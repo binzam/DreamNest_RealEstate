@@ -72,14 +72,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
-  color: #333;
-  font-weight: 500;
+ 
   gap: 0.5rem;
 }
 .schedul_pty_address svg {
   font-size: 1.2rem;
   color: red;
+}
+.schedul_pty_address p {
+  font-size: 0.8rem;
+  color: #333;
+  font-weight: 800;
 }
 .scheduling_form {
   display: flex;
@@ -126,8 +129,7 @@
 */
 
 .schedule_btn {
-  background-color: #ffffff;
-  color: rgb(0, 0, 0);
+  
   padding: 0.5rem 1.2rem;
   border: 1px dashed #13ccbb;
   cursor: pointer;
@@ -139,9 +141,11 @@
   gap: 6px;
   margin-top: 1rem;
   border-radius: 100vw;
-}
-.schedule_btn:hover {
   background-color: #007bff;
   color: #fff;
+}
+.schedule_btn:hover {
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
   border-color: #000;
 }

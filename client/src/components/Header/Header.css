@@ -228,9 +228,11 @@
   width: 100%;
   padding: 1rem;
   border-bottom: 2px solid #000;
-  background-color: #fff;
+  background-color: #eef;
 }
-
+.usr_pr_dd_user_link:hover {
+  background-color: #eee;
+}
 .usr_pr_dd_icon {
   width: 50px;
   height: 50px;
@@ -267,6 +269,7 @@
   letter-spacing: 1px;
 }
 .dd_user_email {
+  font-weight: 600;
   color: #333;
   line-height: 1;
   font-size: 0.7rem;

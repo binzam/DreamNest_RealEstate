@@ -3,6 +3,8 @@ import './ScheduleTourModal.css';
 import { FaLocationDot, FaXmark } from 'react-icons/fa6';
 import { GrScheduleNew } from 'react-icons/gr';
 import { AiOutlineSchedule } from 'react-icons/ai';
+import { axiosPrivate } from '../../../api/axiosInstance';
+import { useNavigate } from 'react-router-dom';
 
 interface ScheduleTourModalProps {
   propertyImage: string;
@@ -19,15 +21,43 @@ const ScheduleTourModal = ({
 }: ScheduleTourModalProps) => {
   const now = new Date();
   const formattedNow = now.toISOString().slice(0, 16);
-  const [dateTime, setDateTime] = useState(formattedNow);
-  // const [isVirtual, setIsVirtual] = useState(false);
-  console.log(dateTime);
+  const [tourDateTime, setTourDateTime] = useState(formattedNow);
+  const [scheduleSuccess, setScheduleSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  console.log(tourDateTime);
+  const navigate = useNavigate();
+  const handleSchedule = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setScheduleSuccess(false);
+    setLoading(true);
+    setError(null);
 
-  const handleSchedule = () => {
-    alert(`Viewing scheduled for Property ID: ${propertyId} at ${dateTime}`);
+    if (!tourDateTime || new Date(tourDateTime) <= new Date()) {
+      setError('Please select a valid future date and time.');
+      setLoading(false);
+      return;
+    }
+    try {
+      const response = await axiosPrivate.post('/tour/schedule-tour', {
+        propertyId,
+        tourDateTime,
+      });
+      alert(response.data.message);
+      if (response.status === 201) {
+        setScheduleSuccess(true);
+      }
+    } catch (error) {
+      console.error('Error scheduling tour:', error);
+      setError('Failed to schedule tour. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleViewSchedule = () => {
+    navigate('/dashboard/tour-schedule');
     onClose();
   };
-
   return (
     <div className="schedule_modal">
       <div className="schedule_modal_content">
@@ -45,35 +75,31 @@ const ScheduleTourModal = ({
         <div className="contact_pty_img">
           <img src={propertyImage} alt={propertyAddress} />
         </div>
-        <form className="scheduling_form">
-          <label className="date_time_label">
-            Date & Time of Viewing
-            <input
-              className="date_time_input"
-              type="datetime-local"
-              value={dateTime}
-              min={formattedNow}
-              onChange={(e) => setDateTime(e.target.value)}
-            />
-          </label>
-          {/* <label className="virtual_checkbox_label">
-            <input
-              className="virtual_checkbox"
-              type="checkbox"
-              checked={isVirtual}
-              onChange={() => setIsVirtual(!isVirtual)}
-            />
-            Virtual Tour
-          </label> */}
-          <button
-            onClick={handleSchedule}
-            type="submit"
-            className="schedule_btn"
-          >
-            Schedule Tour
-            <AiOutlineSchedule />
-          </button>
-        </form>
+        {error && <p className="error_text">{error}</p>}
+        {!scheduleSuccess ? (
+          <form className="scheduling_form" onSubmit={handleSchedule}>
+            {loading && <p className="loading_text">Loading...</p>}
+            <label className="date_time_label">
+              Date & Time of Viewing
+              <input
+                className="date_time_input"
+                type="datetime-local"
+                value={tourDateTime}
+                min={formattedNow}
+                onChange={(e) => setTourDateTime(e.target.value)}
+              />
+            </label>
+            <button type="submit" className="schedule_btn">
+              Schedule Tour
+              <AiOutlineSchedule />
+            </button>
+          </form>
+        ) : (
+          <div className="schedule_success">
+            <h3>Tour Scheduled Successfully!</h3>
+            <button onClick={handleViewSchedule}>View tour schedule</button>
+          </div>
+        )}
       </div>
     </div>
   );

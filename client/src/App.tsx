@@ -5,6 +5,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { GridLoader } from 'react-spinners';
 import Layout from './Layout/Layout';
 import UserProfile from './pages/UserProfile/UserProfile';
+import UserNotifications from './pages/UserNotifications';
+import UserTourSchedule from './pages/UserTourSchedule';
 
 const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
 const Home = lazy(() => import('./pages/Home/Home'));
@@ -59,6 +61,12 @@ function App() {
             </Route>
             <Route element={<ProtectedRoute />}>
               <Route path="user-profile" element={<UserProfile />} />
+            </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="notifications" element={<UserNotifications />} />
+            </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="tour-schedules" element={<UserTourSchedule />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />} />

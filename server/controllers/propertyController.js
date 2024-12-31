@@ -1,5 +1,5 @@
 import { Property } from '../models/propertyModel.js';
-import { TourSchedule } from '../models/TourScheduleModel.js';
+import { TourSchedule } from '../models/tourScheduleModel.js';
 import { sendEmail } from '../utils/notificationsUtil.js';
 import { categorizeProperties } from '../utils/propertyUtils.js';
 import path from 'path';
@@ -41,72 +41,6 @@ const getPropertiesByCategory = async (req, res) => {
     return res
       .status(500)
       .json({ message: 'Server error while fetching properties' });
-  }
-};
-
-const schedulePropertyTour = async (req, res) => {
-  const { propertyId, viewingDate } = req.body;
-  const userId = req.user._id;
-  if (new Date(viewingDate) < new Date()) {
-    return res
-      .status(400)
-      .json({ message: 'Viewing date must be in the future' });
-  }
-  try {
-    const newTourSchedule = new TourSchedule({
-      propertyId,
-      userId,
-      viewingDate,
-    });
-    await newTourSchedule.save();
-
-    // Get the property owner from the Property model (assuming `Property` model exists)
-    const property = await Property.findById(propertyId);
-    const ownerId = property.owner; // Assuming `ownerId` is the owner's user ID
-
-    // Send notification to the user
-    const userNotification = new Notification({
-      userId,
-      message: `You have scheduled a viewing for property: ${property.name} on ${viewingDate}. Please wait for the owner's confirmation.`,
-      type: 'tour',
-      status: 'Pending', // You can adjust the status as needed
-    });
-    await userNotification.save();
-
-    // Send notification to the property owner
-    const ownerNotification = new Notification({
-      userId: ownerId,
-      message: `A viewing request has been made for your property: ${property.name} on ${viewingDate}. Please confirm or cancel the request.`,
-      type: 'tour',
-      status: 'Pending', // Owner has to take action
-    });
-    await ownerNotification.save();
-
-    // Send email to the user
-    await sendEmail({
-      to: req.user.email,
-      subject: 'Property Viewing Scheduled',
-      text: `You have scheduled a viewing for property: ${property.name} on ${viewingDate}. Please wait for the owner's confirmation.`,
-    });
-
-    // Send email to the owner
-    const ownerEmail = property.ownerEmail;
-    await sendEmail({
-      to: ownerEmail,
-      subject: 'Property Viewing Request',
-      text: `A viewing request has been made for your property: ${property.name} on ${viewingDate}. Please confirm or cancel the request.`,
-    });
-
-    // Return response
-    res.status(201).json({
-      message: 'Viewing scheduled successfully',
-      tourSchedule: newTourSchedule,
-    });
-  } catch (error) {
-    console.error('Error scheduling tour:', error);
-    return res
-      .status(500)
-      .json({ message: 'Server error while scheduling tour' });
   }
 };
 
@@ -157,9 +91,7 @@ const getPropertiesOwnedByUser = async (req, res) => {
     const properties = await Property.find({ owner: userId });
 
     if (!properties || properties.length === 0) {
-      return res
-        .status(200)
-        .json([]);
+      return res.status(200).json([]);
     }
 
     return res.status(200).json(properties);
@@ -222,7 +154,6 @@ export {
   getProperties,
   getPropertyById,
   getPropertiesByCategory,
-  schedulePropertyTour,
   addProperty,
   getPropertiesOwnedByUser,
   updateProperty,

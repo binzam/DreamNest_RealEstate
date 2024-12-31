@@ -1,5 +1,8 @@
 import { User } from '../models/userModel.js';
 import path from 'path';
+import multer from 'multer';
+import { Property } from '../models/propertyModel.js';
+import { Notification } from '../models/notificationModel.js';
 
 const getUserProfile = async (req, res) => {
   try {
@@ -7,6 +10,8 @@ const getUserProfile = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+    const userProperties = await Property.find({ owner: req.user._id });
+
     const userProfile = {
       firstName: user.firstName,
       lastName: user.lastName,
@@ -14,11 +19,26 @@ const getUserProfile = async (req, res) => {
       dateJoined: user.createdAt,
       phoneNumber: user.phoneNumber,
       profilePicture: user.profilePicture,
+      wishlistCount: user.wishlist.length,
+      propertyCount: userProperties.length || 0,
     };
     return res.status(200).json(userProfile);
   } catch (error) {
     console.error('Error fetching user profile:', error);
     res.status(500).json({ message: 'Server error' });
+  }
+};
+const getUserNotifications = async (req, res) => {
+  try {
+    const notifications = await Notification.find({
+      userId: req.user._id,
+    }).sort({ createdAt: -1 });
+    res.status(200).json({ notifications });
+  } catch (error) {
+    console.error('Error fetching notifications:', error);
+    return res
+      .status(500)
+      .json({ message: 'Server error while fetching notifications' });
   }
 };
 const updateUserProfile = async (req, res) => {
@@ -53,6 +73,7 @@ const updateUserProfile = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 const uploadProfilePicture = async (req, res) => {
   const userId = req.user._id;
   console.log('req.file////', req.file);
@@ -72,19 +93,39 @@ const uploadProfilePicture = async (req, res) => {
 
     res.status(200).json({ profilePicture: user.profilePicture });
   } catch (error) {
-    console.error('Error uploading profile picture:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.log('Error uploading profile picture:', error);
+    if (
+      error instanceof multer.MulterError &&
+      error.code === 'LIMIT_FILE_SIZE'
+    ) {
+      return res
+        .status(400)
+        .json({ message: 'File too large. Maximum size is 80KB.' });
+    }
+
+    return res.status(500).json({ message: 'Server error' });
   }
 };
 const userWishlist = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).populate('wishlist');
+    console.log('wuish', user.wishlist.length);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
+    const validWishlist = [];
+    for (const property of user.wishlist) {
+      const exists = await Property.find({ _id: property._id });
+      if (exists) validWishlist.push(property);
+    }
 
-    res.json({ wishlist: user.wishlist });
+    if (validWishlist.length !== user.wishlist.length) {
+      user.wishlist = validWishlist.map((property) => property._id);
+      await user.save();
+    }
+
+    res.json({ wishlist: validWishlist });
   } catch (error) {
     console.error('Error fetching wishlist:', error);
     res.status(500).json({ message: 'Server error' });
@@ -98,6 +139,10 @@ const addToWishlist = async (req, res) => {
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
+    }
+    const propertyExists = await Property.exists({ _id: propertyId });
+    if (!propertyExists) {
+      return res.status(404).json({ message: 'Property not found' });
     }
 
     if (user.wishlist.includes(propertyId)) {
@@ -130,6 +175,12 @@ const removeFromWishlist = async (req, res) => {
     if (!user.wishlist.includes(propertyId)) {
       return res.status(400).json({ message: 'Property not in wishlist' });
     }
+    const propertyExists = await Property.exists({ _id: propertyId });
+    if (!propertyExists) {
+      return res
+        .status(404)
+        .json({ message: 'Property no longer exists in the system' });
+    }
     user.wishlist = user.wishlist.filter((id) => id.toString() !== propertyId);
     await user.save();
 
@@ -152,4 +203,5 @@ export {
   getUserProfile,
   updateUserProfile,
   uploadProfilePicture,
+  getUserNotifications,
 };

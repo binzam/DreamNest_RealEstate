@@ -6,10 +6,12 @@ import {
   getUserProfile,
   updateUserProfile,
   uploadProfilePicture,
+  getUserNotifications,
 } from '../controllers/userController.js';
 import authenticateToken from '../middleware/authenticateToken.js';
 import multer from 'multer';
 import fs from 'fs';
+import multerErrorHandler from '../middleware/multerErrorHandler.js';
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -41,6 +43,7 @@ const upload = multer({
 });
 
 router.get('/wishlist', authenticateToken, userWishlist);
+router.get('/notifications', authenticateToken, getUserNotifications);
 
 router.post('/add-to-wishlist', authenticateToken, addToWishlist);
 
@@ -50,6 +53,7 @@ router.post(
   '/profile/upload-picture',
   authenticateToken,
   upload.single('profilePicture'),
+  multerErrorHandler,
   uploadProfilePicture
 );
 router.put('/profile', authenticateToken, updateUserProfile);

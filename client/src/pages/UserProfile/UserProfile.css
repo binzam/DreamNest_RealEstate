@@ -4,14 +4,17 @@
   background-color: #ffffff;
 }
 .prfl_hdr {
-  padding: 2rem 5rem;
+  padding: 1rem 5rem;
   background-color: #f3f3f3;
   border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: flex-end;
+  gap: 4rem;
 }
 .prfl_hdr h2 {
   color: #000000;
   letter-spacing: 1px;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 .prfl_hdr p {
   color: #333;
@@ -19,21 +22,74 @@
   font-weight: 600;
   letter-spacing: 1px;
 }
+.hdr_actions {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+.usr_prf_acts {
+  position: relative;
+}
+.usr_prf_acts a {
+  color: #333;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border-bottom: 2px solid #333;
+  text-decoration: none;
+}
+.usr_prf_acts a:hover {
+  border-bottom: 2px solid transparent;
+  color: #000000;
+  text-decoration: underline;
+}
+.usr_prf_act_count {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #796d00b7;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+  min-width: 20px;
+  min-height: 20px;
+}
 .prfl_cntnt {
-  padding: 1rem 5rem;
+  padding: 1rem 5rem 4rem;
   display: flex;
   align-items: flex-start;
-  gap: 6rem;
+  gap: 5rem;
 }
 .prfl_cntn_top {
-  /* max-width: 500px; */
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  padding-right: 5rem;
-  padding-bottom: 5rem;
+  padding: 0 5rem 5rem;
   border-right: 2px solid #ddd;
+  position: relative;
+}
+.upload_loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.upload_success_msg {
+  color: rgb(255, 255, 255);
+  padding: 0.5rem 1rem;
+  background-color: green;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 }
 /* PROFILE PICTURE */
 .prfl_picture {
@@ -101,6 +157,7 @@
   border-radius: 4px;
   box-shadow: 2px 2px 2px #000000;
   cursor: pointer;
+  position: relative;
 }
 .upload_image_btn:hover {
   background-color: #17c500;

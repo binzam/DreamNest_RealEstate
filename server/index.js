@@ -7,9 +7,9 @@ import cookieParser from 'cookie-parser';
 import authRoutes from './routes/authRoutes.js';
 import propertyRoutes from './routes/propertyRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import tourScheduleRoutes from './routes/tourScheduleRoutes.js';
 import path from 'path';
-// import { clearAllProperties } from './utils/clearAllProperties.js';
-// import { uploadProperties } from './utils/propertiesDataExporter.js';
+import multerErrorHandler from './middleware/multerErrorHandler.js';
 
 const app = express();
 app.use(express.json());
@@ -32,7 +32,8 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/properties', propertyRoutes);
 app.use('/api/user', userRoutes);
-
+app.use('/api/tour', tourScheduleRoutes);
+app.use(multerErrorHandler);
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {

@@ -1,11 +1,23 @@
 import { useSelector } from 'react-redux';
 import './UserProfile.css';
 import { RootState } from '../../store/store';
-import { FaPenToSquare, FaPhone, FaUpload, FaUser } from 'react-icons/fa6';
+import {
+  FaCheck,
+  FaHeart,
+  FaPenToSquare,
+  FaPhone,
+  FaUpload,
+  FaUser,
+} from 'react-icons/fa6';
 import { useEffect, useState } from 'react';
 import { axiosPrivate } from '../../api/axiosInstance';
-import { MdCancel, MdOutlineAlternateEmail, MdSaveAlt } from 'react-icons/md';
-import { FaEdit } from 'react-icons/fa';
+import { MdCancel, MdEmail, MdSaveAlt } from 'react-icons/md';
+import { FaEdit, FaHome } from 'react-icons/fa';
+import ErrorDisplay from '../../components/ErrorDisplay';
+import { GridLoader } from 'react-spinners';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+
 const UserProfile = () => {
   const userProfilePic = useSelector(
     (state: RootState) => state.user.user?.profilePicture
@@ -16,11 +28,17 @@ const UserProfile = () => {
     email: '',
     phoneNumber: '',
     profilePicture: '',
+    wishlistCount: 0,
+    propertyCount: 0,
   });
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
-  const [editPhotoMode, setEditPhotoMode] = useState(false);
   const [editProfileMode, setEditProfileMode] = useState(false);
+  const [editPhotoMode, setEditPhotoMode] = useState(false);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isImgloading, setIsImgLoading] = useState(false);
+  const [isProfileloading, setIsprofileLoading] = useState(false);
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
@@ -34,20 +52,24 @@ const UserProfile = () => {
     };
     fetchUserProfile();
   }, []);
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setError(null);
+      setSuccessMessage(null);
       setEditPhotoMode(true);
       setProfilePicture(file);
       setPreviewImage(URL.createObjectURL(file));
     }
   };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
   const handleImageUpload = async () => {
     if (!profilePicture) return;
-
+    setIsImgLoading(true);
     const formData = new FormData();
     formData.append('profilePicture', profilePicture);
 
@@ -76,11 +98,38 @@ const UserProfile = () => {
       };
 
       localStorage.setItem('DNuser', JSON.stringify(updatedUserData));
+      setSuccessMessage('Profile picture updated successfully!');
+      setTimeout(() => setSuccessMessage(null), 2000);
     } catch (error) {
       console.error('Error uploading profile picture:', error);
+      setEditPhotoMode(false);
+      if (axios.isAxiosError(error)) {
+        if (error.response && error.response.data?.message) {
+          if (error.response.data.message.startsWith('File too large')) {
+            setError(
+              'File size exceeds the allowed limit. Please try a smaller file.'
+            );
+          } else {
+            setError(error.response.data.message);
+          }
+        } else {
+          setError(
+            'An error occurred while uploading the image. Please try again.'
+          );
+        }
+      } else {
+        setError(
+          'An unexpected error occurred. Please check your network and try again.'
+        );
+      }
+    } finally {
+      setIsImgLoading(false);
     }
   };
+
   const handleSaveProfile = async () => {
+    setIsprofileLoading(true);
+    setError(null);
     try {
       const response = await axiosPrivate.put('/user/profile', {
         firstName: userData.firstName,
@@ -90,7 +139,13 @@ const UserProfile = () => {
       });
 
       console.log('Profile updated successfully:', response.data);
-      setUserData(response.data);
+      setUserData((prev) => ({
+        ...prev,
+        firstName: response.data.firstName,
+        lastName: response.data.lastName,
+        email: response.data.email,
+        phoneNumber: response.data.phoneNumber,
+      }));
       setEditProfileMode(false);
       const savedUserData = JSON.parse(localStorage.getItem('DNuser') || '{}');
 
@@ -111,18 +166,66 @@ const UserProfile = () => {
       };
 
       localStorage.setItem('DNuser', JSON.stringify(updatedUserData));
+
+      setSuccessMessage('Profile updated successfully!');
+      setTimeout(() => setSuccessMessage(null), 2000);
     } catch (error) {
+      setError('An error occurred while saving the profile. Please try again.');
       console.error('Error saving profile:', error);
+    } finally {
+      setIsprofileLoading(false);
     }
   };
+
   return (
     <div className="usr_prfl_pge">
       <div className="prfl_hdr">
-        <h2>Hello {userData.firstName || 'there'}!</h2>
-        <p>{userData.email}</p>
+        <div>
+          <h2>Hello {userData.firstName || 'there'}!</h2>
+          <p>{userData.email}</p>
+        </div>
+        <div className="hdr_actions">
+          <div className="usr_prf_acts">
+            <Link to={'/wishlist'}>
+              <FaHeart />
+              Your Wishlist
+            </Link>
+            <span className="usr_prf_act_count">{userData.wishlistCount}</span>
+          </div>
+          <div className="usr_prf_acts">
+            <Link to={'/my-properties'}>
+              <FaHome />
+              Your Properties
+            </Link>
+            <span className="usr_prf_act_count">{userData.propertyCount}</span>
+          </div>
+          <div className="usr_prf_acts">
+            <Link to={'/tour-schedules'}>
+              <FaHome />
+              Tour Schedules
+            </Link>
+            <span className="usr_prf_act_count">{userData.propertyCount}</span>
+          </div>
+        </div>
+        {}
       </div>
+      {error && <ErrorDisplay message={error} />}
+      {successMessage && (
+        <div className="upload_success_msg">
+          <FaCheck />
+          {successMessage}
+        </div>
+      )}
       <div className="prfl_cntnt">
         <div className="prfl_cntn_top">
+          {isImgloading && (
+            <GridLoader
+              color="#13ccbb"
+              margin={10}
+              size={25}
+              className="upload_loading"
+            />
+          )}
           <div className="prfl_picture">
             {previewImage ? (
               <img src={previewImage} alt="Preview" />
@@ -140,13 +243,13 @@ const UserProfile = () => {
             }}
           >
             <input id="uploadImage" type="file" onChange={handleImageChange} />
-
-            {editPhotoMode ? (
+            {editPhotoMode && (
               <button className="upload_image_btn" type="submit">
                 <FaUpload />
-                Upload
+                {isImgloading ? 'Uploading...' : 'Upload'}
               </button>
-            ) : (
+            )}
+            {!editPhotoMode && !successMessage && (
               <label htmlFor="uploadImage" className="select_image_label">
                 <FaPenToSquare />
                 Change photo
@@ -155,6 +258,14 @@ const UserProfile = () => {
           </form>
         </div>
         <div className="prfl_cntn_btm">
+          {isProfileloading && (
+            <GridLoader
+              color="#13ccbb"
+              margin={10}
+              size={55}
+              className="upload_loading"
+            />
+          )}
           {!editProfileMode ? (
             <button
               onClick={() => setEditProfileMode(true)}
@@ -204,7 +315,7 @@ const UserProfile = () => {
           </div>
           <div className="key">
             <label htmlFor="email">
-              <MdOutlineAlternateEmail />
+              <MdEmail />
               Email
             </label>
             {editProfileMode ? (

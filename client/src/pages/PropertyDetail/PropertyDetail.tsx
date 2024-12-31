@@ -186,12 +186,14 @@ const PropertyDetail = () => {
               sqft
             </div>
           </div>
-          <button
-            className="pty_page_contact_btn"
-            onClick={() => setIsContactModalOpen(true)}
-          >
-            Contact {propertyFor === 'rent' ? ' Owner' : ' Seller'}
-          </button>
+          {isAuthenticated && (
+            <button
+              className="pty_actn_btn"
+              onClick={() => setIsScheduleModalOpen(true)}
+            >
+              Schedule Visit
+            </button>
+          )}
         </div>
         <div className="pty_desc_second">
           <div className="pty_declars">
@@ -239,14 +241,13 @@ const PropertyDetail = () => {
               >
                 Ask a Question
               </button>
-              {isAuthenticated && (
-                <button
-                  className="pty_actn_btn"
-                  onClick={() => setIsScheduleModalOpen(true)}
-                >
-                  Schedule Tour
-                </button>
-              )}
+
+              <button
+                className="pty_page_contact_btn"
+                onClick={() => setIsContactModalOpen(true)}
+              >
+                Contact {propertyFor === 'rent' ? ' Owner' : ' Seller'}
+              </button>
             </div>
           </div>
           <div className="pty_map">

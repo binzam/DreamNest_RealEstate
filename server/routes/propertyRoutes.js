@@ -5,7 +5,6 @@ import {
   getPropertiesByCategory,
   getPropertiesOwnedByUser,
   getPropertyById,
-  schedulePropertyTour,
   updateProperty,
   deleteProperty,
 } from '../controllers/propertyController.js';
@@ -50,7 +49,6 @@ router.get('/list/:id', getPropertyById);
 router.get('/my-properties', authenticateToken, getPropertiesOwnedByUser);
 router.put('/list/:id/update', authenticateToken, updateProperty);
 router.delete('/list/:id/delete', authenticateToken, deleteProperty);
-router.post('/schedule-tour', authenticateToken, schedulePropertyTour);
 router.post(
   '/add-property', 
   authenticateToken,

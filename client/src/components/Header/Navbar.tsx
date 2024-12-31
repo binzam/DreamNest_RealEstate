@@ -16,7 +16,6 @@ const Navbar = () => {
   const savedPicture = useSelector(
     (state: RootState) => state.user.user?.profilePicture
   );
-  console.log(savedPicture);
 
   const dispatch = useDispatch<AppDispatch>();
   const { wishlist } = useSelector((state: RootState) => state.user);

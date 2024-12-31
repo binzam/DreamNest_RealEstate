@@ -42,6 +42,7 @@ const propertySchema = new Schema(
     },
     yearBuilt: { type: Number, required: true },
     discount: { type: Number, required: true, default: 0 },
+    views: { type: Number, default: 0 },
   },
   {
     timestamps: true,

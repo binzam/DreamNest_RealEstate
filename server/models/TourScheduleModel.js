@@ -12,7 +12,7 @@ const tourScheduleSchema = new Schema(
       ref: 'User',
       required: true,
     },
-    viewingDate: {
+    tourDateTime: {
       type: Date,
       required: true,
     },

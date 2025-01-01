@@ -70,7 +70,7 @@
   /* padding-right: 5px; */
   /* border-right: 1px solid #ddd; */
 }
-.add_icon{
+.add_icon {
   width: 20px;
   height: 20px;
 }
@@ -147,10 +147,10 @@
   border: 2px solid #ddd;
 }
 .hdr_wl_link svg {
- color: red;
- fill: red;
- width: 16px;
- height: 16px;
+  color: red;
+  fill: red;
+  width: 16px;
+  height: 16px;
 }
 .wl_counter {
   position: absolute;
@@ -176,11 +176,53 @@
   align-items: center;
   justify-content: center;
   border: 1px solid #333;
-  overflow: hidden;
+  /* overflow: hidden; */
+  position: relative;
 }
 .hdr_profile_btn:hover {
   background-color: #333;
   border: 1px solid #3a6ba1;
+}
+
+.hdr_prf_notf {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  /* animation: blink 0.7s infinite; */
+  color: #ff0000;
+}
+.hdr_prf_notf svg {
+  width: 20px;
+  height: 20px;
+  stroke: rgb(0, 0, 0);
+  stroke-width: 3px;
+  /* animation: shake 0.5s ease-in-out infinite; */
+}
+@keyframes blink {
+  0%,
+  100% {
+    color: #be0000;
+    opacity: 1;
+  }
+  50% {
+    color: rgb(255, 255, 59);
+    opacity: 0.5;
+  }
+}
+@keyframes shake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  75% {
+    transform: rotate(-10deg);
+  }
 }
 .icon_profile {
   font-size: 24px;
@@ -246,7 +288,7 @@
   align-items: center;
   justify-content: center;
 }
-.usr_ppic{
+.usr_ppic {
   width: 100%;
   height: 100%;
   border-radius: 50%;
@@ -286,10 +328,32 @@
   color: #333;
   padding: 8px 10px;
   height: auto;
+  margin-bottom: 2px;
+  border-bottom: 1px solid #ddd;
 }
 .usr_dd_link:hover {
   background-color: #000;
+  color: #fff;
+}
+.usr_dd_link.notf_link {
+  display: flex;
   color: #ffffff;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #000;
+}
+.notf_count {
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 3px;
+  line-height: 1;
+  background-color: #3a6ba1;
+  box-shadow: 1px 1px 5px #43a13a;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 .usr_dd_link.logout_btn {
   margin-top: 1rem;

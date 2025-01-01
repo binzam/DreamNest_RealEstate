@@ -9,16 +9,15 @@ import './Header.css';
 import { logoutUser, removeUser } from '../../utils/authUtils';
 import { FaHeart, FaUser } from 'react-icons/fa6';
 import { BsHouseAdd } from 'react-icons/bs';
+import { IoMdNotifications, IoMdSettings } from 'react-icons/io';
+import { CgProfile } from 'react-icons/cg';
+import { FaHome } from 'react-icons/fa';
+import { GrScheduleNew } from 'react-icons/gr';
 const Navbar = () => {
-  const { isAuthenticated, user } = useSelector(
+  const { isAuthenticated, user, wishlist } = useSelector(
     (state: RootState) => state.user
   );
-  const savedPicture = useSelector(
-    (state: RootState) => state.user.user?.profilePicture
-  );
-
   const dispatch = useDispatch<AppDispatch>();
-  const { wishlist } = useSelector((state: RootState) => state.user);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
@@ -33,11 +32,13 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <ul className="nav_list">
-        <li>
-          <Link className="hdr_nav_link add" to="/add-property">
-            <BsHouseAdd className="add_icon" /> Add Property
-          </Link>
-        </li>
+        {isAuthenticated && (
+          <li>
+            <Link className="hdr_nav_link add" to="/add-property">
+              <BsHouseAdd className="add_icon" /> Add Property
+            </Link>
+          </li>
+        )}
         <li>
           <Link className="hdr_nav_link" to="/properties/sale">
             Buy
@@ -69,8 +70,16 @@ const Navbar = () => {
             <FaHeart />
           </Link>
           <button className="hdr_profile_btn" onClick={toggleDropdown}>
-            {savedPicture ? (
-              <img className="usr_ppic" src={savedPicture} alt="User Profile" />
+            <span className="hdr_prf_notf">
+              <IoMdNotifications />
+            </span>
+
+            {user?.profilePicture ? (
+              <img
+                className="usr_ppic"
+                src={user?.profilePicture}
+                alt="User Profile"
+              />
             ) : (
               <RiUser3Line className="icon_profile" />
             )}
@@ -85,10 +94,10 @@ const Navbar = () => {
                     className="usr_pr_dd_user_link"
                   >
                     <div className="usr_pr_dd_icon">
-                      {savedPicture ? (
+                      {user?.profilePicture ? (
                         <img
                           className="usr_ppic"
-                          src={savedPicture}
+                          src={user?.profilePicture}
                           alt="User Profile"
                         />
                       ) : (
@@ -109,13 +118,27 @@ const Navbar = () => {
                     className="usr_dd_link"
                     to="/profile"
                   >
+                    <CgProfile />
                     Profile
+                  </Link>
+                  <Link
+                    onClick={toggleDropdown}
+                    className="usr_dd_link notf_link"
+                    to="/notifications"
+                  >
+                    <div>
+                      <IoMdNotifications /> Notifications
+                    </div>
+                    <span className="notf_count">
+                      <IoMdNotifications />2
+                    </span>
                   </Link>
                   <Link
                     onClick={toggleDropdown}
                     className="usr_dd_link"
                     to="/my-properties"
                   >
+                    <FaHome />
                     My Properties
                   </Link>
                   <Link
@@ -123,13 +146,23 @@ const Navbar = () => {
                     className="usr_dd_link"
                     to="/wishlist"
                   >
+                    <FaHeart />
                     Wishlist
+                  </Link>
+
+                  <Link
+                    onClick={toggleDropdown}
+                    className="usr_dd_link"
+                    to="/tour-schedules"
+                  > <GrScheduleNew />
+                    Tour Schedules
                   </Link>
                   <Link
                     onClick={toggleDropdown}
                     className="usr_dd_link"
-                    to="/settings"
+                    to="/user-profile"
                   >
+                    <IoMdSettings />
                     Settings
                   </Link>
                   <button

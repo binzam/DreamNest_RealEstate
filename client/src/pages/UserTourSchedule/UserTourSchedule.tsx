@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { axiosPrivate } from '../api/axiosInstance';
+import { axiosPrivate } from '../../api/axiosInstance';
 import axios from 'axios';
-import { TourType } from '../types/interface';
+import { TourType } from '../../types/interface';
 
 const UserTourSchedule = () => {
   const [tourSchedules, setTourSchedules] = useState<TourType[]>([]);

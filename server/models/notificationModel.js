@@ -7,6 +7,10 @@ const notificationSchema = new Schema(
       ref: 'User',
       required: true,
     },
+    title: {
+      type: String,
+      required: true,
+    },
     message: {
       type: String,
       required: true,
@@ -20,6 +24,24 @@ const notificationSchema = new Schema(
       type: String,
       enum: ['Pending', 'Read', 'Acknowledged'],
       default: 'Pending',
+    },
+    dateOfTour: {
+      type: String,
+    },
+    timeOfTour: {
+      type: String,
+    },
+    addressOfTour: {
+      type: String,
+    },
+    idOfProperty: {
+      type: Types.ObjectId,
+      ref: 'Property',
+    },
+    initiatorId: {
+      type: Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
   },
   { timestamps: true }

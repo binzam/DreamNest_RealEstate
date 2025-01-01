@@ -1,6 +1,4 @@
-import { useSelector } from 'react-redux';
 import './UserProfile.css';
-import { RootState } from '../../store/store';
 import {
   FaCheck,
   FaHeart,
@@ -17,11 +15,12 @@ import ErrorDisplay from '../../components/ErrorDisplay';
 import { GridLoader } from 'react-spinners';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { updateProfilePicture } from '../../store/slices/userSlice';
+import { GrScheduleNew } from 'react-icons/gr';
 
 const UserProfile = () => {
-  const userProfilePic = useSelector(
-    (state: RootState) => state.user.user?.profilePicture
-  );
+  const dispatch = useDispatch();
   const [userData, setUserData] = useState({
     firstName: '',
     lastName: '',
@@ -84,6 +83,7 @@ const UserProfile = () => {
         }
       );
       console.log('Image uploaded successfully:', response);
+      dispatch(updateProfilePicture(response.data.profilePicture));
       setUserData((prev) => ({
         ...prev,
         profilePicture: response.data.profilePicture,
@@ -201,13 +201,11 @@ const UserProfile = () => {
           </div>
           <div className="usr_prf_acts">
             <Link to={'/tour-schedules'}>
-              <FaHome />
-              Tour Schedules
+              <GrScheduleNew /> Tour Schedules
             </Link>
             <span className="usr_prf_act_count">{userData.propertyCount}</span>
           </div>
         </div>
-        {}
       </div>
       {error && <ErrorDisplay message={error} />}
       {successMessage && (
@@ -229,7 +227,7 @@ const UserProfile = () => {
           <div className="prfl_picture">
             {previewImage ? (
               <img src={previewImage} alt="Preview" />
-            ) : userProfilePic ? (
+            ) : userData.profilePicture !== '' ? (
               <img src={userData.profilePicture} alt="Profile" />
             ) : (
               <FaUser />
@@ -252,7 +250,7 @@ const UserProfile = () => {
             {!editPhotoMode && !successMessage && (
               <label htmlFor="uploadImage" className="select_image_label">
                 <FaPenToSquare />
-                Change photo
+               <span>Change photo</span>
               </label>
             )}
           </form>

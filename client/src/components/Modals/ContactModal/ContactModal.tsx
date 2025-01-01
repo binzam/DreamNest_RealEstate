@@ -17,7 +17,7 @@ const ContactModal: React.FC<ContactModalProps> = ({
   const email = useSelector((state: RootState) => state.user.user?.email);
   const [formData, setFormData] = useState<ContactFormData>({
     fullName: '',
-    email: `${email}`,
+    email: `${email ? email : ''}`,
     phone: '',
     message: `I am interested in ${propertyAddress}...`,
   });

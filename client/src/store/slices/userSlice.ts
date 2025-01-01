@@ -66,6 +66,11 @@ const userSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    updateProfilePicture(state, action: PayloadAction<string>) {
+      if (state.user) {
+        state.user.profilePicture = action.payload;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -107,5 +112,6 @@ const userSlice = createSlice({
       });
   },
 });
-export const { login, logout, setLoading, setError } = userSlice.actions;
+export const { login, logout, setLoading, setError, updateProfilePicture } =
+  userSlice.actions;
 export default userSlice.reducer;

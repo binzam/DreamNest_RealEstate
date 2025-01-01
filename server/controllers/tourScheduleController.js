@@ -15,6 +15,20 @@ const schedulePropertyTour = async (req, res) => {
     if (!property) {
       return res.status(404).json({ message: 'Property not found.' });
     }
+
+    const formattedTourDate = new Date(tourDateTime);
+    const formattedTime = formattedTourDate.toLocaleTimeString();
+    const formattedDate = formattedTourDate.toLocaleDateString('en-US', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    });
+    const formatedAddress = property.address
+      ? `${property.address.street || ''}, ${property.address.city || ''}, ${
+          property.address.state || ''
+        }`.trim()
+      : 'Address not available';
     const newTourSchedule = new TourSchedule({
       propertyId,
       userId,
@@ -23,27 +37,32 @@ const schedulePropertyTour = async (req, res) => {
     await newTourSchedule.save();
 
     const ownerId = property.owner;
-    const formattedTime = new Date(tourDateTime).toLocaleTimeString();
-    const formattedDate = new Date(tourDateTime).toLocaleDateString('en-US', {
-      weekday: 'long',
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric',
-    });
 
     const userNotification = new Notification({
       userId,
-      message: `You have scheduled a viewing for property: ${property.title} on ${formattedDate} at ${formattedTime}. Please wait for the owner's confirmation.`,
+      initiatorId: userId,
+      title: `Viewing Requested for ${property.title}`,
+      message: `You have scheduled a viewing for property: ${formatedAddress} on ${formattedDate} at ${formattedTime}. Please wait for the owner's confirmation.`,
       type: 'tour',
       status: 'Pending',
+      dateOfTour: formattedDate,
+      timeOfTour: formattedTime,
+      addressOfTour: formatedAddress,
+      idOfProperty: propertyId,
     });
     await userNotification.save();
 
     const ownerNotification = new Notification({
       userId: ownerId,
-      message: `A viewing request has been made for your property: ${property.title} on ${formattedDate} at ${formattedTime}. Please confirm or cancel the request.`,
+      initiatorId: userId,
+      title: `New Viewing Request for ${property.title}`,
+      message: `A viewing request has been made for your property: ${formatedAddress} on ${formattedDate} at ${formattedTime}. Please confirm or cancel the request.`,
       type: 'tour',
       status: 'Pending',
+      dateOfTour: formattedDate,
+      timeOfTour: formattedTime,
+      addressOfTour: formatedAddress,
+      idOfProperty: propertyId,
     });
     await ownerNotification.save();
 
@@ -69,7 +88,7 @@ const getUserTourSchedules = async (req, res) => {
     );
 
     if (tours.length === 0) {
-      return res.status(404).json({ message: 'No tour schedules found.' });
+      return res.status(200).json({ tours: [] });
     }
 
     const formattedTours = tours.map((tour) => ({
@@ -80,7 +99,7 @@ const getUserTourSchedules = async (req, res) => {
       status: tour.status,
     }));
 
-    res.json({ tours: formattedTours });
+    res.json({ tours: formattedTours.length > 0 ? formattedTours : [] });
   } catch (error) {
     console.error('Error fetching user tour schedules:', error);
     return res
@@ -88,4 +107,33 @@ const getUserTourSchedules = async (req, res) => {
       .json({ message: 'Server error while fetching tour schedules' });
   }
 };
-export { schedulePropertyTour, getUserTourSchedules };
+const confirmTourSchedule = async (req, res) => {
+  const { tourId } = req.params;
+  const { status } = req.body;
+  const userId = req.user._id;
+  try {
+    const tour = await TourSchedule.findById(tourId).populate('propertyId');
+
+    if (!tour) {
+      return res.status(404).json({ message: 'Viewing not found' });
+    }
+
+    if (tour.propertyId.owner.toString() !== userId.toString()) {
+      return res
+        .status(403)
+        .json({ message: 'You are not authorized to confirm this viewing' });
+    }
+
+    tour.status = status;
+    await tour.save();
+
+    res.status(200).json({ message: 'Viewing status updated', viewing });
+  } catch (error) {
+    console.error('Error confirming viewing:', error);
+    res
+      .status(500)
+      .json({ message: 'Server error while confirming the viewing' });
+  }
+};
+
+export { schedulePropertyTour, getUserTourSchedules, confirmTourSchedule };

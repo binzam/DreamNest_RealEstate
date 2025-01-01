@@ -31,13 +31,12 @@ import ContactModal from '../../components/Modals/ContactModal/ContactModal';
 const PropertyDetail = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
-  const { isAuthenticated } = useSelector((state: RootState) => state.user);
+  const { isAuthenticated, user } = useSelector(
+    (state: RootState) => state.user
+  );
   const { propertiesById, loading } = useSelector(
     (state: RootState) => state.properties
   );
-  // const property = useSelector((state: RootState) =>
-  //   id ? state.properties.propertiesById[id] : null
-  // );
   const property = id ? propertiesById[id] : null;
   const [isImgModalOpen, setIsImgModalOpen] = useState(false);
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
@@ -72,6 +71,7 @@ const PropertyDetail = () => {
     detail,
     propertyFor,
     propertyType,
+    owner,
     createdAt,
   } = property as PropertyDataType;
   const { street, state, city, longitude, latitude } = address;
@@ -186,7 +186,7 @@ const PropertyDetail = () => {
               sqft
             </div>
           </div>
-          {isAuthenticated && (
+          {isAuthenticated && user?._id !== owner && (
             <button
               className="pty_actn_btn"
               onClick={() => setIsScheduleModalOpen(true)}
@@ -234,21 +234,23 @@ const PropertyDetail = () => {
               </div>
               <p>{detail}</p>
             </div>
-            <div className="pty_actions">
-              <button
-                className="pty_actn_btn"
-                onClick={() => setIsContactModalOpen(true)}
-              >
-                Ask a Question
-              </button>
+            {user?._id !== owner && (
+              <div className="pty_actions">
+                <button
+                  className="pty_actn_btn"
+                  onClick={() => setIsContactModalOpen(true)}
+                >
+                  Ask a Question
+                </button>
 
-              <button
-                className="pty_page_contact_btn"
-                onClick={() => setIsContactModalOpen(true)}
-              >
-                Contact {propertyFor === 'rent' ? ' Owner' : ' Seller'}
-              </button>
-            </div>
+                <button
+                  className="pty_page_contact_btn"
+                  onClick={() => setIsContactModalOpen(true)}
+                >
+                  Contact {propertyFor === 'rent' ? ' Owner' : ' Seller'}
+                </button>
+              </div>
+            )}
           </div>
           <div className="pty_map">
             <MapContainer

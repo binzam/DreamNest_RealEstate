@@ -27,16 +27,25 @@ const notificationSchema = new Schema(
     },
     dateOfTour: {
       type: String,
+      required: true,
     },
     timeOfTour: {
       type: String,
+      required: true,
     },
     addressOfTour: {
       type: String,
+      required: true,
     },
     idOfProperty: {
       type: Types.ObjectId,
       ref: 'Property',
+      required: true,
+    },
+    idOfTour: {
+      type: Types.ObjectId,
+      ref: 'TourSchedule',
+      required: true,
     },
     initiatorId: {
       type: Types.ObjectId,

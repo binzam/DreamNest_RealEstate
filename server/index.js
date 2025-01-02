@@ -10,6 +10,7 @@ import userRoutes from './routes/userRoutes.js';
 import tourScheduleRoutes from './routes/tourScheduleRoutes.js';
 import path from 'path';
 import multerErrorHandler from './middleware/multerErrorHandler.js';
+// import { clearAllNotifications, clearAllTourSchedules } from './utils/resetUtils.js';
 
 const app = express();
 app.use(express.json());
@@ -38,6 +39,8 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log('App connected to database');
+    // clearAllNotifications()
+    // clearAllTourSchedules()
     const url = `http://localhost:${process.env.PORT}`;
     app.listen(process.env.PORT, () => {
       console.log(`App listening on: \x1b[32m%s\x1b[0m`, url);

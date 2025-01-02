@@ -8,13 +8,15 @@ import UserProfile from './pages/UserProfile/UserProfile';
 import UserNotifications from './pages/UserNotifications/UserNotifications';
 import UserTourSchedule from './pages/UserTourSchedule/UserTourSchedule';
 import TourScheduleDetail from './pages/UserTourSchedule/TourScheduleDetail';
+import TourRequest from './pages/ManageProperties/TourRequest/TourRequest';
+import ManageProperties from './pages/ManageProperties/ManageProperties';
 
 const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
 const Home = lazy(() => import('./pages/Home/Home'));
 const PropertyList = lazy(() => import('./pages/PropertyList/PropertyList'));
 const Wishlist = lazy(() => import('./pages/Wishlist/Wishlist'));
 const AddProperty = lazy(() => import('./pages/AddProperty/AddProperty'));
-const MyProperties = lazy(() => import('./pages/MyProperties/MyProperties'));
+const MyProperties = lazy(() => import('./pages/ManageProperties/MyProperties/MyProperties'));
 const EditProperty = lazy(() => import('./pages/EditProperty/EditProperty'));
 const PropertyDetail = lazy(
   () => import('./pages/PropertyDetail/PropertyDetail')
@@ -51,12 +53,25 @@ function App() {
             <Route path="property-detail/:id" element={<PropertyDetail />} />
             <Route path="about" element={<About />} />
 
-            <Route element={<ProtectedRoute />}>
+            {/* <Route element={<ProtectedRoute />}>
               <Route path="my-properties" element={<MyProperties />} />
+            </Route> */}
+            {/* <Route element={<ProtectedRoute />}>
+              <Route path="my-properties" element={<MyProperties />}>
+                <Route path="tours" element={<TourRequest />} />
+              </Route>
+            </Route> */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="manage-properties" element={<ManageProperties />}>
+                <Route path="my-properties" element={<MyProperties />} />
+                <Route path="tour-requests" element={<TourRequest />} />
+              </Route>
             </Route>
             <Route element={<ProtectedRoute />}>
               <Route path="my-properties/edit/:id" element={<EditProperty />} />
             </Route>
+
+
             <Route element={<ProtectedRoute />}>
               <Route path="wishlist" element={<Wishlist />} />
             </Route>

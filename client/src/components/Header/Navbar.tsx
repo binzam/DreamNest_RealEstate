@@ -57,7 +57,7 @@ const Navbar = () => {
         </li>
         {isAuthenticated && (
           <li>
-            <Link className="hdr_nav_link" to="/my-properties">
+            <Link className="hdr_nav_link" to="/manage-properties">
               My Properties
             </Link>
           </li>
@@ -136,7 +136,7 @@ const Navbar = () => {
                   <Link
                     onClick={toggleDropdown}
                     className="usr_dd_link"
-                    to="/my-properties"
+                    to="/manage-properties"
                   >
                     <FaHome />
                     My Properties

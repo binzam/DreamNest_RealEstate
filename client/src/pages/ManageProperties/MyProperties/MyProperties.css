@@ -1,0 +1,35 @@
+
+.my_ptys_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+.my_ptys_grid .pty_box {
+  width: 100%;
+}
+.my_pty_loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+.add_pty_link {
+  display: block;
+  width: 30%;
+  text-align: center;
+  margin: 3rem auto;
+  color: #000;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-decoration: none;
+  border: 1px dashed #000;
+  padding: 0.5rem 1rem;
+  border-radius: 100vw;
+  transition: all 0.3s;
+}
+.add_pty_link:hover {
+  background-color: #000;
+  color: #fff;
+}

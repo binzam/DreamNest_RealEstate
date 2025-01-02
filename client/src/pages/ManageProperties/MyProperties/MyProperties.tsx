@@ -1,15 +1,16 @@
 import './MyProperties.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { axiosPrivate } from '../../api/axiosInstance';
-import { PropertyDataType } from '../../types/propertyTypes';
-import PropertyCard from '../../components/PropertyCard/PropertyCard';
+import { axiosPrivate } from '../../../api/axiosInstance';
+import { PropertyDataType } from '../../../types/propertyTypes';
+import PropertyCard from '../../../components/PropertyCard/PropertyCard';
 import axios from 'axios';
-import DeletePropertyModal from '../../components/Modals/DeletePropertyModal/DeletePropertyModal';
-import ErrorDisplay from '../../components/ErrorDisplay';
+import DeletePropertyModal from '../../../components/Modals/DeletePropertyModal/DeletePropertyModal';
+import ErrorDisplay from '../../../components/ErrorDisplay';
 import { GridLoader } from 'react-spinners';
 import { IoHome } from 'react-icons/io5';
-import { IoMdInformationCircleOutline } from 'react-icons/io';
+// import { IoHome } from 'react-icons/io5';
+// import { IoMdInformationCircleOutline } from 'react-icons/io';
 
 const MyProperties = () => {
   const location = useLocation();
@@ -88,36 +89,24 @@ const MyProperties = () => {
 
   const closeDeleteModal = () => {
     setIsModalOpen(false);
-    setPropertyToDelete({ id: "", imageUrl: "" });
+    setPropertyToDelete({ id: '', imageUrl: '' });
   };
   return (
-    <div className="my_ptys_pge">
-      {message && <div className="success-message">{message}</div>}
-      <div className="my_ptys_hdr">
-        <div className="my_ptys_ttl">Manage your properties</div>
-        <div className="my_ptys_sub_ttl">
-          <IoMdInformationCircleOutline />
-
-          <p>
-            Here you can view all the properties you have listed. <br /> 
-            <strong>You can
-            edit or delete them as you wish.</strong> 
-          </p>
-        </div>
+    <>
+      <div>
+        {message && <div className="success-message">{message}</div>}
         {properties && properties.length > 0 && (
           <span className="my_pty_count">
             {properties.length}
             <IoHome />
           </span>
         )}
-      </div>
-      <div className="my_ptys_contnt">
         {loading ? (
           <GridLoader
             color="#13ccbb"
             margin={40}
-            size={55}
-            className="add_pty_loading"
+            size={35}
+            className="my_pty_loading"
           />
         ) : error ? (
           <ErrorDisplay message={error} />
@@ -146,7 +135,7 @@ const MyProperties = () => {
         onConfirm={() => handleDelete(propertyToDelete.id)}
         imageUrl={propertyToDelete.imageUrl}
       />
-    </div>
+    </>
   );
 };
 

@@ -41,7 +41,7 @@ const MobileNavbar = ({ onCloseModal }: MobileNavbarProps) => {
               </Link>
             </div>
             <div>
-              <Link onClick={onCloseModal} className="mob_nav_link" to={'/my-properties'}>
+              <Link onClick={onCloseModal} className="mob_nav_link" to={'/manage-properties'}>
                My Properties
               </Link>
             </div>

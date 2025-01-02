@@ -107,7 +107,7 @@ const AddProperty = () => {
       );
       console.log(response);
       if (response.status === 201) {
-        navigate('/my-properties', {
+        navigate('/manage-properties', {
           state: { message: 'Congratulations! Property added successfully!' },
         });
       }

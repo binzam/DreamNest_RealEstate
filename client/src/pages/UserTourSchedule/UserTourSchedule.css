@@ -1,0 +1,146 @@
+.tour_schedule_page {
+  background-color: #fff;
+  min-height: calc(100vh - 50px);
+}
+.tour_schd_hdr {
+  background-color: #444;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem 5rem;
+}
+.tour_schdl_ttl {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tour_schdl_ttl h2 {
+  color: #ffffff;
+  letter-spacing: 2px;
+  font-size: 1rem;
+}
+.tour_schdl_ttl svg {
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+.tours_sub_ttl {
+  text-align: left;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  color: #ffffff;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.tours_sub_ttl svg {
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.tour_schdl_cntnt {
+  padding: 1rem 5rem;
+}
+.tour_schedule_list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.tour_schedule_item {
+  display: flex;
+  flex-direction: column;
+}
+.highlight_tour {
+  border: 2px solid #13ccbb;
+  background-color: #f0f8ff;
+  transition: background-color 0.5s ease-out;
+}
+.tour_time {
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+}
+.tour_time svg {
+  font-size: 1.2rem;
+  color: #979797;
+}
+.tour_time div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tour_address {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tour_address svg {
+  font-size: 1rem;
+  color: #979797;
+}
+.tour_address a {
+  text-decoration: none;
+  color: #000068;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #000068;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.tour_address a svg {
+  font-size: 1rem;
+  color: #000;
+}
+.tour_address a:hover {
+  text-decoration: underline;
+  border-bottom: 1px solid transparent;
+  color: #0000ad;
+}
+
+.tour_bottm {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.tour_status {
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.tour_status svg {
+  font-size: 1.3rem;
+  color: rgb(187, 187, 0);
+}
+.tour_action_buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.tour_action_buttons button {
+  padding: 0.3rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.8rem;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+.confirm_btn {
+  background-color: #333;
+  color: #fff;
+}
+.cancel_btn {
+  background-color: rgb(255, 54, 54);
+  color: #fff;
+}

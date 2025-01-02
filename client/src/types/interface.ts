@@ -9,16 +9,16 @@ export interface NotificationType {
   idOfProperty: string;
   status: string;
   initiatorId: string;
+  idOfTour: string;
 }
 export interface TourType {
+  propertyId: string;
   tourId: string;
+  propertyOwnerId: string;
   propertyTitle: string;
-  propertyAddress: {
-    street: string;
-    city: string;
-    state: string;
-    zip: string;
-  };
-  tourDateTime: string;
+  dateOfTour: string;
+  timeOfTour: string;
+  addressOfTour: string;
+  tourDateTime: Date;
   status: string;
 }

@@ -193,7 +193,7 @@ const UserProfile = () => {
             <span className="usr_prf_act_count">{userData.wishlistCount}</span>
           </div>
           <div className="usr_prf_acts">
-            <Link to={'/my-properties'}>
+            <Link to={'/manage-properties'}>
               <FaHome />
               Your Properties
             </Link>

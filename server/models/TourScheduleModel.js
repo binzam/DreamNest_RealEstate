@@ -7,6 +7,11 @@ const tourScheduleSchema = new Schema(
       ref: 'Property',
       required: true,
     },
+    propertyOwnerId: {
+      type: Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     userId: {
       type: Types.ObjectId,
       ref: 'User',
@@ -18,8 +23,20 @@ const tourScheduleSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ['Scheduled', 'Completed', 'Cancelled'],
+      enum: ['Scheduled', 'Confirmed', 'Completed', 'Canceled'],
       default: 'Scheduled',
+    },
+    dateOfTour: {
+      type: String,
+      required: true,
+    },
+    timeOfTour: {
+      type: String,
+      required: true,
+    },
+    addressOfTour: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

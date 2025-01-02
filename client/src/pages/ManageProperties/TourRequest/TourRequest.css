@@ -1,0 +1,53 @@
+.my_pty_loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+/* .tour_request_cntnt{
+
+} */
+.tour_request_list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem 5rem;
+}
+.tour_request_item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 5rem;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.tour_status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.2rem 0.5rem;
+}
+.tour_status.confirmed {
+  background-color: #e6f7e6;
+  border: 1px dashed #4caf50;
+  color: #2e7d32;
+}
+.tour_status.scheduled {
+  background-color: #fffbe6;
+  border: 1px dashed #ffd700;
+  color: #856404;
+}
+
+.tour_status span {
+  color: inherit;
+}
+
+.tour_status small {
+  font-size: 0.9rem;
+  color: inherit;
+}
+.tour_status svg {
+  font-size: 1.3rem;
+  color: inherit;
+}

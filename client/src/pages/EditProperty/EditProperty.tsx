@@ -8,8 +8,12 @@ import PropertyCard from '../../components/PropertyCard/PropertyCard';
 import { MdOutlineBrowserUpdated } from 'react-icons/md';
 import axios from 'axios';
 import { GridLoader } from 'react-spinners';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import ErrorDisplay from '../../components/ErrorDisplay';
 const EditProperty = () => {
   const { id } = useParams<{ id: string }>();
+  const { user } = useSelector((state: RootState) => state.user);
   const [property, setProperty] = useState<PropertyDataType | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -20,6 +24,9 @@ const EditProperty = () => {
       try {
         setLoading(true);
         const response = await axiosPrivate.get(`/properties/list/${id}`);
+        // if (response.data.owner !== user?._id) {
+        //   return navigate('/manage-properties');
+        // }
         setProperty(response.data);
       } catch (error) {
         console.log(error);
@@ -35,7 +42,7 @@ const EditProperty = () => {
     };
 
     fetchProperty();
-  }, [id]);
+  }, [id, navigate, user?._id]);
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
@@ -49,7 +56,7 @@ const EditProperty = () => {
       console.log(response);
 
       if (response.status === 200) {
-        navigate('/my-properties', {
+        navigate('/manage-properties/my-properties', {
           state: { message: 'Property updated successfully!' },
         });
       }
@@ -87,18 +94,6 @@ const EditProperty = () => {
     }));
   };
 
-  if (loading) {
-    return (
-      <GridLoader
-        color="#13ccbb"
-        margin={10}
-        size={25}
-        className="listing_p_loading"
-      />
-    );
-  }
-  if (error) return <div>{error}</div>;
-
   return (
     <div className="edit_pty_page">
       <div className="edit_pty_hdr">
@@ -108,134 +103,145 @@ const EditProperty = () => {
       </div>
       <div className="edit_pty_cntnt">
         {property && <PropertyCard property={property} />}
-        <form onSubmit={handleSubmit} className="edit_property_form">
-          <div className="edit_form_cntnt">
-            <div className="edit_frm_grp">
-              <label>
-                Address - Street:
-                <input
-                  type="text"
-                  name="street"
-                  value={property?.address?.street || ''}
-                  onChange={handleAddressChange}
-                />
-              </label>
+        {loading ? (
+          <GridLoader
+            color="#13ccbb"
+            margin={40}
+            size={35}
+            className="edit_pty_loading"
+          />
+        ) : error ? (
+          <ErrorDisplay message={error} />
+        ) : (
+          <form onSubmit={handleSubmit} className="edit_property_form">
+            <div className="edit_form_cntnt">
+              <div className="edit_frm_grp">
+                <label>
+                  Address - Street:
+                  <input
+                    type="text"
+                    name="street"
+                    value={property?.address?.street || ''}
+                    onChange={handleAddressChange}
+                  />
+                </label>
 
-              <label>
-                Address - City:
-                <input
-                  type="text"
-                  name="city"
-                  value={property?.address?.city || ''}
-                  onChange={handleAddressChange}
-                />
-              </label>
+                <label>
+                  Address - City:
+                  <input
+                    type="text"
+                    name="city"
+                    value={property?.address?.city || ''}
+                    onChange={handleAddressChange}
+                  />
+                </label>
 
-              <label>
-                Address - State:
-                <input
-                  type="text"
-                  name="state"
-                  value={property?.address?.state || ''}
-                  onChange={handleAddressChange}
-                />
-              </label>
+                <label>
+                  Address - State:
+                  <input
+                    type="text"
+                    name="state"
+                    value={property?.address?.state || ''}
+                    onChange={handleAddressChange}
+                  />
+                </label>
 
-              <label>
-                Address - Country:
-                <input
-                  type="text"
-                  name="country"
-                  value={property?.address?.country || ''}
-                  onChange={handleAddressChange}
-                />
-              </label>
+                <label>
+                  Address - Country:
+                  <input
+                    type="text"
+                    name="country"
+                    value={property?.address?.country || ''}
+                    onChange={handleAddressChange}
+                  />
+                </label>
+              </div>
+              <div className="edit_frm_grp">
+                <label>
+                  Bedrooms:
+                  <input
+                    type="number"
+                    name="bed"
+                    value={property?.bed || ''}
+                    onChange={handleChange}
+                  />
+                </label>
+
+                <label>
+                  Bathrooms:
+                  <input
+                    type="number"
+                    name="bath"
+                    value={property?.bath || ''}
+                    onChange={handleChange}
+                  />
+                </label>
+
+                <label>
+                  Square Footage:
+                  <input
+                    type="number"
+                    name="sqft"
+                    value={property?.sqft || ''}
+                    onChange={handleChange}
+                  />
+                </label>
+
+                <label>
+                  Year Built:
+                  <input
+                    type="number"
+                    name="yearBuilt"
+                    value={property?.yearBuilt || ''}
+                    onChange={handleChange}
+                  />
+                </label>
+              </div>
+              <div className="edit_frm_grp">
+                <label>
+                  Title:
+                  <input
+                    type="text"
+                    name="title"
+                    value={property?.title || ''}
+                    onChange={handleChange}
+                  />
+                </label>
+                <label>
+                  Description:
+                  <textarea
+                    name="detail"
+                    value={property?.detail || ''}
+                    onChange={handleChange}
+                  ></textarea>
+                </label>
+
+                <label>
+                  Property Type:
+                  <input
+                    type="text"
+                    name="propertyType"
+                    value={property?.propertyType || ''}
+                    onChange={handleChange}
+                  />
+                </label>
+                <label>
+                  Price:
+                  <input
+                    type="number"
+                    name="price"
+                    value={property?.price || ''}
+                    onChange={handleChange}
+                  />
+                </label>
+              </div>
             </div>
-            <div className="edit_frm_grp">
-              <label>
-                Bedrooms:
-                <input
-                  type="number"
-                  name="bed"
-                  value={property?.bed || ''}
-                  onChange={handleChange}
-                />
-              </label>
 
-              <label>
-                Bathrooms:
-                <input
-                  type="number"
-                  name="bath"
-                  value={property?.bath || ''}
-                  onChange={handleChange}
-                />
-              </label>
-
-              <label>
-                Square Footage:
-                <input
-                  type="number"
-                  name="sqft"
-                  value={property?.sqft || ''}
-                  onChange={handleChange}
-                />
-              </label>
-
-              <label>
-                Year Built:
-                <input
-                  type="number"
-                  name="yearBuilt"
-                  value={property?.yearBuilt || ''}
-                  onChange={handleChange}
-                />
-              </label>
-            </div>
-            <div className="edit_frm_grp">
-              <label>
-                Title:
-                <input
-                  type="text"
-                  name="title"
-                  value={property?.title || ''}
-                  onChange={handleChange}
-                />
-              </label>
-              <label>
-                Description:
-                <textarea
-                  name="detail"
-                  value={property?.detail || ''}
-                  onChange={handleChange}
-                ></textarea>
-              </label>
-
-              <label>
-                Property Type:
-                <input
-                  type="text"
-                  name="propertyType"
-                  value={property?.propertyType || ''}
-                  onChange={handleChange}
-                />
-              </label>
-              <label>
-                Price:
-                <input
-                  type="number"
-                  name="price"
-                  value={property?.price || ''}
-                  onChange={handleChange}
-                />
-              </label>
-            </div>
-          </div>
-
-          <button className="update_pty_btn" type="submit">
-            <MdOutlineBrowserUpdated /> Update Property
-          </button>
-        </form>
+            <button className="update_pty_btn" type="submit">
+              <MdOutlineBrowserUpdated /> Update Property
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );

@@ -12,6 +12,13 @@
   align-items: flex-start;
   gap: 4rem;
 }
+.edit_pty_loading{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
 .edit_pty_hdr .back_btn {
   color: #dbdbdb;
 }

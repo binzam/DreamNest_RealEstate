@@ -1,4 +1,4 @@
-.my_ptys_pge {
+.mange_pty_pge {
   width: 100%;
   min-height: 100vh;
   background-color: #fff;
@@ -12,15 +12,15 @@
   padding: 0.5rem;
   background-color: rgb(0, 95, 0);
 }
-.my_ptys_hdr {
+.mange_pty_hdr {
   background-color: rgb(11, 83, 17);
-  padding: 1rem 2rem;
+  padding: 0.5rem 2rem;
   position: relative;
   display: flex;
   align-items: flex-start;
   gap: 4rem;
 }
-.my_ptys_ttl {
+.mange_pty_ttl {
   font-size: 1rem;
   color: #fff;
   font-weight: 600;
@@ -29,7 +29,7 @@
 .my_pty_count {
   position: absolute;
   left: 10px;
-  top: 110%;
+  top: 10%;
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
   font-size: 0.8rem;
@@ -41,7 +41,7 @@
   justify-content: center;
   gap: 4px;
 }
-.my_ptys_sub_ttl {
+.mange_pty_sub_ttl {
   text-align: left;
   font-size: 0.8rem;
   letter-spacing: 1px;
@@ -50,39 +50,36 @@
   gap: 1rem;
   align-items: center;
 }
-.my_ptys_sub_ttl svg {
+.mange_pty_sub_ttl svg {
   font-size: 1.2rem;
   color: #fff;
 }
-.my_ptys_contnt {
-  padding: 1rem 5rem;
+.mange_pty_nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  margin-top: 0.5rem;
 }
-
-.my_ptys_grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1rem;
-}
-.my_ptys_grid .pty_box {
-  width: 100%;
-}
-
-.add_pty_link {
-  display: block;
-  width: 30%;
-  text-align: center;
-  margin: 3rem auto;
-  color: #000;
-  font-size: 1.1rem;
+.mange_nav_link {
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 1px;
+  color: #000;
   text-decoration: none;
-  border: 1px dashed #000;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 3rem;
   border-radius: 100vw;
+  border: 1px dashed #000;
   transition: all 0.3s;
 }
-.add_pty_link:hover {
+.mange_nav_link:hover {
   background-color: #000;
   color: #fff;
+}
+.mange_nav_link.active {
+  background-color: #000;
+  color: #fff;
+}
+.mange_pty_contnt {
+  padding: 1rem 5rem;
 }

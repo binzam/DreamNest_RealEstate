@@ -26,21 +26,6 @@
   font-weight: 600;
   letter-spacing: 2px;
 }
-.my_pty_count {
-  position: absolute;
-  left: 10px;
-  top: 10%;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  background-color: #1f8600;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-}
 .mange_pty_sub_ttl {
   text-align: left;
   font-size: 0.8rem;
@@ -79,7 +64,4 @@
 .mange_nav_link.active {
   background-color: #000;
   color: #fff;
-}
-.mange_pty_contnt {
-  padding: 1rem 5rem;
 }

@@ -39,6 +39,7 @@ const schedulePropertyTour = async (req, res) => {
       timeOfTour: formattedTime,
       addressOfTour: formatedAddress,
       propertyOwnerId: ownerId,
+      propertyImage: property.photos[0].image,
     });
     await newTourSchedule.save();
 
@@ -53,7 +54,9 @@ const schedulePropertyTour = async (req, res) => {
       timeOfTour: formattedTime,
       addressOfTour: formatedAddress,
       idOfProperty: propertyId,
+      propertyOwnerId: ownerId,
       idOfTour: newTourSchedule._id,
+      propertyImage: property.photos[0].image,
     });
     await userNotification.save();
 
@@ -68,7 +71,9 @@ const schedulePropertyTour = async (req, res) => {
       timeOfTour: formattedTime,
       addressOfTour: formatedAddress,
       idOfProperty: propertyId,
+      propertyOwnerId: ownerId,
       idOfTour: newTourSchedule._id,
+      propertyImage: property.photos[0].image,
     });
     await ownerNotification.save();
 
@@ -103,6 +108,7 @@ const getUserTourSchedules = async (req, res) => {
       propertyId: tour.propertyId,
       propertyOwnerId: tour.propertyOwnerId,
       status: tour.status,
+      propertyImage: tour.propertyImage,
     }));
 
     res.json({ tours: formattedTours.length > 0 ? formattedTours : [] });
@@ -121,7 +127,7 @@ const getUserTourRequests = async (req, res) => {
     const tours = await TourSchedule.find({ propertyOwnerId: userId });
 
     if (tours.length === 0) {
-      return res.status(200).json({ tours: [] });
+      return res.status(200).json({ tours: [], tourDates: [], toursCount: 0 });
     }
 
     const formattedTours = tours.map((tour) => ({
@@ -133,9 +139,15 @@ const getUserTourRequests = async (req, res) => {
       propertyId: tour.propertyId,
       propertyOwnerId: tour.propertyOwnerId,
       status: tour.status,
+      propertyImage: tour.propertyImage,
     }));
+    const tourDates = tours.map((tour) => tour.dateOfTour);
 
-    res.json({ tours: formattedTours.length > 0 ? formattedTours : [] });
+    res.json({
+      tours: formattedTours,
+      tourDates,
+      toursCount: tours.length,
+    });
   } catch (error) {
     console.error('Error fetching user tour schedules:', error);
     return res
@@ -176,7 +188,9 @@ const confirmTourSchedule = async (req, res) => {
       timeOfTour: tour.timeOfTour,
       addressOfTour: tour.addressOfTour,
       idOfProperty: tour.propertyId,
+      propertyOwnerId: tour.propertyOwnerId,
       idOfTour: tour._id,
+      propertyImage: tour.propertyImage,
     });
     await userNotification.save();
 
@@ -200,7 +214,7 @@ const cancelTourSchedule = async (req, res) => {
       return res.status(403).json({ message: 'Unauthorized action.' });
     }
 
-    if (tour.status !== 'Scheduled') {
+    if (tour.status !== 'Confirmed') {
       return res
         .status(400)
         .json({ message: 'Tour is not in a schedulable state.' });
@@ -220,7 +234,9 @@ const cancelTourSchedule = async (req, res) => {
       timeOfTour: tour.timeOfTour,
       addressOfTour: tour.addressOfTour,
       idOfProperty: tour.propertyId,
+      propertyOwnerId: tour.propertyOwnerId,
       idOfTour: tour._id,
+      propertyImage: tour.propertyImage,
     });
     await userNotification.save();
 

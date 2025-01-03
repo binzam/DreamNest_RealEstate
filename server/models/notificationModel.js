@@ -52,6 +52,15 @@ const notificationSchema = new Schema(
       ref: 'User',
       required: true,
     },
+    propertyOwnerId: {
+      type: Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    propertyImage: {
+      type: String,
+      // required: true,
+    },
   },
   { timestamps: true }
 );

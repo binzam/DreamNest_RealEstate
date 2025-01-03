@@ -40,7 +40,7 @@ mongoose
   .then(() => {
     console.log('App connected to database');
     // clearAllNotifications()
-    // clearAllTourSchedules()
+    // // clearAllTourSchedules()
     const url = `http://localhost:${process.env.PORT}`;
     app.listen(process.env.PORT, () => {
       console.log(`App listening on: \x1b[32m%s\x1b[0m`, url);

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy, useEffect } from 'react';
 import './App.css';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -16,7 +16,9 @@ const Home = lazy(() => import('./pages/Home/Home'));
 const PropertyList = lazy(() => import('./pages/PropertyList/PropertyList'));
 const Wishlist = lazy(() => import('./pages/Wishlist/Wishlist'));
 const AddProperty = lazy(() => import('./pages/AddProperty/AddProperty'));
-const MyProperties = lazy(() => import('./pages/ManageProperties/MyProperties/MyProperties'));
+const MyProperties = lazy(
+  () => import('./pages/ManageProperties/MyProperties/MyProperties')
+);
 const EditProperty = lazy(() => import('./pages/EditProperty/EditProperty'));
 const PropertyDetail = lazy(
   () => import('./pages/PropertyDetail/PropertyDetail')
@@ -63,6 +65,7 @@ function App() {
             </Route> */}
             <Route element={<ProtectedRoute />}>
               <Route path="manage-properties" element={<ManageProperties />}>
+                <Route path="" element={<Navigate to="my-properties" />} />
                 <Route path="my-properties" element={<MyProperties />} />
                 <Route path="tour-requests" element={<TourRequest />} />
               </Route>
@@ -70,7 +73,6 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="my-properties/edit/:id" element={<EditProperty />} />
             </Route>
-
 
             <Route element={<ProtectedRoute />}>
               <Route path="wishlist" element={<Wishlist />} />

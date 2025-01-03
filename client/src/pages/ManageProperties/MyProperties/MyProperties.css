@@ -1,4 +1,22 @@
+.my_pts_cntnt {
+  padding: 1rem 5rem;
+}
 
+.my_pty_count {
+  position: absolute;
+  left: 5rem;
+  top: 10%;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: #1f8600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
 .my_ptys_grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

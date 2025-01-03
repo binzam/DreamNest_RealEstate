@@ -5,33 +5,177 @@
   transform: translate(-50%, -50%);
   z-index: 10;
 }
-/* .tour_request_cntnt{
+.tour_request_cntnt {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 3rem;
+  padding: 1rem 5rem 1rem 2rem;
+}
 
-} */
+.request_count {
+  position: absolute;
+  right: 5rem;
+  top: 10%;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: #000000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.tour_request_dates {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 3rem;
+  border-left: 2px solid #ddd;
+  box-shadow: 2px 2px 6px #333;
+  border-radius: 10px;
+}
+.tour_request_dates h2 {
+  font-size: 1.5rem;
+  color: #000000;
+  font-weight: 600;
+  border-bottom: 4px solid #ddd;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+}
+.tour_date {
+  color: #333;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 1rem;
+}
+.tour_filter_controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: flex-end;
+}
+.tour_filter_controls label {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #000000;
+}
+.tour_status_filter {
+  border: 1px solid #ddd;
+  padding: 0.1rem 1rem;
+  color: #333;
+  background-color: #333;
+  color: #ffffff;
+}
+.tour_request_dates h3 {
+  font-size: 1rem;
+  color: #000000;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+.tours_display {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 .tour_request_list {
   display: flex;
   flex-direction: column;
-  gap: 1rem 5rem;
+  gap: 1rem;
 }
 .tour_request_item {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  padding: 1rem 5rem;
+  padding: 1rem;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+.tour_body {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.tour_img {
+  width: 200px;
+  height: 100px;
+}
+.tour_img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+.tour_address {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tour_address svg {
+  font-size: 1rem;
+  color: #ff0000;
+}
+.tour_address a {
+  text-decoration: none;
+  color: #000068;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border-bottom: 1px solid #000068;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.tour_address a svg {
+  font-size: 1rem;
+  color: #000;
+}
+.tour_address a:hover {
+  text-decoration: underline;
+  border-bottom: 1px solid transparent;
+  color: #0000ad;
+}
+
+.tour_time {
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+}
+.tour_time svg {
+  font-size: 1rem;
+  color: #00a5a5;
+}
+.tour_time div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 .tour_status {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 0.2rem 0.5rem;
+  margin-top: 0.5rem;
 }
 .tour_status.confirmed {
   background-color: #e6f7e6;
   border: 1px dashed #4caf50;
   color: #2e7d32;
+}
+.tour_status.canceled {
+  background-color: #ffabab;
+  border: 1px dashed #e60000;
+  color: #ff0000;
 }
 .tour_status.scheduled {
   background-color: #fffbe6;
@@ -50,4 +194,40 @@
 .tour_status svg {
   font-size: 1.3rem;
   color: inherit;
+}
+.zero_msg {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #757575;
+  text-align: center;
+  margin-top: 5rem;
+}
+.tour_action_loading {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 10;
+}
+.tour_action_buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: 216px;
+}
+
+.tour_action_buttons button {
+  padding: 0.3rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.8rem;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+.confirm_btn {
+  background-color: #333;
+  color: #fff;
+}
+.cancel_btn {
+  background-color: rgb(255, 54, 54);
+  color: #fff;
 }

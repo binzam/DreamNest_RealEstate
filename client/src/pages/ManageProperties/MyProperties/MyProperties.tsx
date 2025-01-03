@@ -93,7 +93,7 @@ const MyProperties = () => {
   };
   return (
     <>
-      <div>
+      <div className='my_pts_cntnt'>
         {message && <div className="success-message">{message}</div>}
         {properties && properties.length > 0 && (
           <span className="my_pty_count">

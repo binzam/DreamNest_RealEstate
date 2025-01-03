@@ -19,6 +19,13 @@
   padding: 2rem 1.5rem;
   border-radius: 10px;
 }
+.schedule_modal_loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
 .close_button {
   position: absolute;
   top: -40px;
@@ -72,7 +79,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
- 
+
   gap: 0.5rem;
 }
 .schedul_pty_address svg {
@@ -108,28 +115,28 @@
   width: 100%;
   color: #333;
 }
+.date_time_input.error {
+  border-color: red;
+  color: #9b0000;
+}
 .date_time_input:focus {
   border-color: #007bff;
 }
-/* 
-.virtual_checkbox_label {
+.selected_date_time {
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  gap: 0.5rem;
+}
+.selected_date_time div {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 2px;
-  color: #000000;
+  gap: 0.4rem;
 }
-.virtual_checkbox {
-  appearance: auto;
-  width: 15px;
-  height: 15px;
-} 
-*/
-
 .schedule_btn {
-  
   padding: 0.5rem 1.2rem;
   border: 1px dashed #13ccbb;
   cursor: pointer;
@@ -148,4 +155,24 @@
   background-color: #ffffff;
   color: rgb(0, 0, 0);
   border-color: #000;
+}
+.schedule_success {
+  text-align: center;
+  color: #007bff;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+.schedule_success button {
+  padding: 0.5rem 1rem;
+  border: 1px dashed #13ccbb;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin: auto;
+  gap: 6px;
+  margin-top: 1rem;
+  border-radius: 100vw;
+  background-color: #007bff;
+  color: #fff;
 }

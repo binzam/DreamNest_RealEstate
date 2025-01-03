@@ -7,6 +7,10 @@ const tourScheduleSchema = new Schema(
       ref: 'Property',
       required: true,
     },
+    propertyImage: {
+      type: String,
+      required: true,
+    },
     propertyOwnerId: {
       type: Types.ObjectId,
       ref: 'User',

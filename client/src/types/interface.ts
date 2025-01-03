@@ -10,9 +10,13 @@ export interface NotificationType {
   status: string;
   initiatorId: string;
   idOfTour: string;
+  propertyOwnerId: string;
+  createdAt: string;
+  propertyImage: string;
 }
 export interface TourType {
   propertyId: string;
+  propertyImage: string;
   tourId: string;
   propertyOwnerId: string;
   propertyTitle: string;

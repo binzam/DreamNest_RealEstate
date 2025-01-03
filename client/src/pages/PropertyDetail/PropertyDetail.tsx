@@ -22,7 +22,7 @@ import { AppDispatch, RootState } from '../../store/store';
 import { fetchPropertyById } from '../../store/slices/propertySlice';
 import ShareProperty from '../../components/ShareProperty/ShareProperty';
 import ScheduleTourModal from '../../components/Modals/ScheduleTourModal/ScheduleTourModal';
-import { formatDistance, subDays } from 'date-fns';
+import { formatDistance } from 'date-fns';
 import { MdOutlineBrowserUpdated } from 'react-icons/md';
 import { PropertyDataType } from '../../types/propertyTypes';
 import { GridLoader } from 'react-spinners';
@@ -156,8 +156,8 @@ const PropertyDetail = () => {
       <div className="property_descp">
         <div className="pty_post_date">
           <MdOutlineBrowserUpdated />
-          Posted{' '}
-          {formatDistance(subDays(new Date(createdAt), 3), new Date(), {
+          Posted
+          {formatDistance(new Date(createdAt), new Date(), {
             addSuffix: true,
           })}
         </div>

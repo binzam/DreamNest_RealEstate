@@ -48,9 +48,7 @@ const ManageProperties = () => {
           Tour Requests
         </Link>
       </nav>
-      <div className="mange_pty_contnt">
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   );
 };

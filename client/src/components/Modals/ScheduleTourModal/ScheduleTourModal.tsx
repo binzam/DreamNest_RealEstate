@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import './ScheduleTourModal.css';
-import { FaLocationDot, FaXmark } from 'react-icons/fa6';
+import { FaCalendarDays, FaLocationDot, FaXmark } from 'react-icons/fa6';
 import { GrScheduleNew } from 'react-icons/gr';
 import { AiOutlineSchedule } from 'react-icons/ai';
 import { axiosPrivate } from '../../../api/axiosInstance';
 import { useNavigate } from 'react-router-dom';
+import { GridLoader } from 'react-spinners';
+import { BsSmartwatch } from 'react-icons/bs';
+import ErrorDisplay from '../../ErrorDisplay';
 
 interface ScheduleTourModalProps {
   propertyImage: string;
@@ -26,7 +29,16 @@ const ScheduleTourModal = ({
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   console.log(tourDateTime);
+
   const navigate = useNavigate();
+  const formattedTourDate = new Date(tourDateTime);
+  const formattedTime = formattedTourDate.toLocaleTimeString();
+  const formattedDate = formattedTourDate.toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  });
   const handleSchedule = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setScheduleSuccess(false);
@@ -43,7 +55,6 @@ const ScheduleTourModal = ({
         propertyId,
         tourDateTime,
       });
-      alert(response.data.message);
       if (response.status === 201) {
         setScheduleSuccess(true);
       }
@@ -55,12 +66,20 @@ const ScheduleTourModal = ({
     }
   };
   const handleViewSchedule = () => {
-    navigate('/dashboard/tour-schedule');
+    navigate('/tour-schedules');
     onClose();
   };
   return (
     <div className="schedule_modal">
       <div className="schedule_modal_content">
+        {loading && (
+          <GridLoader
+            color="#329e00"
+            margin={30}
+            size={55}
+            className="schedule_modal_loading"
+          />
+        )}
         <button className="close_button" onClick={onClose}>
           <FaXmark />
         </button>
@@ -75,20 +94,29 @@ const ScheduleTourModal = ({
         <div className="contact_pty_img">
           <img src={propertyImage} alt={propertyAddress} />
         </div>
-        {error && <p className="error_text">{error}</p>}
+        {error && <ErrorDisplay message={error} />}
         {!scheduleSuccess ? (
           <form className="scheduling_form" onSubmit={handleSchedule}>
-            {loading && <p className="loading_text">Loading...</p>}
             <label className="date_time_label">
               Date & Time of Viewing
               <input
-                className="date_time_input"
+                className={`date_time_input ${error ? 'error' : ''}`}
                 type="datetime-local"
                 value={tourDateTime}
                 min={formattedNow}
                 onChange={(e) => setTourDateTime(e.target.value)}
               />
             </label>
+            <div className="selected_date_time">
+              <div>
+                <FaCalendarDays />
+                {formattedDate}
+              </div>
+              <div>
+                <BsSmartwatch />
+                {formattedTime}
+              </div>
+            </div>
             <button type="submit" className="schedule_btn">
               Schedule Tour
               <AiOutlineSchedule />

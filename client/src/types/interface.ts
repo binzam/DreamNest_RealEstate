@@ -25,4 +25,5 @@ export interface TourType {
   addressOfTour: string;
   tourDateTime: Date;
   status: string;
+  createdAt: string;
 }

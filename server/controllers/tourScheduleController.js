@@ -109,6 +109,7 @@ const getUserTourSchedules = async (req, res) => {
       propertyOwnerId: tour.propertyOwnerId,
       status: tour.status,
       propertyImage: tour.propertyImage,
+      createdAt: tour.createdAt,
     }));
 
     res.json({ tours: formattedTours.length > 0 ? formattedTours : [] });
@@ -140,6 +141,7 @@ const getUserTourRequests = async (req, res) => {
       propertyOwnerId: tour.propertyOwnerId,
       status: tour.status,
       propertyImage: tour.propertyImage,
+      createdAt: tour.createdAt,
     }));
     const tourDates = tours.map((tour) => tour.dateOfTour);
 

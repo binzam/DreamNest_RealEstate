@@ -6,6 +6,8 @@ import {
   fetchWishlistThunk,
   removeFromWishlistThunk,
 } from './wishlistThunks';
+import { NotificationType } from '../../types/interface';
+import { fetchNotificationsThunk } from './notificationThunks';
 
 interface User {
   email: string;
@@ -20,6 +22,7 @@ interface UserState {
   accessToken: string | null;
   isAuthenticated: boolean;
   wishlist: PropertyDataType[];
+  notifications: NotificationType[];
   loading: boolean;
   error: string | null;
 }
@@ -29,6 +32,7 @@ const initialState: UserState = {
   accessToken: null,
   isAuthenticated: false,
   wishlist: [],
+  notifications: [],
   loading: false,
   error: null,
 };
@@ -56,6 +60,7 @@ const userSlice = createSlice({
       state.accessToken = null;
       state.isAuthenticated = false;
       state.wishlist = [];
+      state.notifications = [];
       state.loading = false;
       state.error = null;
     },
@@ -107,6 +112,18 @@ const userSlice = createSlice({
         state.wishlist = action.payload;
       })
       .addCase(removeFromWishlistThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetchNotificationsThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchNotificationsThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.notifications = action.payload;
+      })
+      .addCase(fetchNotificationsThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

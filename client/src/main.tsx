@@ -6,9 +6,11 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { fetchProperties } from './store/slices/propertySlice.ts';
 import { fetchWishlistThunk } from './store/slices/wishlistThunks.ts';
+import { fetchNotificationsThunk } from './store/slices/notificationThunks.ts';
 
 store.dispatch(fetchProperties());
 store.dispatch(fetchWishlistThunk());
+store.dispatch(fetchNotificationsThunk());
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

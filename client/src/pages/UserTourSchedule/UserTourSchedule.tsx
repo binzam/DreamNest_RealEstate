@@ -5,13 +5,13 @@ import { TourType } from '../../types/interface';
 import './UserTourSchedule.css';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
 import { GrScheduleNew } from 'react-icons/gr';
-import { FaCalendarDays, FaLocationDot } from 'react-icons/fa6';
-import { BsSmartwatch } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
-import { FaHome } from 'react-icons/fa';
+// import { FaCalendarDays, FaLocationDot } from 'react-icons/fa6';
+// import { BsSmartwatch } from 'react-icons/bs';
+// import { Link } from 'react-router-dom';
+// import { FaHome } from 'react-icons/fa';
 import { GridLoader } from 'react-spinners';
 import ErrorDisplay from '../../components/ErrorDisplay';
-// import TourList from '../../components/TourList/TourList';
+import TourList from '../../components/TourList/TourList';
 const UserTourSchedule = () => {
   const [tourSchedules, setTourSchedules] = useState<TourType[]>([]);
   const [loading, setLoading] = useState(true);
@@ -67,64 +67,10 @@ const UserTourSchedule = () => {
             className="tour_loading"
           />
         ) : tourSchedules && tourSchedules.length > 0 ? (
-          <ul className="tour_schedule_list">
-            {tourSchedules.map((tour) => (
-              <li key={tour.tourId} className="tour_schedule_item">
-                <div className="tour_item_body">
-                  <div className="tour_img">
-                    <img src={tour.propertyImage} alt={tour.addressOfTour} />
-                  </div>
-                  <div className="tour_bottm">
-                    <div className="tour_address">
-                      <FaLocationDot />
-                      <Link to={`/property-detail/${tour.propertyId}`}>
-                        <FaHome />
-                        {tour.addressOfTour}
-                      </Link>
-                    </div>
-                    <div className="tour_time">
-                      <div>
-                        <FaCalendarDays /> {tour.dateOfTour}
-                      </div>
-                      <div>
-                        <BsSmartwatch />
-                        {tour.timeOfTour}
-                      </div>
-                    </div>
-                    <div className="tour_status">
-                      <IoMdInformationCircleOutline />
-                      Tour {tour.status} *{' '}
-                      {tour.status === 'Scheduled' && (
-                        <small>
-                          Waiting for the owner to confirm or cancel the request
-                        </small>
-                      )}
-                      {tour.status === 'Confirmed' && (
-                        <small>
-                          Visit the property on the provided data & time.
-                        </small>
-                      )}
-                      {tour.status === 'Canceled' && (
-                        <small>
-                          Tour request has been canceled by the owner.
-                        </small>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-          // <TourList
-          //   tours={tourSchedules}
-          //   loadingTourId={loadingTourId}
-          //   handleConfirm={() => {}}
-          //   handleCancel={() => {}}
-          //   isOwner={false}
-          //   loading={loading}
-          //   error={error}
-          //   noToursMessage="You have not scheduled any tours."
-          // />
+          <TourList
+            tours={tourSchedules}
+            isOwner={false}
+          />
         ) : (
           <p className="zero_msg">You have not scheduled any tours.</p>
         )}

@@ -1,37 +1,24 @@
-import { useEffect, useState } from 'react';
-import { axiosPrivate } from '../../api/axiosInstance';
-import { NotificationType } from '../../types/interface';
+// import { useEffect } from 'react';
 import './UserNotifications.css';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { 
+  // AppDispatch,
+   RootState } from '../../store/store';
 import ErrorDisplay from '../../components/ErrorDisplay';
 import { GridLoader } from 'react-spinners';
 import { formatDistance } from 'date-fns';
+// import { fetchNotificationsThunk } from '../../store/slices/notificationThunks';
+// import { useDispatch } from 'react-redux';
 const UserNotifications = () => {
-  const { user } = useSelector((state: RootState) => state.user);
-  const [notifications, setNotifications] = useState<NotificationType[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        setLoading(true);
-        const response = await axiosPrivate.get('/user/notifications');
-        console.log(response);
+  // const dispatch = useDispatch<AppDispatch>();
+  const { notifications, loading, error, user } = useSelector(
+    (state: RootState) => state.user
+  );
 
-        setNotifications(response.data.notifications);
-        console.log(response);
-      } catch (error) {
-        setError('Failed to fetch notifications');
-        console.error('Error fetching notifications:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchNotifications();
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchNotificationsThunk());
+  // }, [dispatch]);
 
   return (
     <div className="notf_page">

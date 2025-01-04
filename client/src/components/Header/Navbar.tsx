@@ -14,7 +14,7 @@ import { CgProfile } from 'react-icons/cg';
 import { FaHome } from 'react-icons/fa';
 import { GrScheduleNew } from 'react-icons/gr';
 const Navbar = () => {
-  const { isAuthenticated, user, wishlist } = useSelector(
+  const { isAuthenticated, user, wishlist, notifications } = useSelector(
     (state: RootState) => state.user
   );
   const dispatch = useDispatch<AppDispatch>();
@@ -70,9 +70,7 @@ const Navbar = () => {
             <FaHeart />
           </Link>
           <button className="hdr_profile_btn" onClick={toggleDropdown}>
-            <span className="hdr_prf_notf">
-              <IoMdNotifications />
-            </span>
+           
 
             {user?.profilePicture ? (
               <img
@@ -130,7 +128,7 @@ const Navbar = () => {
                       <IoMdNotifications /> Notifications
                     </div>
                     <span className="notf_count">
-                      <IoMdNotifications />2
+                      <IoMdNotifications />{notifications.length}
                     </span>
                   </Link>
                   <Link
@@ -154,7 +152,9 @@ const Navbar = () => {
                     onClick={toggleDropdown}
                     className="usr_dd_link"
                     to="/tour-schedules"
-                  > <GrScheduleNew />
+                  >
+                    {' '}
+                    <GrScheduleNew />
                     Tour Schedules
                   </Link>
                   <Link

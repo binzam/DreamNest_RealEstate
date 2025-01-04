@@ -47,7 +47,7 @@
 .notf_detail {
   display: flex;
   gap: 1rem;
-  align-items: center;
+  align-items: flex-start;
 }
 .notf_img {
   width: 200px;

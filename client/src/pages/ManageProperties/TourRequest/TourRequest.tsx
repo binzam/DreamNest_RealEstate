@@ -1,23 +1,15 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { IoMdInformationCircleOutline } from 'react-icons/io';
-import { FaCalendarDays, FaLocationDot } from 'react-icons/fa6';
-import { BsSmartwatch } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
-import { FaHome } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
 import { TourType } from '../../../types/interface';
 import { axiosPrivate } from '../../../api/axiosInstance';
-import { RootState } from '../../../store/store';
 import ErrorDisplay from '../../../components/ErrorDisplay';
 import { GridLoader } from 'react-spinners';
 import './TourRequest.css';
-import { ImCheckboxChecked } from 'react-icons/im';
-import { GiCancel } from 'react-icons/gi';
 import { BiSolidMessageEdit } from 'react-icons/bi';
-// import TourList from '../../../components/TourList/TourList';
+import TourList from '../../../components/TourList/TourList';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 const TourRequest = () => {
-  const { user } = useSelector((state: RootState) => state.user);
   const [tourSchedules, setTourSchedules] = useState<TourType[]>([]);
   const [tourDates, setTourDates] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -149,7 +141,6 @@ const TourRequest = () => {
     statusFilter === 'All'
       ? tourSchedules
       : tourSchedules.filter((tour) => tour.status === statusFilter);
-  // const noToursMessage = getNoToursMessage();
   return (
     <div className="tour_request_cntnt">
       {tourDates && tourDates.length > 0 && (
@@ -160,12 +151,22 @@ const TourRequest = () => {
       )}
       {tourDates.length > 0 && (
         <aside className="tour_request_dates">
-          <h2>All Tour Request Dates</h2>
+          <div>
+            <h2>Tour Schedule Calendar</h2>
+            <Calendar
+              tileClassName={({ date }) =>
+                tourDates.some((d) => d === date)
+                  ? 'highlight'
+                  : ''
+              }
+            />
+          </div>
+          {/* <h2>All Tour Request Dates</h2>
           {tourDates.map((date) => (
             <h3 key={date} className="tour_date">
               {date}
             </h3>
-          ))}
+          ))} */}
         </aside>
       )}
 
@@ -195,120 +196,14 @@ const TourRequest = () => {
             </select>
           </div>
           {filteredTours.length > 0 ? (
-            <ul className="tour_request_list">
-              {filteredTours.map((tour) => {
-                const isOwner = tour.propertyOwnerId === user?._id;
-                return (
-                  <li key={tour.tourId} className="tour_request_item">
-                    {loadingTourId === tour.tourId && (
-                      <GridLoader
-                        color="#13ccbb"
-                        margin={16}
-                        size={20}
-                        className="tour_action_loading"
-                      />
-                    )}
-                    <div className="tour_body">
-                      <div className="tour_img">
-                        <img
-                          src={tour.propertyImage}
-                          alt={tour.addressOfTour}
-                        />
-                      </div>
-                      <div>
-                        <div className="tour_address">
-                          <FaLocationDot />
-                          <Link to={`/property-detail/${tour.propertyId}`}>
-                            <FaHome />
-                            {tour.addressOfTour}
-                          </Link>
-                        </div>
-                        <div className="tour_time">
-                          <div>
-                            <FaCalendarDays /> {tour.dateOfTour}
-                          </div>
-                          <div>
-                            <BsSmartwatch />
-                            {tour.timeOfTour}
-                          </div>
-                        </div>
-                        <div
-                          className={`tour_status ${tour.status.toLowerCase()}`}
-                        >
-                          {tour.status === 'Scheduled' && (
-                            <>
-                              <IoMdInformationCircleOutline />
-                              <span>Tour {tour.status}</span>
-                              <small>
-                                * You need to confirm or cancel this request.
-                              </small>
-                            </>
-                          )}
-                          {tour.status === 'Confirmed' && (
-                            <>
-                              <ImCheckboxChecked />
-                              <span>Tour {tour.status}</span>
-                              <small>
-                                * Be ready to host on the provided date & time.
-                              </small>
-                            </>
-                          )}
-                          {tour.status === 'Canceled' && (
-                            <>
-                              <GiCancel />
-                              <span>Tour {tour.status}</span>
-                              <small>
-                                * You have canceled this tour request.
-                              </small>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    {isOwner && tour.status === 'Scheduled' && (
-                      <div className="tour_action_buttons">
-                        <button
-                          className="confirm_btn"
-                          onClick={() => handleConfirm(tour.tourId)}
-                          disabled={!!loadingTourId}
-                        >
-                          Confirm
-                        </button>
-                        <button
-                          className="cancel_btn"
-                          onClick={() => handleCancel(tour.tourId)}
-                          disabled={!!loadingTourId}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    )}
-                    {isOwner && tour.status === 'Confirmed' && (
-                      <div className="tour_action_buttons">
-                        <button
-                          className="cancel_btn"
-                          onClick={() => handleCancel(tour.tourId)}
-                          disabled={!!loadingTourId}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
+            <TourList
+              tours={filteredTours}
+              isOwner={true}
+              handleCancel={handleCancel}
+              handleConfirm={handleConfirm}
+              loadingTourId={loadingTourId}
+            />
           ) : (
-            // <TourList
-            //   tours={filteredTours}
-            //   loadingTourId={loadingTourId}
-            //   handleConfirm={handleConfirm}
-            //   handleCancel={handleCancel}
-            //   isOwner={true}
-            //   loading={loading}
-            //   error={error}
-            //   noToursMessage={noToursMessage}
-            // />
             <p className="zero_msg">{getNoToursMessage()}</p>
           )}
         </div>

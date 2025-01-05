@@ -125,7 +125,9 @@ const getUserTourRequests = async (req, res) => {
   try {
     const userId = req.user._id;
 
-    const tours = await TourSchedule.find({ propertyOwnerId: userId });
+    const tours = await TourSchedule.find({ propertyOwnerId: userId }).sort({
+      createdAt: -1,
+    });
 
     if (tours.length === 0) {
       return res.status(200).json({ tours: [], tourDates: [], toursCount: 0 });
@@ -143,7 +145,7 @@ const getUserTourRequests = async (req, res) => {
       propertyImage: tour.propertyImage,
       createdAt: tour.createdAt,
     }));
-    const tourDates = tours.map((tour) => tour.dateOfTour);
+    const tourDates = tours.map((tour) => tour.tourDateTime);
 
     res.json({
       tours: formattedTours,
@@ -216,7 +218,7 @@ const cancelTourSchedule = async (req, res) => {
       return res.status(403).json({ message: 'Unauthorized action.' });
     }
 
-    if (tour.status !== 'Confirmed') {
+    if (tour.status === 'Canceled' && tour.status === 'Confirmed') {
       return res
         .status(400)
         .json({ message: 'Tour is not in a schedulable state.' });

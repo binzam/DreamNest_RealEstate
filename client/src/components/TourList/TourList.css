@@ -21,8 +21,8 @@
 .tour_action_loading {
   position: absolute;
   top: 50%;
-  left: 3rem;
-  transform: translateY(-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 10;
 }
 .tour_body {
@@ -97,6 +97,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.2rem 0.5rem;
+  width: max-content;
   margin-top: 0.1rem;
 }
 .tour_status.confirmed {
@@ -134,12 +135,7 @@
   text-align: center;
   margin-top: 5rem;
 }
-.tour_action_loading {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
-  z-index: 10;
-}
+
 .tour_action_buttons {
   display: flex;
   align-items: center;

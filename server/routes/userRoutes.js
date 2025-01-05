@@ -7,6 +7,7 @@ import {
   updateUserProfile,
   uploadProfilePicture,
   getUserNotifications,
+  markNotificationAsRead,
 } from '../controllers/userController.js';
 import authenticateToken from '../middleware/authenticateToken.js';
 import multer from 'multer';
@@ -44,6 +45,11 @@ const upload = multer({
 
 router.get('/wishlist', authenticateToken, userWishlist);
 router.get('/notifications', authenticateToken, getUserNotifications);
+router.patch(
+  '/notifications/:notificationId/read',
+  authenticateToken,
+  markNotificationAsRead
+);
 
 router.post('/add-to-wishlist', authenticateToken, addToWishlist);
 

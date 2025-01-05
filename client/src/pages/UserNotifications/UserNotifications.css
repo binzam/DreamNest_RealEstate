@@ -5,12 +5,38 @@
 .notf_hdr {
   background-color: #333;
   padding: 0.5rem 5rem;
+  display: flex;
+  align-items: center;
+  gap: 5rem;
 }
 .notf_hdr h2 {
   font-weight: 700;
   font-size: 1.2rem;
   color: #fff;
   letter-spacing: 10px;
+}
+.notf_filter_controls {
+  margin: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+.notf_fltr_btn {
+  color: #0e0d0d;
+  background-color: #ffffff;
+  padding: 0.2rem 1rem;
+  font-size: 0.85rem;
+  border-radius: 3px;
+  border: 1px dashed #000;
+  transition: all 0.3s ease;
+}
+.notf_fltr_btn:hover{
+  background-color: #dbdbdb;
+}
+.notf_fltr_btn.active {
+  background-color: #000;
+  color: #fff;
 }
 .notf_contnt {
   padding: 1rem 5rem;
@@ -90,7 +116,7 @@
   color: #fff;
 }
 .mark_read_btn {
-  background-color: #000;
+  background-color: #0095a8;
   color: #fff;
   padding: 0.5rem 1rem;
   border-radius: 5px;
@@ -99,7 +125,7 @@
   position: absolute;
   right: 1rem;
   top: 1rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 .mark_read_btn:hover {
   background-color: #333;

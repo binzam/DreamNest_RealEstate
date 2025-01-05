@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 dotenv.config();
 import express from 'express';
+import { Server } from 'socket.io';
+import http from 'http';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
@@ -15,6 +17,13 @@ import multerErrorHandler from './middleware/multerErrorHandler.js';
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: process.env.ALLOWED_ORIGIN,
+    methods: ['GET', 'POST'],
+  },
+});
 
 app.use('/uploads', express.static(path.resolve('uploads')));
 
@@ -35,6 +44,15 @@ app.use('/api/properties', propertyRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/tour', tourScheduleRoutes);
 app.use(multerErrorHandler);
+
+io.on('connection', (socket) => {
+  console.log('User connected ', socket.id);
+  socket.on('send_message', (data) => {
+    console.log('Message Received ', data);
+    io.emit('receive_message', data);
+  });
+});
+
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
@@ -42,7 +60,7 @@ mongoose
     // clearAllNotifications()
     // clearAllTourSchedules()
     const url = `http://localhost:${process.env.PORT}`;
-    app.listen(process.env.PORT, () => {
+    server.listen(process.env.PORT, () => {
       console.log(`App listening on: \x1b[32m%s\x1b[0m`, url);
     });
   })

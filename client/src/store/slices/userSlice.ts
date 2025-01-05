@@ -7,7 +7,10 @@ import {
   removeFromWishlistThunk,
 } from './wishlistThunks';
 import { NotificationType } from '../../types/interface';
-import { fetchNotificationsThunk } from './notificationThunks';
+import {
+  fetchNotificationsThunk,
+  markNotificationAsReadThunk,
+} from './notificationThunks';
 
 interface User {
   email: string;
@@ -124,6 +127,27 @@ const userSlice = createSlice({
         state.notifications = action.payload;
       })
       .addCase(fetchNotificationsThunk.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(markNotificationAsReadThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(markNotificationAsReadThunk.fulfilled, (state, action) => {
+        const updatedNotification = action.payload;
+        const index = state.notifications.findIndex(
+          (n) => n._id === updatedNotification._id
+        );
+        if (index !== -1) {
+          state.notifications[index] = {
+            ...state.notifications[index],
+            ...updatedNotification,
+          };
+        }
+        state.loading = false;
+      })
+      .addCase(markNotificationAsReadThunk.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

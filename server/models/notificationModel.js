@@ -22,7 +22,7 @@ const notificationSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ['Pending', 'Read', 'Acknowledged'],
+      enum: ['Pending', 'Read'],
       default: 'Pending',
     },
     dateOfTour: {

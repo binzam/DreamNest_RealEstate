@@ -13,6 +13,7 @@ export interface NotificationType {
   propertyOwnerId: string;
   createdAt: string;
   propertyImage: string;
+  isRead: boolean;
 }
 export interface TourType {
   propertyId: string;

@@ -30,9 +30,9 @@ const TourList: React.FC<TourListProps> = ({
         <li key={tour.tourId} className="tour_item">
           {loadingTourId === tour.tourId && (
             <GridLoader
-              color="#13ccbb"
-              margin={16}
-              size={20}
+              color="#ffa726"
+              margin={10}
+              size={30}
               className="tour_action_loading"
             />
           )}
@@ -65,46 +65,43 @@ const TourList: React.FC<TourListProps> = ({
                   {tour.timeOfTour}
                 </div>
               </div>
-              <div className={`tour_status ${tour.status.toLowerCase()}`}>
-                {tour.status === 'Scheduled' && (
-                  <>
-                    <IoMdInformationCircleOutline />
-                    <span>Tour {tour.status}</span>
-                    <small>
-                      *{' '}
-                      {isOwner
-                        ? 'You need to Confirm or Cancel this tour request.'
-                        : 'Waiting for owners confirmation.'}
-                    </small>
-                  </>
-                )}
-                {tour.status === 'Confirmed' && (
-                  <>
-                    <ImCheckboxChecked />
-                    <span>Tour {tour.status}</span>
-                    <small>
-                      *
-                      {isOwner
-                        ? 'Be ready to host visitors'
-                        : 'Be ready to visit'}{' '}
-                      on the set Date & Time.
-                    </small>
-                  </>
-                )}
-                {tour.status === 'Canceled' && (
-                  <>
-                    <GiCancel />
-                    <span>Tour {tour.status}</span>
-                    <small>
-                      *{' '}
-                      {isOwner
-                        ? 'You canceled this tour request.'
-                        : 'Request canceled by owner.'}
-                    </small>
-                  </>
-                )}
-              </div>
             </div>
+          </div>
+          <div className={`tour_status ${tour.status.toLowerCase()}`}>
+            {tour.status === 'Scheduled' && (
+              <>
+                <IoMdInformationCircleOutline />
+                <span>Tour {tour.status}</span>
+                <small>
+                  *{' '}
+                  {isOwner
+                    ? 'You need to Confirm or Cancel this tour request.'
+                    : 'Waiting for owners confirmation.'}
+                </small>
+              </>
+            )}
+            {tour.status === 'Confirmed' && (
+              <>
+                <ImCheckboxChecked />
+                <span>Tour {tour.status}</span>
+                <small>
+                  *{isOwner ? 'Be ready to host visitors' : 'Be ready to visit'}{' '}
+                  on the set Date & Time.
+                </small>
+              </>
+            )}
+            {tour.status === 'Canceled' && (
+              <>
+                <GiCancel />
+                <span>Tour {tour.status}</span>
+                <small>
+                  *{' '}
+                  {isOwner
+                    ? 'You canceled this tour request.'
+                    : 'Request canceled by owner.'}
+                </small>
+              </>
+            )}
           </div>
           {isOwner && tour.status === 'Scheduled' && (
             <div className="tour_action_buttons">

@@ -16,7 +16,7 @@
 .request_count {
   position: absolute;
   right: 5rem;
-  top: 10%;
+  top: 7%;
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
   font-size: 0.8rem;
@@ -33,13 +33,30 @@
   display: flex;
   flex-direction: column;
   padding: 1rem 3rem;
-  border-left: 2px solid #ddd;
-  box-shadow: 2px 2px 6px #333;
-  border-radius: 10px;
+  position: sticky;
+  top: 3rem;
+}
+.calendar_note {
+  font-size: 1rem;
+  color: #333;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+.calendar_note svg {
+  color: #4caf50;
+  font-size: 1.1rem;
+}
+.calendar_note span {
+  color: orange;
+  font-size: 1.1rem;
 }
 .tour_request_dates h2 {
   font-size: 1.5rem;
   color: #000000;
+  text-align: center;
   font-weight: 600;
   border-bottom: 4px solid #ddd;
   letter-spacing: 1px;
@@ -83,8 +100,101 @@
 .react-calendar .highlight {
   background: #ffa726 !important;
   color: white !important;
-  border-radius: 50%;
+  border-radius: 15px;
+  border: 1px solid #000;
+} /* General Calendar Container */
+.react-calendar {
+  width: 100%;
+  max-width: 500px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  /* font-family: 'Arial', sans-serif; */
+  font-family: 'Parkinsans', sans-serif;
+  color: #000;
 }
+
+/* Navigation Bar (Next/Previous Buttons) */
+.react-calendar__navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.react-calendar__navigation button {
+  background: #4caf50;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.react-calendar__navigation button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+.react-calendar__navigation button:hover:not(:disabled) {
+  background: #45a049;
+}
+
+/* Weekdays Header */
+.react-calendar__month-view__weekdays {
+  font-weight: bold;
+  color: #4caf50;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  padding: 10px 0;
+}
+
+/* Calendar Days */
+.react-calendar__tile {
+  background: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.react-calendar__tile:hover {
+  background: #f1f1f1;
+}
+
+.react-calendar__tile--active {
+  background: #4caf50;
+  color: white;
+}
+
+.react-calendar__tile--now {
+  background: #ffc107;
+  color: #fff;
+}
+
+/* Highlighted Dates */
+
+/* Disable Dates */
+.react-calendar__tile--disabled {
+  background: #f0f0f0;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Adjust Font Sizes */
+.react-calendar__tile,
+.react-calendar__navigation button {
+  font-size: 14px;
+}
+
 .tour_request_dates h3 {
   font-size: 1rem;
   color: #000000;

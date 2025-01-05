@@ -19,7 +19,23 @@
   justify-content: center;
   margin-bottom: 0.6rem;
   gap: 1.4rem;
-  /* position: relative; */
+  position: relative;
+}
+.own_pty_tag {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 0.2rem 1rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background-color: #3bd100;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  text-transform: uppercase;
 }
 .pty_titl {
   color: #333;

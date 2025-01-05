@@ -15,10 +15,15 @@ const Header = () => {
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
   };
+
+  const unreadNotifications = notifications.filter(
+    (notification) => notification.status !== 'Read'
+  );
   const disableHeaderStickyness =
     location.pathname.startsWith('/properties/sale') ||
     location.pathname.startsWith('/properties/rent');
   const diableNotifcations = location.pathname.startsWith('/notifications');
+
   return (
     <header className={`header ${disableHeaderStickyness ? 'static' : ''}`}>
       <button className="hamburger" onClick={toggleModal}>
@@ -28,16 +33,18 @@ const Header = () => {
         <Link className="logo" to={'/'}>
           DreamNest{' '}
         </Link>
-        {!diableNotifcations && notifications && notifications.length > 0 && (
-          <Link
-            to={'/notifications'}
-            className="hdr_prf_notf"
-            title="New Notifications"
-          >
-            <span>{notifications.length}</span>
-            <IoMdNotifications />
-          </Link>
-        )}
+        {!diableNotifcations &&
+          unreadNotifications &&
+          unreadNotifications.length > 0 && (
+            <Link
+              to={'/notifications'}
+              className="hdr_prf_notf"
+              title="New Notifications"
+            >
+              <IoMdNotifications />
+              <span>{unreadNotifications.length}</span>
+            </Link>
+          )}
       </div>
       <Navbar />
       <button className="mob_profile_btn">

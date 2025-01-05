@@ -13,7 +13,7 @@ import { Icon } from 'leaflet';
 import LocationIcon from '../../assets/location-icon.png';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from 'react';
-import { FaHome } from 'react-icons/fa';
+import { FaArrowCircleDown, FaHome } from 'react-icons/fa';
 import { TbDimensions } from 'react-icons/tb';
 import PropertySlider from '../../components/PropertySlider/PropertySlider';
 import { useDispatch } from 'react-redux';
@@ -110,7 +110,12 @@ const PropertyDetail = () => {
           </div>
         </div>
         {/* <div className="pty_titl">{title}</div> */}
-
+        {user?._id === owner && (
+          <div className="own_pty_tag">
+            <FaArrowCircleDown />
+            Your Property
+          </div>
+        )}
         <ShareProperty propertyId={_id} />
       </div>
       <div className="property_photos">

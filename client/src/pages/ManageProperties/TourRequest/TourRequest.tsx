@@ -9,9 +9,10 @@ import { BiSolidMessageEdit } from 'react-icons/bi';
 import TourList from '../../../components/TourList/TourList';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import { IoMdInformationCircleOutline } from 'react-icons/io';
 const TourRequest = () => {
   const [tourSchedules, setTourSchedules] = useState<TourType[]>([]);
-  const [tourDates, setTourDates] = useState<string[]>([]);
+  const [tourDates, setTourDates] = useState<Date[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadingTourId, setLoadingTourId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -23,7 +24,10 @@ const TourRequest = () => {
       try {
         const response = await axiosPrivate.get('/tour/requests');
         setTourSchedules(response.data.tours);
-        setTourDates(response.data.tourDates);
+        const fetchedTourDates = response.data.tourDates.map(
+          (date: string) => new Date(date)
+        );
+        setTourDates(fetchedTourDates);
         console.log(response);
       } catch (error) {
         console.log(error);
@@ -151,22 +155,23 @@ const TourRequest = () => {
       )}
       {tourDates.length > 0 && (
         <aside className="tour_request_dates">
-          <div>
-            <h2>Tour Schedule Calendar</h2>
-            <Calendar
-              tileClassName={({ date }) =>
-                tourDates.some((d) => d === date)
-                  ? 'highlight'
-                  : ''
-              }
-            />
+          <div className="calendar_note">
+            {' '}
+            <IoMdInformationCircleOutline />
+            <small>
+              Dates marked in <span> orange </span>are tour requests.
+            </small>
           </div>
-          {/* <h2>All Tour Request Dates</h2>
-          {tourDates.map((date) => (
-            <h3 key={date} className="tour_date">
-              {date}
-            </h3>
-          ))} */}
+          <Calendar
+            tileClassName={({ date, view }) => {
+              if (
+                view === 'month' &&
+                tourDates.find((d) => d.toDateString() === date.toDateString())
+              ) {
+                return 'highlight';
+              }
+            }}
+          />
         </aside>
       )}
 

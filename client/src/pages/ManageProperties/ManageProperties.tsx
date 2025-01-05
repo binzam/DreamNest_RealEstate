@@ -21,7 +21,7 @@ const ManageProperties = () => {
             </p>
           ) : isTourRequests ? (
             <p>
-              Here you can view all the requested tours to visit your property.
+              Here you can view all the requested dates to visit your property.
               <br />
               <strong>You can Confirm or Cancel them as you wish.</strong>
             </p>

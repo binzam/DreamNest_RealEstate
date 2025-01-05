@@ -41,6 +41,37 @@ const getUserNotifications = async (req, res) => {
       .json({ message: 'Server error while fetching notifications' });
   }
 };
+const markNotificationAsRead = async (req, res) => {
+  const { notificationId } = req.params;
+  try {
+    const notification = await Notification.findById(notificationId);
+    if (!notification) {
+      return res.status(404).json({ message: 'Notification not found' });
+    }
+    if (notification.userId.toString() !== req.user._id.toString()) {
+      return res.status(403).json({
+        message: 'You do not have permission to mark this notification as read',
+      });
+    }
+    if (notification.status === 'Read') {
+      return res.status(200).json({
+        message: 'Notification is already marked as read',
+        notification,
+      });
+    }
+    notification.status = 'Read';
+    await notification.save();
+    res.status(200).json({
+      message: 'Notification marked as read',
+      notification,
+    });
+  } catch (error) {
+    console.error('Error marking notification as read:', error);
+    return res
+      .status(500)
+      .json({ message: 'Server error while marking notification as read' });
+  }
+};
 const updateUserProfile = async (req, res) => {
   const { firstName, lastName, email, phoneNumber } = req.body;
   const userId = req.user._id;
@@ -204,4 +235,5 @@ export {
   updateUserProfile,
   uploadProfilePicture,
   getUserNotifications,
+  markNotificationAsRead,
 };

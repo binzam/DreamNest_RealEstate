@@ -17,6 +17,9 @@ const Navbar = () => {
   const { isAuthenticated, user, wishlist, notifications } = useSelector(
     (state: RootState) => state.user
   );
+  const unreadNotifications = notifications.filter(
+    (notification) => notification.status !== 'Read'
+  );
   const dispatch = useDispatch<AppDispatch>();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -69,9 +72,8 @@ const Navbar = () => {
             <span className="wl_counter">{wishlist.length}</span>
             <FaHeart />
           </Link>
-          <button className="hdr_profile_btn" onClick={toggleDropdown}>
-           
 
+          <button className="hdr_profile_btn" onClick={toggleDropdown}>
             {user?.profilePicture ? (
               <img
                 className="usr_ppic"
@@ -128,7 +130,8 @@ const Navbar = () => {
                       <IoMdNotifications /> Notifications
                     </div>
                     <span className="notf_count">
-                      <IoMdNotifications />{notifications.length}
+                      <IoMdNotifications />
+                      {unreadNotifications.length}
                     </span>
                   </Link>
                   <Link

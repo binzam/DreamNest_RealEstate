@@ -99,7 +99,7 @@ const EditProperty = () => {
       <div className="edit_pty_hdr">
         <BackButton />
 
-        <h1>Edit Property</h1>
+        <h2>Edit Property</h2>
       </div>
       <div className="edit_pty_cntnt">
         {property && <PropertyCard property={property} />}

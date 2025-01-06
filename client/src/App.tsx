@@ -10,6 +10,7 @@ import UserTourSchedule from './pages/UserTourSchedule/UserTourSchedule';
 import TourScheduleDetail from './pages/UserTourSchedule/TourScheduleDetail';
 import TourRequest from './pages/ManageProperties/TourRequest/TourRequest';
 import ManageProperties from './pages/ManageProperties/ManageProperties';
+import NotificationListener from './components/NotificationListener';
 
 const ScrollToTop = lazy(() => import('./components/ScrollToTop'));
 const Home = lazy(() => import('./pages/Home/Home'));
@@ -39,6 +40,7 @@ function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <NotificationListener />
       <Suspense fallback={<GridLoader color="#13ccbb" margin={10} size={25} />}>
         <Routes>
           <Route path="login" element={<Login />} />
@@ -55,14 +57,6 @@ function App() {
             <Route path="property-detail/:id" element={<PropertyDetail />} />
             <Route path="about" element={<About />} />
 
-            {/* <Route element={<ProtectedRoute />}>
-              <Route path="my-properties" element={<MyProperties />} />
-            </Route> */}
-            {/* <Route element={<ProtectedRoute />}>
-              <Route path="my-properties" element={<MyProperties />}>
-                <Route path="tours" element={<TourRequest />} />
-              </Route>
-            </Route> */}
             <Route element={<ProtectedRoute />}>
               <Route path="manage-properties" element={<ManageProperties />}>
                 <Route path="" element={<Navigate to="my-properties" />} />

@@ -11,7 +11,6 @@ export const axiosPrivate = axios.create({
   baseURL: `${import.meta.env.VITE_BASE_URL}`,
   headers: {
     'Content-Type': 'application/json',
-    Authorization: `${localStorage.getItem('DNat')}`,
   },
   withCredentials: true,
 });
@@ -25,6 +24,7 @@ const refreshAccessToken = async () => {
     setAccessToken(newAccessToken);
     return newAccessToken;
   } catch (error) {
+    console.error('Token refresh failed:', error);
     removeUser();
     window.location.href = '/login';
     throw error;
@@ -45,8 +45,37 @@ axiosPrivate.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    if (!originalRequest._retryCount) {
+      originalRequest._retryCount = 0;
+    }
+    if (originalRequest.url.includes('/auth/refresh-token')) {
+      return Promise.reject(error);
+    }
+    if (
+      (!error.response || error.response.status >= 500) &&
+      originalRequest._retryCount < 3
+    ) {
+      originalRequest._retryCount += 1;
+      console.log(
+        `Retrying request to ${originalRequest.url}... Attempt ${originalRequest._retryCount}`
+      );
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    if (error.response.status === 401 && !originalRequest._retry) {
+      try {
+        return axiosPrivate(originalRequest);
+      } catch (retryError) {
+        console.error(
+          `Retrying request failed after ${originalRequest._retryCount} attempts`,
+          retryError
+        );
+        return Promise.reject(retryError);
+      }
+    }
+    if (
+      error.response &&
+      error.response.status === 401 &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
 
       try {

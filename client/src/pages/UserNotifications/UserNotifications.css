@@ -9,11 +9,18 @@
   align-items: center;
   gap: 5rem;
 }
+.notf_hdr_sub_ttl{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fff;
+  font-size: 0.9rem;
+}
 .notf_hdr h2 {
   font-weight: 700;
   font-size: 1.2rem;
   color: #fff;
-  letter-spacing: 10px;
+  letter-spacing: 3px;
 }
 .notf_filter_controls {
   margin: 0.5rem;

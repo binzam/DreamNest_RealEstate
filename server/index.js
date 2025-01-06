@@ -12,16 +12,19 @@ import userRoutes from './routes/userRoutes.js';
 import tourScheduleRoutes from './routes/tourScheduleRoutes.js';
 import path from 'path';
 import multerErrorHandler from './middleware/multerErrorHandler.js';
-// import { clearAllNotifications, clearAllTourSchedules } from './utils/resetUtils.js';
+// import { clearAllUsers } from './utils/resetUtils.js';
+// import { clearAllNotifications, clearAllTourSchedules, fixBug } from './utils/resetUtils.js';
 
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: process.env.ALLOWED_ORIGIN,
     methods: ['GET', 'POST'],
+    credentials: true,
   },
 });
 
@@ -38,7 +41,10 @@ app.use(express.json());
 app.get('/', (req, res) => {
   return res.status(200).json('Welcome DreamNest REALESTATE');
 });
-
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
 app.use('/api/auth', authRoutes);
 app.use('/api/properties', propertyRoutes);
 app.use('/api/user', userRoutes);
@@ -47,9 +53,16 @@ app.use(multerErrorHandler);
 
 io.on('connection', (socket) => {
   console.log('User connected ', socket.id);
+   socket.on('join', (userId) => {
+    socket.join(userId);
+    console.log(`${userId} joined the room`);
+  });
   socket.on('send_message', (data) => {
     console.log('Message Received ', data);
     io.emit('receive_message', data);
+  });
+  socket.on('send_notification', (userId, notificationData) => {
+    io.to(userId).emit('notification', notificationData);  
   });
 });
 
@@ -59,11 +72,14 @@ mongoose
     console.log('App connected to database');
     // clearAllNotifications()
     // clearAllTourSchedules()
+    // fixBug()
+    // clearAllUsers()
     const url = `http://localhost:${process.env.PORT}`;
     server.listen(process.env.PORT, () => {
       console.log(`App listening on: \x1b[32m%s\x1b[0m`, url);
     });
   })
   .catch((error) => {
-    console.log(error);
+    console.error('Failed to connect to database:', error.message);
+    process.exit(1);
   });

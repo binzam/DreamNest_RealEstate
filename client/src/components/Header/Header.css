@@ -35,43 +35,75 @@
 
 .hdr_prf_notf {
   position: absolute;
-  top: 0;
+  top: 50%;
+  transform: translateY(-50%);
   left: 110%;
-  bottom: 0;
-  height: 100%;
   width: max-content;
-  animation: blink 0.7s linear 5;
-  color: #ff0000;
+  background-color: #3a6ca117;
   display: flex;
-  /* background-color: #0000005b; */
-  background-color: #000000a4;
-  align-items: center;
+  align-items: flex-start;
+  border: 2px solid #3a6ba1;
+  border-radius: 3px;
   gap: 1px;
-  padding: 3px 3px;
   z-index: 100;
-  padding: 1px 13px;
+  padding: 5px 15px;
 }
-.hdr_prf_notf span {
-  font-size: 0.8rem;
+.hdr_prf_notf:hover {
+  background-color: #000000;
+}
+
+.hdr_prf_notf:hover .hdr_bell_icon {
+  color: #fff;
+}
+
+.hdr_prf_notf:hover .hdr_notf_count {
+  color: #fff;
+}
+.hdr_notf_count {
+  font-size: 0.9rem;
   font-weight: 800;
-  color: #ffffff;
+  color: #555555;
+  line-height: 1;
 }
-.hdr_prf_notf svg {
-  width: 26px;
-  height: 26px;
-  stroke: rgb(0, 0, 0);
-  stroke-width: 3px;
-  animation: shake 0.5s ease-in-out 5, blink 0.7s linear 5;
-  color: #ffffff;
+.hdr_bell_icon {
+  width: 20px;
+  height: 20px;
+  color: #ff0000;
+}
+.hdr_prf_notf.new_notification {
+  animation: blink 0.3s ease-out;
+}
+.hdr_bell_icon.new_notification {
+  animation: bounce 1s ease-out;
+}
+/* Bounce animation */
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1);
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 @keyframes blink {
   0%,
   100% {
-    color: red;
+    border-color: red;
+    border-style: dashed;
     opacity: 1;
   }
   50% {
-    color: rgb(255, 255, 255);
+    border-style: dotted;
+    border-color: rgb(194, 191, 0);
     opacity: 0.5;
   }
 }

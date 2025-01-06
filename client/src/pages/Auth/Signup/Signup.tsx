@@ -2,9 +2,11 @@ import { useState } from 'react';
 import './Signup.css';
 import { Link, useNavigate } from 'react-router-dom';
 import RealEstateImageTwo from '../../../assets/images/realestate-image-2.jpg';
-// import SignUpIcon from '../../../assets/images/workspace-with-computer.png';
 import { IoArrowBackCircleSharp } from 'react-icons/io5';
 import { axiosPublic } from '../../../api/axiosInstance';
+import ErrorDisplay from '../../../components/ErrorDisplay';
+import { GridLoader } from 'react-spinners';
+import { AxiosError } from 'axios';
 const Signup = () => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -15,9 +17,8 @@ const Signup = () => {
     agreeToTerms: false,
   });
   const navigate = useNavigate();
-  // const [error, setError] = useState('');
-  // const [loading, setLoading] = useState('');
-  // const { firstName, lastName, email, password, confirmPassword } = formData;
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -36,26 +37,45 @@ const Signup = () => {
       confirmPassword,
       agreeToTerms,
     } = formData;
-    if (!agreeToTerms) {
-      alert('You must agree to the terms and conditions');
+    if (!firstName || !lastName || !email || !password || !confirmPassword) {
+      setError('Please fill out all fields.');
       return;
     }
-
+    if (!agreeToTerms) {
+      setError('You must agree to the terms and conditions');
+      return;
+    }
     if (password !== confirmPassword) {
-      alert('Passwords do not match');
+      setError('Passwords do not match');
       return;
     }
 
     try {
-      const response = await axiosPublic.post('/auth/register',
-        { firstName, lastName, email, password }
-      );
+      setIsLoading(true);
+      const response = await axiosPublic.post('/auth/register', {
+        firstName,
+        lastName,
+        email,
+        password,
+      });
       console.log(response);
       if (response.status === 201) {
-        navigate('/login');
+        navigate('/login', {
+          state: {
+            successMessage: 'Account created successfully! Please log in.',
+          },
+        });
       }
     } catch (error) {
-      console.error('Error registering user:', error);
+      console.log(error);
+      
+      if (error instanceof AxiosError) {
+        setError(error.response?.data?.message || 'An error occurred.');
+      } else {
+        setError('An error occurred during registration. Please try again.');
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -67,6 +87,7 @@ const Signup = () => {
             <IoArrowBackCircleSharp className="icon_back" />
             Back to website
           </Link>
+
           <img
             src={RealEstateImageTwo}
             className="slider_image"
@@ -74,8 +95,17 @@ const Signup = () => {
           />
         </div>
         <div className="form_wrapper">
+          {isLoading && (
+            <GridLoader
+              color="#002955"
+              margin={30}
+              size={50}
+              className="auth_loading"
+            />
+          )}
           <div className="form_hdr">
             <h2>Create an Account</h2>
+            {error && <ErrorDisplay message={error} />}
             <span>
               Already have an Account?{' '}
               <Link className="form_hdr_link" to={'/login'}>

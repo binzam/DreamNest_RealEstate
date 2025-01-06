@@ -74,6 +74,15 @@
   border-right: 5px solid #0000003f;
   gap: 0.5rem;
 }
+
+.auth_loading {
+  position: absolute;
+  top: 50%;
+  color: #002955;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+}
 .form_hdr {
   max-width: 400px;
   margin: 0 auto;

@@ -21,8 +21,8 @@ const userSchema = new Schema(
     },
     phoneNumber: {
       type: String,
-      unique: false,
-      default: '',
+      unique: true,
+      sparse: true,
     },
     password: {
       type: String,
@@ -54,5 +54,4 @@ const userSchema = new Schema(
     timestamps: true,
   }
 );
-
 export const User = model('User', userSchema);

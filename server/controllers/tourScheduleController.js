@@ -5,7 +5,8 @@ import { TourSchedule } from '../models/tourScheduleModel.js';
 const schedulePropertyTour = async (req, res) => {
   const { propertyId, tourDateTime } = req.body;
   const userId = req.user._id;
-  if (new Date(tourDateTime) < new Date()) {
+  const now = new Date();
+  if (new Date(tourDateTime) < now) {
     return res
       .status(400)
       .json({ message: 'Viewing date must be in the future' });
@@ -58,7 +59,6 @@ const schedulePropertyTour = async (req, res) => {
       idOfTour: newTourSchedule._id,
       propertyImage: property.photos[0].image,
     });
-    await userNotification.save();
 
     const ownerNotification = new Notification({
       userId: ownerId,
@@ -75,7 +75,10 @@ const schedulePropertyTour = async (req, res) => {
       idOfTour: newTourSchedule._id,
       propertyImage: property.photos[0].image,
     });
+    await userNotification.save();
     await ownerNotification.save();
+    req.io.to(userId.toString()).emit('notification', userNotification);
+    req.io.to(ownerId.toString()).emit('notification', ownerNotification);
 
     res.status(201).json({
       message: 'Viewing scheduled successfully',
@@ -93,7 +96,9 @@ const getUserTourSchedules = async (req, res) => {
   try {
     const userId = req.user._id;
 
-    const tours = await TourSchedule.find({ userId });
+    const tours = await TourSchedule.find({ userId }).sort({
+      createdAt: -1,
+    });
 
     if (tours.length === 0) {
       return res.status(200).json({ tours: [] });
@@ -197,6 +202,7 @@ const confirmTourSchedule = async (req, res) => {
       propertyImage: tour.propertyImage,
     });
     await userNotification.save();
+    req.io.to(tour.userId.toString()).emit('notification', userNotification);
 
     res.status(200).json({ message: 'Tour confirmed successfully.' });
   } catch (error) {
@@ -243,7 +249,7 @@ const cancelTourSchedule = async (req, res) => {
       propertyImage: tour.propertyImage,
     });
     await userNotification.save();
-
+    req.io.to(tour.userId.toString()).emit('notification', userNotification);
     res.status(200).json({ message: 'Tour canceled successfully.' });
   } catch (error) {
     console.error('Error canceling tour:', error);

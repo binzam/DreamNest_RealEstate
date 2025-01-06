@@ -110,7 +110,7 @@ const PropertyDetail = () => {
           </div>
         </div>
         {/* <div className="pty_titl">{title}</div> */}
-        {user?._id === owner && (
+        {isAuthenticated && user?._id === owner && (
           <div className="own_pty_tag">
             <FaArrowCircleDown />
             Your Property

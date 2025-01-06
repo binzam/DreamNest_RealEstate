@@ -3,6 +3,7 @@ import path from 'path';
 import multer from 'multer';
 import { Property } from '../models/propertyModel.js';
 import { Notification } from '../models/notificationModel.js';
+import { TourSchedule } from '../models/tourScheduleModel.js';
 
 const getUserProfile = async (req, res) => {
   try {
@@ -11,6 +12,7 @@ const getUserProfile = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
     const userProperties = await Property.find({ owner: req.user._id });
+    const tourSchedules = await TourSchedule.find({ userId: req.user._id });
 
     const userProfile = {
       firstName: user.firstName,
@@ -21,6 +23,7 @@ const getUserProfile = async (req, res) => {
       profilePicture: user.profilePicture,
       wishlistCount: user.wishlist.length,
       propertyCount: userProperties.length || 0,
+      tourScheduleCount: tourSchedules.length || 0,
     };
     return res.status(200).json(userProfile);
   } catch (error) {
@@ -140,7 +143,6 @@ const uploadProfilePicture = async (req, res) => {
 const userWishlist = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).populate('wishlist');
-    console.log('wuish', user.wishlist.length);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -162,6 +164,7 @@ const userWishlist = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 const addToWishlist = async (req, res) => {
   const { propertyId } = req.body;
   const userId = req.user._id;

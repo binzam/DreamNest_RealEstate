@@ -146,78 +146,82 @@ const TourRequest = () => {
       ? tourSchedules
       : tourSchedules.filter((tour) => tour.status === statusFilter);
   return (
-    <div className="tour_request_cntnt">
-      {tourDates && tourDates.length > 0 && (
-        <span className="request_count">
-          {tourDates.length}
-          <BiSolidMessageEdit />
-        </span>
-      )}
-      {tourDates.length > 0 && (
-        <aside className="tour_request_dates">
-          <div className="calendar_note">
-            {' '}
-            <IoMdInformationCircleOutline />
-            <small>
-              Dates marked in <span> orange </span>are tour requests.
-            </small>
-          </div>
-          <Calendar
-            tileClassName={({ date, view }) => {
-              if (
-                view === 'month' &&
-                tourDates.find((d) => d.toDateString() === date.toDateString())
-              ) {
-                return 'highlight';
-              }
-            }}
-          />
-        </aside>
-      )}
-
-      {loading ? (
-        <GridLoader
-          color="#13ccbb"
-          margin={40}
-          size={35}
-          className="my_pty_loading"
-        />
-      ) : error ? (
-        <ErrorDisplay message={error} />
-      ) : tourSchedules.length > 0 || filteredTours.length > 0 ? (
-        <div className="tours_display">
-          <div className="tour_filter_controls">
-            <label htmlFor="statusFilter">Filter Tours: </label>
-            <select
-              className="tour_status_filter"
-              id="statusFilter"
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-            >
-              <option value="All">All</option>
-              <option value="Scheduled">Pending</option>
-              <option value="Confirmed">Confirmed</option>
-              <option value="Canceled">Canceled</option>
-            </select>
-          </div>
-          {filteredTours.length > 0 ? (
-            <TourList
-              tours={filteredTours}
-              isOwner={true}
-              handleCancel={handleCancel}
-              handleConfirm={handleConfirm}
-              loadingTourId={loadingTourId}
+    <>
+      <div className="tour_request_cntnt">
+        {tourDates && tourDates.length > 0 && (
+          <span className="request_count">
+            {tourDates.length}
+            <BiSolidMessageEdit />
+          </span>
+        )}
+        {tourDates.length > 0 && (
+          <aside className="tour_request_dates">
+            <div className="calendar_note">
+              {' '}
+              <IoMdInformationCircleOutline />
+              <small>
+                Dates marked in <span> orange </span>are tour requests.
+              </small>
+            </div>
+            <Calendar
+              tileClassName={({ date, view }) => {
+                if (
+                  view === 'month' &&
+                  tourDates.find(
+                    (d) => d.toDateString() === date.toDateString()
+                  )
+                ) {
+                  return 'highlight';
+                }
+              }}
             />
-          ) : (
-            <p className="zero_msg">{getNoToursMessage()}</p>
-          )}
-        </div>
-      ) : (
-        <div className="tours_display">
-          <p className="zero_msg">You have no tour requests.</p>
-        </div>
-      )}
-    </div>
+          </aside>
+        )}
+
+        {loading ? (
+          <GridLoader
+            color="#13ccbb"
+            margin={40}
+            size={35}
+            className="my_pty_loading"
+          />
+        ) : error ? (
+          <ErrorDisplay message={error} />
+        ) : tourSchedules.length > 0 || filteredTours.length > 0 ? (
+          <div className="tours_display">
+            <div className="tour_filter_controls">
+              <label htmlFor="statusFilter">Filter Tours: </label>
+              <select
+                className="tour_status_filter"
+                id="statusFilter"
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+              >
+                <option value="All">All</option>
+                <option value="Scheduled">Pending</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Canceled">Canceled</option>
+              </select>
+            </div>
+            {filteredTours.length > 0 ? (
+              <TourList
+                tours={filteredTours}
+                isOwner={true}
+                handleCancel={handleCancel}
+                handleConfirm={handleConfirm}
+                loadingTourId={loadingTourId}
+              />
+            ) : (
+              <p className="zero_msg">{getNoToursMessage()}</p>
+            )}
+          </div>
+        ) : (
+          <div className="tours_display">
+            <p className="zero_msg">You have no tour requests.</p>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

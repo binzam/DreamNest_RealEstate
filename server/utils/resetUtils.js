@@ -1,6 +1,16 @@
 import { Notification } from '../models/notificationModel.js';
 import { Property } from '../models/propertyModel.js';
 import { TourSchedule } from '../models/tourScheduleModel.js';
+import { User } from '../models/userModel.js';
+
+const clearAllUsers = async () => {
+  try {
+    const result = await User.deleteMany({});
+    console.log(`Deleted ${result.deletedCount} Users.`);
+  } catch (error) {
+    console.error('Error deleting Users:', error);
+  }
+};
 
 const clearAllProperties = async () => {
   try {
@@ -29,4 +39,22 @@ const clearAllTourSchedules = async () => {
   }
 };
 
-export { clearAllProperties, clearAllNotifications, clearAllTourSchedules };
+const fixBug = async () => {
+  try {
+    await User.updateMany(
+      { phoneNumber: { $exists: false } }, // Find documents with missing phoneNumber
+      { $set: { phoneNumber: null } } // Set phoneNumber to null for these documents
+    );
+    
+  } catch (error) {
+    console.error('Error in fix:', error);
+  }
+};
+
+export {
+  clearAllUsers,
+  clearAllProperties,
+  clearAllNotifications,
+  clearAllTourSchedules,
+  fixBug,
+};

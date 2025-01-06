@@ -29,6 +29,7 @@ const UserProfile = () => {
     profilePicture: '',
     wishlistCount: 0,
     propertyCount: 0,
+    tourScheduleCount: 0,
   });
   const [editProfileMode, setEditProfileMode] = useState(false);
   const [editPhotoMode, setEditPhotoMode] = useState(false);
@@ -188,7 +189,7 @@ const UserProfile = () => {
           <div className="usr_prf_acts">
             <Link to={'/wishlist'}>
               <FaHeart />
-              Your Wishlist
+              Your Wishlist 
             </Link>
             <span className="usr_prf_act_count">{userData.wishlistCount}</span>
           </div>
@@ -203,7 +204,7 @@ const UserProfile = () => {
             <Link to={'/tour-schedules'}>
               <GrScheduleNew /> Tour Schedules
             </Link>
-            <span className="usr_prf_act_count">{userData.propertyCount}</span>
+            <span className="usr_prf_act_count">{userData.tourScheduleCount}</span>
           </div>
         </div>
       </div>

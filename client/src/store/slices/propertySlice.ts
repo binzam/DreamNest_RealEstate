@@ -40,8 +40,8 @@ export const fetchPropertyById = createAsyncThunk(
   async (id: string, { rejectWithValue }) => {
     try {
       const response = await axiosPublic.get(`/properties/list/${id}`);
-      console.log('PROPERTY BY ID API CALL');
-
+      console.log('PROPERTY BY ID API CALL', response);
+      
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {

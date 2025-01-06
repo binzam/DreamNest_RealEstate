@@ -11,6 +11,9 @@ import {
   markNotificationAsReadThunk,
 } from '../../store/slices/notificationThunks';
 import { useDispatch } from 'react-redux';
+import { IoMdInformationCircleOutline } from 'react-icons/io';
+
+
 const UserNotifications = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { notifications, loading, error, user } = useSelector(
@@ -38,6 +41,14 @@ const UserNotifications = () => {
     <div className="notf_page">
       <div className="notf_hdr">
         <h2>Notifications</h2>
+        <div className="notf_hdr_sub_ttl">
+          <IoMdInformationCircleOutline />
+
+          <p>
+            Here you can view all messages you recieved<br />
+            <strong>You can filter notfications using the buttons below.</strong>
+          </p>
+        </div>
       </div>
       <div className="notf_filter_controls">
         <button

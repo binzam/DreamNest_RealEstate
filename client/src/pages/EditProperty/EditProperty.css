@@ -31,6 +31,8 @@
 .edit_pty_cntnt .pty_box {
   width: 300px;
   margin: 0;
+  position: sticky;
+  top: 3rem;
 }
 .edit_property_form {
   width: calc(100% - 300px);

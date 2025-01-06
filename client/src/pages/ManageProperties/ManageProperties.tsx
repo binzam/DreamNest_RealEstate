@@ -3,7 +3,8 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import './ManageProperties.css';
 const ManageProperties = () => {
   const location = useLocation();
-
+  const { state } = useLocation();
+  const successMessage = state?.successMessage;
   const isMyProperties = location.pathname.includes('my-properties');
   const isTourRequests = location.pathname.includes('tour-requests');
 
@@ -48,6 +49,10 @@ const ManageProperties = () => {
           Tour Requests
         </Link>
       </nav>
+
+      {successMessage && (
+        <div className="success-message">{successMessage}</div>
+      )}
       <Outlet />
     </div>
   );

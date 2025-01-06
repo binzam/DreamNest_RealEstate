@@ -2,20 +2,23 @@
   width: 100%;
   min-height: 100vh;
   background-color: #fff;
+  position: relative;
 }
 .success-message {
-  color: rgb(255, 255, 255);
+  color: rgb(0, 119, 16);
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: 2px;
   text-align: center;
   padding: 0.5rem;
-  background-color: rgb(0, 95, 0);
+  background-color: rgb(255, 255, 255);
+  border: 1px dashed #000;
+  margin-top: 0.5rem;
 }
 .mange_pty_hdr {
   background-color: rgb(11, 83, 17);
   padding: 0.5rem 2rem;
-  position: relative;
+  /* position: relative; */
   display: flex;
   align-items: flex-start;
   gap: 4rem;

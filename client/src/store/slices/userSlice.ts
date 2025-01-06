@@ -79,6 +79,10 @@ const userSlice = createSlice({
         state.user.profilePicture = action.payload;
       }
     },
+    addNotification(state, action: PayloadAction<NotificationType>) {
+      console.log('add notfication called');
+      state.notifications.unshift(action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -153,6 +157,12 @@ const userSlice = createSlice({
       });
   },
 });
-export const { login, logout, setLoading, setError, updateProfilePicture } =
-  userSlice.actions;
+export const {
+  login,
+  logout,
+  setLoading,
+  setError,
+  updateProfilePicture,
+  addNotification,
+} = userSlice.actions;
 export default userSlice.reducer;

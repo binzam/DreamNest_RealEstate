@@ -44,6 +44,7 @@ const MyProperties = () => {
         const response = await axiosPrivate.get('/properties/my-properties');
         console.log(response);
         setProperties(response.data);
+        setError(null);
       } catch (error) {
         console.log(error);
         if (axios.isAxiosError(error)) {

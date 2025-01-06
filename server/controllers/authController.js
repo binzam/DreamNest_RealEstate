@@ -86,7 +86,6 @@ const refresh = async (req, res) => {
 const registerUser = async (req, res) => {
   try {
     const { firstName, lastName, email, password } = req.body;
-    console.log('register', firstName, lastName, email, password);
 
     // Check for required fields
     if (!firstName || !lastName || !email || !password) {

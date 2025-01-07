@@ -63,7 +63,8 @@ export interface PropertyFormData {
   bed: number;
   bath: number;
   sqft: number;
-  photos: { title: string; image: File | null }[];
+  sizeUnit: 'sqft' | 'sqm';
+  photos: { title: string; image: File | null; previewUrl: string }[];
 
   propertyFor: 'sale' | 'rent';
   propertyType: string;

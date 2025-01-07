@@ -33,11 +33,17 @@ const AddProperty = () => {
       latitude: 0,
       longitude: 0,
     },
-    photos: [{ title: 'Main', image: null }],
+    photos: [
+      { title: 'Main', image: null, previewUrl: '' },
+      { title: '', image: null, previewUrl: '' },
+      { title: '', image: null, previewUrl: '' },
+      { title: '', image: null, previewUrl: '' },
+    ],
     price: 0,
     bed: 0,
     bath: 0,
     sqft: 0,
+    sizeUnit: 'sqft',
     propertyFor: 'sale',
     propertyType: '',
     detail: '',
@@ -108,7 +114,9 @@ const AddProperty = () => {
       console.log(response);
       if (response.status === 201) {
         navigate('/manage-properties/my-properties', {
-          state: { successMessage: 'Congratulations! Property added successfully!' },
+          state: {
+            successMessage: 'Congratulations! Property added successfully!',
+          },
         });
       }
     } catch (error) {
@@ -227,7 +235,8 @@ const AddProperty = () => {
                 onClick={prevStep}
                 disabled={currentStep === 1}
               >
-                 <GrLinkPrevious />Previous
+                <GrLinkPrevious />
+                Previous
               </button>
             )}
             {currentStep < 5 && (
@@ -241,8 +250,9 @@ const AddProperty = () => {
               </button>
             )}
             {currentStep === 5 && (
-              <button className='add_pty_btn' type="submit" disabled={loading}>
-             <MdOutlineDoneOutline />   {loading ? 'Adding Property...' : 'Add Property'}
+              <button className="add_pty_btn" type="submit" disabled={loading}>
+                <MdOutlineDoneOutline />{' '}
+                {loading ? 'Adding Property...' : 'Add Property'}
               </button>
             )}
           </div>

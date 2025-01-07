@@ -82,7 +82,7 @@ const PropertyInfoForm: React.FC<PropertyInfoFormProps> = ({
               <label htmlFor="price">
                 {formData.propertyFor === 'sale'
                   ? 'Enter total price'
-                  : 'Enter monthly rent'}
+                  : 'Enter price per month'}
               </label>
               <input
                 className="wide_rounded_input"
@@ -112,13 +112,16 @@ const PropertyInfoForm: React.FC<PropertyInfoFormProps> = ({
                 <option value="USD">USD - US Dollar</option>
                 <option value="EUR">EUR - Euro</option>
                 <option value="GBP">GBP - British Pound</option>
+                <option value="INR">INR - Indian Rupee</option>
+                <option value="JPY">JPY - Japanese Yen</option>
+                <option value="AUD">AUD - Australian Dollar</option>
               </select>
             </div>
           </div>
 
-          <div className="add_form_group">
+          {/* <div className="add_form_group">
             <label htmlFor="isAvailable">
-              Is this property available at this moment?
+              Is this property available for {formData.propertyFor} at this moment?
             </label>
             <input
               className=""
@@ -128,7 +131,7 @@ const PropertyInfoForm: React.FC<PropertyInfoFormProps> = ({
               checked={formData.isAvailable || false}
               onChange={handleChange}
             />
-          </div>
+          </div> */}
         </div>
       </div>
     </fieldset>

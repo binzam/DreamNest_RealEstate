@@ -146,7 +146,8 @@
   padding: 0.5rem 1rem;
   background-color: #333;
   color: #ffffff;
-  width: 200px;
+  width: 100%;
+  max-width: 250px;
   font-size: 1rem;
   font-weight: 500;
   letter-spacing: 1px;
@@ -260,12 +261,31 @@
 /* END ADDRESS  */
 /* SIZE */
 .add_pty_size_inputs {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+  /* margin-bottom: 2rem; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.add_pty_size_inputs .add_form_group {
+  width: 250px;
+}
+.add_pty_size_input {
+  display: flex;
+  align-items: center;
   gap: 2rem;
-  margin-bottom: 2rem;
-  width: 300px;
-  margin: 0 auto;
+}
+.add_pty_unit_select {
+  padding: 0.5rem 1rem;
+  background-color: #333;
+  color: #ffffff;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  border-radius: 10px 10px 0 0;
+  cursor: pointer;
 }
 /* END SIZE */
 /* INFO: DETAIL, TITLE */
@@ -304,7 +324,6 @@
 .pty_year_price {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
   gap: 2rem;
 }
@@ -312,7 +331,6 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 1rem;
 }
 .add_price_curncy {
@@ -400,12 +418,12 @@ input.file_input {
   bottom: 10px;
   right: 10px;
   z-index: 5;
-  background-color: #ffffff86;
-  color: red;
-}
-.remove_photo_btn:hover {
   color: #ffffff;
   background-color: red;
+}
+.remove_photo_btn:hover {
+  background-color: #ffffff86;
+  color: red;
 }
 .add_more_photos_btn {
   padding: 0.5rem 3rem;
@@ -458,7 +476,7 @@ input.file_input {
   background-color: #065b00;
   margin-left: auto;
 }
-.add_pty_form_navigation button.add_pty_btn{
+.add_pty_form_navigation button.add_pty_btn {
   padding: 0.5rem 2rem;
   background-color: #00c9ff;
   color: #ffffff;

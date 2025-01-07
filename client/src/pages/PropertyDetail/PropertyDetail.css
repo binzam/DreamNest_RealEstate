@@ -150,6 +150,22 @@
   gap: 5px;
   margin: 0.5rem 0;
 }
+.pty_visit_btn {
+  border-radius: 10px;
+  border: 3px dashed #5c5c5c;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  background-color: #13ccbb;
+  color: #ffffff;
+  text-align: center;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-shadow: 0px 8px 15px -7px #33333383;
+}
+.pty_visit_btn:hover {
+  color: #000;
+  background-color: #ffffff;
+}
 .pty_desc_main {
   margin: 2rem 0 1rem;
   display: flex;
@@ -192,24 +208,6 @@
   left: 0.4rem;
 }
 
-.pty_page_contact_btn {
-  border-radius: 100vw;
-  flex: 1;
-  min-width: 150px;
-  border: 3px solid #000000;
-  padding: 0.5rem 1rem;
-  font-weight: 700;
-  background-color: #ffffff;
-  color: #333;
-  text-align: center;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  box-shadow: 0px 8px 15px -7px #33333383;
-}
-.pty_page_contact_btn:hover {
-  background-color: #000000;
-  color: #fff;
-}
 .info_ttl {
   font-weight: 800;
   line-height: 1;
@@ -307,9 +305,8 @@
   align-items: center;
   gap: 1rem;
 }
-.pty_actn_btn {
-  max-width: 500px;
-  margin: 0 auto;
+.pty_ask_btn,
+.pty_page_contact_btn {
   border-radius: 100vw;
   flex: 1;
   min-width: 150px;
@@ -323,8 +320,8 @@
   transition: all 0.3s ease;
   box-shadow: 0px 8px 15px -7px #33333383;
 }
-.pty_actn_btn:hover {
-  border: 2px solid rgb(0, 0, 0);
+.pty_ask_btn:hover,
+.pty_page_contact_btn:hover {
   background-color: #000000;
   color: #fff;
 }

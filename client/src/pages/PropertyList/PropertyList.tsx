@@ -32,11 +32,13 @@ const PropertyList = () => {
     minPrice: Number(searchParams.get('minPrice')) || 0,
     maxPrice: Number(searchParams.get('maxPrice')) || Infinity,
   });
-  const [roomsRange, setRoomsRange] = useState({
-    bedroomMin: Number(searchParams.get('bedroomMin')) || 0,
-    bedroomMax: Number(searchParams.get('bedroomMax')) || Infinity,
-    bathroomMin: Number(searchParams.get('bathroomMin')) || 0,
-    bathroomMax: Number(searchParams.get('bathroomMax')) || Infinity,
+  const [bedRoomsRange, setBedRoomsRange] = useState({
+    bedroomMin: Number(searchParams.get('bedroomMin')) || null,
+    bedroomMax: Number(searchParams.get('bedroomMax')) || null,
+  });
+  const [bathRoomsRange, setBathRoomsRange] = useState({
+    bathroomMin: Number(searchParams.get('bathroomMin')) || null,
+    bathroomMax: Number(searchParams.get('bathroomMax')) || null,
   });
   const [propertyType, setPropertyType] = useState(
     searchParams.get('propertyType') || ''
@@ -45,14 +47,19 @@ const PropertyList = () => {
     setPriceRange({ minPrice, maxPrice });
     updateSearchParams({ minPrice, maxPrice });
   };
-  const handleRoomsRangeChange = (
+  const handleBedRoomsRangeChange = (
     bedroomMin: number,
-    bedroomMax: number,
+    bedroomMax: number
+  ) => {
+    setBedRoomsRange({ bedroomMin, bedroomMax });
+    updateSearchParams({ bedroomMin, bedroomMax });
+  };
+  const handleBathRoomsRangeChange = (
     bathroomMin: number,
     bathroomMax: number
   ) => {
-    setRoomsRange({ bedroomMin, bedroomMax, bathroomMin, bathroomMax });
-    updateSearchParams({ bedroomMin, bedroomMax, bathroomMin, bathroomMax });
+    setBathRoomsRange({ bathroomMin, bathroomMax });
+    updateSearchParams({ bathroomMin, bathroomMax });
   };
   const handlePropertyTypeChange = (propertyType: string) => {
     setPropertyType(propertyType);
@@ -90,10 +97,10 @@ const PropertyList = () => {
     type,
     minPrice: priceRange.minPrice,
     maxPrice: priceRange.maxPrice,
-    bedroomMin: roomsRange.bedroomMin,
-    bedroomMax: roomsRange.bedroomMax,
-    bathroomMin: roomsRange.bathroomMin,
-    bathroomMax: roomsRange.bathroomMax,
+    bedroomMin: bedRoomsRange.bedroomMin,
+    bedroomMax: bedRoomsRange.bedroomMax,
+    bathroomMin: bathRoomsRange.bathroomMin,
+    bathroomMax: bathRoomsRange.bathroomMax,
     propertyType: propertyType,
   });
   const sortedProperties = useSortedProperties(
@@ -119,13 +126,14 @@ const PropertyList = () => {
       </h2>
       <PropertyFilterBar
         onPriceRangeChange={handlePriceRangeChange}
-        onRoomsRangeChange={handleRoomsRangeChange}
+        onBedRoomsRangeChange={handleBedRoomsRangeChange}
+        onBathRoomsRangeChange={handleBathRoomsRangeChange}
         onPropertyTypeChange={handlePropertyTypeChange}
         type={type || ''}
       />
 
       <SortingControl
-        type={type || ""}
+        type={type || ''}
         count={filteredProperties.length}
         sortParam={sortParam}
         sortOrder={sortOrder}

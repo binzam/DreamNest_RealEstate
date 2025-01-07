@@ -6,7 +6,7 @@ import {
 } from 'react-icons/fa6';
 import './PropertyTypeFilter.css';
 import { useEffect, useMemo, useState } from 'react';
-import { MdCabin, MdTerrain } from 'react-icons/md';
+import { MdCabin, MdTerrain, MdVilla } from 'react-icons/md';
 import { PiFarm } from 'react-icons/pi';
 import { HiHomeModern } from 'react-icons/hi2';
 import { BiSolidBuildingHouse } from 'react-icons/bi';
@@ -30,6 +30,7 @@ const PropertyTypeFilter: React.FC<PropertyTypeFilterProps> = ({
     () => [
       { title: 'Any', icon: <BiSolidBuildingHouse /> },
       { title: 'House', icon: <HiHomeModern /> },
+      { title: 'Villa', icon:  <MdVilla /> },
       { title: 'Condo', icon: <LiaCitySolid /> },
       { title: 'Townhome', icon: <MdCabin /> },
       { title: 'Multi family', icon: <BsFillHousesFill /> },

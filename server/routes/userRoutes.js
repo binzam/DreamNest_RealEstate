@@ -40,7 +40,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 80000 },
+  limits: { fileSize: 100000 },
 });
 
 router.get('/wishlist', authenticateToken, userWishlist);

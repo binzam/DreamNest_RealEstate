@@ -4,27 +4,47 @@
   background-color: #ffffff;
 }
 .prfl_hdr {
-  padding: 1rem 5rem;
+  padding: 0.5rem 2rem;
   background-color: #f3f3f3;
   border-bottom: 1px solid #ddd;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 4rem;
 }
-.prfl_hdr h2 {
+.prfl_hdr_main h2 {
   color: #000000;
   letter-spacing: 1px;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.3rem;
 }
-.prfl_hdr p {
+.prfl_hdr_main p {
   color: #333;
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+}
+.usr_prl_hdr_info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.usr_prl_hdr_info svg {
+  font-size: 1.2rem;
+  color: #000000;
+}
+.usr_prl_hdr_info p {
+  max-width: 500px;
+  color: #333;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 .hdr_actions {
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin: 1rem auto;
   gap: 4rem;
 }
 .usr_prf_acts {
@@ -142,7 +162,7 @@
   background-color: #333;
   box-shadow: none;
 }
-.select_image_label span{
+.select_image_label span {
   line-height: 1;
 }
 .upload_image_btn {
@@ -169,7 +189,7 @@
 
 /* END PROFILE PICTURE */
 .prfl_cntn_btm {
-  width: 500px;
+  width: 400px;
 }
 .edit_prfl_btn,
 .cancel_edit_btn {
@@ -195,10 +215,10 @@
   background-color: #c50000;
 }
 .prfl_cntn_btm input {
-  padding: 0.5rem 1rem;
+  padding: 0.2rem 1rem;
   border: 1px solid #ddd;
   border-radius: 4px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 500;
   letter-spacing: 1px;
   width: 100%;
@@ -212,10 +232,10 @@
   flex-direction: column;
   gap: 3px;
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 .key label {
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 1px;
   color: #000000;
@@ -225,11 +245,11 @@
   gap: 5px;
 }
 .key label svg {
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #796d00;
 }
 .value {
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   color: #333;
   font-weight: 600;
   letter-spacing: 1px;

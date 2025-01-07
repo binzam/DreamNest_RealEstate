@@ -161,12 +161,19 @@ const PropertyDetail = () => {
       <div className="property_descp">
         <div className="pty_post_date">
           <MdOutlineBrowserUpdated />
-          Posted
+          <span>Posted</span>{' '}
           {formatDistance(new Date(createdAt), new Date(), {
             addSuffix: true,
           })}
         </div>
-
+        {isAuthenticated && user?._id !== owner && (
+          <button
+            className="pty_visit_btn"
+            onClick={() => setIsScheduleModalOpen(true)}
+          >
+           I want to Visit this Property
+          </button>
+        )}
         <div className="pty_desc_main">
           <div className="pty_detail_price">
             <div className="pty_purpose">
@@ -191,14 +198,6 @@ const PropertyDetail = () => {
               sqft
             </div>
           </div>
-          {isAuthenticated && user?._id !== owner && (
-            <button
-              className="pty_actn_btn"
-              onClick={() => setIsScheduleModalOpen(true)}
-            >
-              Schedule Visit
-            </button>
-          )}
         </div>
         <div className="pty_desc_second">
           <div className="pty_declars">
@@ -242,7 +241,7 @@ const PropertyDetail = () => {
             {user?._id !== owner && (
               <div className="pty_actions">
                 <button
-                  className="pty_actn_btn"
+                  className="pty_ask_btn"
                   onClick={() => setIsContactModalOpen(true)}
                 >
                   Ask a Question

@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react'; // , { useState }
 import { FaUpload, FaXmark } from 'react-icons/fa6';
 
 interface PropertyImageFormProps {
   formData: {
-    photos: { title: string; image: File | null }[];
+    photos: { title: string; image: File | null; previewUrl: string }[];
   };
 
   updateFormData: (
-    newData: Partial<{ photos: { title: string; image: File | null }[] }>
+    newData: Partial<{
+      photos: { title: string; image: File | null; previewUrl: string }[];
+    }>
   ) => void;
 }
 
@@ -15,7 +17,7 @@ const PropertyImageForm: React.FC<PropertyImageFormProps> = ({
   formData,
   updateFormData,
 }) => {
-  const [previewPhotos, setPreviewPhotos] = useState<string[]>([]);
+  // const [previewPhotos, setPreviewPhotos] = useState<string[]>([]);
 
   const handleImageChange = (
     index: number,
@@ -28,34 +30,39 @@ const PropertyImageForm: React.FC<PropertyImageFormProps> = ({
           ? {
               ...photo,
               [name]: files[0],
+              previewUrl: URL.createObjectURL(files[0]),
             }
           : photo
       );
       updateFormData({ photos: updatedPhotos });
 
-      const updatedPreviewPhotos = [...previewPhotos];
-      updatedPreviewPhotos[index] = URL.createObjectURL(files[0]);
-      setPreviewPhotos(updatedPreviewPhotos);
+      // const updatedPreviewPhotos = [...previewPhotos];
+      // updatedPreviewPhotos[index] = URL.createObjectURL(files[0]);
+      // setPreviewPhotos(updatedPreviewPhotos);
     }
   };
 
   const handleRemovePhoto = (index: number) => {
     const updatedPhotos = formData.photos.map((photo, i) =>
-      i === index ? { ...photo, image: null } : photo
+      i === index ? { ...photo, image: null, previewUrl: '' } : photo
     );
     updateFormData({ photos: updatedPhotos });
 
-    const updatedPreviewPhotos = [...previewPhotos];
-    updatedPreviewPhotos[index] = '';
-    setPreviewPhotos(updatedPreviewPhotos);
   };
 
   const handleAddPhoto = () => {
-    const newPhotos = [...formData.photos, { title: '', image: null }];
+    const newPhotos = [
+      ...formData.photos,
+      { title: '', image: null, previewUrl: '' },
+    ];
     updateFormData({ photos: newPhotos });
-    setPreviewPhotos([...previewPhotos, '']);
   };
-
+  const handleTitleChange = (index: number, value: string) => {
+    const updatedPhotos = formData.photos.map((photo, i) =>
+      i === index ? { ...photo, title: value } : photo
+    );
+    updateFormData({ photos: updatedPhotos });
+  };
   return (
     <fieldset>
       <legend>Property Images</legend>
@@ -81,24 +88,16 @@ const PropertyImageForm: React.FC<PropertyImageFormProps> = ({
                       'Photo Title'
                     )}
                   </label>
-                  {photo.title !== 'Main' && (
-                    <input
-                      className="wide_rounded_input"
-                      type="text"
-                      id={`title-${index}`}
-                      name="title"
-                      value={photo.title}
-                      readOnly={photo.title === 'Main'}
-                      onChange={(e) => {
-                        const updatedPhotos = formData.photos.map((p, i) =>
-                          i === index ? { ...p, title: e.target.value } : p
-                        );
-                        updateFormData({ photos: updatedPhotos });
-                      }}
-                      placeholder="Example: Living Room, Bedroom 1, Backyard etc."
-                      required
-                    />
-                  )}
+                  <input
+                    className="wide_rounded_input"
+                    type="text"
+                    id={`title-${index}`}
+                    name="title"
+                    value={photo.title}
+                    readOnly={photo.title === 'Main'}
+                    onChange={(e) => handleTitleChange(index, e.target.value)}
+                    placeholder="Example: Living Room, Bedroom 1, Backyard, etc."
+                  />
                 </div>
                 <div className="add_form_group">
                   <label
@@ -109,17 +108,17 @@ const PropertyImageForm: React.FC<PropertyImageFormProps> = ({
                     {photo.image ? 'Change Image' : 'Choose Image'}
                   </label>
                   <input
-                  className='file_input'
+                    className="file_input"
                     type="file"
                     id={`image-${index}`}
                     name="image"
                     onChange={(e) => handleImageChange(index, e)}
                     accept="image/*"
                   />
-                  {previewPhotos[index] && (
+                  {photo.previewUrl && (
                     <div className="pty_img_preview">
                       <img
-                        src={previewPhotos[index]}
+                        src={photo.previewUrl}
                         alt={`Image ${index + 1} preview`}
                       />
                     </div>
@@ -137,14 +136,23 @@ const PropertyImageForm: React.FC<PropertyImageFormProps> = ({
               </div>
             ))}
           </div>
-          <button
+          {/* <button
             type="button"
             className="add_more_photos_btn"
             onClick={handleAddPhoto}
             disabled={formData.photos.length >= 8}
           >
             Add More Photos
-          </button>
+          </button> */}
+          {formData.photos.length === 5 && formData.photos.length < 8 && (
+            <button
+              type="button"
+              className="add_more_photos_btn"
+              onClick={handleAddPhoto}
+            >
+              Add More Photos
+            </button>
+          )}
         </div>
       </div>
     </fieldset>

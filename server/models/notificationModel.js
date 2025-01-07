@@ -17,7 +17,7 @@ const notificationSchema = new Schema(
     },
     type: {
       type: String,
-      enum: ['tour', 'message', 'alert'],
+      enum: ['tour', 'message', 'alert', 'offer'],
       required: true,
     },
     status: {

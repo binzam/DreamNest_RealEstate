@@ -56,7 +56,7 @@
 .room_dropdown {
   position: absolute;
   top: calc(100% + 14px);
-  left: 0;
+  right: 0;
   z-index: 10;
   width: 300px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);

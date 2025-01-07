@@ -105,7 +105,7 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
     <fieldset>
       <legend>Property Location</legend>
       <div className="location_pin">
-        <h3>Enter the full address of your property.</h3>
+        {/* <h3>Enter the full address of your property.</h3> */}
         <div className="adress_inputs">
           <div className="add_form_group">
             <label htmlFor="street">Street</label>
@@ -136,7 +136,7 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
           </div>
 
           <div className="add_form_group">
-            <label htmlFor="state">State</label>
+            <label htmlFor="state">State <small>*optional</small></label>
             <input
               className="wide_rounded_input"
               type="text"

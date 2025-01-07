@@ -21,7 +21,7 @@ export const validatePropertyData = (data, files) => {
     address: Joi.object({
       street: Joi.string().required(),
       city: Joi.string().required(),
-      state: Joi.string().required(),
+      state: Joi.string().optional(),
       country: Joi.string().required(),
       latitude: Joi.number().required(),
       longitude: Joi.number().required(),

@@ -18,6 +18,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateProfilePicture } from '../../store/slices/userSlice';
 import { GrScheduleNew } from 'react-icons/gr';
+import { IoMdInformationCircleOutline } from 'react-icons/io';
 
 const UserProfile = () => {
   const dispatch = useDispatch();
@@ -181,31 +182,42 @@ const UserProfile = () => {
   return (
     <div className="usr_prfl_pge">
       <div className="prfl_hdr">
-        <div>
+        <div className="prfl_hdr_main">
           <h2>Hello {userData.firstName || 'there'}!</h2>
-          <p>{userData.email}</p>
+          <p>
+            <MdEmail /> {userData.email}
+          </p>
         </div>
-        <div className="hdr_actions">
-          <div className="usr_prf_acts">
-            <Link to={'/wishlist'}>
-              <FaHeart />
-              Your Wishlist 
-            </Link>
-            <span className="usr_prf_act_count">{userData.wishlistCount}</span>
-          </div>
-          <div className="usr_prf_acts">
-            <Link to={'/manage-properties'}>
-              <FaHome />
-              Your Properties
-            </Link>
-            <span className="usr_prf_act_count">{userData.propertyCount}</span>
-          </div>
-          <div className="usr_prf_acts">
-            <Link to={'/tour-schedules'}>
-              <GrScheduleNew /> Tour Schedules
-            </Link>
-            <span className="usr_prf_act_count">{userData.tourScheduleCount}</span>
-          </div>
+        <div className="usr_prl_hdr_info">
+          <IoMdInformationCircleOutline />
+          <p>
+            Here you can edit your personal information, change profile picture
+            and keep track of your essesntials.
+          </p>
+        </div>
+      </div>
+      <div className="hdr_actions">
+        <div className="usr_prf_acts">
+          <Link to={'/wishlist'}>
+            <FaHeart />
+            Your Wishlist
+          </Link>
+          <span className="usr_prf_act_count">{userData.wishlistCount}</span>
+        </div>
+        <div className="usr_prf_acts">
+          <Link to={'/manage-properties'}>
+            <FaHome />
+            Your Properties
+          </Link>
+          <span className="usr_prf_act_count">{userData.propertyCount}</span>
+        </div>
+        <div className="usr_prf_acts">
+          <Link to={'/tour-schedules'}>
+            <GrScheduleNew /> Tour Schedules
+          </Link>
+          <span className="usr_prf_act_count">
+            {userData.tourScheduleCount}
+          </span>
         </div>
       </div>
       {error && <ErrorDisplay message={error} />}
@@ -251,7 +263,7 @@ const UserProfile = () => {
             {!editPhotoMode && !successMessage && (
               <label htmlFor="uploadImage" className="select_image_label">
                 <FaPenToSquare />
-               <span>Change photo</span>
+                <span>Change photo</span>
               </label>
             )}
           </form>

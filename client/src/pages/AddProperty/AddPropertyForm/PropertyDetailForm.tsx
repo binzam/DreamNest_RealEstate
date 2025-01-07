@@ -1,4 +1,4 @@
-import { MdCabin, MdTerrain } from 'react-icons/md';
+import { MdCabin, MdTerrain, MdVilla } from 'react-icons/md';
 import { PiFarm } from 'react-icons/pi';
 import { HiHomeModern } from 'react-icons/hi2';
 import { LiaCitySolid } from 'react-icons/lia';
@@ -15,6 +15,7 @@ const PropertyDetailForm: React.FC<PropertyDetailFormProps> = ({
 }) => {
   const propertyTypes = [
     { title: 'House', icon: <HiHomeModern /> },
+    { title: 'Villa', icon: <MdVilla /> },
     { title: 'Condo', icon: <LiaCitySolid /> },
     { title: 'Town house', icon: <MdCabin /> },
     { title: 'Multi family', icon: <BsFillHousesFill /> },
@@ -69,7 +70,7 @@ const PropertyDetailForm: React.FC<PropertyDetailFormProps> = ({
           value={formData.propertyFor}
           onChange={handleChange}
         >
-          <option value="">Listing Purpose</option>
+          <option value="">Sale / Rent</option>
           <option value="rent">Rent</option>
           <option value="sale">Sale</option>
         </select>

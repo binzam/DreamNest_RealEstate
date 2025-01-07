@@ -40,6 +40,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
     bath,
     sqft,
     address,
+    propertyType,
     createdAt,
   } = property;
   const { city, street, state } = address;
@@ -130,7 +131,11 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
         <Link to={`/property-detail/${_id}`}>
           <div className="pty_box_body">
             <div className="pty_purpose">
-              <span className="dot"></span>Listing for {propertyFor}
+              <span className="dot"></span>
+              {propertyType === 'Single family' || propertyType === 'Mobile'
+                ? `${propertyType} House`
+                : propertyType}{' '}
+              for {propertyFor}
             </div>
             {propertyFor === 'sale' ? (
               <div className="pty_price">${formattedPrice}</div>

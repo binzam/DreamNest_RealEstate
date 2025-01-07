@@ -4,10 +4,10 @@ interface Filters {
   type?: string;
   minPrice?: number;
   maxPrice?: number;
-  bedroomMin?: number;
-  bedroomMax?: number;
-  bathroomMin?: number;
-  bathroomMax?: number;
+  bedroomMin?: number | null;
+  bedroomMax?: number | null;
+  bathroomMin?: number | null;
+  bathroomMax?: number | null;
   propertyType?: string;
 }
 export const useFilteredProperties = (
@@ -18,10 +18,10 @@ export const useFilteredProperties = (
     type,
     minPrice = 0,
     maxPrice = Infinity,
-    bedroomMin = 0,
-    bedroomMax = Infinity,
-    bathroomMin = 0,
-    bathroomMax = Infinity,
+    bedroomMin,
+    bedroomMax ,
+    bathroomMin,
+    bathroomMax ,
     propertyType,
   } = filters;
   const propertyCategories = ['sale', 'rent'];
@@ -38,7 +38,7 @@ export const useFilteredProperties = (
         property.bath >= bathroomMin &&
         property.bath <= bathroomMax;
       const matchesPropertyType =
-        !propertyType || property.propertyType === propertyType;
+        !propertyType || property.propertyType.toLocaleLowerCase() === propertyType.toLocaleLowerCase();
       return (
         matchesCategory && matchesPrice && matchesRooms && matchesPropertyType
       );

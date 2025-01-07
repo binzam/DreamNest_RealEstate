@@ -1,16 +1,20 @@
 import './PropertyFilterBar.css';
 import PropertyPriceFilter from './PropertyPriceFilter/PropertyPriceFilter';
-import PropertyRoomFilter from './PropertyRoomFilter/PropertyRoomFilter';
+import BathroomFilter from './PropertyRoomFilter/BathroomFilter';
+import BedroomFilter from './PropertyRoomFilter/BedroomFilter';
+// import PropertyRoomFilter from './PropertyRoomFilter/PropertyRoomFilter';
 import PropertySearch from './PropertySearch/PropertySearch';
 import PropertyTypeFilter from './PropertyTypeFilter/PropertyTypeFilter';
 
 type PropertyFilterBarProps = {
   onPriceRangeChange: (minPrice: number, maxPrice: number) => void;
-  onRoomsRangeChange: (
-    bedroomMin: number,
-    bedroomMax: number,
-    bathroomMin: number,
-    bathroomMax: number
+  onBedRoomsRangeChange: (
+    bedroomMin: number | null,
+    bedroomMax: number | null
+  ) => void;
+  onBathRoomsRangeChange: (
+    bathroomMin: number | null,
+    bathroomMax: number | null
   ) => void;
   onPropertyTypeChange: (propertyType: string) => void;
   type?: string;
@@ -18,7 +22,8 @@ type PropertyFilterBarProps = {
 
 const PropertyFilterBar: React.FC<PropertyFilterBarProps> = ({
   onPriceRangeChange,
-  onRoomsRangeChange,
+  onBedRoomsRangeChange,
+  onBathRoomsRangeChange,
   onPropertyTypeChange,
   type,
 }) => {
@@ -31,7 +36,9 @@ const PropertyFilterBar: React.FC<PropertyFilterBarProps> = ({
           type={type}
         />
         <PropertyTypeFilter onPropertyTypeChange={onPropertyTypeChange} />
-        <PropertyRoomFilter onRoomsRangeChange={onRoomsRangeChange} />
+        {/* <PropertyRoomFilter onRoomsRangeChange={onRoomsRangeChange} /> */}
+        <BedroomFilter onBedRoomsRangeChange={onBedRoomsRangeChange} />
+        <BathroomFilter onBathRoomsRangeChange={onBathRoomsRangeChange} />
       </div>
     </div>
   );

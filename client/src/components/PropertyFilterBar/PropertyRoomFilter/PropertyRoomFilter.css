@@ -150,8 +150,8 @@
   z-index: 20;
 }
 .inner_bed_dropdowns {
-  top: -94px;
-}
+  /* top: -94px; */
+  top: -17px;}
 .inner_bath_dropdowns {
   top: -17px;
 }

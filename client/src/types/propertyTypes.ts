@@ -15,6 +15,7 @@ export interface PropertyDataType {
     latitude: number;
   };
   price: number;
+  currency: string;
   bed: number;
   bath: number;
   sqft: number;

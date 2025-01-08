@@ -5,11 +5,18 @@
   padding: 0rem 5rem 2rem;
   position: relative;
 }
+.pty_listing_hdr{
+  display: flex;
+  align-items: flex-start;
+  padding: 0.4rem;
+}
 .pty_listing_ttl {
+  flex: 1;
   color: #333;
   text-transform: capitalize;
   letter-spacing: 1px;
   text-align: center;
+  line-height: 1.1;
 }
 .pty_listing_contnt {
   display: grid;

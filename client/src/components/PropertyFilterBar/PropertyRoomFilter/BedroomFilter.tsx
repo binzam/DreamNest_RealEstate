@@ -1,17 +1,23 @@
 import { FaBed, FaChevronDown, FaChevronUp, FaXmark } from 'react-icons/fa6';
 import './PropertyRoomFilter.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
+import { useSearchParams } from 'react-router-dom';
 
-const roomValues = ['No Min', '1', '2', '3', '4', '5', '6'];
+const roomMinValues = ['No Min', '1', '2', '3', '4', '5', '6'];
+const roomMaxValues = ['No Max', '1', '2', '3', '4', '5', '6'];
 
 type BedroomFilterProps = {
-  onBedRoomsRangeChange: (bedroomMin: number, bedroomMax: number) => void;
+  onBedRoomsRangeChange: (
+    bedroomMin: number | null,
+    bedroomMax: number | null
+  ) => void;
 };
 
 const BedroomFilter: React.FC<BedroomFilterProps> = ({
   onBedRoomsRangeChange,
 }) => {
+  const [searchParams] = useSearchParams();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownState, setDropdownState] = useState({
     bedroomMin: false,
@@ -19,50 +25,80 @@ const BedroomFilter: React.FC<BedroomFilterProps> = ({
   });
 
   const [selectedValues, setSelectedValues] = useState({
-    bedroomMin: 0,
-    bedroomMax: 0,
+    bedroomMin: null as number | null,
+    bedroomMax: null as number | null,
   });
 
   const [displayText, setDisplayText] = useState('Bedrooms');
   const [isRangeSelected, setIsRangeSelected] = useState(false);
+  useEffect(() => {
+    const urlBedMin = searchParams.get('bedroomMin');
+    const urlBedMax = searchParams.get('bedroomMax');
 
+    const parsedMin = urlBedMin ? parseInt(urlBedMin, 10) : null;
+    const parsedMax =
+      urlBedMax && urlBedMax !== 'Infinity' ? parseInt(urlBedMax, 10) : null;
+    setSelectedValues({ bedroomMin: parsedMin, bedroomMax: parsedMax });
+
+    const bedroomText =
+      parsedMin !== null || parsedMax !== null
+        ? `${parsedMin ?? 'No Min'} - ${parsedMax ?? 'No Max'} Bedrooms`
+        : 'Bedrooms';
+
+    setDisplayText(bedroomText);
+    setIsRangeSelected(parsedMin !== null || parsedMax !== null);
+  }, [searchParams]);
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
   const toggleSpecificDropdown = (key: keyof typeof dropdownState) =>
     setDropdownState((prev) => ({ ...prev, [key]: !prev[key] }));
 
   const clearSelection = () => {
     setSelectedValues({
-      bedroomMin: 0,
-      bedroomMax: Infinity,
+      bedroomMin: null,
+      bedroomMax: null,
     });
-    onBedRoomsRangeChange(0, Infinity);
+    onBedRoomsRangeChange(null, null);
     setDropdownOpen(!isDropdownOpen);
     setDisplayText('Bedrooms');
     setIsRangeSelected(false);
   };
 
   const handleDone = () => {
+    const { bedroomMin, bedroomMax } = selectedValues;
     const bedroomText =
-      selectedValues.bedroomMin || selectedValues.bedroomMax
-        ? `${selectedValues.bedroomMin || 'No Min'} - ${
-            selectedValues.bedroomMax || 'No Max'
-          } Bed`
-        : '';
+      bedroomMin !== null || bedroomMax !== null
+        ? `${bedroomMin ?? 'No Min'} - ${bedroomMax ?? 'No Max'} Bed`
+        : 'Bedrooms';
 
-    setDisplayText(bedroomText || 'Bedrooms');
+    // setDisplayText(bedroomText || 'Bedrooms');
+    setDisplayText(bedroomText);
     setDropdownOpen(false);
-    onBedRoomsRangeChange(selectedValues.bedroomMin, selectedValues.bedroomMax);
-    setIsRangeSelected(!!bedroomText);
+    onBedRoomsRangeChange(bedroomMin, bedroomMax);
+    setIsRangeSelected(bedroomMin !== null || bedroomMax !== null);
   };
 
-  const selectValue = (key: string, value: string) => {
-    const parsedValue = value === 'No Min' || value === 'No Max' ? null : value;
-    setSelectedValues((prev) => ({ ...prev, [key]: parsedValue }));
+  const selectValue = (key: 'bedroomMin' | 'bedroomMax', value: string) => {
+    const parsedValue =
+      value === 'No Min' || value === 'No Max' ? null : parseInt(value, 10);
+    setSelectedValues((prev) => {
+      if (key === 'bedroomMin' && parsedValue !== null) {
+        if (prev.bedroomMax !== null && parsedValue >= prev.bedroomMax) {
+          return { ...prev, bedroomMin: prev.bedroomMax - 1 };
+        }
+      } else if (key === 'bedroomMax' && parsedValue !== null) {
+        if (prev.bedroomMin !== null && parsedValue <= prev.bedroomMin) {
+          return { ...prev, bedroomMax: prev.bedroomMin + 1 };
+        }
+      }
+      return { ...prev, [key]: parsedValue };
+    });
     setDropdownState((prev) => ({ ...prev, [key]: false }));
   };
 
-  const renderDropdownOptions = (key: string) =>
-    roomValues.map((value, index) => (
+  const renderDropdownOptions = (key: 'bedroomMin' | 'bedroomMax') => {
+    const values = key === 'bedroomMax' ? roomMaxValues : roomMinValues;
+
+    return values.map((value, index) => (
       <button
         key={index}
         className="room_value_btn"
@@ -71,6 +107,7 @@ const BedroomFilter: React.FC<BedroomFilterProps> = ({
         {value}
       </button>
     ));
+  };
 
   return (
     <div className="lp_room_sorter">

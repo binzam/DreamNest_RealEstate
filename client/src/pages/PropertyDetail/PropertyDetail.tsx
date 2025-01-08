@@ -42,6 +42,10 @@ const PropertyDetail = () => {
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState<string | null>(null);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const currencyOptions = ['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'JPY']; // Add as many currencies as needed
+  const [selectedCurrency, setSelectedCurrency] = useState('USD'); // Default to USD
+  const [convertedPrice, setConvertedPrice] = useState(null);
+
   const customIcon = new Icon({
     iconUrl: LocationIcon,
     iconSize: [38, 38],
@@ -51,12 +55,6 @@ const PropertyDetail = () => {
       dispatch(fetchPropertyById(id));
     }
   }, [dispatch, id, property]);
-  if (!loading && !property) {
-    return <p>Property not found.</p>;
-  }
-  if (!property) {
-    return null;
-  }
 
   const {
     _id,
@@ -65,6 +63,7 @@ const PropertyDetail = () => {
     bed,
     bath,
     yearBuilt,
+    currency,
     // title,
     sqft,
     photos = [],
@@ -74,6 +73,8 @@ const PropertyDetail = () => {
     owner,
     createdAt,
   } = property as PropertyDataType;
+  console.log(property);
+
   const { street, state, city, longitude, latitude } = address;
   const openModal = (image: string) => {
     setModalImage(image);
@@ -86,6 +87,41 @@ const PropertyDetail = () => {
     setIsImgModalOpen(false);
     setModalImage(null);
   };
+
+  useEffect(() => {
+    const fetchConversionRate = async () => {
+      try {
+        const response = await fetch(
+          `https://api.exchangerate-api.com/v4/latest/${currency}`
+        );
+        const data = await response.json();
+        const rate = data.rates[selectedCurrency];
+        if (rate) {
+          setConvertedPrice(price * rate);
+        }
+      } catch (error) {
+        console.error('Error fetching exchange rate:', error);
+      }
+    };
+
+    if (price && property.currency !== selectedCurrency) {
+      fetchConversionRate();
+    } else {
+      setConvertedPrice(price);
+    }
+  }, [price, selectedCurrency, currency, property.currency]);
+
+  const handleCurrencyChange = (e) => {
+    setSelectedCurrency(e.target.value);
+  };
+
+  const formatCurrency = (amount, currency) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currency,
+    }).format(amount);
+  };
+
   if (!property || loading) {
     return (
       <GridLoader
@@ -96,6 +132,7 @@ const PropertyDetail = () => {
       />
     );
   }
+
   return (
     <div className="property_detail">
       <BackButton />
@@ -171,15 +208,38 @@ const PropertyDetail = () => {
             className="pty_visit_btn"
             onClick={() => setIsScheduleModalOpen(true)}
           >
-           I want to Visit this Property
+            I want to Visit this Property
           </button>
         )}
+        <div className="property-price-container">
+          <div className="currency-selector">
+            <label htmlFor="currency">Select Currency: </label>
+            <select
+              id="currency"
+              value={selectedCurrency}
+              onChange={handleCurrencyChange}
+            >
+              {currencyOptions.map((currency) => (
+                <option key={currency} value={currency}>
+                  {currency}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="property-price">
+            <span className="label">Price: </span>
+            {convertedPrice !== null
+              ? formatCurrency(convertedPrice, selectedCurrency)
+              : formatCurrency(price, property.currency)}{' '}
+          </div>
+        </div>
         <div className="pty_desc_main">
           <div className="pty_detail_price">
             <div className="pty_purpose">
               <span className="dot"></span>House for {propertyFor}
             </div>
-            <div className="pty_price">${price?.toLocaleString()}</div>
+            <div className="pty_price"> {formatCurrency(price, currency)}</div>
           </div>
           <div className="pty_info">
             <div className="info">

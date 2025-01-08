@@ -25,12 +25,14 @@ const PropertyTypeFilter: React.FC<PropertyTypeFilterProps> = ({
   const [searchParams] = useSearchParams();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedType, setSelectedType] = useState('Any');
+
+  const [displayText, setDisplayText] = useState('Property Type');
   const [isTypeSelected, setIsTypeSelected] = useState(false);
   const propertyTypes = useMemo(
     () => [
       { title: 'Any', icon: <BiSolidBuildingHouse /> },
       { title: 'House', icon: <HiHomeModern /> },
-      { title: 'Villa', icon:  <MdVilla /> },
+      { title: 'Villa', icon: <MdVilla /> },
       { title: 'Condo', icon: <LiaCitySolid /> },
       { title: 'Townhome', icon: <MdCabin /> },
       { title: 'Multi family', icon: <BsFillHousesFill /> },
@@ -40,10 +42,10 @@ const PropertyTypeFilter: React.FC<PropertyTypeFilterProps> = ({
     ],
     []
   );
-  const displayedType = selectedType === 'Any' ? 'Property type' : selectedType;
   useEffect(() => {
     const urlType = searchParams.get('propertyType') || 'Any';
     setSelectedType(urlType);
+    setDisplayText(urlType === "Any" ? "Property Type" : urlType);
     setIsTypeSelected(urlType !== 'Any');
   }, [searchParams]);
 
@@ -52,19 +54,20 @@ const PropertyTypeFilter: React.FC<PropertyTypeFilterProps> = ({
   const handleSelect = (type: string) => {
     setSelectedType(type);
   };
-
-  const handleDone = () => {
-    const type = selectedType === 'Any' ? '' : selectedType;
-    setIsDropdownOpen(false);
-    setIsTypeSelected(true);
-    if (onPropertyTypeChange) onPropertyTypeChange(type);
-  };
   const clearSelection = () => {
     setSelectedType('Any');
     setIsDropdownOpen(!isDropdownOpen);
     setIsTypeSelected(false);
     onPropertyTypeChange('');
   };
+  const handleDone = () => {
+    const type = selectedType === 'Any' ? '' : selectedType;
+    setIsDropdownOpen(false);
+    setDisplayText(type);
+    setIsTypeSelected(true);
+    onPropertyTypeChange(type);
+  };
+
   return (
     <div className="lp_pty_type_sorter">
       <button
@@ -73,7 +76,7 @@ const PropertyTypeFilter: React.FC<PropertyTypeFilterProps> = ({
         aria-expanded={isDropdownOpen}
         aria-label="Property type filter"
       >
-        <span className="type_sorting_btn_txt">{displayedType}</span>
+        <span className="type_sorting_btn_txt">{displayText}</span>
         <span className="type_btn_icon">
           {isTypeSelected ? (
             <span className="clear_type_btn" onClick={clearSelection}>
@@ -91,7 +94,7 @@ const PropertyTypeFilter: React.FC<PropertyTypeFilterProps> = ({
           <div className="type_dd_hdr">
             <span>Property type</span>
             <span className="done_btn" onClick={handleDone}>
-            <IoSearch /> FILTER
+              <IoSearch /> FILTER
             </span>
           </div>
           <div className="dd_types">

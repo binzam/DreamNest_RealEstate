@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import './PropertyPriceFilter.css';
 import { FaChevronDown, FaChevronUp, FaXmark } from 'react-icons/fa6';
 import { IoSearch } from 'react-icons/io5';
+import { useSearchParams } from 'react-router-dom';
 type PriceOption = {
   display: string;
   value: number;
@@ -15,6 +16,7 @@ const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({
   onPriceRangeChange,
   type,
 }) => {
+  const [searchParams] = useSearchParams();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isMinDropdownOpen, setMinDropdownOpen] = useState(false);
   const [isMaxDropdownOpen, setMaxDropdownOpen] = useState(false);
@@ -73,7 +75,32 @@ const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({
           ],
     [type]
   );
+  useEffect(() => {
+    const urlMin = searchParams.get('minPrice');
+    const urlMax = searchParams.get('maxPrice');
 
+    const parsedMin = urlMin ? parseInt(urlMin, 10) : null;
+    const parsedMax =
+      urlMax && urlMax !== 'Infinity' ? parseInt(urlMax, 10) : null;
+
+    const minOption = minValues.find((v) => v.value === parsedMin) || null;
+    const maxOption = maxValues.find((v) => v.value === parsedMax) || null;
+
+    setSelectedMin(minOption);
+    setSelectedMax(maxOption);
+
+    const isValidRange = parsedMin !== 0 || parsedMax !== Infinity;
+    const priceText = `${minOption?.display || 'No Min'} - ${
+      maxOption?.display || 'No Max'
+    }`;
+    if (parsedMin === 0 && parsedMax === Infinity) {
+      setDisplayText('Price');
+      setIsRangeSelected(false);
+    } else {
+      setDisplayText(priceText);
+      setIsRangeSelected(isValidRange);
+    }
+  }, [searchParams, minValues, maxValues]);
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
   const toggleMinDropdown = () => setMinDropdownOpen((prev) => !prev);
   const toggleMaxDropdown = () => setMaxDropdownOpen((prev) => !prev);
@@ -103,18 +130,19 @@ const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({
     setIsRangeSelected(false);
   };
   const handleDone = () => {
+    const minPrice = selectedMin?.value || 0;
+    const maxPrice = selectedMax?.value || Infinity;
     if (selectedMin || selectedMax) {
       setDisplayText(
         `${selectedMin?.display || 'No Min'} - ${
           selectedMax?.display || 'No Max'
         }`
       );
-      const minPrice = selectedMin?.value || 0;
-      const maxPrice = selectedMax?.value || Infinity;
       onPriceRangeChange(minPrice, maxPrice);
       setIsRangeSelected(true);
     } else {
       setDisplayText('Price');
+        setIsRangeSelected(false);
     }
     setDropdownOpen(false);
   };

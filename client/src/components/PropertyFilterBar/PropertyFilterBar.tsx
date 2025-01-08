@@ -2,7 +2,6 @@ import './PropertyFilterBar.css';
 import PropertyPriceFilter from './PropertyPriceFilter/PropertyPriceFilter';
 import BathroomFilter from './PropertyRoomFilter/BathroomFilter';
 import BedroomFilter from './PropertyRoomFilter/BedroomFilter';
-// import PropertyRoomFilter from './PropertyRoomFilter/PropertyRoomFilter';
 import PropertySearch from './PropertySearch/PropertySearch';
 import PropertyTypeFilter from './PropertyTypeFilter/PropertyTypeFilter';
 
@@ -36,7 +35,6 @@ const PropertyFilterBar: React.FC<PropertyFilterBarProps> = ({
           type={type}
         />
         <PropertyTypeFilter onPropertyTypeChange={onPropertyTypeChange} />
-        {/* <PropertyRoomFilter onRoomsRangeChange={onRoomsRangeChange} /> */}
         <BedroomFilter onBedRoomsRangeChange={onBedRoomsRangeChange} />
         <BathroomFilter onBathRoomsRangeChange={onBathRoomsRangeChange} />
       </div>

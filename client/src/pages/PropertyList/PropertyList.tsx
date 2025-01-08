@@ -1,77 +1,64 @@
 import { useParams, useSearchParams } from 'react-router-dom';
 import './PropertyList.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { PropertyDataType } from '../../types/propertyTypes';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
 import PropertyFilterBar from '../../components/PropertyFilterBar/PropertyFilterBar';
 import BackButton from '../../components/BackButton/BackButton';
 import SortingControl from '../../components/SortingControl/SortingControl';
-import { useFilteredProperties } from '../../hooks/useFilteredProperties';
 import { useSortedProperties } from '../../hooks/useSortedProperties';
-import { AppDispatch, RootState } from '../../store/store';
-import { useSelector } from 'react-redux';
 import { GridLoader } from 'react-spinners';
-import { useDispatch } from 'react-redux';
-import { fetchProperties } from '../../store/slices/propertySlice';
+import { useFetchProperties } from '../../hooks/useFetchProperties';
+import { usePropertyFilters } from '../../hooks/usePropertyFilters';
+import useFilteredProperties from '../../hooks/useFilteredProperties';
+import ErrorDisplay from '../../components/ErrorDisplay';
 
 const PropertyList = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { properties, loading, error } = useSelector(
-    (state: RootState) => state.properties
-  );
-
   const { type } = useParams<{ type?: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { properties, loading, error } = useFetchProperties(type);
   const [sortParam, setSortParam] = useState(
     searchParams.get('sort') || 'relevance'
   );
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>(
     (searchParams.get('order') as 'asc' | 'desc') || 'asc'
   );
-  const [priceRange, setPriceRange] = useState({
-    minPrice: Number(searchParams.get('minPrice')) || 0,
-    maxPrice: Number(searchParams.get('maxPrice')) || Infinity,
-  });
-  const [bedRoomsRange, setBedRoomsRange] = useState({
-    bedroomMin: Number(searchParams.get('bedroomMin')) || null,
-    bedroomMax: Number(searchParams.get('bedroomMax')) || null,
-  });
-  const [bathRoomsRange, setBathRoomsRange] = useState({
-    bathroomMin: Number(searchParams.get('bathroomMin')) || null,
-    bathroomMax: Number(searchParams.get('bathroomMax')) || null,
-  });
-  const [propertyType, setPropertyType] = useState(
-    searchParams.get('propertyType') || ''
-  );
+  const {
+    priceRange,
+    bedRoomsRange,
+    bathRoomsRange,
+    propertyType,
+    setPriceRange,
+    setBedRoomsRange,
+    setBathRoomsRange,
+    setPropertyType,
+  } = usePropertyFilters(searchParams);
   const handlePriceRangeChange = (minPrice: number, maxPrice: number) => {
     setPriceRange({ minPrice, maxPrice });
     updateSearchParams({ minPrice, maxPrice });
   };
   const handleBedRoomsRangeChange = (
-    bedroomMin: number,
-    bedroomMax: number
+    bedroomMin: number | null,
+    bedroomMax: number | null
   ) => {
-    setBedRoomsRange({ bedroomMin, bedroomMax });
-    updateSearchParams({ bedroomMin, bedroomMax });
+    const min = bedroomMin ?? 0;
+    const max = bedroomMax ?? Infinity;
+    setBedRoomsRange({ bedroomMin: min, bedroomMax: max });
+    updateSearchParams({ bedroomMin: min, bedroomMax: max });
   };
   const handleBathRoomsRangeChange = (
-    bathroomMin: number,
-    bathroomMax: number
+    bathroomMin: number | null,
+    bathroomMax: number | null
   ) => {
-    setBathRoomsRange({ bathroomMin, bathroomMax });
-    updateSearchParams({ bathroomMin, bathroomMax });
+    const min = bathroomMin ?? 0;
+    const max = bathroomMax ?? Infinity;
+    setBathRoomsRange({ bathroomMin: min, bathroomMax: max });
+    updateSearchParams({ bathroomMin: min, bathroomMax: max });
   };
   const handlePropertyTypeChange = (propertyType: string) => {
     setPropertyType(propertyType);
     updateSearchParams({ propertyType });
   };
-
-  useEffect(() => {
-    document.title = `Property Listings - ${type || 'All'}`;
-    if (!properties) {
-      dispatch(fetchProperties());
-    }
-  }, [type, properties, dispatch]);
 
   const handleSortChange = (param: string) => {
     setSortParam(param);
@@ -91,6 +78,8 @@ const PropertyList = () => {
         {}
       ),
     };
+    console.log(updatedParams);
+    
     setSearchParams(updatedParams);
   };
   const filteredProperties = useFilteredProperties(properties, {
@@ -112,6 +101,8 @@ const PropertyList = () => {
   if (error) return <p>Error: {error}</p>;
   return (
     <div className="property_listing_page">
+      {error && <ErrorDisplay message={error} />}
+
       {loading && (
         <GridLoader
           color="#13ccbb"

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { PropertyDataType } from '../types/propertyTypes';
-interface Filters {
+
+interface FilterCriteria {
   type?: string;
   minPrice?: number;
   maxPrice?: number;
@@ -10,42 +11,62 @@ interface Filters {
   bathroomMax?: number | null;
   propertyType?: string;
 }
-export const useFilteredProperties = (
+
+const useFilteredProperties = (
   properties: PropertyDataType[],
-  filters: Filters
-) => {
-  const {
+  {
     type,
     minPrice = 0,
     maxPrice = Infinity,
-    bedroomMin,
-    bedroomMax ,
-    bathroomMin,
-    bathroomMax ,
-    propertyType,
-  } = filters;
-  const propertyCategories = ['sale', 'rent'];
-  const isCategory = propertyCategories.includes(type || '');
-
-  return useMemo(() => {
+    bedroomMin = null,
+    bedroomMax = null,
+    bathroomMin = null,
+    bathroomMax = null,
+    propertyType = '',
+  }: FilterCriteria
+) => {
+  const filteredProperties = useMemo(() => {
+    
+  
     return properties.filter((property) => {
-      const matchesCategory = isCategory ? property.propertyFor === type : true;
-      const matchesPrice =
-        property.price >= minPrice && property.price <= maxPrice;
-      const matchesRooms =
-        property.bed >= bedroomMin &&
-        property.bed <= bedroomMax &&
-        property.bath >= bathroomMin &&
-        property.bath <= bathroomMax;
-      const matchesPropertyType =
-        !propertyType || property.propertyType.toLocaleLowerCase() === propertyType.toLocaleLowerCase();
-      return (
-        matchesCategory && matchesPrice && matchesRooms && matchesPropertyType
-      );
+      // Filter by type if provided
+      if (type && property.propertyFor.toLowerCase() !== type.toLowerCase()) {
+        return false;
+      }
+
+      // Filter by price range
+      if (property.price < minPrice || property.price > maxPrice) {
+        return false;
+      }
+
+      // Filter by bedroom range
+      if (
+        (bedroomMin !== null && property.bed < bedroomMin) ||
+        (bedroomMax !== null && property.bed > bedroomMax)
+      ) {
+        return false;
+      }
+
+      // Filter by bathroom range
+      if (
+        (bathroomMin !== null && property.bath < bathroomMin) ||
+        (bathroomMax !== null && property.bath > bathroomMax)
+      ) {
+        return false;
+      }
+
+      // Filter by property type if provided
+      if (
+        propertyType &&
+        property.propertyType.toLowerCase() !== propertyType.toLowerCase()
+      ) {
+        return false;
+      }
+
+      return true;
     });
   }, [
     properties,
-    isCategory,
     type,
     minPrice,
     maxPrice,
@@ -55,4 +76,8 @@ export const useFilteredProperties = (
     bathroomMax,
     propertyType,
   ]);
+
+  return filteredProperties;
 };
+
+export default useFilteredProperties;

@@ -1,7 +1,8 @@
 import { FaBath, FaChevronDown, FaChevronUp, FaXmark } from 'react-icons/fa6';
 import './PropertyRoomFilter.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
+import { useSearchParams } from 'react-router-dom';
 
 const roomMinValues = ['No Min', '1', '2', '3', '4', '5', '6'];
 const roomMaxValues = ['No Max', '1', '2', '3', '4', '5', '6'];
@@ -16,6 +17,7 @@ type BathroomFilterProps = {
 const BathroomFilter: React.FC<BathroomFilterProps> = ({
   onBathRoomsRangeChange,
 }) => {
+  const [searchParams] = useSearchParams();
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownState, setDropdownState] = useState({
     bathroomMin: false,
@@ -23,13 +25,30 @@ const BathroomFilter: React.FC<BathroomFilterProps> = ({
   });
 
   const [selectedValues, setSelectedValues] = useState({
-    bathroomMin: null,
-    bathroomMax: null,
+    bathroomMin: null as number | null,
+    bathroomMax: null as number | null,
   });
 
-  const [displayText, setDisplayText] = useState('Bathrooms');
+  const [displayText, setDisplayText] = useState('Bathroom');
   const [isRangeSelected, setIsRangeSelected] = useState(false);
+  useEffect(() => {
+    const urlBathMin = searchParams.get('bathroomMin');
+    const urlBathMax = searchParams.get('bathroomMax');
 
+    const parsedMin = urlBathMin ? parseInt(urlBathMin, 10) : null;
+    const parsedMax =
+      urlBathMax && urlBathMax !== 'Infinity' ? parseInt(urlBathMax, 10) : null;
+
+    setSelectedValues({ bathroomMin: parsedMin, bathroomMax: parsedMax });
+
+    const bathroomText =
+      parsedMin !== null || parsedMax !== null
+        ? `${parsedMin ?? 'No Min'} - ${parsedMax ?? 'No Max'} Bathrooms`
+        : 'Bathrooms';
+
+    setDisplayText(bathroomText);
+    setIsRangeSelected(parsedMin !== null || parsedMax !== null);
+  }, [searchParams]);
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
   const toggleSpecificDropdown = (key: keyof typeof dropdownState) =>
     setDropdownState((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -46,12 +65,6 @@ const BathroomFilter: React.FC<BathroomFilterProps> = ({
   };
 
   const handleDone = () => {
-    // const bathroomText =
-    //   selectedValues.bathroomMin || selectedValues.bathroomMax
-    //     ? `${selectedValues.bathroomMin || 'No Min'} - ${
-    //         selectedValues.bathroomMax || 'No Max'
-    //       } Bath`
-    //     : '';
     const { bathroomMin, bathroomMax } = selectedValues;
     const bathroomText =
       bathroomMin !== null || bathroomMax !== null
@@ -59,22 +72,27 @@ const BathroomFilter: React.FC<BathroomFilterProps> = ({
         : 'Bathrooms';
     setDisplayText(bathroomText || 'Bathrooms');
     setDropdownOpen(false);
-    // onBathRoomsRangeChange(
-    //   selectedValues.bathroomMin,
-    //   selectedValues.bathroomMax
-    // );
-    // setIsRangeSelected(!!bathroomText);
+
     onBathRoomsRangeChange(bathroomMin, bathroomMax);
     setIsRangeSelected(bathroomMin !== null || bathroomMax !== null);
   };
 
   const selectValue = (key: 'bathroomMin' | 'bathroomMax', value: string) => {
-    // const parsedValue = value === 'No Min' || value === 'No Max' ? null : value;
-    // setSelectedValues((prev) => ({ ...prev, [key]: parsedValue }));
-    // setDropdownState((prev) => ({ ...prev, [key]: false }));
     const parsedValue =
       value === 'No Min' || value === 'No Max' ? null : parseInt(value, 10);
     setSelectedValues((prev) => ({ ...prev, [key]: parsedValue }));
+    setSelectedValues((prev) => {
+      if (key === 'bathroomMin' && parsedValue !== null) {
+        if (prev.bathroomMax !== null && parsedValue >= prev.bathroomMax) {
+          return { ...prev, bathroomMin: prev.bathroomMax - 1 };
+        }
+      } else if (key === 'bathroomMax' && parsedValue !== null) {
+        if (prev.bathroomMin !== null && parsedValue <= prev.bathroomMin) {
+          return { ...prev, bathroomMax: prev.bathroomMin + 1 };
+        }
+      }
+      return { ...prev, [key]: parsedValue };
+    });
     setDropdownState((prev) => ({ ...prev, [key]: false }));
   };
 

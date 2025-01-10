@@ -14,9 +14,9 @@ import useFilteredProperties from '../../hooks/useFilteredProperties';
 import ErrorDisplay from '../../components/ErrorDisplay';
 
 const PropertyList = () => {
-  const { type } = useParams<{ type?: string }>();
+  const { type } = useParams<{ type: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
-  const { properties, loading, error } = useFetchProperties(type);
+  const { properties, loading, error } = useFetchProperties();
   const [sortParam, setSortParam] = useState(
     searchParams.get('sort') || 'relevance'
   );
@@ -33,10 +33,20 @@ const PropertyList = () => {
     setBathRoomsRange,
     setPropertyType,
   } = usePropertyFilters(searchParams);
-  const handlePriceRangeChange = (minPrice: number, maxPrice: number) => {
-    setPriceRange({ minPrice, maxPrice });
-    updateSearchParams({ minPrice, maxPrice });
+
+  const handlePriceRangeChange = (
+    minPrice: number | null,
+    maxPrice: number | null
+  ) => {
+    const min = minPrice ?? 0;
+    const max = maxPrice ?? Infinity;
+    setPriceRange({ minPrice: min, maxPrice: max });
+    updateSearchParams({
+      minPrice: min,
+      maxPrice: max === Infinity ? 'Infinity' : max,
+    });
   };
+
   const handleBedRoomsRangeChange = (
     bedroomMin: number | null,
     bedroomMax: number | null
@@ -44,8 +54,12 @@ const PropertyList = () => {
     const min = bedroomMin ?? 0;
     const max = bedroomMax ?? Infinity;
     setBedRoomsRange({ bedroomMin: min, bedroomMax: max });
-    updateSearchParams({ bedroomMin: min, bedroomMax: max });
+    updateSearchParams({
+      bedroomMin: min,
+      bedroomMax: max === Infinity ? 'Infinity' : max,
+    });
   };
+
   const handleBathRoomsRangeChange = (
     bathroomMin: number | null,
     bathroomMax: number | null
@@ -53,8 +67,12 @@ const PropertyList = () => {
     const min = bathroomMin ?? 0;
     const max = bathroomMax ?? Infinity;
     setBathRoomsRange({ bathroomMin: min, bathroomMax: max });
-    updateSearchParams({ bathroomMin: min, bathroomMax: max });
+    updateSearchParams({
+      bathroomMin: min,
+      bathroomMax: max === Infinity ? 'Infinity' : max,
+    });
   };
+
   const handlePropertyTypeChange = (propertyType: string) => {
     setPropertyType(propertyType);
     updateSearchParams({ propertyType });
@@ -79,7 +97,7 @@ const PropertyList = () => {
       ),
     };
     console.log(updatedParams);
-    
+
     setSearchParams(updatedParams);
   };
   const filteredProperties = useFilteredProperties(properties, {
@@ -90,7 +108,7 @@ const PropertyList = () => {
     bedroomMax: bedRoomsRange.bedroomMax,
     bathroomMin: bathRoomsRange.bathroomMin,
     bathroomMax: bathRoomsRange.bathroomMax,
-    propertyType: propertyType,
+    propertyType,
   });
   const sortedProperties = useSortedProperties(
     filteredProperties,
@@ -98,7 +116,6 @@ const PropertyList = () => {
     sortOrder
   );
 
-  if (error) return <p>Error: {error}</p>;
   return (
     <div className="property_listing_page">
       {error && <ErrorDisplay message={error} />}

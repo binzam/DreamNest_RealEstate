@@ -86,6 +86,7 @@ const CategorisedListing = () => {
         <h2 className="list_ttl">{title}</h2>
 
         <SortingControl
+          type=""
           count={filteredProperties.length}
           sortParam={sortParam}
           sortOrder={sortOrder}

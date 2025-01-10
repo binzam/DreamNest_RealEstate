@@ -20,6 +20,7 @@ const Header = () => {
   const unreadNotifications = notifications.filter(
     (notification) => notification.status !== 'Read'
   );
+  const disableHeaderDisplay = location.pathname.startsWith('/property-detail');
   const disableHeaderStickyness =
     location.pathname.startsWith('/properties/sale') ||
     location.pathname.startsWith('/properties/rent');
@@ -35,7 +36,11 @@ const Header = () => {
   }, [unreadNotifications]);
 
   return (
-    <header className={`header ${disableHeaderStickyness ? 'static' : ''}`}>
+    <header
+      className={`header ${
+        disableHeaderStickyness ? 'static' : disableHeaderDisplay ? 'none' : ''
+      }`}
+    >
       <button className="hamburger" onClick={toggleModal}>
         <HiOutlineMenuAlt2 className="icon_hamburger" />
       </button>
@@ -53,10 +58,14 @@ const Header = () => {
               }`}
               title="New Notifications"
             >
-              <IoMdNotifications className={`hdr_bell_icon ${
-                newNotification ? 'new_notification' : ''
-              }`} />
-              <span className='hdr_notf_count'>{unreadNotifications.length}</span>
+              <IoMdNotifications
+                className={`hdr_bell_icon ${
+                  newNotification ? 'new_notification' : ''
+                }`}
+              />
+              <span className="hdr_notf_count">
+                {unreadNotifications.length}
+              </span>
             </Link>
           )}
       </div>

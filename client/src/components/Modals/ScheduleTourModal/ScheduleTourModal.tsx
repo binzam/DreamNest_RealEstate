@@ -69,6 +69,7 @@ const ScheduleTourModal = ({
     navigate('/tour-schedules');
     onClose();
   };
+  
   return (
     <div className="schedule_modal">
       <div className="schedule_modal_content">
@@ -98,7 +99,7 @@ const ScheduleTourModal = ({
         {!scheduleSuccess ? (
           <form className="scheduling_form" onSubmit={handleSchedule}>
             <label className="date_time_label">
-              Date & Time of Viewing
+             Prefered Date & Time of Viewing
               <input
                 className={`date_time_input ${error ? 'error' : ''}`}
                 type="datetime-local"

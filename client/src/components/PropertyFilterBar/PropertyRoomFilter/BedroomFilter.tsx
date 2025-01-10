@@ -23,7 +23,6 @@ const BedroomFilter: React.FC<BedroomFilterProps> = ({
     bedroomMin: false,
     bedroomMax: false,
   });
-
   const [selectedValues, setSelectedValues] = useState({
     bedroomMin: null as number | null,
     bedroomMax: null as number | null,
@@ -37,21 +36,23 @@ const BedroomFilter: React.FC<BedroomFilterProps> = ({
 
     const parsedMin = urlBedMin ? parseInt(urlBedMin, 10) : null;
     const parsedMax =
-      urlBedMax && urlBedMax !== 'Infinity' ? parseInt(urlBedMax, 10) : null;
-    setSelectedValues({ bedroomMin: parsedMin, bedroomMax: parsedMax });
+      urlBedMax === 'Infinity' || !urlBedMax ? null : parseInt(urlBedMax, 10);
 
-    const bedroomText =
-      parsedMin !== null || parsedMax !== null
-        ? `${parsedMin ?? 'No Min'} - ${parsedMax ?? 'No Max'} Bedrooms`
-        : 'Bedrooms';
+    setSelectedValues({ bedroomMin: parsedMin, bedroomMax: parsedMax });
+    const isDefaultRange =
+      (parsedMin === 0 && parsedMax === null) ||
+      (parsedMin === null && parsedMax === null);
+    const bedroomText = isDefaultRange
+      ? 'Bedrooms'
+      : `${parsedMin ?? 'No Min'} - ${parsedMax ?? 'No Max'} Beds`;
 
     setDisplayText(bedroomText);
-    setIsRangeSelected(parsedMin !== null || parsedMax !== null);
+    setIsRangeSelected(!isDefaultRange);
   }, [searchParams]);
+  console.log(selectedValues);
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
   const toggleSpecificDropdown = (key: keyof typeof dropdownState) =>
     setDropdownState((prev) => ({ ...prev, [key]: !prev[key] }));
-
   const clearSelection = () => {
     setSelectedValues({
       bedroomMin: null,
@@ -65,16 +66,15 @@ const BedroomFilter: React.FC<BedroomFilterProps> = ({
 
   const handleDone = () => {
     const { bedroomMin, bedroomMax } = selectedValues;
-    const bedroomText =
-      bedroomMin !== null || bedroomMax !== null
-        ? `${bedroomMin ?? 'No Min'} - ${bedroomMax ?? 'No Max'} Bed`
-        : 'Bedrooms';
+    const isDefaultRange = bedroomMin === null && bedroomMax === null;
+    const bedroomText = isDefaultRange
+      ? 'Bedrooms'
+      : `${bedroomMin ?? 'No Min'} - ${bedroomMax ?? 'No Max'} Beds`;
 
-    // setDisplayText(bedroomText || 'Bedrooms');
     setDisplayText(bedroomText);
     setDropdownOpen(false);
     onBedRoomsRangeChange(bedroomMin, bedroomMax);
-    setIsRangeSelected(bedroomMin !== null || bedroomMax !== null);
+    setIsRangeSelected(!isDefaultRange);
   };
 
   const selectValue = (key: 'bedroomMin' | 'bedroomMax', value: string) => {

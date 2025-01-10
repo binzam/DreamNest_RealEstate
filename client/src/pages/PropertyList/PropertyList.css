@@ -11,12 +11,12 @@
   padding: 0.4rem;
 }
 .pty_listing_ttl {
-  flex: 1;
   color: #333;
   text-transform: capitalize;
   letter-spacing: 1px;
   text-align: center;
   line-height: 1.1;
+  margin-bottom: 0.3rem;
 }
 .pty_listing_contnt {
   display: grid;

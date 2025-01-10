@@ -42,6 +42,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
     address,
     propertyType,
     createdAt,
+    currency,
   } = property;
   const { city, street, state } = address;
   const dispatch = useDispatch<AppDispatch>();
@@ -79,7 +80,13 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
       setLoadingProperty(null);
     });
   };
-  const formattedPrice = new Intl.NumberFormat().format(price);
+  const formatCurrency = (amount: number, currency: string) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currency,
+    }).format(amount);
+  };
+ 
   return (
     <article className={`pty_box ${isInWishlist ? 'wishlisted' : ''}`}>
       {loadingProperty === _id && (
@@ -138,10 +145,10 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
               for {propertyFor}
             </div>
             {propertyFor === 'sale' ? (
-              <div className="pty_price">${formattedPrice}</div>
+              <div className="pty_price">{formatCurrency(price, currency)}</div>
             ) : (
               <div className="pty_price">
-                ${formattedPrice} <small>/ month</small>
+                {formatCurrency(price, currency)} <small>/ month</small>
               </div>
             )}
             <div className="pty_specs">

@@ -37,17 +37,20 @@ const BathroomFilter: React.FC<BathroomFilterProps> = ({
 
     const parsedMin = urlBathMin ? parseInt(urlBathMin, 10) : null;
     const parsedMax =
-      urlBathMax && urlBathMax !== 'Infinity' ? parseInt(urlBathMax, 10) : null;
+      urlBathMax === 'Infinity' || !urlBathMax
+        ? null
+        : parseInt(urlBathMax, 10);
 
     setSelectedValues({ bathroomMin: parsedMin, bathroomMax: parsedMax });
-
-    const bathroomText =
-      parsedMin !== null || parsedMax !== null
-        ? `${parsedMin ?? 'No Min'} - ${parsedMax ?? 'No Max'} Bathrooms`
-        : 'Bathrooms';
+    const isDefaultRange =
+      (parsedMin === 0 && parsedMax === null) ||
+      (parsedMin === null && parsedMax === null);
+    const bathroomText = isDefaultRange
+      ? 'Bathrooms'
+      : `${parsedMin ?? 'No Min'} - ${parsedMax ?? 'No Max'} Baths`;
 
     setDisplayText(bathroomText);
-    setIsRangeSelected(parsedMin !== null || parsedMax !== null);
+    setIsRangeSelected(!isDefaultRange);
   }, [searchParams]);
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
   const toggleSpecificDropdown = (key: keyof typeof dropdownState) =>
@@ -66,15 +69,15 @@ const BathroomFilter: React.FC<BathroomFilterProps> = ({
 
   const handleDone = () => {
     const { bathroomMin, bathroomMax } = selectedValues;
-    const bathroomText =
-      bathroomMin !== null || bathroomMax !== null
-        ? `${bathroomMin ?? 'No Min'} - ${bathroomMax ?? 'No Max'} Bath`
-        : 'Bathrooms';
-    setDisplayText(bathroomText || 'Bathrooms');
+    const isDefaultRange = bathroomMin === null && bathroomMax === null;
+    const bathroomText = isDefaultRange
+      ? 'Bedrooms'
+      : `${bathroomMin ?? 'No Min'} - ${bathroomMax ?? 'No Max'} Baths`;
+    setDisplayText(bathroomText);
     setDropdownOpen(false);
 
     onBathRoomsRangeChange(bathroomMin, bathroomMax);
-    setIsRangeSelected(bathroomMin !== null || bathroomMax !== null);
+    setIsRangeSelected(!isDefaultRange);
   };
 
   const selectValue = (key: 'bathroomMin' | 'bathroomMax', value: string) => {

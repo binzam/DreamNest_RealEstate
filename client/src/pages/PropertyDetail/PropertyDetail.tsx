@@ -25,9 +25,11 @@ import ScheduleTourModal from '../../components/Modals/ScheduleTourModal/Schedul
 import { formatDistance } from 'date-fns';
 import { MdOutlineBrowserUpdated } from 'react-icons/md';
 import { PropertyDataType } from '../../types/propertyTypes';
-import { GridLoader } from 'react-spinners';
+import { BeatLoader, GridLoader } from 'react-spinners';
 import ImagePreviewModal from '../../components/Modals/ImagePreviewModal/ImagePreviewModal';
 import ContactModal from '../../components/Modals/ContactModal/ContactModal';
+import { IoMdInformationCircleOutline } from 'react-icons/io';
+import { SiGooglemaps } from 'react-icons/si';
 const PropertyDetail = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
@@ -42,10 +44,10 @@ const PropertyDetail = () => {
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState<string | null>(null);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
-  const currencyOptions = ['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'JPY']; // Add as many currencies as needed
-  const [selectedCurrency, setSelectedCurrency] = useState('USD'); // Default to USD
-  const [convertedPrice, setConvertedPrice] = useState(null);
-
+  const [selectedCurrency, setSelectedCurrency] = useState('USD');
+  const [convertedPrice, setConvertedPrice] = useState<number | null>(null);
+  const currencyOptions = ['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'JPY'];
+  const [isLoading, setIsLoading] = useState(false);
   const customIcon = new Icon({
     iconUrl: LocationIcon,
     iconSize: [38, 38],
@@ -55,7 +57,16 @@ const PropertyDetail = () => {
       dispatch(fetchPropertyById(id));
     }
   }, [dispatch, id, property]);
-
+  if (!property || loading) {
+    return (
+      <GridLoader
+        color="#13ccbb"
+        margin={10}
+        size={25}
+        className="listing_p_loading"
+      />
+    );
+  }
   const {
     _id,
     address,
@@ -88,52 +99,44 @@ const PropertyDetail = () => {
     setModalImage(null);
   };
 
-  useEffect(() => {
-    const fetchConversionRate = async () => {
-      try {
-        const response = await fetch(
-          `https://api.exchangerate-api.com/v4/latest/${currency}`
-        );
-        const data = await response.json();
-        const rate = data.rates[selectedCurrency];
-        if (rate) {
-          setConvertedPrice(price * rate);
-        }
-      } catch (error) {
-        console.error('Error fetching exchange rate:', error);
+  const fetchConversionRate = async (
+    currency: string,
+    selectedCurrency: string
+  ) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(
+        `https://api.exchangerate-api.com/v4/latest/${currency}`
+      );
+      const data = await response.json();
+      console.log(data);
+
+      const rate = data.rates[selectedCurrency];
+      if (rate) {
+        setConvertedPrice(price * rate);
       }
-    };
-
-    if (price && property.currency !== selectedCurrency) {
-      fetchConversionRate();
-    } else {
-      setConvertedPrice(price);
+    } catch (error) {
+      console.error('Error fetching exchange rate:', error);
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     }
-  }, [price, selectedCurrency, currency, property.currency]);
-
-  const handleCurrencyChange = (e) => {
-    setSelectedCurrency(e.target.value);
   };
-
-  const formatCurrency = (amount, currency) => {
+  const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCurrency(e.target.value);
+    fetchConversionRate(currency, e.target.value);
+  };
+  const formatCurrency = (amount: number, currency: string) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: currency,
     }).format(amount);
   };
-
-  if (!property || loading) {
-    return (
-      <GridLoader
-        color="#13ccbb"
-        margin={10}
-        size={25}
-        className="listing_p_loading"
-      />
-    );
-  }
+  const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
 
   return (
+    
     <div className="property_detail">
       <BackButton />
       <div className="pty_detail_hdr">
@@ -208,38 +211,46 @@ const PropertyDetail = () => {
             className="pty_visit_btn"
             onClick={() => setIsScheduleModalOpen(true)}
           >
-            I want to Visit this Property
+            <p>Do you want to Visit this Property?</p>
+            <span>
+              <IoMdInformationCircleOutline />
+              Click to schedule a tour.
+            </span>
           </button>
         )}
-        <div className="property-price-container">
-          <div className="currency-selector">
-            <label htmlFor="currency">Select Currency: </label>
-            <select
-              id="currency"
-              value={selectedCurrency}
-              onChange={handleCurrencyChange}
-            >
-              {currencyOptions.map((currency) => (
-                <option key={currency} value={currency}>
-                  {currency}
-                </option>
-              ))}
-            </select>
-          </div>
 
-          <div className="property-price">
-            <span className="label">Price: </span>
-            {convertedPrice !== null
-              ? formatCurrency(convertedPrice, selectedCurrency)
-              : formatCurrency(price, property.currency)}{' '}
-          </div>
-        </div>
         <div className="pty_desc_main">
           <div className="pty_detail_price">
             <div className="pty_purpose">
               <span className="dot"></span>House for {propertyFor}
             </div>
-            <div className="pty_price"> {formatCurrency(price, currency)}</div>
+            <div className="pty_price">
+              {isLoading ? (
+                <BeatLoader color="#008000" margin={10} size={11} />
+              ) : convertedPrice !== null ? (
+                formatCurrency(convertedPrice, selectedCurrency)
+              ) : (
+                formatCurrency(price, currency)
+              )}
+              {propertyFor === 'rent' && <small>/ month</small>}
+            </div>
+            <div className="currency_selector">
+              <label htmlFor="currency">
+                <span>Change</span> <br /> currency?
+              </label>
+              <select
+                className="currency_opts"
+                id="currency"
+                value={selectedCurrency}
+                onChange={handleCurrencyChange}
+              >
+                {currencyOptions.map((currency) => (
+                  <option key={currency} value={currency}>
+                    {currency}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
           <div className="pty_info">
             <div className="info">
@@ -317,16 +328,26 @@ const PropertyDetail = () => {
             )}
           </div>
           <div className="pty_map">
-            <MapContainer
-              center={[latitude, longitude]}
-              zoom={13}
-              scrollWheelZoom={false}
+            <a
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="location_link"
             >
-              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-              <Marker icon={customIcon} position={[latitude, longitude]}>
-                <Popup>Property Location</Popup>
-              </Marker>
-            </MapContainer>
+              <SiGooglemaps /> View on Google Maps
+            </a>
+            <div className="map_display">
+              <MapContainer
+                center={[latitude, longitude]}
+                zoom={13}
+                scrollWheelZoom={false}
+              >
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                <Marker icon={customIcon} position={[latitude, longitude]}>
+                  <Popup>Property Location</Popup>
+                </Marker>
+              </MapContainer>
+            </div>
           </div>
         </div>
       </div>

@@ -1,12 +1,17 @@
+import { useSearchParams } from 'react-router-dom';
 import './PropertyFilterBar.css';
 import PropertyPriceFilter from './PropertyPriceFilter/PropertyPriceFilter';
 import BathroomFilter from './PropertyRoomFilter/BathroomFilter';
 import BedroomFilter from './PropertyRoomFilter/BedroomFilter';
 import PropertySearch from './PropertySearch/PropertySearch';
 import PropertyTypeFilter from './PropertyTypeFilter/PropertyTypeFilter';
+import { FaXmark } from 'react-icons/fa6';
 
 type PropertyFilterBarProps = {
-  onPriceRangeChange: (minPrice: number, maxPrice: number) => void;
+  onPriceRangeChange: (
+    minPrice: number | null,
+    maxPrice: number | null
+  ) => void;
   onBedRoomsRangeChange: (
     bedroomMin: number | null,
     bedroomMax: number | null
@@ -16,7 +21,7 @@ type PropertyFilterBarProps = {
     bathroomMax: number | null
   ) => void;
   onPropertyTypeChange: (propertyType: string) => void;
-  type?: string;
+  type: string;
 };
 
 const PropertyFilterBar: React.FC<PropertyFilterBarProps> = ({
@@ -26,9 +31,23 @@ const PropertyFilterBar: React.FC<PropertyFilterBarProps> = ({
   onPropertyTypeChange,
   type,
 }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isAnyFilterApplied = Array.from(searchParams.entries()).some(
+    ([, value]) => value !== '' && value !== '0' && value !== 'Infinity'
+  );
+
+  const clearAllSelections = () => {
+    onPriceRangeChange(null, null);
+    onBedRoomsRangeChange(null, null);
+    onBathRoomsRangeChange(null, null);
+    onPropertyTypeChange('');
+
+    setSearchParams({});
+  };
+
   return (
-    <div className="sorting_bar">
-      <div className="sorting_bar_comps">
+    <div className="filtering_bar">
+      <div className="filtering_bar_comps">
         <PropertySearch />
         <PropertyPriceFilter
           onPriceRangeChange={onPriceRangeChange}
@@ -37,6 +56,11 @@ const PropertyFilterBar: React.FC<PropertyFilterBarProps> = ({
         <PropertyTypeFilter onPropertyTypeChange={onPropertyTypeChange} />
         <BedroomFilter onBedRoomsRangeChange={onBedRoomsRangeChange} />
         <BathroomFilter onBathRoomsRangeChange={onBathRoomsRangeChange} />
+        {isAnyFilterApplied && (
+          <button onClick={clearAllSelections} className="clear_selection_btn">
+            <FaXmark /> Clear Filters
+          </button>
+        )}
       </div>
     </div>
   );

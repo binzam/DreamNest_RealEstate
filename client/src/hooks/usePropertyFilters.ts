@@ -1,18 +1,27 @@
 import { useState } from 'react';
 
 export const usePropertyFilters = (searchParams: URLSearchParams) => {
+  const parseMaxValue = (value: string | null) =>
+    value === null ? Infinity : Number(value);
+
+  const parseMinValue = (value: string | null) =>
+    value === null ? 0 : Number(value);
+
   const [priceRange, setPriceRange] = useState({
-    minPrice: Number(searchParams.get('minPrice')) || 0,
-    maxPrice: Number(searchParams.get('maxPrice')) || Infinity,
+    minPrice: parseMinValue(searchParams.get('minPrice')),
+    maxPrice: parseMaxValue(searchParams.get('maxPrice')),
   });
+
   const [bedRoomsRange, setBedRoomsRange] = useState({
-    bedroomMin: Number(searchParams.get('bedroomMin')) || null,
-    bedroomMax: Number(searchParams.get('bedroomMax')) || null,
+    bedroomMin: parseMinValue(searchParams.get('bedroomMin')),
+    bedroomMax: parseMaxValue(searchParams.get('bedroomMax')),
   });
+
   const [bathRoomsRange, setBathRoomsRange] = useState({
-    bathroomMin: Number(searchParams.get('bathroomMin')) || null,
-    bathroomMax: Number(searchParams.get('bathroomMax')) || null,
+    bathroomMin: parseMinValue(searchParams.get('bathroomMin')),
+    bathroomMax: parseMaxValue(searchParams.get('bathroomMax')),
   });
+
   const [propertyType, setPropertyType] = useState(
     searchParams.get('propertyType') || ''
   );

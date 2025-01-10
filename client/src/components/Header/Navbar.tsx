@@ -1,6 +1,6 @@
 import { RiUser3Line } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { AppDispatch, RootState } from '../../store/store';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -37,32 +37,57 @@ const Navbar = () => {
       <ul className="nav_list">
         {isAuthenticated && (
           <li>
-            <Link className="hdr_nav_link add" to="/add-property">
+            <NavLink
+              to="/add-property"
+              className={({ isActive }) =>
+                isActive ? 'hdr_nav_link active' : 'hdr_nav_link add'
+              }
+            >
               <BsHouseAdd className="add_icon" /> Add Property
-            </Link>
+            </NavLink>
           </li>
         )}
         <li>
-          <Link className="hdr_nav_link" to="/properties/sale">
+          <NavLink
+            to="/properties/sale"
+            className={({ isActive }) =>
+              isActive ? 'hdr_nav_link active' : 'hdr_nav_link'
+            }
+          >
             Buy
-          </Link>
+          </NavLink>
         </li>
 
         <li>
-          <Link className="hdr_nav_link" to="/properties/rent">
+          <NavLink
+            to="/properties/rent"
+            className={({ isActive }) =>
+              isActive ? 'hdr_nav_link active' : 'hdr_nav_link'
+            }
+          >
             Rent
-          </Link>
+          </NavLink>
         </li>
         <li>
-          <Link className="hdr_nav_link" to="/listings">
+          <NavLink
+            className={({ isActive }) =>
+              isActive ? 'hdr_nav_link active' : 'hdr_nav_link'
+            }
+            to="/listings"
+          >
             Listings
-          </Link>
+          </NavLink>
         </li>
         {isAuthenticated && (
           <li>
-            <Link className="hdr_nav_link" to="/manage-properties">
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? 'hdr_nav_link active' : 'hdr_nav_link'
+              }
+              to="/manage-properties"
+            >
               My Properties
-            </Link>
+            </NavLink>
           </li>
         )}
       </ul>

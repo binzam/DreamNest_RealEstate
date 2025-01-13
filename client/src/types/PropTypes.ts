@@ -25,3 +25,10 @@ export interface TestimonialType {
 export interface TestimonialCardProps {
   testimony: TestimonialType;
 }
+export interface TourItemProps {
+  propertyId: string;
+  addressOfTour: string;
+  propertyImage: string;
+  dateOfTour: string;
+  timeOfTour: string;
+}

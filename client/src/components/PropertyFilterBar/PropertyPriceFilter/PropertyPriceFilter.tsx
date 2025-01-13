@@ -28,8 +28,6 @@ const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({
 
   const [displayText, setDisplayText] = useState('Price');
   const [isRangeSelected, setIsRangeSelected] = useState(false);
-  console.log(selectedMin);
-  console.log(selectedMax);
   
   const minValues = useMemo(
     () =>

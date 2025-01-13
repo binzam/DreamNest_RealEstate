@@ -49,7 +49,6 @@ const BedroomFilter: React.FC<BedroomFilterProps> = ({
     setDisplayText(bedroomText);
     setIsRangeSelected(!isDefaultRange);
   }, [searchParams]);
-  console.log(selectedValues);
   const toggleDropdown = () => setDropdownOpen((prev) => !prev);
   const toggleSpecificDropdown = (key: keyof typeof dropdownState) =>
     setDropdownState((prev) => ({ ...prev, [key]: !prev[key] }));

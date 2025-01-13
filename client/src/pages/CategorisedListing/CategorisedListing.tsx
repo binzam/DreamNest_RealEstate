@@ -11,8 +11,8 @@ import { AppDispatch, RootState } from '../../store/store';
 import { fetchProperties } from '../../store/slices/propertySlice';
 import { GridLoader } from 'react-spinners';
 const CategorisedListing = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const { category } = useParams<{ category?: string }>();
+  const dispatch = useDispatch<AppDispatch>();
   const { properties, loading, error } = useSelector(
     (state: RootState) => state.properties
   );
@@ -86,7 +86,7 @@ const CategorisedListing = () => {
         <h2 className="list_ttl">{title}</h2>
 
         <SortingControl
-          type=""
+          type={categoryValue}
           count={filteredProperties.length}
           sortParam={sortParam}
           sortOrder={sortOrder}

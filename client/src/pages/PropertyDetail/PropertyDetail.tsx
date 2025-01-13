@@ -43,6 +43,7 @@ const PropertyDetail = () => {
   const [isImgModalOpen, setIsImgModalOpen] = useState(false);
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState<string | null>(null);
+  const [modalImageTitle, setModalImageTitle] = useState<string | null>(null);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const [convertedPrice, setConvertedPrice] = useState<number | null>(null);
@@ -87,8 +88,9 @@ const PropertyDetail = () => {
   console.log(property);
 
   const { street, state, city, longitude, latitude } = address;
-  const openModal = (image: string) => {
+  const openModal = (image: string, title: string) => {
     setModalImage(image);
+    setModalImageTitle(title);
     setIsImgModalOpen(true);
     setIsImgModalOpen(true);
   };
@@ -97,6 +99,7 @@ const PropertyDetail = () => {
     setIsImgModalOpen(false);
     setIsImgModalOpen(false);
     setModalImage(null);
+    setModalImageTitle(null);
   };
 
   const fetchConversionRate = async (
@@ -136,7 +139,6 @@ const PropertyDetail = () => {
   const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
 
   return (
-    
     <div className="property_detail">
       <BackButton />
       <div className="pty_detail_hdr">
@@ -174,9 +176,9 @@ const PropertyDetail = () => {
                   (photo) => photo.title === 'main'
                 );
                 if (frontPhoto) {
-                  openModal(frontPhoto.image);
+                  openModal(frontPhoto.image, frontPhoto.title);
                 } else if (photos[0]) {
-                  openModal(photos[0].image);
+                  openModal(photos[0].image, photos[0].title);
                 }
               }}
             />
@@ -190,7 +192,7 @@ const PropertyDetail = () => {
               <div
                 key={index}
                 className="photo_box"
-                onClick={() => openModal(photo.image)}
+                onClick={() => openModal(photo.image, photo.title)}
               >
                 <span className="photo_info">{photo.title}</span>
                 <img src={photo.image} alt={photo.title} loading="lazy" />
@@ -352,7 +354,11 @@ const PropertyDetail = () => {
         </div>
       </div>
       {isImgModalOpen && modalImage && (
-        <ImagePreviewModal imageUrl={modalImage} onClose={closeModal} />
+        <ImagePreviewModal
+          imageUrl={modalImage}
+          onClose={closeModal}
+          imageTitle={modalImageTitle}
+        />
       )}
       {isScheduleModalOpen && (
         <ScheduleTourModal

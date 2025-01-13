@@ -3,10 +3,10 @@
   max-height: 500px;
   position: relative;
 }
-.hero_bg{
+.hero_bg {
   height: 500px;
 }
-.hero_bg img{
+.hero_bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -27,7 +27,7 @@
 }
 .hero_message {
   max-width: 600px;
-  margin: 0  auto;
+  margin: 0 auto;
 }
 
 .hero_actions {
@@ -106,11 +106,15 @@
   position: relative;
   height: 100%;
 }
-
-.nav_link:hover {
-  color: #e4e4e4;
+.hero_nav_link.add {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
 }
-.nav_link:hover::after {
+.hero_nav_link:hover {
+  color: #f8f8f8;
+}
+.hero_nav_link:hover::after {
   content: '';
   position: absolute;
   width: 100%;

@@ -27,7 +27,6 @@ const Home = () => {
   }, []);
   return (
     <>
-      <Hero />
       <Suspense
         fallback={
           <GridLoader
@@ -38,6 +37,7 @@ const Home = () => {
           />
         }
       >
+        <Hero />
         <PropertyCategory />
         <CallToAction />
         <PropertyListing category="recommended" title="recommended homes" />

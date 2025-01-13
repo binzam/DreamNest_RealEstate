@@ -5,6 +5,7 @@ import heroDesktopXL from '../../assets/images/hp-hero-desktop-xl.jpg';
 import { Link } from 'react-router-dom';
 import { TypeAnimation } from 'react-type-animation';
 import './Hero.css';
+import { BsHouseAdd } from 'react-icons/bs';
 const Hero = () => {
   return (
     <section className="hero">
@@ -47,11 +48,11 @@ const Hero = () => {
             <Link className="hero_nav_link" to="/properties/sale">
               Buy
             </Link>
-            <Link className="hero_nav_link" to="/sell">
-              Sell
-            </Link>
             <Link className="hero_nav_link" to="/properties/rent">
               Rent
+            </Link>
+            <Link className="hero_nav_link add" to="/add-property">
+              <BsHouseAdd /> Add Property
             </Link>
           </nav>
           <form className="search_form">

@@ -96,7 +96,6 @@ const PropertyList = () => {
         {}
       ),
     };
-    console.log(updatedParams);
 
     setSearchParams(updatedParams);
   };

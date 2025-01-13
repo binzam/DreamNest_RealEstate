@@ -3,9 +3,14 @@ import './ImagePreviewModal.css';
 interface ImagePreviewModalProps {
   imageUrl: string | null;
   onClose: () => void;
+  imageTitle: string | null;
 }
 
-const ImagePreviewModal = ({ imageUrl, onClose }: ImagePreviewModalProps) => {
+const ImagePreviewModal = ({
+  imageUrl,
+  onClose,
+  imageTitle,
+}: ImagePreviewModalProps) => {
   if (!imageUrl) return null;
   return (
     <div className="pty_img_modal" role="dialog" aria-modal="true">
@@ -13,6 +18,7 @@ const ImagePreviewModal = ({ imageUrl, onClose }: ImagePreviewModalProps) => {
         <button className="close_modal_button" onClick={onClose}>
           <FaXmark />
         </button>
+        <p className='modal_img_ttl'>{imageTitle}</p>
         <img
           src={imageUrl}
           alt="Enlarged view"

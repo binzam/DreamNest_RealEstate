@@ -1,14 +1,11 @@
-import { FaHome } from 'react-icons/fa';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
-import { BsSmartwatch } from 'react-icons/bs';
 import { ImCheckboxChecked } from 'react-icons/im';
 import { GiCancel } from 'react-icons/gi';
-import { Link } from 'react-router-dom';
-import { FaCalendarDays, FaLocationDot } from 'react-icons/fa6';
 import './TourList.css';
 import { TourType } from '../../types/interface';
 import { GridLoader } from 'react-spinners';
 import { formatDistance } from 'date-fns';
+import TourItem from './TourItem';
 interface TourListProps {
   tours: TourType[];
   isOwner: boolean;
@@ -41,7 +38,7 @@ const TourList: React.FC<TourListProps> = ({
               addSuffix: true,
             })}
           </span>
-          <div className="tour_body">
+          {/* <div className="tour_body">
             <Link
               to={`/property-detail/${tour.propertyId}`}
               className="tour_img"
@@ -66,7 +63,14 @@ const TourList: React.FC<TourListProps> = ({
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
+          <TourItem
+            propertyId={tour.propertyId}
+            addressOfTour={tour.addressOfTour}
+            dateOfTour={tour.dateOfTour}
+            timeOfTour={tour.timeOfTour}
+            propertyImage={tour.propertyImage}
+          />
           <div className={`tour_status ${tour.status.toLowerCase()}`}>
             {tour.status === 'Scheduled' && (
               <>

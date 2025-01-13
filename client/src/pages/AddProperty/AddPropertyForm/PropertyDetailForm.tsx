@@ -59,21 +59,23 @@ const PropertyDetailForm: React.FC<PropertyDetailFormProps> = ({
           ))}
         </div>
       </div>
-      <div className="add_form_group pty_purpose">
-        <label htmlFor="propertyFor">
-          What are you listing your property for?
-        </label>
-        <select
-          id="propertyFor"
-          name="propertyFor"
-          className="add_pty_select"
-          value={formData.propertyFor}
-          onChange={handleChange}
-        >
-          <option value="">Sale / Rent</option>
-          <option value="rent">Rent</option>
-          <option value="sale">Sale</option>
-        </select>
+      <div className="add_form_group">
+        <div className="pty_purpose_for">
+          <label htmlFor="propertyFor">
+            What are you listing your property for?
+          </label>
+          <select
+            id="propertyFor"
+            name="propertyFor"
+            className="add_pty_select"
+            value={formData.propertyFor}
+            onChange={handleChange}
+          >
+            <option value="">Sale / Rent</option>
+            <option value="rent">Rent</option>
+            <option value="sale">Sale</option>
+          </select>
+        </div>
       </div>
     </fieldset>
   );

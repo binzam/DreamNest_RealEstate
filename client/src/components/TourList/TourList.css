@@ -65,6 +65,7 @@
   display: flex;
   align-items: center;
   gap: 2px;
+  text-wrap: pretty;
 }
 .tour_address a svg {
   font-size: 1rem;

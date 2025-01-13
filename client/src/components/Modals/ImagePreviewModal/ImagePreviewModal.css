@@ -19,15 +19,29 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  /* border-radius: 8px; */
 }
 
 .modal_image {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   border-radius: 8px;
 }
-
+.modal_img_ttl {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 4px 18px;
+  font-size: 1rem;
+  text-transform: capitalize;
+  font-weight: 500;
+  line-height: 20px;
+  color: rgb(255, 255, 255);
+  border-radius: 100vw;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2;
+}
 .close_modal_button {
   position: absolute;
   top: -20px;

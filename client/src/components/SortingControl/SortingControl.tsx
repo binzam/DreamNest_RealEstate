@@ -40,23 +40,25 @@ const SortingControl = ({
         <span>{count}</span>
         {count === 1 ? 'property' : 'properties'} for {type}
       </div>
-      <div className="sort_by">
-        <label htmlFor="sort-options" className="sort_by_ttl">
-          Sort by
-        </label>
-        <select
-          className="sort_options"
-          id="sort-options"
-          value={sortParam}
-          onChange={(e) => onSortParamChange(e.target.value)}
-        >
-          <option value="relevance">Relevance</option>
-          <option value="price">Price</option>
-          <option value="bed">Bedrooms</option>
-          <option value="bath">Bathrooms</option>
-          <option value="sqft">Square Footage</option>
-        </select>
-      </div>
+      {count > 0 && (
+        <div className="sort_by">
+          <label htmlFor="sort-options" className="sort_by_ttl">
+            Sort by
+          </label>
+          <select
+            className="sort_options"
+            id="sort-options"
+            value={sortParam}
+            onChange={(e) => onSortParamChange(e.target.value)}
+          >
+            <option value="relevance">Relevance</option>
+            <option value="price">Price</option>
+            <option value="bed">Bedrooms</option>
+            <option value="bath">Bathrooms</option>
+            <option value="sqft">Square Footage</option>
+          </select>
+        </div>
+      )}
       {sortParam !== 'relevance' && (
         <div className="sort_order_buttons">
           <button

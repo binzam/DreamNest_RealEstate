@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './Listings.css';
 import LoadingSkeleton from '../../components/Loading/LoadingSkeleton/LoadingSkeleton';
-import {  axiosPublic } from '../../api/axiosInstance';
+import { axiosPublic } from '../../api/axiosInstance';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -11,6 +11,8 @@ import {
 } from '../../types/propertyTypes';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
 import { settingsForProperty as settings } from '../../utils/sliderSetting';
+import ErrorDisplay from '../../components/ErrorDisplay';
+import { Outlet } from 'react-router-dom';
 
 const Listings = () => {
   const [categoriedProperties, setCategoriedProperties] = useState<
@@ -22,9 +24,7 @@ const Listings = () => {
   useEffect(() => {
     const fetchCategorizedProperties = async () => {
       try {
-        const response = await axiosPublic.get(
-          '/properties/list/categorized'
-        );
+        const response = await axiosPublic.get('/properties/list/categorized');
         console.log(response);
 
         setCategoriedProperties(response.data);
@@ -52,28 +52,31 @@ const Listings = () => {
   }
 
   if (error) {
-    return <p>Error: {error}</p>;
+    return <ErrorDisplay message={error} />;
   }
 
   return (
-    <div className="all_listings">
-      <section className="slider_section">
-        {categoriedProperties.map((category) => (
-          <div key={category.category} className="property_slider">
-            <h1>{category.category.split('-').join(' ')}</h1>
-            {category.properties && category.properties.length > 0 && (
-              <div>
-                <Slider  {...settings}>
-                  {category.properties.map((property: PropertyDataType) => (
-                    <PropertyCard key={property._id} property={property} />
-                  ))}
-                </Slider>
-              </div>
-            )}
-          </div>
-        ))}
-      </section>
-    </div>
+    <>
+      <Outlet />
+      <div className="all_listings">
+        <section className="slider_section">
+          {categoriedProperties.map((category) => (
+            <div key={category.category} className="property_slider">
+              <h1>{category.category.split('-').join(' ')}</h1>
+              {category.properties && category.properties.length > 0 && (
+                <div>
+                  <Slider {...settings}>
+                    {category.properties.map((property: PropertyDataType) => (
+                      <PropertyCard key={property._id} property={property} />
+                    ))}
+                  </Slider>
+                </div>
+              )}
+            </div>
+          ))}
+        </section>
+      </div>
+    </>
   );
 };
 

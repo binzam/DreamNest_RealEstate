@@ -8,10 +8,6 @@ import {
   FaLocationDot,
   FaRulerCombined,
 } from 'react-icons/fa6';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { Icon } from 'leaflet';
-import LocationIcon from '../../assets/location-icon.png';
-import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from 'react';
 import { FaArrowCircleDown, FaHome } from 'react-icons/fa';
 import { TbDimensions } from 'react-icons/tb';
@@ -24,22 +20,21 @@ import ShareProperty from '../../components/ShareProperty/ShareProperty';
 import ScheduleTourModal from '../../components/Modals/ScheduleTourModal/ScheduleTourModal';
 import { formatDistance } from 'date-fns';
 import { MdOutlineBrowserUpdated } from 'react-icons/md';
-import { PropertyDataType } from '../../types/propertyTypes';
 import { BeatLoader, GridLoader } from 'react-spinners';
 import ImagePreviewModal from '../../components/Modals/ImagePreviewModal/ImagePreviewModal';
 import ContactModal from '../../components/Modals/ContactModal/ContactModal';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
 import { SiGooglemaps } from 'react-icons/si';
+import MapDisplay from '../../components/MapDisplay/MapDisplay';
 const PropertyDetail = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
   const { isAuthenticated, user } = useSelector(
     (state: RootState) => state.user
   );
-  const { propertiesById, loading } = useSelector(
+  const { singleProperty, loading } = useSelector(
     (state: RootState) => state.properties
   );
-  const property = id ? propertiesById[id] : null;
   const [isImgModalOpen, setIsImgModalOpen] = useState(false);
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState<string | null>(null);
@@ -49,16 +44,13 @@ const PropertyDetail = () => {
   const [convertedPrice, setConvertedPrice] = useState<number | null>(null);
   const currencyOptions = ['USD', 'EUR', 'GBP', 'AUD', 'CAD', 'JPY'];
   const [isLoading, setIsLoading] = useState(false);
-  const customIcon = new Icon({
-    iconUrl: LocationIcon,
-    iconSize: [38, 38],
-  });
+
   useEffect(() => {
-    if (!property && id) {
+    if (id) {
       dispatch(fetchPropertyById(id));
     }
-  }, [dispatch, id, property]);
-  if (!property || loading) {
+  }, [dispatch, id]);
+  if (!singleProperty || loading) {
     return (
       <GridLoader
         color="#13ccbb"
@@ -68,6 +60,7 @@ const PropertyDetail = () => {
       />
     );
   }
+
   const {
     _id,
     address,
@@ -76,16 +69,15 @@ const PropertyDetail = () => {
     bath,
     yearBuilt,
     currency,
+    propertyType,
     // title,
     sqft,
     photos = [],
     detail,
     propertyFor,
-    propertyType,
     owner,
     createdAt,
-  } = property as PropertyDataType;
-  console.log(property);
+  } = singleProperty;
 
   const { street, state, city, longitude, latitude } = address;
   const openModal = (image: string, title: string) => {
@@ -224,7 +216,8 @@ const PropertyDetail = () => {
         <div className="pty_desc_main">
           <div className="pty_detail_price">
             <div className="pty_purpose">
-              <span className="dot"></span>House for {propertyFor}
+              <span className="dot"></span>
+              {propertyType} for {propertyFor}
             </div>
             <div className="pty_price">
               {isLoading ? (
@@ -338,18 +331,11 @@ const PropertyDetail = () => {
             >
               <SiGooglemaps /> View on Google Maps
             </a>
-            <div className="map_display">
-              <MapContainer
-                center={[latitude, longitude]}
-                zoom={13}
-                scrollWheelZoom={false}
-              >
-                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                <Marker icon={customIcon} position={[latitude, longitude]}>
-                  <Popup>Property Location</Popup>
-                </Marker>
-              </MapContainer>
-            </div>
+            <MapDisplay
+              longitude={longitude}
+              latitude={latitude}
+              mapSize="lrg"
+            />
           </div>
         </div>
       </div>

@@ -15,11 +15,10 @@ export interface PropertyDataType {
     latitude: number;
   };
   price: number;
-  currency: string;
   bed: number;
   bath: number;
   sqft: number;
-  uniqueId: string;
+  uniqueId?: string;
   photos: PhotoType[];
   category: string;
   detail: string;
@@ -28,6 +27,11 @@ export interface PropertyDataType {
   propertyType: string;
   title: string;
   createdAt: string;
+  currency: string;
+  features?: string[];
+  videoUrl?: string;
+  contactInfo?: string;
+  dateListed?: string;
 }
 
 export interface PropertyCategoryType {
@@ -72,7 +76,7 @@ export interface PropertyFormData {
   detail: string;
   yearBuilt: number;
   isAvailable: boolean;
-  currency?: string;
+  currency: string;
   features?: string[];
   videoUrl?: string;
   contactInfo?: string;

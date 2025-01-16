@@ -190,7 +190,7 @@ const TourRequest = () => {
         ) : tourSchedules.length > 0 || filteredTours.length > 0 ? (
           <div className="tours_display">
             <div className="tour_filter_controls">
-              <label htmlFor="statusFilter">Filter Tours: </label>
+              <label htmlFor="statusFilter">Filter Requests </label>
               <select
                 className="tour_status_filter"
                 id="statusFilter"

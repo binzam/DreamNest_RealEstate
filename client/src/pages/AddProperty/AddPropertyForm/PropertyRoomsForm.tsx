@@ -19,9 +19,10 @@ const PropertyRoomsForm: React.FC<PropertyRoomsFormProps> = ({
   };
   return (
     <fieldset>
+     
       <legend>Property Size & Rooms</legend>
       <div className="bed_bath_sqft_inputs">
-        <small>Please give accurate values.</small>
+        <small className='add_pty_sml_txt'>Please give accurate values.</small>
         <div className="add_pty_size_inputs">
           <div  className="add_pty_size_input">
             <div className="add_form_group">

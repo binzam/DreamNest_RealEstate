@@ -5,14 +5,14 @@ import { PropertyDataType } from '../../types/propertyTypes';
 
 interface PropertyState {
   properties: PropertyDataType[];
-  propertiesById: { [key: string]: PropertyDataType };
+  singleProperty: PropertyDataType | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: PropertyState = {
   properties: [],
-  propertiesById: {},
+  singleProperty: null,
   loading: true,
   error: null,
 };
@@ -41,7 +41,7 @@ export const fetchPropertyById = createAsyncThunk(
     try {
       const response = await axiosPublic.get(`/properties/list/${id}`);
       console.log('PROPERTY BY ID API CALL', response);
-      
+
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -66,23 +66,22 @@ const propertySlice = createSlice({
       .addCase(fetchProperties.fulfilled, (state, action) => {
         state.loading = false;
         state.properties = action.payload;
-        state.propertiesById = action.payload.reduce(
-          (
-            acc: { [key: string]: PropertyDataType },
-            property: PropertyDataType
-          ) => {
-            acc[property._id] = property;
-            return acc;
-          },
-          {}
-        );
       })
       .addCase(fetchProperties.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       })
+      .addCase(fetchPropertyById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(fetchPropertyById.fulfilled, (state, action) => {
-        state.propertiesById[action.payload.id] = action.payload;
+        state.loading = false;
+        state.singleProperty = action.payload;
+      })
+      .addCase(fetchPropertyById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });

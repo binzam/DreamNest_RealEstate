@@ -1,8 +1,8 @@
 import './AddProperty.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { axiosPrivate } from '../../api/axiosInstance';
 import BackButton from '../../components/BackButton/BackButton';
-import { MdAddHomeWork, MdOutlineDoneOutline } from 'react-icons/md';
+import { MdAddHomeWork } from 'react-icons/md';
 import PropertyDetailForm from './AddPropertyForm/PropertyDetailForm';
 import PropertyLocationForm from './AddPropertyForm/PropertyLocationForm';
 import { PropertyFormData } from '../../types/propertyTypes';
@@ -14,15 +14,21 @@ import { useNavigate } from 'react-router-dom';
 import { GridLoader } from 'react-spinners';
 import ErrorDisplay from '../../components/ErrorDisplay';
 import { GrLinkNext, GrLinkPrevious } from 'react-icons/gr';
+import AddPropertyCheckout from './AddPropertyCheckout';
+import { useDispatch } from 'react-redux';
+import { fetchProperties } from '../../store/slices/propertySlice';
+import { AppDispatch } from '../../store/store';
 const stepTitles = [
   'Property Type',
   'Property Location',
   'Property Specs',
   'Property Info',
   'Property Images',
+  'Listing Payment',
 ];
 
 const AddProperty = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState<PropertyFormData>({
     title: '',
     address: {
@@ -58,9 +64,7 @@ const AddProperty = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     setLoading(true);
     setError(null);
 
@@ -113,9 +117,10 @@ const AddProperty = () => {
       );
       console.log(response);
       if (response.status === 201) {
+        dispatch(fetchProperties());
         navigate('/manage-properties/my-properties', {
           state: {
-            successMessage: 'Congratulations! Property added successfully!',
+            message: 'Congratulations! Property added successfully!',
           },
         });
       }
@@ -137,7 +142,7 @@ const AddProperty = () => {
   };
 
   const nextStep = () => {
-    if (currentStep < 5) {
+    if (currentStep < 6) {
       setCurrentStep((prev) => prev + 1);
     }
   };
@@ -158,7 +163,7 @@ const AddProperty = () => {
     setError(null);
   };
 
-  const progressBarWidth = (currentStep / 5) * 100;
+  const progressBarWidth = (currentStep / 6) * 100;
   return (
     <div className="add_property">
       {loading && (
@@ -181,6 +186,7 @@ const AddProperty = () => {
         <div className="step-titles">
           {stepTitles.map((title, index) => (
             <span
+              onClick={() => setCurrentStep(index + 1)}
               key={index}
               className={`step-title ${
                 currentStep === index + 1 ? 'active' : ''
@@ -226,6 +232,12 @@ const AddProperty = () => {
               updateFormData={updateFormData}
             />
           )}
+          {currentStep === 6 && (
+            <AddPropertyCheckout
+              formData={formData}
+              onPaymentSuccess={handleSubmit}
+            />
+          )}
 
           <div className="add_pty_form_navigation">
             {currentStep > 1 && (
@@ -239,7 +251,7 @@ const AddProperty = () => {
                 Previous
               </button>
             )}
-            {currentStep < 5 && (
+            {currentStep < 6 && (
               <button
                 disabled={loading}
                 className="next_btn"
@@ -249,12 +261,12 @@ const AddProperty = () => {
                 Next <GrLinkNext />
               </button>
             )}
-            {currentStep === 5 && (
+            {/* {currentStep === 6 && (
               <button className="add_pty_btn" type="submit" disabled={loading}>
                 <MdOutlineDoneOutline />{' '}
                 {loading ? 'Adding Property...' : 'Add Property'}
               </button>
-            )}
+            )} */}
           </div>
         </form>
         {error && <ErrorDisplay message={error} />}

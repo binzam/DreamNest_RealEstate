@@ -11,9 +11,9 @@
   padding: 0.4rem;
 }
 .pty_listing_ttl {
-  color: #333;
+  color: #041c50;
   text-transform: capitalize;
-  letter-spacing: 1px;
+  letter-spacing: 4px;
   text-align: center;
   line-height: 1.1;
   margin-bottom: 0.3rem;

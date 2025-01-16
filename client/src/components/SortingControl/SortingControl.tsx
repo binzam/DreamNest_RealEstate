@@ -40,7 +40,7 @@ const SortingControl = ({
         <span>{count}</span>
         {count === 1 ? 'property' : 'properties'} for {type}
       </div>
-      {count > 0 && (
+      {count > 1 && (
         <div className="sort_by">
           <label htmlFor="sort-options" className="sort_by_ttl">
             Sort by

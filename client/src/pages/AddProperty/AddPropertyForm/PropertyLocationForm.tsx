@@ -1,19 +1,11 @@
 import React, { useState } from 'react';
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  useMapEvents,
-} from 'react-leaflet';
-import { Icon } from 'leaflet';
-import LocationIcon from '../../../assets/location-icon.png';
 import axios from 'axios';
-import 'leaflet/dist/leaflet.css';
 import { GridLoader } from 'react-spinners';
 import { GiConfirmed } from 'react-icons/gi';
 import ErrorDisplay from '../../../components/ErrorDisplay';
 import { PropertyFormData } from '../../../types/propertyTypes';
+import MapDisplay from '../../../components/MapDisplay/MapDisplay';
+import { IoMdInformationCircleOutline } from 'react-icons/io';
 interface PropertyLocationFormProps {
   formData: PropertyFormData;
   updateFormData: (data: Partial<PropertyFormData>) => void;
@@ -26,10 +18,7 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>('');
   const [mapVisible, setMapVisible] = useState<boolean>(false);
-  const customIcon = new Icon({
-    iconUrl: LocationIcon,
-    iconSize: [38, 38],
-  });
+
   const { street, city, state, country } = formData.address;
 
   const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,21 +69,30 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
     }
   };
 
-  const MapClick = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const map = useMapEvents({
-      click(event) {
-        const { lat, lng } = event.latlng;
-        updateFormData({
-          address: {
-            ...formData.address,
-            latitude: lat,
-            longitude: lng,
-          },
-        });
+  // const MapClick = () => {
+  //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //   const map = useMapEvents({
+  //     click(event) {
+  //       const { lat, lng } = event.latlng;
+  //       updateFormData({
+  //         address: {
+  //           ...formData.address,
+  //           latitude: lat,
+  //           longitude: lng,
+  //         },
+  //       });
+  //     },
+  //   });
+  //   return null;
+  // };
+  const handleMapClick = (lat: number, lng: number) => {
+    updateFormData({
+      address: {
+        ...formData.address,
+        latitude: lat,
+        longitude: lng,
       },
     });
-    return null;
   };
   const latitude = formData.address.latitude ?? 51.505;
   const longitude = formData.address.longitude ?? -0.09;
@@ -136,7 +134,9 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
           </div>
 
           <div className="add_form_group">
-            <label htmlFor="state">State <small>*optional</small></label>
+            <label htmlFor="state">
+              State <small>*optional</small>
+            </label>
             <input
               className="wide_rounded_input"
               type="text"
@@ -176,7 +176,10 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
         {mapVisible && (
           <div className="add_pty_map_input">
             <h3>Pinpoint the location of the property</h3>
-            <small>Please be as precise as possible.</small>
+            <small>
+              <IoMdInformationCircleOutline />
+              Please be as precise as possible.
+            </small>
 
             <div className="add_pty_map_container">
               {loading ? (
@@ -187,17 +190,12 @@ const PropertyLocationForm: React.FC<PropertyLocationFormProps> = ({
                   size={45}
                 />
               ) : (
-                <MapContainer
-                  center={[latitude, longitude]}
-                  zoom={13}
-                  scrollWheelZoom={false}
-                >
-                  <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                  <MapClick />
-                  <Marker icon={customIcon} position={[latitude, longitude]}>
-                    <Popup>Property Location</Popup>
-                  </Marker>
-                </MapContainer>
+                <MapDisplay
+                  latitude={latitude}
+                  longitude={longitude}
+                  mapSize="lrg"
+                  onMapClick={handleMapClick}
+                />
               )}
             </div>
           </div>

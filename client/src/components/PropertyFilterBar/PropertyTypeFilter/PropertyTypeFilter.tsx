@@ -34,7 +34,7 @@ const PropertyTypeFilter: React.FC<PropertyTypeFilterProps> = ({
       { title: 'House', icon: <HiHomeModern /> },
       { title: 'Villa', icon: <MdVilla /> },
       { title: 'Condo', icon: <LiaCitySolid /> },
-      { title: 'Townhome', icon: <MdCabin /> },
+      { title: 'Town house', icon: <MdCabin /> },
       { title: 'Multi family', icon: <BsFillHousesFill /> },
       { title: 'Farm', icon: <PiFarm /> },
       { title: 'Mobile', icon: <FaTrailer /> },

@@ -42,10 +42,6 @@ const CategorisedListing = lazy(
 );
 const Listings = lazy(() => import('./pages/Listings/Listings'));
 const Home = lazy(() => import('./pages/Home/Home'));
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-
-const stripePromise = loadStripe(`${import.meta.env.VITE_STRIPE_KEY}`);
 
 function App() {
   return (
@@ -80,11 +76,7 @@ function App() {
 
             <Route
               path="tour-schedule/payment"
-              element={
-                <Elements stripe={stripePromise}>
-                  <TourScheduleCheckout />
-                </Elements>
-              }
+              element={<TourScheduleCheckout />}
             />
             <Route path="wishlist" element={<Wishlist />} />
             <Route path="user-profile" element={<UserProfile />} />

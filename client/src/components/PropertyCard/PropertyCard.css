@@ -90,6 +90,19 @@
   background-size: contain;
   background-position: 0 117px;
 }
+.new_pty{
+  padding: 1rem 1rem ;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 0px 1px 12px #33333370;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-image: url(../../assets/bg-dots.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 0 117px;
+}
 .pty_purpose {
   display: flex;
   align-items: center;
@@ -153,11 +166,11 @@
   flex-direction: column;
   gap: 0.25rem;
 }
-.pty_street {
+small.pty_street {
   color: #333;
   font-weight: 800;
   line-height: 1;
-  /* font-size: 0.8rem; */
+  font-size: 0.8rem;
 }
 .pty_state {
   color: #000000;
@@ -168,7 +181,7 @@
   align-items: center;
   text-transform: capitalize;
 }
-.contact_btn {
+/* .contact_btn {
   position: absolute;
   top: 185px;
   right: 16px;
@@ -187,7 +200,7 @@
   border: 2px solid rgb(0, 0, 0);
   background-color: #000000;
   color: #fff;
-}
+} */
 .pty_box_post_date {
   display: flex;
   align-items: center;

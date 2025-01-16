@@ -129,7 +129,7 @@ const PropertyList = () => {
       )}
       <BackButton />
       <h2 className="pty_listing_ttl">
-        Listings for {type ? type.toUpperCase() : 'All'}
+        Properties for {type ? type.toUpperCase() : 'All'}
       </h2>
       <PropertyFilterBar
         onPriceRangeChange={handlePriceRangeChange}

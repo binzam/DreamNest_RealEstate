@@ -69,7 +69,7 @@ const PropertyImageForm: React.FC<PropertyImageFormProps> = ({
       <div className="pty_img_upload">
         <div className="add_form_group">
           <label>Upload at least 4 images of your property</label>
-          <small>
+          <small className='add_pty_sml_txt'>
             Please provide a descriptive title for each Image. <br /> Example:
             "Bedroom 1", "Front", "Side"...
           </small>

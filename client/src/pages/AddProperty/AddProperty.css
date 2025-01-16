@@ -60,6 +60,10 @@
   color: #ccc;
   transition: color 0.3s ease;
   font-weight: 500;
+  cursor: pointer;
+}
+.step-title:hover {
+  color: #006986;
 }
 .step-title.active {
   color: #13ccbb;
@@ -99,9 +103,9 @@
   border: 1px solid #00c8ff;
   background-color: #d8f6ffbb;
 }
-.add_form_group {
+/* .add_form_group { */
   /* padding: 1rem 3rem; */
-}
+/* } */
 .add_pty_form fieldset {
   border: 5px solid #ddd;
   border-radius: 15px;
@@ -133,7 +137,7 @@
   letter-spacing: 1px;
   margin-bottom: 1rem;
 }
-.add_pty_form small {
+.add_pty_form .add_pty_sml_txt {
   font-size: 0.9rem;
   color: #333;
   font-weight: 500;
@@ -210,8 +214,8 @@
 /* END TYPE AND PURPOSE  */
 
 /* ADDRESS  */
-.location_pin {
-}
+/* .location_pin {
+} */
 
 .adress_inputs {
   display: grid;
@@ -244,7 +248,6 @@
 .add_pty_map_container {
   width: 100%;
   position: relative;
-  height: 350px;
 }
 .leaflet-container {
   height: 100%;
@@ -252,6 +255,15 @@
 .add_pty_map_input {
   width: 100%;
   height: auto;
+}
+.add_pty_map_input small {
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: #006986;
 }
 .map_loading {
   position: absolute;
@@ -492,4 +504,42 @@ input.file_input {
   font-weight: 600;
   width: fit-content;
   color: #000000;
+}
+/* .listing_payment {
+} */
+.add_pty_payment_cntnt {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.listing_payment h2 {
+  font-size: 1.3rem;
+  text-align: center;
+  letter-spacing: 2px;
+  color: #333;
+  margin-bottom: 1rem;
+}
+.new_lsting_box {
+  border-radius: 5px;
+  display: flex;
+  gap: 1rem;
+  background-color: #fff;
+}
+.new_lsting_box .new_pty {
+  width: 300px;
+  justify-content: space-around;
+}
+.new_pty_imgs {
+  flex: 1;
+  height: 200px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.3rem;
+}
+.new_pty_imgs img {
+  width: 49%;
+  height: 49%;
+  border-radius: 5px;
+  object-fit: cover;
+  object-position: center;
 }

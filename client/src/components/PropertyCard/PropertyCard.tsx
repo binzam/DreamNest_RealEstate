@@ -1,11 +1,4 @@
-import {
-  FaBath,
-  FaBed,
-  FaDeleteLeft,
-  FaHeart,
-  FaLocationDot,
-  FaRulerCombined,
-} from 'react-icons/fa6';
+import { FaDeleteLeft, FaHeart } from 'react-icons/fa6';
 import { PropertyDataType } from '../../types/propertyTypes';
 import './PropertyCard.css';
 import { Link, useNavigate } from 'react-router-dom';
@@ -21,6 +14,7 @@ import { GridLoader } from 'react-spinners';
 import { formatDistance } from 'date-fns';
 import { MdOutlineBrowserUpdated } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
+import PropertyCardBody from './PropertyCardBody';
 interface PropertyCardProps {
   property: PropertyDataType;
   onEdit?: (id: string) => void;
@@ -80,13 +74,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
       setLoadingProperty(null);
     });
   };
-  const formatCurrency = (amount: number, currency: string) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: currency,
-    }).format(amount);
-  };
- 
+
   return (
     <article className={`pty_box ${isInWishlist ? 'wishlisted' : ''}`}>
       {loadingProperty === _id && (
@@ -137,50 +125,19 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
       <div>
         <Link to={`/property-detail/${_id}`}>
           <div className="pty_box_body">
-            <div className="pty_purpose">
-              <span className="dot"></span>
-              {propertyType === 'Single family' || propertyType === 'Mobile'
-                ? `${propertyType} House`
-                : propertyType}{' '}
-              for {propertyFor}
-            </div>
-            {propertyFor === 'sale' ? (
-              <div className="pty_price">{formatCurrency(price, currency)}</div>
-            ) : (
-              <div className="pty_price">
-                {formatCurrency(price, currency)} <small>/ month</small>
-              </div>
-            )}
-            <div className="pty_specs">
-              <div className="pty_spec">
-                <FaBed />
-                <span className="spec">{bed}</span>
-              </div>
-              <div className="pty_spec">
-                <FaBath />
-                <span className="spec">{bath}</span>
-              </div>
-              <div className="pty_spec">
-                <FaRulerCombined />
-                <span className="spec">{sqft?.toLocaleString()} sqft</span>
-              </div>
-            </div>
-            <div className="pty_box_btm">
-              <div className="pty_location">
-                <FaLocationDot />
-                <div className="pty_loc_detail">
-                  <small className="pty_street">{street}</small>
-                  <div className="pty_state">
-                    {city}, {state}
-                  </div>
-                </div>
-              </div>
-              {/* {property.owner !== userId && (
-                <button className="contact_btn">
-                  Contact{propertyFor === 'sale' ? ' Seller' : ' Manager'}
-                </button>
-              )} */}
-            </div>
+            <PropertyCardBody
+              propertyFor={propertyFor}
+              propertyType={propertyType}
+              bed={bed}
+              bath={bath}
+              sqft={sqft}
+              price={price}
+              currency={currency}
+              city={city}
+              street={street}
+              state={state}
+              className=''
+            />
             <div className="pty_box_post_date">
               <MdOutlineBrowserUpdated />
               Posted{' '}

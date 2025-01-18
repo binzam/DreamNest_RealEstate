@@ -6,6 +6,7 @@ import Layout from './Layout/Layout';
 import NotificationListener from './components/NotificationListener';
 import ScrollToTop from './components/ScrollToTop';
 import TourScheduleCheckout from './pages/TourScheduleCheckout/TourScheduleCheckout';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const UserProfile = lazy(() => import('./pages/UserProfile/UserProfile'));
 const UserNotifications = lazy(
@@ -49,8 +50,26 @@ function App() {
       <ScrollToTop />
       <NotificationListener />
       <Routes>
-        <Route path="login" element={<Login />} />
-        <Route path="signup" element={<Signup />} />
+        <Route
+          path="login"
+          element={
+            <GoogleOAuthProvider
+              clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+            >
+              <Login />
+            </GoogleOAuthProvider>
+          }
+        />
+        <Route
+          path="signup"
+          element={
+            <GoogleOAuthProvider
+              clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+            >
+              <Signup />
+            </GoogleOAuthProvider>
+          }
+        />
         <Route path="*" element={<NotFound />} />
         <Route element={<ProtectedRoute />}>
           <Route path="add-property" element={<AddProperty />} />

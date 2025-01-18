@@ -28,12 +28,19 @@ const PropertyList = () => {
     bedRoomsRange,
     bathRoomsRange,
     propertyType,
+    searchTerm,
     setPriceRange,
     setBedRoomsRange,
     setBathRoomsRange,
     setPropertyType,
+    setSearchTerm,
   } = usePropertyFilters(searchParams);
 
+  const handleSearchTermChange = (matchedProperty: {
+    [key: string]: string;
+  }) => {
+    setSearchTerm(matchedProperty);
+  };
   const handlePriceRangeChange = (
     minPrice: number | null,
     maxPrice: number | null
@@ -80,13 +87,11 @@ const PropertyList = () => {
 
   const handleSortChange = (param: string) => {
     setSortParam(param);
-    updateSearchParams({ sort: param });
   };
 
   const toggleSortOrder = () => {
     const newOrder: 'asc' | 'desc' = sortOrder === 'asc' ? 'desc' : 'asc';
     setSortOrder(newOrder);
-    updateSearchParams({ order: newOrder });
   };
   const updateSearchParams = (newParams: Record<string, string | number>) => {
     const updatedParams = {
@@ -99,7 +104,7 @@ const PropertyList = () => {
 
     setSearchParams(updatedParams);
   };
-  const filteredProperties = useFilteredProperties(properties, {
+  const filteredProperties = useFilteredProperties(properties, searchTerm, {
     type,
     minPrice: priceRange.minPrice,
     maxPrice: priceRange.maxPrice,
@@ -114,6 +119,8 @@ const PropertyList = () => {
     sortParam,
     sortOrder
   );
+  const searchKey = Object.keys(searchTerm)[0];
+  const searchValue = searchTerm[searchKey];
 
   return (
     <div className="property_listing_page">
@@ -131,7 +138,10 @@ const PropertyList = () => {
       <h2 className="pty_listing_ttl">
         Properties for {type ? type.toUpperCase() : 'All'}
       </h2>
+
       <PropertyFilterBar
+        properties={properties}
+        onSearchTermChange={handleSearchTermChange}
         onPriceRangeChange={handlePriceRangeChange}
         onBedRoomsRangeChange={handleBedRoomsRangeChange}
         onBathRoomsRangeChange={handleBathRoomsRangeChange}
@@ -146,6 +156,8 @@ const PropertyList = () => {
         sortOrder={sortOrder}
         onSortParamChange={handleSortChange}
         onSortOrderToggle={toggleSortOrder}
+        searchValue={searchValue}
+        searchKey={searchKey}
       />
       {!loading && sortedProperties.length === 0 ? (
         <div className="no_properties_found">No matching properties found.</div>

@@ -1,11 +1,11 @@
 import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
 import { PropertyFormData } from '../../types/propertyTypes';
 import PropertyCardBody from '../../components/PropertyCard/PropertyCardBody';
 import MapDisplay from '../../components/MapDisplay/MapDisplay';
 import StripeCheckout from '../../components/StripeCheckout/StripeCheckout';
 import { RootState } from '../../store/store';
 import { useSelector } from 'react-redux';
+import { stripePromise } from '../../constants';
 
 interface AddPropertyCheckoutProps {
   formData: PropertyFormData;
@@ -16,7 +16,7 @@ const AddPropertyCheckout: React.FC<AddPropertyCheckoutProps> = ({
   onPaymentSuccess,
 }) => {
   const { user } = useSelector((state: RootState) => state.user);
-  const stripePromise = loadStripe(`${import.meta.env.VITE_STRIPE_KEY}`);
+  
   const {
     propertyFor,
     price,

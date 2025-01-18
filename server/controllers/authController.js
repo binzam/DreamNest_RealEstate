@@ -1,6 +1,7 @@
 import { User } from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import { OAuth2Client, UserRefreshClient } from 'google-auth-library';
 // import validator from 'validator';
 
 const generateAccessToken = (user) => {
@@ -16,6 +17,21 @@ const generateRefreshToken = (user) => {
     expiresIn: '7d',
   });
 };
+const issueTokens = (user, res) => {
+  const accessToken = generateAccessToken(user);
+  const refreshToken = generateRefreshToken(user);
+
+  // Set the refresh token in a secure cookie
+  res.cookie('refreshToken', refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'Lax',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
+
+  return { accessToken };
+};
+
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -125,7 +141,7 @@ const logout = (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'Lax',
-      maxAge: 0, 
+      maxAge: 0,
     });
     return res.status(200).json({ message: 'Logged out successfully' });
   } catch (error) {
@@ -133,5 +149,58 @@ const logout = (req, res) => {
     res.status(500).json({ message: 'An error occurred while logging out' });
   }
 };
+const googleSignin = async (req, res) => {
+  const oAuth2Client = new OAuth2Client(
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+    process.env.ALLOWED_ORIGIN
+  );
 
-export { registerUser, login, refresh, logout };
+  try {
+    if (!req.body.code) {
+      return res.status(400).json({ error: 'Authorization code is required' });
+    }
+    const { tokens } = await oAuth2Client.getToken(req.body.code);
+    const ticket = await oAuth2Client.verifyIdToken({
+      idToken: tokens.id_token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+
+    let user = await User.findOne({ email: payload.email });
+
+    if (!user) {
+      user = new User({
+        email: payload.email,
+        firstName: payload.given_name,
+        lastName: payload.family_name,
+        profilePicture: payload.picture,
+        googleId: payload.sub,
+      });
+
+      await user.save();
+    }
+
+    const { accessToken } = issueTokens(user, res);
+
+    return res.status(200).json({
+      accessToken,
+      user: {
+        email: user.email,
+        role: user.role,
+        profilePicture: user.profilePicture,
+        _id: user._id,
+        firstName: user.firstName,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+
+    console.error('Error during Google Sign-In:', error.message);
+    res.status(500).json({
+      error: error.response?.data || 'Failed to authenticate with Google',
+    });
+  }
+};
+
+export { registerUser, login, refresh, logout, googleSignin };

@@ -16,8 +16,9 @@ const SortingControl = ({
   sortOrder,
   onSortParamChange,
   onSortOrderToggle,
+  searchKey,
+  searchValue,
 }: SortingControlProps) => {
-  // console.log(sortParam);
 
   const getSortIcon = () => {
     switch (sortParam) {
@@ -37,13 +38,21 @@ const SortingControl = ({
   return (
     <div className="sort_control">
       <div className="pty_count">
-        <span>{count}</span>
-        {count === 1 ? 'property' : 'properties'} for {type}
+        <div className="pty_counter">
+          <span>{count}</span>
+          {count === 1 ? 'property' : 'properties'} for {type}
+        </div>
+        <small>
+          {searchKey &&
+            searchValue &&
+            `around ${searchValue}
+  ${searchKey}`}
+        </small>
       </div>
       {count > 1 && (
         <div className="sort_by">
           <label htmlFor="sort-options" className="sort_by_ttl">
-            Sort by
+            {/* Sort <br /> by */}
           </label>
           <select
             className="sort_options"

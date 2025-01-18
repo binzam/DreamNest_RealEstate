@@ -26,8 +26,6 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
-      minlength: 6,
     },
 
     profilePicture: {
@@ -41,6 +39,9 @@ const userSchema = new Schema(
       default: 'user',
     },
     resetToken: {
+      type: String,
+    },
+    googleId: {
       type: String,
     },
     wishlist: [

@@ -6,7 +6,7 @@ export const usePropertyFilters = (searchParams: URLSearchParams) => {
 
   const parseMinValue = (value: string | null) =>
     value === null ? 0 : Number(value);
-
+  const [searchTerm, setSearchTerm] = useState<{ [key: string]: string }>({});
   const [priceRange, setPriceRange] = useState({
     minPrice: parseMinValue(searchParams.get('minPrice')),
     maxPrice: parseMaxValue(searchParams.get('maxPrice')),
@@ -35,5 +35,7 @@ export const usePropertyFilters = (searchParams: URLSearchParams) => {
     setBedRoomsRange,
     setBathRoomsRange,
     setPropertyType,
+    setSearchTerm,
+    searchTerm,
   };
 };

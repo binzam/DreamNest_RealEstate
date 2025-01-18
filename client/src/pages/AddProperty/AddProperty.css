@@ -8,17 +8,17 @@
   padding: 0.5rem 5rem;
   height: 60px;
   display: flex;
-  background: #00c9ff; /* fallback for old browsers */
+  background: #41295a; 
   background: -webkit-linear-gradient(
     to right,
-    #92fe9d,
-    #00c9ff
-  ); /* Chrome 10-25, Safari 5.1-6 */
+    #2f0743,
+    #41295a
+  ); 
   background: linear-gradient(
     to right,
-    #92fe9d,
-    #00c9ff
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    #2f0743,
+    #41295a
+  ); 
 
   align-items: center;
   justify-content: space-between;
@@ -27,12 +27,15 @@
 }
 .add_pty_hdr svg.add_icon {
   width: 50px;
-  color: green;
-  fill: green;
+  color: rgb(146, 233, 146);
+  fill: rgb(116, 187, 116);
   height: 50px;
 }
+.add_pty_hdr .back_btn{
+  color: #00c8ff;
+}
 .add_pty_hdr h2 {
-  font-size: 2rem;
+  font-size: 1.2rem;
   color: #ffffff;
   letter-spacing: 3px;
   /* margin: 0 1rem 0 5rem; */
@@ -104,7 +107,7 @@
   background-color: #d8f6ffbb;
 }
 /* .add_form_group { */
-  /* padding: 1rem 3rem; */
+/* padding: 1rem 3rem; */
 /* } */
 .add_pty_form fieldset {
   border: 5px solid #ddd;

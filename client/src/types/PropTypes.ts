@@ -14,6 +14,8 @@ export interface SortingControlProps {
   sortOrder: 'asc' | 'desc';
   onSortParamChange: (param: string) => void;
   onSortOrderToggle: () => void;
+  searchKey?: string;
+  searchValue?: string;
 }
 export interface TestimonialType {
   id: number;

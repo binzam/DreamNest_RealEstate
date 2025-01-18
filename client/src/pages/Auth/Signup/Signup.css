@@ -127,7 +127,6 @@
 .form_input.chkbox {
   display: flex;
   flex-direction: column;
-  margin: 0rem 0 1.5rem;
 }
 
 .form_input .input_spc {
@@ -137,7 +136,7 @@
   font-weight: 500;
   background-color: #ffffff;
   border-radius: 5px;
-  padding: 0.7rem 1rem;
+  padding: 0.3rem 1rem;
 }
 .input_spc:focus {
   outline: 2px solid blue;
@@ -162,7 +161,7 @@
   text-decoration: underline;
   margin: 0 1px;
 }
-.auth_form button {
+.signup_btn_ca {
   padding: 0.5rem 1.5rem;
   background-color: #007bff;
   color: #ffffff;
@@ -173,4 +172,25 @@
   font-size: 1rem;
   letter-spacing: 2px;
   font-weight: 500;
+}
+.google_login_btn {
+  width: 100%;
+  padding: 0.6rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  background-color: #fff;
+  color: #333;
+  border-radius: 100vw;
+  border: 1px solid transparent;
+}
+.google_login_btn svg {
+  font-size: 1.3rem;
+}
+.google_login_btn:hover {
+  border: 1px dashed #bdbdbd;
+  background-color: #f1f1f1;
 }

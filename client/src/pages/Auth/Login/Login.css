@@ -99,19 +99,42 @@
 }
 
 .login_btn {
+  width: 100%;
   background-color: #007bff;
   color: #fff;
+  display: block;
   border: none;
-  padding: 0.6rem 4rem;
+  padding: 0.6rem 0;
+  margin-bottom: 0.5rem;
   border-radius: 100vw;
   cursor: pointer;
   font-size: 1rem;
   letter-spacing: 5px;
   font-weight: 600;
   text-transform: uppercase;
-  transition: background 0.3s;
+  transition: all 0.3s ease;
 }
-
+.google_login_btn {
+  width: 100%;
+  padding: 0.6rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  background-color: #fff;
+  color: #333;
+  border-radius: 100vw;
+  border: 1px solid transparent;
+}
+.google_login_btn svg{
+  font-size: 1.3rem;
+}
+.google_login_btn:hover{
+  border: 1px dashed #bdbdbd;
+  background-color: #f1f1f1;
+}
 .login_btn:hover {
   background-color: #0056b3;
 }

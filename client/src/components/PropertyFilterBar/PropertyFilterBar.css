@@ -24,19 +24,24 @@
 .clear_selection_btn {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 0.5rem;
   background-color: #f44336;
-  padding: 0.3rem 0.6rem;
-  min-width: 70px;
+  padding: 0.3rem 1rem;
+  /* min-width: 70px; */
   border-radius: 100vw;
   color: #ffffff;
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 500;
   box-shadow: 0px 2px 5px #333333;
   transition: all 0.3s ease;
+  letter-spacing: 1px;
 }
 .clear_selection_btn svg{
-  font-size: 1.2rem
+  font-size: 1.5rem
+}
+.clear_selection_btn span{
+  line-height: 1;
 }
 .clear_selection_btn:hover {
   border-radius: 0.6rem;

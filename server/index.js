@@ -17,9 +17,6 @@ import multerErrorHandler from './middleware/multerErrorHandler.js';
 // import { clearAllNotifications, clearAllTourSchedules, fixBug } from './utils/resetUtils.js';
 
 const app = express();
-app.use(express.json());
-app.use(cookieParser());
-
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
@@ -29,16 +26,17 @@ const io = new Server(server, {
   },
 });
 
-app.use('/uploads', express.static(path.resolve('uploads')));
+app.use(express.json());
+app.use(cookieParser());
 
 const corsOptions = {
   origin: process.env.ALLOWED_ORIGIN,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   credentials: true,
 };
-
 app.use(cors(corsOptions));
-app.use(express.json());
+app.use('/uploads', express.static(path.resolve('uploads')));
+
 app.get('/', (req, res) => {
   return res.status(200).json('Welcome DreamNest REALESTATE');
 });

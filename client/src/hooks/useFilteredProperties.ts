@@ -14,6 +14,7 @@ interface FilterCriteria {
 
 const useFilteredProperties = (
   properties: PropertyDataType[],
+  searchTerm: { [key: string]: string },
   {
     type,
     minPrice = 0,
@@ -25,21 +26,35 @@ const useFilteredProperties = (
     propertyType = '',
   }: FilterCriteria
 ) => {
+
   const filteredProperties = useMemo(() => {
-    
-  
+    const trimmedSearchTerm =
+      Object.keys(searchTerm).length === 0
+        ? ''
+        : searchTerm[Object.keys(searchTerm)[0]].toLowerCase();
     return properties.filter((property) => {
-      // Filter by type if provided
+      if (trimmedSearchTerm) {
+        const searchKey = Object.keys(
+          searchTerm
+        )[0] as keyof typeof property.address;
+        const searchValue = trimmedSearchTerm;
+
+        const matchesSearch = property.address[searchKey]
+          ?.toString()
+          .toLowerCase()
+          .includes(searchValue);
+
+        if (!matchesSearch) return false;
+      }
+
       if (type && property.propertyFor.toLowerCase() !== type.toLowerCase()) {
         return false;
       }
 
-      // Filter by price range
       if (property.price < minPrice || property.price > maxPrice) {
         return false;
       }
 
-      // Filter by bedroom range
       if (
         (bedroomMin !== null && property.bed < bedroomMin) ||
         (bedroomMax !== null && property.bed > bedroomMax)
@@ -47,7 +62,6 @@ const useFilteredProperties = (
         return false;
       }
 
-      // Filter by bathroom range
       if (
         (bathroomMin !== null && property.bath < bathroomMin) ||
         (bathroomMax !== null && property.bath > bathroomMax)
@@ -55,7 +69,6 @@ const useFilteredProperties = (
         return false;
       }
 
-      // Filter by property type if provided
       if (
         propertyType &&
         property.propertyType.toLowerCase() !== propertyType.toLowerCase()
@@ -66,6 +79,7 @@ const useFilteredProperties = (
       return true;
     });
   }, [
+    searchTerm,
     properties,
     type,
     minPrice,

@@ -6,6 +6,7 @@ import BedroomFilter from './PropertyRoomFilter/BedroomFilter';
 import PropertySearch from './PropertySearch/PropertySearch';
 import PropertyTypeFilter from './PropertyTypeFilter/PropertyTypeFilter';
 import { FaXmark } from 'react-icons/fa6';
+import { PropertyDataType } from '../../types/propertyTypes';
 
 type PropertyFilterBarProps = {
   onPriceRangeChange: (
@@ -21,6 +22,8 @@ type PropertyFilterBarProps = {
     bathroomMax: number | null
   ) => void;
   onPropertyTypeChange: (propertyType: string) => void;
+  onSearchTermChange: (searchTerm: { [key: string]: string }) => void; 
+  properties: PropertyDataType[];
   type: string;
 };
 
@@ -29,6 +32,8 @@ const PropertyFilterBar: React.FC<PropertyFilterBarProps> = ({
   onBedRoomsRangeChange,
   onBathRoomsRangeChange,
   onPropertyTypeChange,
+  onSearchTermChange,
+  properties,
   type,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -48,7 +53,11 @@ const PropertyFilterBar: React.FC<PropertyFilterBarProps> = ({
   return (
     <div className="filtering_bar">
       <div className="filtering_bar_comps">
-        <PropertySearch />
+        <PropertySearch
+          properties={properties}
+          onSearchTermChange={onSearchTermChange}
+          type={type}
+        />
         <PropertyPriceFilter
           onPriceRangeChange={onPriceRangeChange}
           type={type}
@@ -58,7 +67,7 @@ const PropertyFilterBar: React.FC<PropertyFilterBarProps> = ({
         <BathroomFilter onBathRoomsRangeChange={onBathRoomsRangeChange} />
         {isAnyFilterApplied && (
           <button onClick={clearAllSelections} className="clear_selection_btn">
-            <FaXmark /> Clear Filters
+            <FaXmark /> <span>Clear <br /> Filters</span>
           </button>
         )}
       </div>

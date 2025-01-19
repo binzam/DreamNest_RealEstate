@@ -90,7 +90,7 @@ const useAuth = (isSignup: boolean) => {
         dispatch(fetchNotificationsThunk());
         setAccessToken(accessToken);
         setUser(user);
-        navigate(user.role === 'admin' ? '/admin/dashboard' : '/', {
+        navigate(user.role === 'admin' ? '/admin' : '/', {
           replace: true,
         });
       }
@@ -122,7 +122,7 @@ const useAuth = (isSignup: boolean) => {
           dispatch(fetchNotificationsThunk());
           setAccessToken(accessToken);
           setUser(user);
-          navigate(user.role === 'admin' ? '/admin/dashboard' : '/', {
+          navigate(user.role === 'admin' ? '/admin' : '/', {
             replace: true,
           });
         }

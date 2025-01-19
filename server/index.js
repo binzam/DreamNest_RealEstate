@@ -11,6 +11,7 @@ import propertyRoutes from './routes/propertyRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import tourScheduleRoutes from './routes/tourScheduleRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 import path from 'path';
 import multerErrorHandler from './middleware/multerErrorHandler.js';
 // import { clearAllUsers } from './utils/resetUtils.js';
@@ -49,6 +50,7 @@ app.use('/api/properties', propertyRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/tour', tourScheduleRoutes);
 app.use('/api/payment', paymentRoutes);
+app.use('/api/admin', adminRoutes);
 app.use(multerErrorHandler);
 
 io.on('connection', (socket) => {

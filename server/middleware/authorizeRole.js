@@ -1,8 +1,8 @@
-const authorizeRole = (roles) => {
+const authorizeRole = (role) => {
   return (req, res, next) => {
-    if (!roles.includes(req.user.role)) {
+    if (role !== req.user.role) {
       return res.status(403).json({
-        message: 'You do not have permission to access this resource',
+        message: 'Unauthorized',
       });
     }
     next();

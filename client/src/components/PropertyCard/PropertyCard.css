@@ -90,8 +90,8 @@
   background-size: contain;
   background-position: 0 117px;
 }
-.new_pty{
-  padding: 1rem 1rem ;
+.new_pty {
+  padding: 1rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -102,6 +102,11 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 0 117px;
+}
+.new_pty.no_shadow {
+  box-shadow: none;
+  width: max-content;
+  padding: 1rem 0.5rem;
 }
 .pty_purpose {
   display: flex;
@@ -133,6 +138,7 @@
   align-items: center;
   justify-content: space-evenly;
   max-width: 400px;
+  gap: 0.5rem;
 }
 .pty_spec {
   display: flex;

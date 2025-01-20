@@ -4,8 +4,8 @@ import { GiCancel } from 'react-icons/gi';
 import './TourList.css';
 import { TourType } from '../../types/interface';
 import { GridLoader } from 'react-spinners';
-import { formatDistance } from 'date-fns';
 import TourItem from './TourItem';
+import FormattedDate from '../FormattedDate/FormattedDate';
 interface TourListProps {
   tours: TourType[];
   isOwner: boolean;
@@ -33,37 +33,9 @@ const TourList: React.FC<TourListProps> = ({
               className="tour_action_loading"
             />
           )}
-          <span className="req_date">
-            {formatDistance(new Date(tour.createdAt), new Date(), {
-              addSuffix: true,
-            })}
-          </span>
-          {/* <div className="tour_body">
-            <Link
-              to={`/property-detail/${tour.propertyId}`}
-              className="tour_img"
-            >
-              <img src={tour.propertyImage} alt={tour.addressOfTour} />
-            </Link>
-            <div className="tour_info">
-              <div className="tour_address">
-                <FaLocationDot />
-                <Link to={`/property-detail/${tour.propertyId}`}>
-                  <FaHome />
-                  {tour.addressOfTour}
-                </Link>
-              </div>
-              <div className="tour_time">
-                <div>
-                  <FaCalendarDays /> {tour.dateOfTour}
-                </div>
-                <div>
-                  <BsSmartwatch />
-                  {tour.timeOfTour}
-                </div>
-              </div>
-            </div>
-          </div> */}
+
+          <FormattedDate date={tour.createdAt} className="req_date" />
+
           <TourItem
             propertyId={tour.propertyId}
             addressOfTour={tour.addressOfTour}

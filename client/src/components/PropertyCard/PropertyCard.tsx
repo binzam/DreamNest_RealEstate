@@ -11,10 +11,9 @@ import {
   removeFromWishlistThunk,
 } from '../../store/slices/wishlistThunks';
 import { GridLoader } from 'react-spinners';
-import { formatDistance } from 'date-fns';
-import { MdOutlineBrowserUpdated } from 'react-icons/md';
 import { FaEdit } from 'react-icons/fa';
 import PropertyCardBody from './PropertyCardBody';
+import FormattedDate from '../FormattedDate/FormattedDate';
 interface PropertyCardProps {
   property: PropertyDataType;
   onEdit?: (id: string) => void;
@@ -43,10 +42,11 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
   const navigate = useNavigate();
   const { wishlist } = useSelector((state: RootState) => state.user);
   const [loadingProperty, setLoadingProperty] = useState<string | null>(null);
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.user.isAuthenticated
+  const { isAuthenticated, user } = useSelector(
+    (state: RootState) => state.user
   );
   const userId = useSelector((state: RootState) => state.user.user?._id);
+  const isAdminMode = user?.role === 'admin';
 
   const isInWishlist = useMemo(
     () => wishlist.some((wishlistItem) => wishlistItem._id === _id),
@@ -85,7 +85,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
           className="pty_box_loading"
         />
       )}
-      {property.owner !== userId && (
+      {!isAdminMode && property.owner !== userId && (
         <button
           className={isInWishlist ? 'wish_btn filled' : 'wish_btn'}
           onClick={isInWishlist ? handleRemoveFromWish : handleAddToWish}
@@ -95,7 +95,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
           />
         </button>
       )}
-      {property.owner === userId && (onEdit || onDelete) && (
+      {(isAdminMode || property.owner === userId) && (onEdit || onDelete) && (
         <div className="owner_actions">
           {onEdit && (
             <button className="edit_btn" onClick={() => onEdit(_id)}>
@@ -136,15 +136,15 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
               city={city}
               street={street}
               state={state}
-              className=''
+              className=""
             />
-            <div className="pty_box_post_date">
-              <MdOutlineBrowserUpdated />
-              Posted{' '}
-              {formatDistance(new Date(createdAt), new Date(), {
-                addSuffix: true,
-              })}
-            </div>
+
+            <FormattedDate
+              date={createdAt}
+              prefix="Posted"
+              showIcon={true}
+              className="pty_box_post_date"
+            />
           </div>
         </Link>
       </div>

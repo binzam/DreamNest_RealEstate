@@ -9,6 +9,7 @@ import TourScheduleCheckout from './pages/TourScheduleCheckout/TourScheduleCheck
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import AdminLayout from './Layout/AdminLayout';
 import AdminDashboard from './pages/Admin/AdminDashboard';
+import ManageListings from './pages/Admin/ManageListings/ManageListings';
 
 const UserProfile = lazy(() => import('./pages/UserProfile/UserProfile'));
 const UserNotifications = lazy(
@@ -111,10 +112,10 @@ function App() {
         <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
           {' '}
           {/* Restrict admin access */}
-          <Route path="/admin" element={<AdminLayout />}>
+          <Route path="admin" element={<AdminLayout />}>
             <Route index element={<AdminDashboard />} />
             {/* <Route path="manage-users" element={<ManageUsers />} /> */}
-            {/* <Route path="manage-listings" element={<ManageListings />} /> */}
+            <Route path="manage-listings" element={<ManageListings />} />
           </Route>
         </Route>
       </Routes>

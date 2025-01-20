@@ -3,6 +3,7 @@ import { PropertyDataType } from '../types/propertyTypes';
 
 interface FilterCriteria {
   type?: string;
+  listingType?: string;
   minPrice?: number;
   maxPrice?: number;
   bedroomMin?: number | null;
@@ -17,6 +18,7 @@ const useFilteredProperties = (
   searchTerm: { [key: string]: string },
   {
     type,
+    listingType,
     minPrice = 0,
     maxPrice = Infinity,
     bedroomMin = null,
@@ -26,7 +28,6 @@ const useFilteredProperties = (
     propertyType = '',
   }: FilterCriteria
 ) => {
-
   const filteredProperties = useMemo(() => {
     const trimmedSearchTerm =
       Object.keys(searchTerm).length === 0
@@ -48,6 +49,12 @@ const useFilteredProperties = (
       }
 
       if (type && property.propertyFor.toLowerCase() !== type.toLowerCase()) {
+        return false;
+      }
+      if (
+        listingType &&
+        property.propertyFor.toLowerCase() !== listingType.toLowerCase()
+      ) {
         return false;
       }
 
@@ -89,6 +96,7 @@ const useFilteredProperties = (
     bathroomMin,
     bathroomMax,
     propertyType,
+    listingType,
   ]);
 
   return filteredProperties;

@@ -12,11 +12,16 @@ import { useFetchProperties } from '../../hooks/useFetchProperties';
 import { usePropertyFilters } from '../../hooks/usePropertyFilters';
 import useFilteredProperties from '../../hooks/useFilteredProperties';
 import ErrorDisplay from '../../components/ErrorDisplay';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
 
 const PropertyList = () => {
   const { type } = useParams<{ type: string }>();
+  const { user } = useSelector((state: RootState) => state.user);
+  const isAdminMode = user?.role === 'admin';
   const [searchParams, setSearchParams] = useSearchParams();
   const { properties, loading, error } = useFetchProperties();
+  const [listingType, setListingType] = useState('');
   const [sortParam, setSortParam] = useState(
     searchParams.get('sort') || 'relevance'
   );
@@ -106,6 +111,7 @@ const PropertyList = () => {
   };
   const filteredProperties = useFilteredProperties(properties, searchTerm, {
     type,
+    listingType,
     minPrice: priceRange.minPrice,
     maxPrice: priceRange.maxPrice,
     bedroomMin: bedRoomsRange.bedroomMin,
@@ -136,9 +142,14 @@ const PropertyList = () => {
       )}
       <BackButton />
       <h2 className="pty_listing_ttl">
-        Properties for {type ? type.toUpperCase() : 'All'}
+        {!type && 'All'} Properties {type ? `for ${type.toUpperCase()}` : ''}
       </h2>
-
+      {isAdminMode && (
+        <div>
+          <button onClick={() => setListingType('rent')}>Rentals</button>
+          <button onClick={() => setListingType('sale')}>For Sale</button>
+        </div>
+      )}
       <PropertyFilterBar
         properties={properties}
         onSearchTermChange={handleSearchTermChange}
@@ -146,11 +157,11 @@ const PropertyList = () => {
         onBedRoomsRangeChange={handleBedRoomsRangeChange}
         onBathRoomsRangeChange={handleBathRoomsRangeChange}
         onPropertyTypeChange={handlePropertyTypeChange}
-        type={type || ''}
+        type={type || listingType}
       />
 
       <SortingControl
-        type={type || ''}
+        type={type || listingType}
         count={filteredProperties.length}
         sortParam={sortParam}
         sortOrder={sortOrder}

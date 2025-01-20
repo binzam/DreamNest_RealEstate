@@ -22,7 +22,7 @@
 }
 .logo_wrap {
   position: relative;
-  /* display: flex; */
+  display: flex;
   height: 100%;
 }
 .logo {

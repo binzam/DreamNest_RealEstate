@@ -44,7 +44,7 @@ const MapDisplay = ({
       <MapContainer
         center={[latitude, longitude]}
         zoom={13}
-        scrollWheelZoom={false}
+        scrollWheelZoom={true}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {onMapClick && <MapClick onMapClick={onMapClick} />}

@@ -18,7 +18,9 @@ const AdminHeader = () => {
   };
   return (
     <header className="admn_header">
-      DREAMNEST
+      <Link className="logo" to={'/admin'}>
+        Admin mode
+      </Link>
       <nav className="admn_nav">
         <ul className="admin_nav_links">
           <li>
@@ -28,7 +30,7 @@ const AdminHeader = () => {
             </Link>
           </li>
           <li>
-            <Link className="admin_nav_link" to={'/admin'}>
+            <Link className="admin_nav_link" to={'/admin/manage-listings'}>
               <BiSolidBuildingHouse />
               Properties
             </Link>
@@ -48,11 +50,11 @@ const AdminHeader = () => {
         </ul>
       </nav>
       <div className="admin_hdr_right">
-        <div className='admn_notf_hdr'>
+        <div className="admn_notf_hdr">
           <IoIosNotifications />
         </div>
         <div className="admn_hdr_prfl">
-        <MdAdminPanelSettings />
+          <MdAdminPanelSettings />
           <div>Admin</div>
           <button onClick={handleLogout}>Logout</button>
         </div>

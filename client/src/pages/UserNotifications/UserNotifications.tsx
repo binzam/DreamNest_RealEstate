@@ -5,14 +5,13 @@ import { useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/store';
 import ErrorDisplay from '../../components/ErrorDisplay';
 import { GridLoader } from 'react-spinners';
-import { formatDistance } from 'date-fns';
 import {
   fetchNotificationsThunk,
   markNotificationAsReadThunk,
 } from '../../store/slices/notificationThunks';
 import { useDispatch } from 'react-redux';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
-
+import FormattedDate from '../../components/FormattedDate/FormattedDate';
 
 const UserNotifications = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -45,8 +44,11 @@ const UserNotifications = () => {
           <IoMdInformationCircleOutline />
 
           <p>
-            Here you can view all messages you recieved<br />
-            <strong>You can filter notfications using the buttons below.</strong>
+            Here you can view all messages you recieved
+            <br />
+            <strong>
+              You can filter notfications using the buttons below.
+            </strong>
           </p>
         </div>
       </div>
@@ -87,15 +89,10 @@ const UserNotifications = () => {
                 const isOwner = notification.propertyOwnerId === user?._id;
                 return (
                   <li key={notification._id} className="notf_item">
-                    <span className="notf_date">
-                      {formatDistance(
-                        new Date(notification.createdAt),
-                        new Date(),
-                        {
-                          addSuffix: true,
-                        }
-                      )}
-                    </span>
+                    <FormattedDate
+                      date={notification.createdAt}
+                      className="notf_date"
+                    />
                     <div className="notf_detail">
                       <Link
                         to={`/property-detail/${notification.idOfProperty}`}

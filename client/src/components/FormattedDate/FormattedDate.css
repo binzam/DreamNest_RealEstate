@@ -1,0 +1,26 @@
+.formatted_date {
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+.pty_post_date {
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin: 0.5rem 0;
+}
+.req_date {
+  color: #9b9b9b;
+}
+.post_date_lrg {
+  font-size: 1rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+}
+.notf_date {
+  color: #9b9b9b;
+}

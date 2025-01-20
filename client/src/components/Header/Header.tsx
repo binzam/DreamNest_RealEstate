@@ -1,6 +1,6 @@
 import Navbar from './Navbar';
 import './Header.css';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
 import MobileNavbar from './MobileNavbar/MobileNavbar';
@@ -9,12 +9,22 @@ import { RootState } from '../../store/store';
 import { useSelector } from 'react-redux';
 import { IoMdNotifications } from 'react-icons/io';
 const Header = () => {
-  const { notifications } = useSelector((state: RootState) => state.user);
+  const { notifications, user } = useSelector((state: RootState) => state.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newNotification, setNewNotification] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const isAdminMode = user?.role === 'admin';
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+  };
+
+  const toggleAdminMode = () => {
+    if (location.pathname.startsWith('/admin')) {
+      navigate('/');
+      return;
+    }
+    navigate('/admin');
   };
 
   const unreadNotifications = notifications.filter(
@@ -45,9 +55,12 @@ const Header = () => {
         <HiOutlineMenuAlt2 className="icon_hamburger" />
       </button>
       <div className="logo_wrap">
-        <Link className="logo" to={'/'}>
+        <Link className="logo" to={`${isAdminMode ? '/admin' : '/'}`}>
           DreamNest{' '}
         </Link>
+        {isAdminMode && (
+          <button onClick={toggleAdminMode}>Go to Admin dashboard</button>
+        )}
         {!diableNotifcations &&
           unreadNotifications &&
           unreadNotifications.length > 0 && (

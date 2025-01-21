@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store/store';
 import { logoutUser, removeUser } from '../../utils/authUtils';
 import { logout } from '../../store/slices/userSlice';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { MdAdminPanelSettings, MdDashboard, MdPayments } from 'react-icons/md';
 import { BiSolidBuildingHouse } from 'react-icons/bi';
 import { HiMiniUsers } from 'react-icons/hi2';
@@ -18,34 +18,54 @@ const AdminHeader = () => {
   };
   return (
     <header className="admn_header">
-      <Link className="logo" to={'/admin'}>
+      <NavLink className="logo" to={'/admin'}>
         Admin mode
-      </Link>
+      </NavLink>
       <nav className="admn_nav">
         <ul className="admin_nav_links">
           <li>
-            <Link className="admin_nav_link active" to={'/admin'}>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? 'admin_nav_link active' : 'admin_nav_link'
+              }
+              to={'/admin/dashboard'}
+            >
               <MdDashboard />
               Dashboard
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link className="admin_nav_link" to={'/admin/manage-listings'}>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? 'admin_nav_link active' : 'admin_nav_link'
+              }
+              to={'/admin/manage-listings'}
+            >
               <BiSolidBuildingHouse />
               Properties
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link className="admin_nav_link" to={'/admin'}>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? 'admin_nav_link active' : 'admin_nav_link'
+              }
+              to={'/admin/transactions'}
+            >
               <MdPayments />
               Transactions
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link className="admin_nav_link" to={'/admin'}>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? 'admin_nav_link active' : 'admin_nav_link'
+              }
+              to={'/admin/manage-users'}
+            >
               <HiMiniUsers />
               Users
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>

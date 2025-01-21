@@ -5,10 +5,42 @@
   padding: 0rem 5rem 2rem;
   position: relative;
 }
-.pty_listing_hdr{
+.pty_listing_hdr {
   display: flex;
   align-items: flex-start;
   padding: 0.4rem;
+}
+.listing-type-buttons {
+  display: flex;
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.listing-type-button {
+  padding: 0.5rem 2rem;
+  border: 2px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.listing-type-button:hover {
+  border-color: #13ccbb;
+  color: #13ccbb;
+}
+
+.listing-type-button.active {
+  background-color: #13ccbb;
+  color: #fff;
+  border-color: #13ccbb;
+  font-weight: bold;
 }
 .pty_listing_ttl {
   color: #041c50;

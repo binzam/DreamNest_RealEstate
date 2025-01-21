@@ -46,13 +46,12 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
     (state: RootState) => state.user
   );
   const userId = useSelector((state: RootState) => state.user.user?._id);
-  const isAdminMode = user?.role === 'admin';
 
   const isInWishlist = useMemo(
     () => wishlist.some((wishlistItem) => wishlistItem._id === _id),
     [wishlist, _id]
   );
-
+  const adminMode = user?.role === 'admin';
   const handleAddToWish = () => {
     if (!isAuthenticated) {
       navigate('/login');
@@ -85,7 +84,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
           className="pty_box_loading"
         />
       )}
-      {!isAdminMode && property.owner !== userId && (
+      {!adminMode && property.owner !== userId && (
         <button
           className={isInWishlist ? 'wish_btn filled' : 'wish_btn'}
           onClick={isInWishlist ? handleRemoveFromWish : handleAddToWish}
@@ -95,7 +94,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
           />
         </button>
       )}
-      {(isAdminMode || property.owner === userId) && (onEdit || onDelete) && (
+      {(adminMode || property.owner === userId) && (onEdit || onDelete) && (
         <div className="owner_actions">
           {onEdit && (
             <button className="edit_btn" onClick={() => onEdit(_id)}>

@@ -12,13 +12,17 @@ import { useFetchProperties } from '../../hooks/useFetchProperties';
 import { usePropertyFilters } from '../../hooks/usePropertyFilters';
 import useFilteredProperties from '../../hooks/useFilteredProperties';
 import ErrorDisplay from '../../components/ErrorDisplay';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-
-const PropertyList = () => {
+interface PropertyListProps {
+  adminMode?: boolean;
+  onEdit?: (id: string) => void;
+  onDelete?: (id: string) => void;
+}
+const PropertyList: React.FC<PropertyListProps> = ({
+  adminMode = false,
+  onEdit,
+  onDelete,
+}) => {
   const { type } = useParams<{ type: string }>();
-  const { user } = useSelector((state: RootState) => state.user);
-  const isAdminMode = user?.role === 'admin';
   const [searchParams, setSearchParams] = useSearchParams();
   const { properties, loading, error } = useFetchProperties();
   const [listingType, setListingType] = useState('');
@@ -140,16 +144,33 @@ const PropertyList = () => {
           className="listing_p_loading"
         />
       )}
-      <BackButton />
-      <h2 className="pty_listing_ttl">
-        {!type && 'All'} Properties {type ? `for ${type.toUpperCase()}` : ''}
-      </h2>
-      {isAdminMode && (
-        <div>
-          <button onClick={() => setListingType('rent')}>Rentals</button>
-          <button onClick={() => setListingType('sale')}>For Sale</button>
+      {!adminMode && <BackButton />}
+
+      {adminMode ? (
+        <div className="listing-type-buttons">
+          <button
+            className={`listing-type-button ${
+              listingType === 'rent' ? 'active' : ''
+            }`}
+            onClick={() => setListingType('rent')}
+          >
+            Rentals
+          </button>
+          <button
+            className={`listing-type-button ${
+              listingType === 'sale' ? 'active' : ''
+            }`}
+            onClick={() => setListingType('sale')}
+          >
+            For Sale
+          </button>
         </div>
+      ) : (
+        <h2 className="pty_listing_ttl">
+          {!type && 'All'} Properties {type ? `for ${type.toUpperCase()}` : ''}
+        </h2>
       )}
+
       <PropertyFilterBar
         properties={properties}
         onSearchTermChange={handleSearchTermChange}
@@ -175,7 +196,12 @@ const PropertyList = () => {
       ) : (
         <div className="pty_listing_contnt">
           {sortedProperties.map((property: PropertyDataType) => (
-            <PropertyCard key={property._id} property={property} />
+            <PropertyCard
+              key={property._id}
+              property={property}
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
           ))}
         </div>
       )}

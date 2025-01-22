@@ -1,3 +1,5 @@
+import { UserDataType } from "./userTypes";
+
 export interface PhotoType {
   title: string;
   image: string;
@@ -5,7 +7,7 @@ export interface PhotoType {
 
 export interface PropertyDataType {
   _id: string;
-  owner: string;
+  owner: string | UserDataType;
   address: {
     street: string;
     city: string;

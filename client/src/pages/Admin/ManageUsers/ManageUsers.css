@@ -1,0 +1,43 @@
+.manage_usrs {
+  background-color: #fff;
+  min-height: calc(100vh - 50px);
+}
+.manage_contnet {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+}
+.usr_filters {
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px #8383838e;
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.usr_search {
+  padding: 0.5rem;
+  border-radius: 100vw;
+  border: 1px solid #ddd;
+}
+.usr_search:focus {
+  outline: 1px solid #4b4bff;
+  border: 1px solid transparent;
+}
+.user_sorters {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.usrs_cntnr {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  position: relative;
+  min-height: 200px;
+}

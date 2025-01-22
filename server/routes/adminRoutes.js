@@ -1,5 +1,5 @@
 import express from 'express';
-import { getDashBoard } from '../controllers/adminController.js';
+import { getAllTransactions, getAllUsers, getDashBoard } from '../controllers/adminController.js';
 import authenticateToken from '../middleware/authenticateToken.js';
 import { authorizeRole } from '../middleware/authorizeRole.js';
 
@@ -11,6 +11,7 @@ router.get(
   authorizeRole('admin'),
   getDashBoard
 );
-// router.post('/google', googleSignin);
+router.get('/users', authenticateToken, authorizeRole('admin'), getAllUsers);
+router.get('/transactions', authenticateToken, authorizeRole('admin'), getAllTransactions);
 
 export default router;

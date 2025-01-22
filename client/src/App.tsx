@@ -11,6 +11,7 @@ import AdminLayout from './Layout/AdminLayout';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import ManageListings from './pages/Admin/ManageListings/ManageListings';
 import ManageUsers from './pages/Admin/ManageUsers/ManageUsers';
+import ManageTransactions from './pages/Admin/ManageTransactions/ManageTransactions';
 
 const UserProfile = lazy(() => import('./pages/UserProfile/UserProfile'));
 const UserNotifications = lazy(
@@ -116,6 +117,7 @@ function App() {
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="manage-users" element={<ManageUsers />} />
             <Route path="manage-listings" element={<ManageListings />} />
+            <Route path="manage-transactions" element={<ManageTransactions />} />
             <Route path="edit-property/:id" element={<EditProperty />} />
           </Route>
         </Route>

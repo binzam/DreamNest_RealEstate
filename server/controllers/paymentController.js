@@ -1,4 +1,5 @@
 import stripe from 'stripe';
+import { Transaction } from '../models/transactionModel.js';
 
 const createPaymentIntent = async (req, res) => {
   const stripeClient = stripe(process.env.STRIPE_SECRET_KEY);
@@ -16,6 +17,17 @@ const createPaymentIntent = async (req, res) => {
         customerEmail,
       },
     });
+      const transaction = new Transaction({
+        paymentIntentId: paymentIntent.id,
+        amount: amount,
+        currency: currency,
+        customerName,
+        customerEmail,
+        paymentReason,
+        status: 'succeeded', 
+      });
+      await transaction.save();
+  
     console.log('PAYMENT INTENT-->', paymentIntent);
     res.status(200).json({
       clientSecret: paymentIntent.client_secret,

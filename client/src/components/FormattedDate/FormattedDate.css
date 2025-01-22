@@ -13,14 +13,16 @@
 .req_date {
   color: #9b9b9b;
 }
-.post_date_lrg {
-  font-size: 1rem;
+.post_date_admn_dash{
+  font-size: 0.85rem;
+  font-weight: 700;
   color: #333;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 5px;
 }
+
 .notf_date {
   color: #9b9b9b;
 }

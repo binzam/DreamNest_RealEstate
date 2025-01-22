@@ -5,4 +5,7 @@ export interface UserDataType {
   profilePicture: string;
   id: string;
   firstName: string;
+  lastName: string;
+  createdAt: string;
+  propertiesListed: number;
 }

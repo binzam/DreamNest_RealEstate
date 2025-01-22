@@ -19,7 +19,7 @@ const AdminHeader = () => {
   return (
     <header className="admn_header">
       <NavLink className="logo" to={'/admin'}>
-        Admin mode
+        DreamNest
       </NavLink>
       <nav className="admn_nav">
         <ul className="admin_nav_links">
@@ -50,7 +50,7 @@ const AdminHeader = () => {
               className={({ isActive }) =>
                 isActive ? 'admin_nav_link active' : 'admin_nav_link'
               }
-              to={'/admin/transactions'}
+              to={'/admin/manage-transactions'}
             >
               <MdPayments />
               Transactions

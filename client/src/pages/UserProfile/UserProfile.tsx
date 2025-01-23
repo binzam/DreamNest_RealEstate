@@ -14,14 +14,19 @@ import { FaEdit, FaHome } from 'react-icons/fa';
 import ErrorDisplay from '../../components/ErrorDisplay';
 import { GridLoader } from 'react-spinners';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { updateProfilePicture } from '../../store/slices/userSlice';
 import { GrScheduleNew } from 'react-icons/gr';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
+import BackButton from '../../components/BackButton/BackButton';
+interface UserProfileProps {
+  isAdminView?: boolean;
+}
 
-const UserProfile = () => {
+const UserProfile = ({ isAdminView = false }: UserProfileProps) => {
   const dispatch = useDispatch();
+  const { userId } = useParams<{ userId?: string }>();
   const [userData, setUserData] = useState({
     firstName: '',
     lastName: '',
@@ -43,7 +48,9 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axiosPrivate.get('/user/profile');
+        const endpoint = userId ? `/admin/users/${userId}` : '/user/profile';
+        const response = await axiosPrivate.get(endpoint);
+        setUserData(response.data);
         console.log(response);
 
         setUserData(response.data);
@@ -52,7 +59,7 @@ const UserProfile = () => {
       }
     };
     fetchUserProfile();
-  }, []);
+  }, [userId]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -182,37 +189,55 @@ const UserProfile = () => {
   return (
     <div className="usr_prfl_pge">
       <div className="prfl_hdr">
+        <BackButton />
         <div className="prfl_hdr_main">
-          <h2>Hello {userData.firstName || 'there'}!</h2>
+          {!isAdminView && <h2>Hello {userData.firstName || 'there'}!</h2>}
+
           <p>
             <MdEmail /> {userData.email}
           </p>
         </div>
         <div className="usr_prl_hdr_info">
           <IoMdInformationCircleOutline />
-          <p>
-            Here you can edit your personal information, change profile picture
-            and keep track of your essesntials.
-          </p>
+          {isAdminView ? (
+            <p>This is {userData.firstName}'s profile.</p>
+          ) : (
+            <p>
+              Here you can edit your personal information, change profile
+              picture and keep track of your essesntials.
+            </p>
+          )}
         </div>
       </div>
       <div className="hdr_actions">
         <div className="usr_prf_acts">
           <Link to={'/wishlist'}>
             <FaHeart />
-            Your Wishlist
+            Wishlist
           </Link>
           <span className="usr_prf_act_count">{userData.wishlistCount}</span>
         </div>
         <div className="usr_prf_acts">
-          <Link to={'/manage-properties'}>
+          <Link
+            to={
+              isAdminView
+                ? `/admin/users/${userId}/properties`
+                : '/manage-properties'
+            }
+          >
             <FaHome />
-            Your Properties
+            Properties
           </Link>
           <span className="usr_prf_act_count">{userData.propertyCount}</span>
         </div>
         <div className="usr_prf_acts">
-          <Link to={'/tour-schedules'}>
+          <Link
+            to={
+              isAdminView
+                ? `/admin/users/${userId}/tour-schedules`
+                : '/tour-schedules'
+            }
+          >
             <GrScheduleNew /> Tour Schedules
           </Link>
           <span className="usr_prf_act_count">
@@ -246,27 +271,33 @@ const UserProfile = () => {
               <FaUser />
             )}
           </div>
-          <form
-            className="upload_image_form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleImageUpload();
-            }}
-          >
-            <input id="uploadImage" type="file" onChange={handleImageChange} />
-            {editPhotoMode && (
-              <button className="upload_image_btn" type="submit">
-                <FaUpload />
-                {isImgloading ? 'Uploading...' : 'Upload'}
-              </button>
-            )}
-            {!editPhotoMode && !successMessage && (
-              <label htmlFor="uploadImage" className="select_image_label">
-                <FaPenToSquare />
-                <span>Change photo</span>
-              </label>
-            )}
-          </form>
+          {!isAdminView && (
+            <form
+              className="upload_image_form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleImageUpload();
+              }}
+            >
+              <input
+                id="uploadImage"
+                type="file"
+                onChange={handleImageChange}
+              />
+              {editPhotoMode && (
+                <button className="upload_image_btn" type="submit">
+                  <FaUpload />
+                  {isImgloading ? 'Uploading...' : 'Upload'}
+                </button>
+              )}
+              {!editPhotoMode && !successMessage && (
+                <label htmlFor="uploadImage" className="select_image_label">
+                  <FaPenToSquare />
+                  <span>Change photo</span>
+                </label>
+              )}
+            </form>
+          )}
         </div>
         <div className="prfl_cntn_btm">
           {isProfileloading && (
@@ -277,26 +308,30 @@ const UserProfile = () => {
               className="upload_loading"
             />
           )}
-          {!editProfileMode ? (
-            <button
-              onClick={() => setEditProfileMode(true)}
-              className="edit_prfl_btn"
-            >
-              <FaEdit /> Edit Profile
-            </button>
-          ) : (
-            <button
-              onClick={() => setEditProfileMode(false)}
-              className="cancel_edit_btn"
-            >
-              <MdCancel /> Cancel
-            </button>
+          {!isAdminView && (
+            <>
+              {!editProfileMode && !isAdminView ? (
+                <button
+                  onClick={() => setEditProfileMode(true)}
+                  className="edit_prfl_btn"
+                >
+                  <FaEdit /> Edit Profile
+                </button>
+              ) : (
+                <button
+                  onClick={() => setEditProfileMode(false)}
+                  className="cancel_edit_btn"
+                >
+                  <MdCancel /> Cancel
+                </button>
+              )}
+            </>
           )}
           <div className="key">
             <label htmlFor="firstName">
               <FaUser /> First Name
             </label>
-            {editProfileMode ? (
+            {editProfileMode && !isAdminView ? (
               <input
                 type="text"
                 name="firstName"
@@ -312,7 +347,7 @@ const UserProfile = () => {
               <FaUser /> Last Name
             </label>
 
-            {editProfileMode ? (
+            {editProfileMode && !isAdminView ? (
               <input
                 id="lastName"
                 type="text"
@@ -329,7 +364,7 @@ const UserProfile = () => {
               <MdEmail />
               Email
             </label>
-            {editProfileMode ? (
+            {editProfileMode && !isAdminView ? (
               <input
                 id="email"
                 type="email"
@@ -346,7 +381,7 @@ const UserProfile = () => {
               <FaPhone />
               Phone Number
             </label>
-            {editProfileMode ? (
+            {editProfileMode && !isAdminView ? (
               <input
                 id="phoneNumber"
                 type="text"
@@ -359,7 +394,7 @@ const UserProfile = () => {
             )}
           </div>
           <div className="prfl_actions">
-            {editProfileMode && (
+            {!isAdminView && editProfileMode && (
               <button onClick={handleSaveProfile} className="save_prfl_btn">
                 <MdSaveAlt /> Save Changes
               </button>

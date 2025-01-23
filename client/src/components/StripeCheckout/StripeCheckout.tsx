@@ -14,6 +14,8 @@ interface StripeCheckoutProps {
   paymentReason: string;
   customerEmail: string;
   paymentAmount: string;
+  tempPropertyId?: string;
+  tempTourId?: string;
 }
 
 const StripeCheckout = ({
@@ -24,6 +26,8 @@ const StripeCheckout = ({
   paymentReason,
   customerEmail,
   paymentAmount,
+  tempPropertyId,
+  tempTourId,
 }: StripeCheckoutProps) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -45,6 +49,8 @@ const StripeCheckout = ({
           customerName,
           paymentReason,
           customerEmail,
+          tempPropertyId,
+          tempTourId,
         }
       );
 
@@ -63,10 +69,11 @@ const StripeCheckout = ({
         setLoading(false);
         return;
       }
-      if (Number(paymentAmount) === 20) {
+      if (Number(paymentAmount) === 20 && tempTourId) {
         await axiosPrivate.post('/tour/schedule-tour', {
           propertyId,
           tourDateTime,
+          tempTourId,
         });
       }
       onSuccess();

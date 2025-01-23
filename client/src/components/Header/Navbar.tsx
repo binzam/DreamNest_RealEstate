@@ -14,9 +14,10 @@ import { CgProfile } from 'react-icons/cg';
 import { FaHome } from 'react-icons/fa';
 import { GrScheduleNew } from 'react-icons/gr';
 const Navbar = () => {
-  const { isAuthenticated, user, wishlist, notifications } = useSelector(
+  const { isAuthenticated, user, notifications } = useSelector(
     (state: RootState) => state.user
   );
+  const { wishlist } = useSelector((state: RootState) => state.wishlist);
   const unreadNotifications = notifications.filter(
     (notification) => notification.status !== 'Read'
   );

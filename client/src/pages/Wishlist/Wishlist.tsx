@@ -7,7 +7,7 @@ import ErrorDisplay from '../../components/ErrorDisplay';
 
 const Wishlist = () => {
   const { wishlist, loading, error } = useSelector(
-    (state: RootState) => state.user
+    (state: RootState) => state.wishlist
   );
 
   return (

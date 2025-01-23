@@ -1,5 +1,6 @@
 import { FaBath, FaBed, FaLocationDot, FaRulerCombined } from 'react-icons/fa6';
 import './PropertyCard.css';
+import PriceDisplay from '../PriceDisplay/PriceDisplay';
 interface PropertyCardBodyProps {
   propertyFor: string;
   propertyType: string;
@@ -27,12 +28,6 @@ const PropertyCardBody = ({
   state,
   className,
 }: PropertyCardBodyProps) => {
-  const formatCurrency = (amount: number, currency: string) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: currency,
-    }).format(amount);
-  };
   return (
     <div className={className}>
       <div className="pty_purpose">
@@ -42,13 +37,13 @@ const PropertyCardBody = ({
           : propertyType}{' '}
         for {propertyFor}
       </div>
-      {propertyFor === 'sale' ? (
-        <div className="pty_price">{formatCurrency(price, currency)}</div>
-      ) : (
-        <div className="pty_price">
-          {formatCurrency(price, currency)} <small>/ month</small>
-        </div>
-      )}
+     
+      <PriceDisplay
+        amount={price}
+        currency={currency}
+        propertyFor={propertyFor}
+        className='sml'
+      />
       <div className="pty_specs">
         <div className="pty_spec">
           <FaBed />

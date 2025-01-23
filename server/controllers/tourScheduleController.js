@@ -1,10 +1,15 @@
 import { Notification } from '../models/notificationModel.js';
 import { Property } from '../models/propertyModel.js';
 import { TourSchedule } from '../models/tourScheduleModel.js';
+import { Transaction } from '../models/transactionModel.js';
 
 const schedulePropertyTour = async (req, res) => {
-  const { propertyId, tourDateTime } = req.body;
+  const { propertyId, tourDateTime, tempTourId } = req.body;
   const userId = req.user._id;
+  const tourDate = new Date(tourDateTime);
+  if (isNaN(tourDate.getTime())) {
+    return res.status(400).json({ message: 'Invalid tour date and time.' });
+  }
   const now = new Date();
   if (new Date(tourDateTime) < now) {
     return res
@@ -40,9 +45,22 @@ const schedulePropertyTour = async (req, res) => {
       timeOfTour: formattedTime,
       addressOfTour: formatedAddress,
       propertyOwnerId: ownerId,
-      propertyImage: property.photos[0].image,
+      propertyImage:
+        property.photos && property.photos.length > 0
+          ? property.photos[0].image
+          : 'locaal',
     });
+
     await newTourSchedule.save();
+    const updatedTransaction = await Transaction.findOneAndUpdate(
+      { tempTourId },
+      { tourId: newTourSchedule._id },
+      { new: true }
+    );
+
+    if (!updatedTransaction) {
+      return res.status(404).json({ message: 'Transaction not found.' });
+    }
 
     const userNotification = new Notification({
       userId,

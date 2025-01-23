@@ -1,0 +1,59 @@
+.transactions {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.transactions h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.filter-buttons {
+  margin-bottom: 20px;
+}
+
+.filter-buttons button {
+  padding: 10px 15px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.filter-buttons button.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.transactions-table th,
+.transactions-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.transactions-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.transactions-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.transactions-table a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.transactions-table a:hover {
+  text-decoration: underline;
+}

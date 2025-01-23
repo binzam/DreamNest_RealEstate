@@ -1,3 +1,25 @@
+.admn_view_ptys_hdr {
+  background-color: rgb(11, 83, 17);
+  padding: 0.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+.admn_view_ptys_hdr div {
+  text-align: left;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  color: #ffffff;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.admn_view_ptys_hdr svg {
+  font-size: 1.2rem;
+  color: #fff;
+}
+
 .my_pts_cntnt {
   padding: 1rem 5rem;
 }

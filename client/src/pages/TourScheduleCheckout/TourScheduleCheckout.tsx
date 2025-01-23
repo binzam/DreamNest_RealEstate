@@ -6,12 +6,14 @@ import { loadStripe } from '@stripe/stripe-js';
 import StripeCheckout from '../../components/StripeCheckout/StripeCheckout';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
+import { v4 as uuidv4 } from 'uuid';
 
 const TourScheduleCheckout = () => {
   const { user } = useSelector((state: RootState) => state.user);
   const stripePromise = loadStripe(`${import.meta.env.VITE_STRIPE_KEY}`);
   const navigate = useNavigate();
   const location = useLocation();
+  const tempTourId = uuidv4();
   const {
     propertyId,
     tourDateTime,
@@ -46,6 +48,7 @@ const TourScheduleCheckout = () => {
           paymentReason="Tour scheduling Fee"
           customerEmail={user?.email || ''}
           paymentAmount='20'
+          tempTourId={tempTourId}
         />
       </Elements>
       

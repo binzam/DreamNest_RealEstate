@@ -7,6 +7,9 @@
   /* margin-bottom: 0.5rem; */
   transition: all 0.2s ease;
 }
+.back_btn.white{
+  color: #fff;
+}
 .back_btn:hover {
   color: #c2a500;
 }

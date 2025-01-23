@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PropertyDataType } from '../../types/propertyTypes';
+// import { PropertyDataType } from '../../types/propertyTypes';
 import { getAccessToken, getUser } from '../../utils/authUtils';
-import {
-  addToWishlistThunk,
-  fetchWishlistThunk,
-  removeFromWishlistThunk,
-} from './wishlistThunks';
+// import {
+  // addToWishlistThunk,
+  // fetchWishlistThunk,
+  // removeFromWishlistThunk,
+// } from './wishlistThunks';
 import { NotificationType } from '../../types/interface';
 import {
   fetchNotificationsThunk,
@@ -24,7 +24,7 @@ interface UserState {
   user: User | null;
   accessToken: string | null;
   isAuthenticated: boolean;
-  wishlist: PropertyDataType[];
+  // wishlist: PropertyDataType[];
   notifications: NotificationType[];
   loading: boolean;
   error: string | null;
@@ -34,7 +34,7 @@ const initialState: UserState = {
   user: null,
   accessToken: null,
   isAuthenticated: false,
-  wishlist: [],
+  // wishlist: [],
   notifications: [],
   loading: false,
   error: null,
@@ -62,7 +62,7 @@ const userSlice = createSlice({
       state.user = null;
       state.accessToken = null;
       state.isAuthenticated = false;
-      state.wishlist = [];
+      // state.wishlist = [];
       state.notifications = [];
       state.loading = false;
       state.error = null;
@@ -86,42 +86,42 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchWishlistThunk.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchWishlistThunk.fulfilled, (state, action) => {
-        state.loading = false;
-        state.wishlist = action.payload;
-      })
-      .addCase(fetchWishlistThunk.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      })
-      .addCase(addToWishlistThunk.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(addToWishlistThunk.fulfilled, (state, action) => {
-        state.loading = false;
-        state.wishlist = action.payload;
-      })
-      .addCase(addToWishlistThunk.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      })
-      .addCase(removeFromWishlistThunk.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(removeFromWishlistThunk.fulfilled, (state, action) => {
-        state.loading = false;
-        state.wishlist = action.payload;
-      })
-      .addCase(removeFromWishlistThunk.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      })
+      // .addCase(fetchWishlistThunk.pending, (state) => {
+      //   state.loading = true;
+      //   state.error = null;
+      // })
+      // .addCase(fetchWishlistThunk.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.wishlist = action.payload;
+      // })
+      // .addCase(fetchWishlistThunk.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.error = action.payload as string;
+      // })
+      // .addCase(addToWishlistThunk.pending, (state) => {
+      //   state.loading = true;
+      //   state.error = null;
+      // })
+      // .addCase(addToWishlistThunk.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.wishlist = action.payload;
+      // })
+      // .addCase(addToWishlistThunk.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.error = action.payload as string;
+      // })
+      // .addCase(removeFromWishlistThunk.pending, (state) => {
+      //   state.loading = true;
+      //   state.error = null;
+      // })
+      // .addCase(removeFromWishlistThunk.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.wishlist = action.payload;
+      // })
+      // .addCase(removeFromWishlistThunk.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.error = action.payload as string;
+      // })
       .addCase(fetchNotificationsThunk.pending, (state) => {
         state.loading = true;
         state.error = null;

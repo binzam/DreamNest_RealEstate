@@ -30,33 +30,56 @@ const stepTitles = [
 const AddProperty = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [formData, setFormData] = useState<PropertyFormData>({
-    title: '',
-    address: {
-      street: '',
-      city: '',
-      state: '',
-      country: '',
-      latitude: 0,
-      longitude: 0,
-    },
-    photos: [
-      { title: 'Main', image: null, previewUrl: '' },
-      { title: '', image: null, previewUrl: '' },
-      { title: '', image: null, previewUrl: '' },
-      { title: '', image: null, previewUrl: '' },
-    ],
-    price: 0,
-    bed: 0,
-    bath: 0,
-    sqft: 0,
-    sizeUnit: 'sqft',
-    propertyFor: 'sale',
-    propertyType: '',
-    detail: '',
-    yearBuilt: 0,
     currency: 'USD',
+    title: 'sapien urna pretium',
+    address: {
+      street: '32067 Artisan Point',
+      city: 'Buffalo',
+      state: 'New York',
+      country: 'United States',
+      latitude: 42.7684,
+      longitude: -78.8871,
+    },
+    price: 190623,
+    bed: 1,
+    bath: 4,
+    sqft: 4270,
+    sizeUnit: 'sqft',
+    photos: [
+      {
+        title: 'living room',
+        image: null,
+        previewUrl:
+          'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+      },
+      {
+        title: 'side',
+        image: null,
+        previewUrl:
+          'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+      },
+      {
+        title: 'front',
+        image: null,
+        previewUrl:
+          'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+      },
+      {
+        title: 'bedroom',
+        image: null,
+        previewUrl:
+          'http://ap.rdcpix.com/dc056cce79810cd4113cadea6618982dl-m526987112rd-w2048_h1536.webp',
+      },
+    ],
+    detail:
+      'Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.\n\nNullam porttitor lacus at turpis. Donec posuere metus vitae ipsum. Aliquam non mauris.\n\nMorbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.',
+    propertyFor: 'sale',
+    propertyType: 'House',
+    yearBuilt: 1887,
     features: ['', ''],
     isAvailable: true,
+    tempPropertyId: null,
+   
   });
 
   const [currentStep, setCurrentStep] = useState(1);
@@ -94,7 +117,9 @@ const AddProperty = () => {
       formDataWithFiles.append('currency', formData.currency);
     }
     formDataWithFiles.append('isAvailable', formData.isAvailable.toString());
-
+    if (formData.tempPropertyId) {
+      formDataWithFiles.append('tempPropertyId', formData.tempPropertyId);
+    }
     formData.photos.forEach((photo, index) => {
       if (photo.image) {
         formDataWithFiles.append(`photos${index}[title]`, photo.title);
@@ -261,12 +286,6 @@ const AddProperty = () => {
                 Next <GrLinkNext />
               </button>
             )}
-            {/* {currentStep === 6 && (
-              <button className="add_pty_btn" type="submit" disabled={loading}>
-                <MdOutlineDoneOutline />{' '}
-                {loading ? 'Adding Property...' : 'Add Property'}
-              </button>
-            )} */}
           </div>
         </form>
         {error && <ErrorDisplay message={error} />}

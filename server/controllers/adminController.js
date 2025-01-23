@@ -1,4 +1,5 @@
 import { Property } from '../models/propertyModel.js';
+import { TourSchedule } from '../models/tourScheduleModel.js';
 import { Transaction } from '../models/transactionModel.js';
 import { User } from '../models/userModel.js';
 
@@ -53,6 +54,36 @@ const getAllTransactions = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch transactions' });
   }
 };
+const getUserById = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(400).json({
+        message: 'user not found',
+      });
+    }
+    const userProperties = await Property.find({ owner: userId });
+    const tourSchedules = await TourSchedule.find({ userId: userId });
+
+    const userProfile = {
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      dateJoined: user.createdAt,
+      phoneNumber: user.phoneNumber,
+      profilePicture: user.profilePicture,
+      wishlistCount: user.wishlist.length,
+      propertyCount: userProperties.length || 0,
+      tourScheduleCount: tourSchedules.length || 0,
+    };
+    return res.status(200).json(userProfile);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const getAllUsers = async (req, res) => {
   const { search, role, sort, hasListedProperty } = req.query;
 
@@ -101,4 +132,61 @@ const getAllUsers = async (req, res) => {
     });
   }
 };
-export { getDashBoard, getLatestProperties, getAllUsers, getAllTransactions };
+const getTourSchedulesByUserId = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const tours = await TourSchedule.find({ userId }).sort({
+      createdAt: -1,
+    });
+
+    if (tours.length === 0) {
+      return res.status(200).json({ tours: [] });
+    }
+
+    const formattedTours = tours.map((tour) => ({
+      tourId: tour._id,
+      addressOfTour: tour.addressOfTour,
+      tourDateTime: tour.tourDateTime,
+      dateOfTour: tour.dateOfTour,
+      timeOfTour: tour.timeOfTour,
+      propertyId: tour.propertyId,
+      propertyOwnerId: tour.propertyOwnerId,
+      status: tour.status,
+      propertyImage: tour.propertyImage,
+      createdAt: tour.createdAt,
+    }));
+
+    res.json({ tours: formattedTours.length > 0 ? formattedTours : [] });
+  } catch (error) {
+    console.error('Error fetching user tour schedules:', error);
+    return res
+      .status(500)
+      .json({ message: 'Server error while fetching tour schedules' });
+  }
+};
+const getPropertiesByUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const properties = await Property.find({ owner: userId });
+
+    if (!properties || properties.length === 0) {
+      return res.status(200).json([]);
+    }
+
+    return res.status(200).json(properties);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+export {
+  getDashBoard,
+  getLatestProperties,
+  getAllUsers,
+  getAllTransactions,
+  getUserById,
+  getTourSchedulesByUserId,
+  getPropertiesByUser,
+};

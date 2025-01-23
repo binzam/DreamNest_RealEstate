@@ -14,6 +14,7 @@ import paymentRoutes from './routes/paymentRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import path from 'path';
 import multerErrorHandler from './middleware/multerErrorHandler.js';
+// import { clearAllTransactions } from './utils/resetUtils.js';
 // import { clearAllUsers } from './utils/resetUtils.js';
 // import { clearAllNotifications, clearAllTourSchedules, fixBug } from './utils/resetUtils.js';
 
@@ -55,7 +56,7 @@ app.use(multerErrorHandler);
 
 io.on('connection', (socket) => {
   console.log('User connected ', socket.id);
-   socket.on('join', (userId) => {
+  socket.on('join', (userId) => {
     socket.join(userId);
     console.log(`${userId} joined the room`);
   });
@@ -64,7 +65,7 @@ io.on('connection', (socket) => {
     io.emit('receive_message', data);
   });
   socket.on('send_notification', (userId, notificationData) => {
-    io.to(userId).emit('notification', notificationData);  
+    io.to(userId).emit('notification', notificationData);
   });
 });
 
@@ -76,6 +77,7 @@ mongoose
     // clearAllTourSchedules()
     // fixBug()
     // clearAllUsers()
+    // clearAllTransactions();
     const url = `http://localhost:${process.env.PORT}`;
     server.listen(process.env.PORT, () => {
       console.log(`App listening on: \x1b[32m%s\x1b[0m`, url);

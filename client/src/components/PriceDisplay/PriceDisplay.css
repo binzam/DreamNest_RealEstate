@@ -1,0 +1,27 @@
+.price_display {
+  font-weight: 800;
+  color: #333;
+}
+.price_display small {
+  font-weight: 500;
+  color: #8f8f8f;
+}
+.price_display.sml {
+  font-size: 1.2rem;
+}
+.price_display.sml small {
+  font-size: 0.7rem;
+}
+
+.price_display.lrg {
+  font-size: 1.5rem;
+  color: #008000;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.price_display.lrg small {
+  font-size: 0.7rem;
+  margin-left: 3px;
+}

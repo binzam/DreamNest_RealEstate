@@ -14,7 +14,7 @@ const ManageUsers = () => {
   const [hasListedProperty, setHasListedProperty] = useState(false);
   useEffect(() => {
     const fetchUsers = async () => {
-      setLoading(true)
+      setLoading(true);
       try {
         const response = await axiosPrivate.get('/admin/users', {
           params: {
@@ -37,7 +37,6 @@ const ManageUsers = () => {
     fetchUsers();
   }, [searchQuery, filterRole, sortOrder, hasListedProperty]);
 
-
   if (error) {
     return <div>{error}</div>;
   }
@@ -45,7 +44,7 @@ const ManageUsers = () => {
     <div className="manage_usrs">
       <div className="manage_contnet">
         <div className="usr_filters">
-      <h1>Manage users</h1>
+          <h1>Manage users</h1>
           <input
             className="usr_search"
             type="text"

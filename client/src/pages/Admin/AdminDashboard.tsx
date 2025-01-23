@@ -98,7 +98,7 @@ const AdminDashboard = () => {
         </div>
       </div>
       <div className="dashboard_data new_ptys">
-        <div className="new_ptys_ttl">Latest Listings</div>
+        <div className="dash_ttl">Latest Listings</div>
         <div className="newly_lstd_ptys">
           {dashboardData.latestProperties.map((property) => {
             const {
@@ -156,13 +156,18 @@ const AdminDashboard = () => {
         </div>
       </div>
       <div className="dashboard_data  new_users">
-        <div className="new_ptys_ttl">Newest Users</div>
+        <div className="dash_ttl">Newest Users</div>
         <div className="new_users_listing">
           {dashboardData.latestUsers.map((user) => (
             <UserCard user={user} key={user._id} />
           ))}
         </div>
       </div>
+
+      <div className="dashboard_data transactions">
+        <div className="dash_ttl">Transactions</div>
+       
+        </div>
     </div>
   );
 };

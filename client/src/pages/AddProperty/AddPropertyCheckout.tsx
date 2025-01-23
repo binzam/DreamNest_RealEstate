@@ -6,7 +6,7 @@ import StripeCheckout from '../../components/StripeCheckout/StripeCheckout';
 import { RootState } from '../../store/store';
 import { useSelector } from 'react-redux';
 import { stripePromise } from '../../constants';
-
+import { v4 as uuidv4 } from 'uuid';
 interface AddPropertyCheckoutProps {
   formData: PropertyFormData;
   onPaymentSuccess: () => void;
@@ -16,7 +16,8 @@ const AddPropertyCheckout: React.FC<AddPropertyCheckoutProps> = ({
   onPaymentSuccess,
 }) => {
   const { user } = useSelector((state: RootState) => state.user);
-  
+  const tempPropertyId = uuidv4();
+  formData.tempPropertyId = tempPropertyId;
   const {
     propertyFor,
     price,
@@ -68,6 +69,7 @@ const AddPropertyCheckout: React.FC<AddPropertyCheckoutProps> = ({
             paymentReason="Property Listing Fee"
             customerEmail={user?.email || ''}
             paymentAmount="45"
+            tempPropertyId={tempPropertyId}
           />
         </Elements>
       </div>

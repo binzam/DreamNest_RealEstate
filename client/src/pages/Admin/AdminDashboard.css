@@ -45,17 +45,28 @@
   grid-area: 1 / 4 / 7 / 5;
   height: max-content;
 }
+.dashboard_data.transactions {
+  padding: 30px 20px 20px;
+  border-radius: 20px;
+  position: relative;
+  background-color: #48a6a7;
+  grid-area: 5 / 1 / 5 / 4;
+  height: max-content;
+}
 .new_users_listing {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
-.new_ptys_ttl {
+.dash_ttl {
   color: #ffffff;
   position: absolute;
-  top: 0.1rem;
-  font-size: 1rem;
-  font-weight: 600;
+  top: 0rem;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 700;
   letter-spacing: 2px;
 }
 .newly_lstd_ptys {
@@ -77,7 +88,7 @@
   width: 100%;
   min-height: 48%;
 }
-.new_pty_row_hdr{
+.new_pty_row_hdr {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -85,7 +96,7 @@
   font-weight: 700;
   color: #333;
 }
-.new_pty_lister{
+.new_pty_lister {
   display: flex;
   align-items: center;
   gap: 2px;
@@ -96,8 +107,6 @@
   gap: 0.5rem;
   justify-content: space-between;
 }
-
-
 
 .user_card img {
   width: 40px;

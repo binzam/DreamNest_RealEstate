@@ -20,12 +20,13 @@ import ShareProperty from '../../components/ShareProperty/ShareProperty';
 import ScheduleTourModal from '../../components/Modals/ScheduleTourModal/ScheduleTourModal';
 import { formatDistance } from 'date-fns';
 import { MdOutlineBrowserUpdated } from 'react-icons/md';
-import { BeatLoader, GridLoader } from 'react-spinners';
+import { GridLoader } from 'react-spinners';
 import ImagePreviewModal from '../../components/Modals/ImagePreviewModal/ImagePreviewModal';
 import ContactModal from '../../components/Modals/ContactModal/ContactModal';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
 import { SiGooglemaps } from 'react-icons/si';
 import MapDisplay from '../../components/MapDisplay/MapDisplay';
+import PriceDisplay from '../../components/PriceDisplay/PriceDisplay';
 const PropertyDetail = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
@@ -122,12 +123,7 @@ const PropertyDetail = () => {
     setSelectedCurrency(e.target.value);
     fetchConversionRate(currency, e.target.value);
   };
-  const formatCurrency = (amount: number, currency: string) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: currency,
-    }).format(amount);
-  };
+
   const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
 
   return (
@@ -219,16 +215,16 @@ const PropertyDetail = () => {
               <span className="dot"></span>
               {propertyType} for {propertyFor}
             </div>
-            <div className="pty_price">
-              {isLoading ? (
-                <BeatLoader color="#008000" margin={10} size={11} />
-              ) : convertedPrice !== null ? (
-                formatCurrency(convertedPrice, selectedCurrency)
-              ) : (
-                formatCurrency(price, currency)
-              )}
-              {propertyFor === 'rent' && <small>/ month</small>}
-            </div>
+
+            <PriceDisplay
+              amount={price}
+              currency={currency}
+              isLoading={isLoading}
+              convertedAmount={convertedPrice}
+              selectedCurrency={selectedCurrency}
+              propertyFor={propertyFor}
+              className="lrg"
+            />
             <div className="currency_selector">
               <label htmlFor="currency">
                 <span>Change</span> <br /> currency?

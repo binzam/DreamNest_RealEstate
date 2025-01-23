@@ -83,6 +83,7 @@ export interface PropertyFormData {
   videoUrl?: string;
   contactInfo?: string;
   dateListed?: string;
+  tempPropertyId: string | null;
 }
 export interface ContactFormData {
   fullName: string;

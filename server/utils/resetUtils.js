@@ -1,6 +1,7 @@
 import { Notification } from '../models/notificationModel.js';
 import { Property } from '../models/propertyModel.js';
 import { TourSchedule } from '../models/tourScheduleModel.js';
+import { Transaction } from '../models/transactionModel.js';
 import { User } from '../models/userModel.js';
 
 const clearAllUsers = async () => {
@@ -27,6 +28,14 @@ const clearAllNotifications = async () => {
     console.log(`Deleted ${result.deletedCount} Notifications.`);
   } catch (error) {
     console.error('Error deleting Notifications:', error);
+  }
+};
+const clearAllTransactions = async () => {
+  try {
+    const result = await Transaction.deleteMany({});
+    console.log(`Deleted ${result.deletedCount} Transactions.`);
+  } catch (error) {
+    console.error('Error deleting Transactions:', error);
   }
 };
 
@@ -57,4 +66,5 @@ export {
   clearAllNotifications,
   clearAllTourSchedules,
   fixBug,
+  clearAllTransactions,
 };

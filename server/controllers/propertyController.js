@@ -1,9 +1,10 @@
 import { Property } from '../models/propertyModel.js';
-import { TourSchedule } from '../models/tourScheduleModel.js';
-import { sendEmail } from '../utils/notificationsUtil.js';
+// import { TourSchedule } from '../models/tourScheduleModel.js';
+// import { sendEmail } from '../utils/notificationsUtil.js';
 import { categorizeProperties } from '../utils/propertyUtils.js';
 import path from 'path';
 import { validatePropertyData } from '../utils/propertyValidation.js';
+import { Transaction } from '../models/transactionModel.js';
 
 const getProperties = async (req, res) => {
   try {
@@ -75,6 +76,14 @@ const addProperty = async (req, res) => {
 
     await newProperty.save();
 
+    // Update the transaction with the propertyId
+    if (value.tempPropertyId) {
+      await Transaction.findOneAndUpdate(
+        { tempPropertyId: value.tempPropertyId },
+        { propertyId: newProperty._id },
+        { new: true }
+      );
+    }
     return res.status(201).json({
       message: 'Property added successfully',
       property: newProperty,

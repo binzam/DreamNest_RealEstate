@@ -5,6 +5,7 @@
 }
 .hero_bg {
   height: 500px;
+  text-align: center;
 }
 .hero_bg img {
   width: 100%;

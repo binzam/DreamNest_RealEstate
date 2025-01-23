@@ -1,5 +1,5 @@
 import './MyProperties.css';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { axiosPrivate } from '../../../api/axiosInstance';
 import { PropertyDataType } from '../../../types/propertyTypes';
@@ -9,12 +9,17 @@ import DeletePropertyModal from '../../../components/Modals/DeletePropertyModal/
 import ErrorDisplay from '../../../components/ErrorDisplay';
 import { GridLoader } from 'react-spinners';
 import { IoHome } from 'react-icons/io5';
-// import { IoHome } from 'react-icons/io5';
-// import { IoMdInformationCircleOutline } from 'react-icons/io';
+import BackButton from '../../../components/BackButton/BackButton';
+import { IoMdInformationCircleOutline } from 'react-icons/io';
 
-const MyProperties = () => {
+interface MyPropertiesProps {
+  isAdminView?: boolean;
+}
+
+const MyProperties = ({ isAdminView = false }: MyPropertiesProps) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { userId } = useParams<{ userId?: string }>();
   const [properties, setProperties] = useState<PropertyDataType[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -41,7 +46,10 @@ const MyProperties = () => {
     const fetchUserPropeties = async () => {
       try {
         setLoading(true);
-        const response = await axiosPrivate.get('/properties/my-properties');
+        const endpoint = userId
+          ? `/admin/users/${userId}/properties`
+          : '/properties/my-properties';
+        const response = await axiosPrivate.get(endpoint);
         console.log(response);
         setProperties(response.data);
         setError(null);
@@ -58,7 +66,7 @@ const MyProperties = () => {
       }
     };
     fetchUserPropeties();
-  }, []);
+  }, [userId]);
   const handleEdit = (id: string) => {
     navigate(`/my-properties/edit/${id}`);
   };
@@ -94,7 +102,16 @@ const MyProperties = () => {
   };
   return (
     <>
-      <div className='my_pts_cntnt'>
+      {isAdminView && (
+        <div className="admn_view_ptys_hdr">
+          <BackButton className="white" />
+          <div>
+            <IoMdInformationCircleOutline />
+            <p>Here you can view all the properties listed by the user.</p>
+          </div>
+        </div>
+      )}
+      <div className="my_pts_cntnt">
         {message && <div className="success-message">{message}</div>}
         {properties && properties.length > 0 && (
           <span className="my_pty_count">
@@ -124,10 +141,12 @@ const MyProperties = () => {
               />
             ))}
           </div>
-        ) : (
+        ) : !isAdminView ? (
           <Link className="add_pty_link" to="/add-property">
             Add Property
           </Link>
+        ) : (
+          <p className="zero_msg">This user has not listed any propeties.</p>
         )}
       </div>
       <DeletePropertyModal

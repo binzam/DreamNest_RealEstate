@@ -116,8 +116,23 @@ function App() {
             <Route path="" element={<Navigate to="dashboard" />} />
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="manage-users" element={<ManageUsers />} />
+            <Route
+              path="users/:userId/profile"
+              element={<UserProfile isAdminView />}
+            />
+            <Route
+              path="users/:userId/tour-schedules"
+              element={<UserTourSchedule isAdminView />}
+            />
+            <Route
+              path="users/:userId/properties"
+              element={<MyProperties isAdminView />}
+            />
             <Route path="manage-listings" element={<ManageListings />} />
-            <Route path="manage-transactions" element={<ManageTransactions />} />
+            <Route
+              path="manage-transactions"
+              element={<ManageTransactions />}
+            />
             <Route path="edit-property/:id" element={<EditProperty />} />
           </Route>
         </Route>

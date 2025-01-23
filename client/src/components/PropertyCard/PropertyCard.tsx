@@ -40,7 +40,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
   const { city, street, state } = address;
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { wishlist } = useSelector((state: RootState) => state.user);
+  const { wishlist } = useSelector((state: RootState) => state.wishlist);
   const [loadingProperty, setLoadingProperty] = useState<string | null>(null);
   const { isAuthenticated, user } = useSelector(
     (state: RootState) => state.user

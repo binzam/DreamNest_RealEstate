@@ -37,6 +37,7 @@ export const validatePropertyData = (data, files) => {
     discount: Joi.number().min(0).max(100).optional(),
     currency: Joi.string().required(),
     isAvailable: Joi.boolean().required(),
+    tempPropertyId: Joi.string().required(),
   });
 
   // Validate main property data (excluding photos)

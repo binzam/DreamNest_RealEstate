@@ -1,5 +1,12 @@
 import express from 'express';
-import { getAllTransactions, getAllUsers, getDashBoard } from '../controllers/adminController.js';
+import {
+  getAllTransactions,
+  getAllUsers,
+  getDashBoard,
+  getPropertiesByUser,
+  getTourSchedulesByUserId,
+  getUserById,
+} from '../controllers/adminController.js';
 import authenticateToken from '../middleware/authenticateToken.js';
 import { authorizeRole } from '../middleware/authorizeRole.js';
 
@@ -12,6 +19,29 @@ router.get(
   getDashBoard
 );
 router.get('/users', authenticateToken, authorizeRole('admin'), getAllUsers);
-router.get('/transactions', authenticateToken, authorizeRole('admin'), getAllTransactions);
+router.get(
+  '/users/:userId',
+  authenticateToken,
+  authorizeRole('admin'),
+  getUserById
+);
+router.get(
+  '/transactions',
+  authenticateToken,
+  authorizeRole('admin'),
+  getAllTransactions
+);
+router.get(
+  '/users/:userId/tour-schedules',
+  authenticateToken,
+  authorizeRole('admin'),
+  getTourSchedulesByUserId
+);
+router.get(
+  '/users/:userId/properties',
+  authenticateToken,
+  authorizeRole('admin'),
+  getPropertiesByUser
+);
 
 export default router;

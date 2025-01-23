@@ -239,20 +239,7 @@ flex-direction: column;
   font-size: 1.2rem;
   color: #f8f8f8;
 }
-.property_detail .pty_price {
-  font-size: 1.5rem;
-  color: #008000;
-  min-height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-.property_detail .pty_price small {
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: #8f8f8f;
-  margin-left: 3px;
-}
+
 .currency_selector {
   display: flex;
   align-items: flex-end;

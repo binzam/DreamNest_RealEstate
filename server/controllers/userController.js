@@ -1,5 +1,4 @@
 import { User } from '../models/userModel.js';
-import path from 'path';
 import multer from 'multer';
 import { Property } from '../models/propertyModel.js';
 import { Notification } from '../models/notificationModel.js';

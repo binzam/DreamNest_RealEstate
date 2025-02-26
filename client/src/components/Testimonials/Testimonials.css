@@ -1,18 +1,21 @@
 .testimonials_sec {
   width: 100%;
-  padding: 5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   background: url(../../assets/bg-tablet-pattern.svg);
   background-position: -135% 0%;
   background-repeat: no-repeat;
   background-size: 90%;
 }
+.testimonials_sec_inner {
+  width: 100%;
+  padding: 5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 .testi_ttl {
   font-size: 2.3rem;
-  color: hsl(219, 29%, 14%);
+  color:  #255a7a;
   margin-bottom: 1.5rem;
   text-align: center;
   text-transform: capitalize;
@@ -24,23 +27,22 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 3.5rem 1.5rem;
   padding: 2.5rem 0;
-
 }
 .tst_box {
   width: 100%;
-  background-color: hsl(219, 29%, 14%);
   padding: 2.25rem 1rem 2.625rem;
   position: relative;
-  box-shadow: 0px 1px 5px -1px #A775F1;
+  box-shadow: 0px 1px 5px -1px #000000;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   border-radius: 5px;
+  background-color: #255a7a;
   background-image: url(../../assets/quote-pattern.svg);
   background-repeat: no-repeat;
-  background-size: 3rem;
+  background-size:  3rem;
   background-position: 10px 10px;
 }
 .tst_box img {
@@ -51,16 +53,16 @@
   top: -36px;
   left: 50%;
   transform: translateX(-50%);
-  border-top: 3px dotted hsl(0, 0%, 68%);;
-  border-left: 3px dotted hsl(0, 0%, 87%);;
-  border-right: 3px dotted hsl(0, 0%, 87%);;
-  border-bottom: 3px dotted hsl(0, 0%, 100%);;
+  border-top: 3px dotted hsl(0, 0%, 68%);
+  border-left: 3px dotted hsl(0, 0%, 87%);
+  border-right: 3px dotted hsl(0, 0%, 87%);
+  border-bottom: 3px dotted hsl(0, 0%, 100%);
   object-fit: cover;
 }
 .tst_box h3 {
   margin-block: 1.5rem 1rem;
   font-size: 1rem;
-  font-weight:600;
+  font-weight: 600;
   line-height: 1;
   color: hsl(0, 0%, 100%);
 }
@@ -89,4 +91,15 @@
 .btn:hover {
   background-color: #0056b3;
   color: #ffffff;
+}
+@media (max-width: 768px) {
+  .testimonials_sec_inner {
+    padding: 5rem 0;
+  }
+
+  .testi_ttl {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    letter-spacing: 3px;
+  }
 }

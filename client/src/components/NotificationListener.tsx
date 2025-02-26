@@ -1,26 +1,30 @@
 import { useEffect } from 'react';
 import { socket } from '../socket';
-import { addNotification } from '../store/slices/userSlice';
-import { useDispatch } from 'react-redux';
-import { RootState } from '../store/store';
-import { useSelector } from 'react-redux';
+import { useQueryClient } from '@tanstack/react-query';
+import { NotificationType } from '../types/interface';
+import { useUser } from '../context/useUser';
 
 const NotificationListener = () => {
-  const dispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.user);
+  const queryClient = useQueryClient();
+  const { state } = useUser();
+  const { user } = state;
   useEffect(() => {
     if (user?._id) {
       socket.emit('join', user._id);
     }
-    socket.on('notification', (data) => {
-      console.log('Notification received:', data);
-      dispatch(addNotification(data));
+    socket.on('notification', (newNotification: NotificationType) => {
+      console.log('Notification received:', newNotification);
+
+      queryClient.setQueryData<NotificationType[]>(
+        ['notifications'],
+        (oldNotifications = []) => [newNotification, ...oldNotifications]
+      );
     });
 
     return () => {
       socket.off('notification');
     };
-  }, [dispatch, user?._id]);
+  }, [queryClient, user?._id]);
 
   return null;
 };

@@ -1,10 +1,6 @@
 import { RiUser3Line } from 'react-icons/ri';
-import { useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
-import { AppDispatch, RootState } from '../../store/store';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { logout } from '../../store/slices/userSlice';
 import './Header.css';
 import { logoutUser, removeUser } from '../../utils/authUtils';
 import { FaHeart, FaUser } from 'react-icons/fa6';
@@ -13,25 +9,37 @@ import { IoMdNotifications, IoMdSettings } from 'react-icons/io';
 import { CgProfile } from 'react-icons/cg';
 import { FaHome } from 'react-icons/fa';
 import { GrScheduleNew } from 'react-icons/gr';
+import { useFetchWishlist } from '../../hooks/useWishlist';
+import { useFetchNotification } from '../../hooks/useNotifications';
+import { useUser } from '../../context/useUser';
+import AuthLinks from '../AuthLinks/AuthLinks';
 const Navbar = () => {
-  const { isAuthenticated, user, notifications } = useSelector(
-    (state: RootState) => state.user
-  );
-  const { wishlist } = useSelector((state: RootState) => state.wishlist);
+  const { state, dispatch } = useUser();
+  const { user, isAuthenticated } = state;
+
+  const { data: notifications = [] } = useFetchNotification(isAuthenticated);
+
+  const { data: wishlist = [] } = useFetchWishlist(isAuthenticated);
+
   const unreadNotifications = notifications.filter(
-    (notification) => notification.status !== 'Read'
+    (notification: { status: string; }) => notification.status !== 'Read'
   );
-  const dispatch = useDispatch<AppDispatch>();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
-
+  const isAdminMode = user?.role === 'admin';
   const handleLogout = async () => {
-    dispatch(logout());
-    removeUser();
-    setIsDropdownOpen(false);
-    toggleDropdown();
-    await logoutUser();
+    try {
+      setIsDropdownOpen(false);
+
+      await logoutUser();
+
+      removeUser();
+
+      dispatch({ type: 'LOGOUT' });
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
   return (
     <nav className="navbar">
@@ -44,7 +52,7 @@ const Navbar = () => {
                 isActive ? 'hdr_nav_link active' : 'hdr_nav_link add'
               }
             >
-              <BsHouseAdd className="add_icon" /> Add Property
+              <BsHouseAdd className="hdr_add_icon" /> Add Property
             </NavLink>
           </li>
         )}
@@ -94,10 +102,12 @@ const Navbar = () => {
       </ul>
       {isAuthenticated ? (
         <div className="hdr_user_profile_wl">
-          <Link className="hdr_wl_link" to="/wishlist">
-            <span className="wl_counter">{wishlist.length}</span>
-            <FaHeart />
-          </Link>
+          {!isAdminMode && (
+            <Link className="hdr_wl_link" to="/wishlist">
+              <span className="wl_counter">{wishlist?.length}</span>
+              <FaHeart />
+            </Link>
+          )}
 
           <button className="hdr_profile_btn" onClick={toggleDropdown}>
             {user?.profilePicture ? (
@@ -107,7 +117,7 @@ const Navbar = () => {
                 alt="User Profile"
               />
             ) : (
-              <RiUser3Line className="icon_profile" />
+              <RiUser3Line  />
             )}
           </button>
           {isDropdownOpen && (
@@ -127,8 +137,8 @@ const Navbar = () => {
                           alt="User Profile"
                         />
                       ) : (
-                        <div className="center">
-                          <FaUser className="icon_avatar" />
+                        <div>
+                          <FaUser />
                         </div>
                       )}
                     </div>
@@ -142,7 +152,7 @@ const Navbar = () => {
                   <Link
                     onClick={toggleDropdown}
                     className="usr_dd_link"
-                    to="/profile"
+                    to="/user-profile"
                   >
                     <CgProfile />
                     Profile
@@ -168,24 +178,28 @@ const Navbar = () => {
                     <FaHome />
                     My Properties
                   </Link>
-                  <Link
-                    onClick={toggleDropdown}
-                    className="usr_dd_link"
-                    to="/wishlist"
-                  >
-                    <FaHeart />
-                    Wishlist
-                  </Link>
+                  {!isAdminMode && (
+                    <Link
+                      onClick={toggleDropdown}
+                      className="usr_dd_link"
+                      to="/wishlist"
+                    >
+                      <FaHeart />
+                      Wishlist
+                    </Link>
+                  )}
 
-                  <Link
-                    onClick={toggleDropdown}
-                    className="usr_dd_link"
-                    to="/tour-schedules"
-                  >
-                    {' '}
-                    <GrScheduleNew />
-                    Tour Schedules
-                  </Link>
+                  {!isAdminMode && (
+                    <Link
+                      onClick={toggleDropdown}
+                      className="usr_dd_link"
+                      to="/tour-schedules"
+                    >
+                      {' '}
+                      <GrScheduleNew />
+                      Tour Schedules
+                    </Link>
+                  )}
                   <Link
                     onClick={toggleDropdown}
                     className="usr_dd_link"
@@ -206,14 +220,7 @@ const Navbar = () => {
           )}
         </div>
       ) : (
-        <div className="auth_links">
-          <Link className="auth_link login_link" to="/login">
-            Login
-          </Link>
-          <Link className="auth_link signup_link" to="/signup">
-            Sign up
-          </Link>
-        </div>
+        <AuthLinks />
       )}
     </nav>
   );

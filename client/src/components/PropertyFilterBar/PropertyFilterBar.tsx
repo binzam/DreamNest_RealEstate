@@ -1,76 +1,62 @@
-import { useSearchParams } from 'react-router-dom';
 import './PropertyFilterBar.css';
 import PropertyPriceFilter from './PropertyPriceFilter/PropertyPriceFilter';
 import BathroomFilter from './PropertyRoomFilter/BathroomFilter';
 import BedroomFilter from './PropertyRoomFilter/BedroomFilter';
-import PropertySearch from './PropertySearch/PropertySearch';
 import PropertyTypeFilter from './PropertyTypeFilter/PropertyTypeFilter';
 import { FaXmark } from 'react-icons/fa6';
 import { PropertyDataType } from '../../types/propertyTypes';
+import SearchBar from '../SearchBar/SearchBar';
+import { usePropertyFilters } from '../../context/usePropertyFilters';
+import Container from '../Container/Container';
+import { useState } from 'react';
 
 type PropertyFilterBarProps = {
-  onPriceRangeChange: (
-    minPrice: number | null,
-    maxPrice: number | null
-  ) => void;
-  onBedRoomsRangeChange: (
-    bedroomMin: number | null,
-    bedroomMax: number | null
-  ) => void;
-  onBathRoomsRangeChange: (
-    bathroomMin: number | null,
-    bathroomMax: number | null
-  ) => void;
-  onPropertyTypeChange: (propertyType: string) => void;
-  onSearchTermChange: (searchTerm: { [key: string]: string }) => void; 
   properties: PropertyDataType[];
   type: string;
 };
 
 const PropertyFilterBar: React.FC<PropertyFilterBarProps> = ({
-  onPriceRangeChange,
-  onBedRoomsRangeChange,
-  onBathRoomsRangeChange,
-  onPropertyTypeChange,
-  onSearchTermChange,
   properties,
   type,
 }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const isAnyFilterApplied = Array.from(searchParams.entries()).some(
-    ([, value]) => value !== '' && value !== '0' && value !== 'Infinity'
-  );
+  const { clearAllFilters, isAnyFilterApplied } = usePropertyFilters();
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
-  const clearAllSelections = () => {
-    onPriceRangeChange(null, null);
-    onBedRoomsRangeChange(null, null);
-    onBathRoomsRangeChange(null, null);
-    onPropertyTypeChange('');
-
-    setSearchParams({});
+  const handleDropdownToggle = (dropdownId: string) => {
+    setOpenDropdown((prev) => (prev === dropdownId ? null : dropdownId));
   };
-
   return (
     <div className="filtering_bar">
-      <div className="filtering_bar_comps">
-        <PropertySearch
-          properties={properties}
-          onSearchTermChange={onSearchTermChange}
-          type={type}
-        />
-        <PropertyPriceFilter
-          onPriceRangeChange={onPriceRangeChange}
-          type={type}
-        />
-        <PropertyTypeFilter onPropertyTypeChange={onPropertyTypeChange} />
-        <BedroomFilter onBedRoomsRangeChange={onBedRoomsRangeChange} />
-        <BathroomFilter onBathRoomsRangeChange={onBathRoomsRangeChange} />
-        {isAnyFilterApplied && (
-          <button onClick={clearAllSelections} className="clear_selection_btn">
-            <FaXmark /> <span>Clear <br /> Filters</span>
-          </button>
-        )}
-      </div>
+      <Container>
+        <div className="filtering_bar_comps">
+          <SearchBar properties={properties} type={type} className="filter" />
+          <PropertyPriceFilter
+            type={type}
+            isOpen={openDropdown === 'price'}
+            onToggle={() => handleDropdownToggle('price')}
+          />
+          <PropertyTypeFilter
+            isOpen={openDropdown === 'type'}
+            onToggle={() => handleDropdownToggle('type')}
+          />
+          <BedroomFilter
+            isOpen={openDropdown === 'bedroom'}
+            onToggle={() => handleDropdownToggle('bedroom')}
+          />
+          <BathroomFilter
+            isOpen={openDropdown === 'bathroom'}
+            onToggle={() => handleDropdownToggle('bathroom')}
+          />
+          {isAnyFilterApplied && (
+            <button onClick={clearAllFilters} className="clear_selection_btn">
+              <FaXmark />{' '}
+              <span>
+                Clear <br /> Filters
+              </span>
+            </button>
+          )}
+        </div>
+      </Container>
     </div>
   );
 };

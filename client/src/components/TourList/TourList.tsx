@@ -1,17 +1,17 @@
-import { IoMdInformationCircleOutline } from 'react-icons/io';
-import { ImCheckboxChecked } from 'react-icons/im';
-import { GiCancel } from 'react-icons/gi';
 import './TourList.css';
 import { TourType } from '../../types/interface';
 import { GridLoader } from 'react-spinners';
 import TourItem from './TourItem';
 import FormattedDate from '../FormattedDate/FormattedDate';
+import { Link } from 'react-router-dom';
+import TourStatusMessage from './TourStatusMessage';
 interface TourListProps {
   tours: TourType[];
   isOwner: boolean;
   handleCancel?: (tourId: string) => void;
   handleConfirm?: (tourId: string) => void;
   loadingTourId?: string | null;
+  isAdminView?: boolean;
 }
 
 const TourList: React.FC<TourListProps> = ({
@@ -20,6 +20,7 @@ const TourList: React.FC<TourListProps> = ({
   handleCancel,
   handleConfirm,
   loadingTourId,
+  isAdminView,
 }) => {
   return (
     <ul className="tour_list">
@@ -43,42 +44,17 @@ const TourList: React.FC<TourListProps> = ({
             timeOfTour={tour.timeOfTour}
             propertyImage={tour.propertyImage}
           />
-          <div className={`tour_status ${tour.status.toLowerCase()}`}>
-            {tour.status === 'Scheduled' && (
-              <>
-                <IoMdInformationCircleOutline />
-                <span>Tour {tour.status}</span>
-                <small>
-                  *{' '}
-                  {isOwner
-                    ? 'You need to Confirm or Cancel this tour request.'
-                    : 'Waiting for owners confirmation.'}
-                </small>
-              </>
-            )}
-            {tour.status === 'Confirmed' && (
-              <>
-                <ImCheckboxChecked />
-                <span>Tour {tour.status}</span>
-                <small>
-                  *{isOwner ? 'Be ready to host visitors' : 'Be ready to visit'}{' '}
-                  on the set Date & Time.
-                </small>
-              </>
-            )}
-            {tour.status === 'Canceled' && (
-              <>
-                <GiCancel />
-                <span>Tour {tour.status}</span>
-                <small>
-                  *{' '}
-                  {isOwner
-                    ? 'You canceled this tour request.'
-                    : 'Request canceled by owner.'}
-                </small>
-              </>
-            )}
-          </div>
+          {isAdminView ? (
+            <p className="tour_desc">
+              This is a tour request made by{' '}
+              <Link to={`/admin/users/${tour.schedulerId}/profile`}>
+                {tour.schedulerEmail}
+              </Link>
+            </p>
+          ) : (
+            <TourStatusMessage status={tour.status} isOwner={isOwner} />
+          )}
+
           {isOwner && tour.status === 'Scheduled' && (
             <div className="tour_action_buttons">
               <button

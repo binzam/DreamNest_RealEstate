@@ -1,26 +1,23 @@
 import { useEffect, useMemo, useState } from 'react';
 import './PropertyPriceFilter.css';
-import { FaChevronDown, FaChevronUp, FaXmark } from 'react-icons/fa6';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa6';
 import { IoSearch } from 'react-icons/io5';
 import { useSearchParams } from 'react-router-dom';
+import { usePropertyFilters } from '../../../context/usePropertyFilters';
+import FilterButton from '../../FilterButton/FilterButton';
 type PriceOption = {
   display: string;
   value: number;
 };
 type PropertyPriceFilterProps = {
-  onPriceRangeChange: (
-    minPrice: number | null,
-    maxPrice: number | null
-  ) => void;
   type: string;
+  isOpen: boolean;
+  onToggle: () => void;
 };
 
-const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({
-  onPriceRangeChange,
-  type,
-}) => {
+const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({ type , isOpen, onToggle}) => {
   const [searchParams] = useSearchParams();
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMinDropdownOpen, setMinDropdownOpen] = useState(false);
   const [isMaxDropdownOpen, setMaxDropdownOpen] = useState(false);
   const [selectedMin, setSelectedMin] = useState<PriceOption | null>(null);
@@ -28,7 +25,7 @@ const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({
 
   const [displayText, setDisplayText] = useState('Price');
   const [isRangeSelected, setIsRangeSelected] = useState(false);
-  
+  const { handlePriceRangeChange, clearSpecificFilter } = usePropertyFilters();
   const minValues = useMemo(
     () =>
       type === 'rent'
@@ -87,7 +84,7 @@ const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({
 
     const parsedMin = urlMin ? parseInt(urlMin, 10) : 0;
     const parsedMax =
-      urlMax === "Infinity" || !urlMax ? Infinity : parseInt(urlMax, 10);
+      urlMax === 'Infinity' || !urlMax ? Infinity : parseInt(urlMax, 10);
 
     const minOption = minValues.find((v) => v.value === parsedMin) || null;
     const maxOption = maxValues.find((v) => v.value === parsedMax) || null;
@@ -104,7 +101,10 @@ const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({
     );
     setIsRangeSelected(!isDefaultRange);
   }, [searchParams, minValues, maxValues]);
-  const toggleDropdown = () => setDropdownOpen((prev) => !prev);
+  const toggleDropdown = () => {
+    onToggle(); 
+    // setIsDropdownOpen((prev) => !prev);
+  };
   const toggleMinDropdown = () => setMinDropdownOpen((prev) => !prev);
   const toggleMaxDropdown = () => setMaxDropdownOpen((prev) => !prev);
 
@@ -128,8 +128,11 @@ const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({
     setSelectedMin(null);
     setSelectedMax(null);
     setDisplayText('Price');
-    setDropdownOpen(!isDropdownOpen);
-    onPriceRangeChange(0, Infinity);
+    handlePriceRangeChange(0, Infinity);
+    clearSpecificFilter('price');
+    // setIsDropdownOpen(!isDropdownOpen);
+    onToggle()
+
     setIsRangeSelected(false);
   };
   const handleDone = () => {
@@ -143,31 +146,24 @@ const PropertyPriceFilter: React.FC<PropertyPriceFilterProps> = ({
             selectedMax?.display || 'No Max'
           }`
     );
-    onPriceRangeChange(minPrice, maxPrice);
+    handlePriceRangeChange(minPrice, maxPrice);
     setIsRangeSelected(!isDefaultRange);
-    setDropdownOpen(false);
+    // setIsDropdownOpen(false);
+    onToggle()
+
   };
   return (
     <div className="lp_price_sorter">
-      <button
-        className={`price_filter_btn ${isRangeSelected ? 'selected' : ''}`}
-        onClick={toggleDropdown}
-      >
-        <span className="price_sorting_btn_txt">{displayText}</span>
-        <span className="price_btn_icon">
-          {isRangeSelected ? (
-            <span className="clear_price_btn" onClick={clearSelection}>
-              <FaXmark className="icon_clear" />
-            </span>
-          ) : isDropdownOpen ? (
-            <FaChevronUp />
-          ) : (
-            <FaChevronDown />
-          )}
-        </span>
-      </button>
-
-      {isDropdownOpen && (
+      <FilterButton
+        className="filter_btn"
+        isSelected={isRangeSelected}
+        isDropdownOpen={isOpen}
+        toggleDropdown={toggleDropdown}
+        clearSelection={clearSelection}
+        displayText={displayText}
+        title="Price Range"
+      />
+      {isOpen && (
         <div className="price_dropdown">
           <div className="price_dd_hdr">
             <span>Price range</span>{' '}

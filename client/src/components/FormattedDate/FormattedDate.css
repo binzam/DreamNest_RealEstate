@@ -10,10 +10,23 @@
   gap: 5px;
   margin: 0.5rem 0;
 }
+.pty_post_date.fixed_width{
+  /* width: 70px; */
+  text-align: center;
+  line-height: 1;
+}
+.pty_det_post_date {
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 0.3rem;
+}
 .req_date {
   color: #9b9b9b;
 }
-.post_date_admn_dash{
+.post_date_admn_dash {
   font-size: 0.85rem;
   font-weight: 700;
   color: #333;
@@ -22,7 +35,17 @@
   justify-content: flex-start;
   gap: 5px;
 }
-
+.btm_right {
+  position: absolute;
+  bottom: 0.2rem;
+  right: 0.5rem;
+  color: #9b9b9b;
+}
+.xsml {
+  line-height: 1;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
 .notf_date {
   color: #9b9b9b;
 }

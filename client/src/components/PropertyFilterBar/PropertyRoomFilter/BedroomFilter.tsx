@@ -1,24 +1,23 @@
-import { FaBed, FaChevronDown, FaChevronUp, FaXmark } from 'react-icons/fa6';
+import { FaBed, FaChevronDown, FaChevronUp } from 'react-icons/fa6';
 import './PropertyRoomFilter.css';
 import { useEffect, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
 import { useSearchParams } from 'react-router-dom';
+import { usePropertyFilters } from '../../../context/usePropertyFilters';
+import FilterButton from '../../FilterButton/FilterButton';
 
 const roomMinValues = ['No Min', '1', '2', '3', '4', '5', '6'];
 const roomMaxValues = ['No Max', '1', '2', '3', '4', '5', '6'];
-
 type BedroomFilterProps = {
-  onBedRoomsRangeChange: (
-    bedroomMin: number | null,
-    bedroomMax: number | null
-  ) => void;
+  isOpen: boolean;
+  onToggle: () => void;
 };
 
 const BedroomFilter: React.FC<BedroomFilterProps> = ({
-  onBedRoomsRangeChange,
+  isOpen,
+  onToggle,
 }) => {
   const [searchParams] = useSearchParams();
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownState, setDropdownState] = useState({
     bedroomMin: false,
     bedroomMax: false,
@@ -30,6 +29,9 @@ const BedroomFilter: React.FC<BedroomFilterProps> = ({
 
   const [displayText, setDisplayText] = useState('Bedrooms');
   const [isRangeSelected, setIsRangeSelected] = useState(false);
+  const { handleBedRoomsRangeChange, clearSpecificFilter } =
+    usePropertyFilters();
+
   useEffect(() => {
     const urlBedMin = searchParams.get('bedroomMin');
     const urlBedMax = searchParams.get('bedroomMax');
@@ -49,7 +51,9 @@ const BedroomFilter: React.FC<BedroomFilterProps> = ({
     setDisplayText(bedroomText);
     setIsRangeSelected(!isDefaultRange);
   }, [searchParams]);
-  const toggleDropdown = () => setDropdownOpen((prev) => !prev);
+  const toggleDropdown = () => {
+    onToggle(); 
+  };
   const toggleSpecificDropdown = (key: keyof typeof dropdownState) =>
     setDropdownState((prev) => ({ ...prev, [key]: !prev[key] }));
   const clearSelection = () => {
@@ -57,8 +61,11 @@ const BedroomFilter: React.FC<BedroomFilterProps> = ({
       bedroomMin: null,
       bedroomMax: null,
     });
-    onBedRoomsRangeChange(null, null);
-    setDropdownOpen(!isDropdownOpen);
+    handleBedRoomsRangeChange(null, null);
+    onToggle()
+
+    clearSpecificFilter('bed');
+
     setDisplayText('Bedrooms');
     setIsRangeSelected(false);
   };
@@ -71,8 +78,8 @@ const BedroomFilter: React.FC<BedroomFilterProps> = ({
       : `${bedroomMin ?? 'No Min'} - ${bedroomMax ?? 'No Max'} Beds`;
 
     setDisplayText(bedroomText);
-    setDropdownOpen(false);
-    onBedRoomsRangeChange(bedroomMin, bedroomMax);
+    onToggle()
+    handleBedRoomsRangeChange(bedroomMin, bedroomMax);
     setIsRangeSelected(!isDefaultRange);
   };
 
@@ -109,26 +116,17 @@ const BedroomFilter: React.FC<BedroomFilterProps> = ({
   };
 
   return (
-    <div className="lp_room_sorter">
-      <button
-        className={`room_filter_btn ${isRangeSelected ? 'selected' : ''} `}
-        onClick={toggleDropdown}
-      >
-        <span className="room_sorting_btn_txt">{displayText}</span>
-        <span className="room_btn_icon">
-          {isRangeSelected ? (
-            <span className="clear_room_btn" onClick={clearSelection}>
-              <FaXmark className="icon_clear" />
-            </span>
-          ) : isDropdownOpen ? (
-            <FaChevronUp />
-          ) : (
-            <FaChevronDown />
-          )}
-        </span>
-      </button>
-
-      {isDropdownOpen && (
+    <div className="lp_bed_room_sorter">
+      <FilterButton
+        className="filter_btn"
+        isSelected={isRangeSelected}
+        isDropdownOpen={isOpen}
+        toggleDropdown={toggleDropdown}
+        clearSelection={clearSelection}
+        displayText={displayText}
+        title="Bedroom Range"
+      />
+      {isOpen && (
         <div className="room_dropdown">
           <div className="room_dd_hdr">
             <span>Bedrooms</span>{' '}

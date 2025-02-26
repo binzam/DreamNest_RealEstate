@@ -1,82 +1,103 @@
-import { useEffect, useState } from 'react';
 import './Listings.css';
 import LoadingSkeleton from '../../components/Loading/LoadingSkeleton/LoadingSkeleton';
-import { axiosPublic } from '../../api/axiosInstance';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import {
-  CategorizedProperty,
-  PropertyDataType,
-} from '../../types/propertyTypes';
+import { PropertyDataType } from '../../types/propertyTypes';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
 import { settingsForProperty as settings } from '../../utils/sliderSetting';
-import ErrorDisplay from '../../components/ErrorDisplay';
-import { Outlet } from 'react-router-dom';
-
+import ErrorDisplay from '../../components/ErrorDisplay/ErrorDisplay';
+import { useFetchCategorizedProperties } from '../../hooks/useProperties';
+import Container from '../../components/Container/Container';
+import { FaTrailer } from 'react-icons/fa6';
+import { MdCabin, MdTerrain, MdVilla } from 'react-icons/md';
+import { PiFarm } from 'react-icons/pi';
+import { HiHomeModern } from 'react-icons/hi2';
+import { BiSolidBuildingHouse } from 'react-icons/bi';
+import { LiaCitySolid } from 'react-icons/lia';
+import { BsFillHousesFill } from 'react-icons/bs';
+import { useMemo } from 'react';
+import BackToTopButton from '../../components/BackToTopButton/BackToTopButton';
 const Listings = () => {
-  const [categoriedProperties, setCategoriedProperties] = useState<
-    CategorizedProperty[]
-  >([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchCategorizedProperties = async () => {
-      try {
-        const response = await axiosPublic.get('/properties/list/categorized');
-        console.log(response);
-
-        setCategoriedProperties(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching properties:', error);
-        setError('Failed to load properties');
-        setLoading(false);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCategorizedProperties();
-  }, []);
-
-  if (loading) {
+  const {
+    data: categoriedProperties,
+    isLoading,
+    isError,
+    error,
+  } = useFetchCategorizedProperties();
+  const propertyTypes = useMemo(
+    () => [
+      { title: 'Any', icon: <BiSolidBuildingHouse /> },
+      { title: 'House', icon: <HiHomeModern /> },
+      { title: 'Villa', icon: <MdVilla /> },
+      { title: 'Condo', icon: <LiaCitySolid /> },
+      { title: 'Town house', icon: <MdCabin /> },
+      { title: 'Multi family', icon: <BsFillHousesFill /> },
+      { title: 'Farm', icon: <PiFarm /> },
+      { title: 'Mobile', icon: <FaTrailer /> },
+      { title: 'Land', icon: <MdTerrain /> },
+    ],
+    []
+  );
+  if (isLoading || !categoriedProperties) {
     return (
-      <div className="loading_skeletons">
+      <>
         <LoadingSkeleton />
         <LoadingSkeleton />
         <LoadingSkeleton />
-      </div>
+      </>
     );
   }
 
-  if (error) {
-    return <ErrorDisplay message={error} />;
+  if (isError) {
+    return <ErrorDisplay message={error.message} />;
   }
 
   return (
-    <>
-      <Outlet />
+    <Container>
       <div className="all_listings">
         <section className="slider_section">
-          {categoriedProperties.map((category) => (
-            <div key={category.category} className="property_slider">
-              <h1>{category.category.split('-').join(' ')}</h1>
-              {category.properties && category.properties.length > 0 && (
-                <div>
-                  <Slider {...settings}>
-                    {category.properties.map((property: PropertyDataType) => (
-                      <PropertyCard key={property._id} property={property} />
-                    ))}
-                  </Slider>
+          {categoriedProperties.length > 0 ? (
+            categoriedProperties.map((category) => {
+              const matchedType = propertyTypes.find(
+                (type) =>
+                  type.title.toLowerCase() === category.category.toLowerCase()
+              );
+
+              return (
+                <div key={category.category} className="property_slider">
+                  <h1 className="cat_ttl">
+                    {category.category.split('-').join(' ')} {matchedType?.icon}{' '}
+                  </h1>
+                  {category.properties.length === 1 && (
+                    <div className="single_pty">
+                      <PropertyCard property={category.properties[0]} />
+                    </div>
+                  )}
+                  {category.properties.length > 1 && (
+                    <div>
+                      <Slider {...settings}>
+                        {category.properties.map(
+                          (property: PropertyDataType) => (
+                            <PropertyCard
+                              key={property._id}
+                              property={property}
+                            />
+                          )
+                        )}
+                      </Slider>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          ))}
+              );
+            })
+          ) : (
+            <p>No properties found.</p>
+          )}
         </section>
       </div>
-    </>
+      <BackToTopButton />
+    </Container>
   );
 };
 

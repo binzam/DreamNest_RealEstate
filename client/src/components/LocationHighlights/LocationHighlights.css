@@ -1,12 +1,22 @@
 .location_highlights {
   width: 100%;
-  padding: 2rem 5rem;
-  /* margin: 2rem 0; */
   background-color: #ffffff00;
+}
+.location_highlights_inner {
+  width: 100%;
+  padding: 2rem 3rem;
+  position: relative;
 }
 .locations_ttl {
   font-size: 1.4rem;
   color: #333;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.locations_ttl svg{
+  font-size: 2rem;
+  fill: red;
 }
 .map_container {
   height: 350px;
@@ -28,7 +38,10 @@
   transform: translate(-14%, -16%);
   border: 2px dotted #ffc0ac;
 }
-
+.custom-cluster-marker {
+  background-color: transparent;
+  border: none;
+}
 .map_popup {
   width: 150px;
   text-align: center;
@@ -38,4 +51,11 @@
   height: 100px;
   object-fit: cover;
   object-position: center;
+}
+
+
+@media (max-width: 1000px) {
+  .location_highlights_inner {
+    padding: 2rem 0rem;
+  }
 }

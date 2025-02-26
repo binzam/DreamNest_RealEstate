@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { axiosPrivate } from '../../api/axiosInstance';
 import { MdPayments } from 'react-icons/md';
 import './StripeCheckout.css';
-import ErrorDisplay from '../ErrorDisplay';
+import ErrorDisplay from '../ErrorDisplay/ErrorDisplay';
 import { BeatLoader } from 'react-spinners';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
 interface StripeCheckoutProps {
@@ -16,6 +16,7 @@ interface StripeCheckoutProps {
   paymentAmount: string;
   tempPropertyId?: string;
   tempTourId?: string;
+  paymentTier?: 'standard' | 'featured';
 }
 
 const StripeCheckout = ({
@@ -28,6 +29,7 @@ const StripeCheckout = ({
   paymentAmount,
   tempPropertyId,
   tempTourId,
+  paymentTier,
 }: StripeCheckoutProps) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -51,6 +53,7 @@ const StripeCheckout = ({
           customerEmail,
           tempPropertyId,
           tempTourId,
+          paymentTier,
         }
       );
 
@@ -124,8 +127,8 @@ const StripeCheckout = ({
       {loading && (
         <BeatLoader
           color="#008000"
-          margin={20}
-          size={20}
+          margin={10}
+          size={25}
           className="checkout_loading"
         />
       )}

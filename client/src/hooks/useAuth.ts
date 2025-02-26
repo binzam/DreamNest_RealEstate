@@ -1,14 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { login } from '../store/slices/userSlice';
 import { setAccessToken, setUser } from '../utils/authUtils';
 import { axiosPublic } from '../api/axiosInstance';
-import { AppDispatch } from '../store/store';
-import { fetchWishlistThunk } from '../store/slices/wishlistThunks';
-import { fetchNotificationsThunk } from '../store/slices/notificationThunks';
 import { AxiosError } from 'axios';
 import { useGoogleLogin } from '@react-oauth/google';
+import { useUser } from '../context/useUser';
 
 interface AuthData {
   email: string;
@@ -20,7 +16,7 @@ interface AuthData {
 }
 
 const useAuth = (isSignup: boolean) => {
-  const dispatch = useDispatch<AppDispatch>();
+  const { dispatch } = useUser();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<AuthData>({
     email: '',
@@ -34,7 +30,11 @@ const useAuth = (isSignup: boolean) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, type, checked, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value, 
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -85,9 +85,7 @@ const useAuth = (isSignup: boolean) => {
       }
       const { accessToken, user } = response.data;
       if (accessToken && user) {
-        dispatch(login({ user, accessToken }));
-        dispatch(fetchWishlistThunk());
-        dispatch(fetchNotificationsThunk());
+        dispatch({ type: 'LOGIN', payload: { user, accessToken } });
         setAccessToken(accessToken);
         setUser(user);
         navigate(user.role === 'admin' ? '/admin' : '/', {
@@ -117,9 +115,8 @@ const useAuth = (isSignup: boolean) => {
         );
         const { accessToken, user } = response.data;
         if (accessToken && user) {
-          dispatch(login({ user, accessToken }));
-          dispatch(fetchWishlistThunk());
-          dispatch(fetchNotificationsThunk());
+          dispatch({ type: 'LOGIN', payload: { user, accessToken } });
+
           setAccessToken(accessToken);
           setUser(user);
           navigate(user.role === 'admin' ? '/admin' : '/', {

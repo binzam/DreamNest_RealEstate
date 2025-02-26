@@ -6,7 +6,8 @@ import { AiOutlineSchedule } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { GridLoader } from 'react-spinners';
 import { BsSmartwatch } from 'react-icons/bs';
-import ErrorDisplay from '../../ErrorDisplay';
+import ErrorDisplay from '../../ErrorDisplay/ErrorDisplay';
+import { IoMdInformationCircleOutline } from 'react-icons/io';
 
 interface ScheduleTourModalProps {
   propertyImage: string;
@@ -58,10 +59,6 @@ const ScheduleTourModal = ({
       },
     });
   };
-  // const handleViewSchedule = () => {
-  //   navigate('/tour-schedules');
-  //   onClose();
-  // };
 
   return (
     <div className="schedule_modal">
@@ -69,8 +66,8 @@ const ScheduleTourModal = ({
         {loading && (
           <GridLoader
             color="#329e00"
-            margin={30}
-            size={55}
+            margin={20}
+            size={50}
             className="schedule_modal_loading"
           />
         )}
@@ -79,19 +76,22 @@ const ScheduleTourModal = ({
         </button>
         <div className="schedule_hdr">
           <GrScheduleNew />
-          <h2 className="scedule_ttl">Schedule Viewing</h2>
+          <h2 className="scedule_ttl">Schedule a Visit</h2>
         </div>
         <div className="schedul_pty_address">
           <FaLocationDot />
           <p>{propertyAddress}</p>
         </div>
-        <div className="contact_pty_img">
+        <div className="schedule_pty_img">
           <img src={propertyImage} alt={propertyAddress} />
         </div>
         {error && <ErrorDisplay message={error} />}
         <form className="scheduling_form" onSubmit={handleSchedule}>
           <label className="date_time_label">
-            Prefered Date & Time of Viewing
+            <span>
+              <IoMdInformationCircleOutline /> Insert Date & Time of visit
+            </span>
+
             <input
               className={`date_time_input ${error ? 'error' : ''}`}
               type="datetime-local"
@@ -115,10 +115,6 @@ const ScheduleTourModal = ({
             <AiOutlineSchedule />
           </button>
         </form>
-        {/* <div className="schedule_success">
-            <h3>Tour Scheduled Successfully!</h3>
-            <button onClick={handleViewSchedule}>View tour schedule</button>
-          </div> */}
       </div>
     </div>
   );

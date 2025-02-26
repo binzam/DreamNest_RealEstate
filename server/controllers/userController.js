@@ -15,6 +15,7 @@ const getUserProfile = async (req, res) => {
     const tourSchedules = await TourSchedule.find({ userId: req.user._id });
 
     const userProfile = {
+      id: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
@@ -117,11 +118,11 @@ const uploadProfilePicture = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
-    const filePath = path.join('uploads', req.file.filename);
+  
+    // const filePath = path.join('uploads', req.file.filename);
     const profilePictureUrl = `${req.protocol}://${req.get(
       'host'
-    )}/${filePath}`;
+    )}/uploads/profilePictures/${req.file.filename}`;
     user.profilePicture = profilePictureUrl;
     await user.save();
 
@@ -142,6 +143,8 @@ const uploadProfilePicture = async (req, res) => {
 };
 const userWishlist = async (req, res) => {
   try {
+  console.log("userWishlist CALLED")
+
     const user = await User.findById(req.user._id).populate('wishlist');
 
     if (!user) {

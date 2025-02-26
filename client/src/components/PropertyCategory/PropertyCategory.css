@@ -1,8 +1,9 @@
 .categories_section {
-  padding: 2rem 5rem 4rem;
   width: 100%;
-  overflow: hidden;
   background-color: #fff;
+}
+.categories_section_inner {
+  padding: 2rem 2rem 4rem;
 }
 .category_ttl {
   font-size: 1.5rem;
@@ -77,4 +78,20 @@
   touch-action: none;
   background-color: rgb(255, 255, 255);
   color: rgb(26, 24, 22);
+}
+
+@media (max-width: 768px) {
+  .categories_section_inner {
+    padding: 2rem 0rem;
+  }
+  .property_categories {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .property_categories {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
 }

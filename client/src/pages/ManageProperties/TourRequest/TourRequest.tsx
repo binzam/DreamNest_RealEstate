@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { TourType } from '../../../types/interface';
-import { axiosPrivate } from '../../../api/axiosInstance';
-import ErrorDisplay from '../../../components/ErrorDisplay';
+import { useState } from 'react';
+import ErrorDisplay from '../../../components/ErrorDisplay/ErrorDisplay';
 import { GridLoader } from 'react-spinners';
 import './TourRequest.css';
 import { BiSolidMessageEdit } from 'react-icons/bi';
@@ -10,128 +7,47 @@ import TourList from '../../../components/TourList/TourList';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { IoMdInformationCircleOutline } from 'react-icons/io';
+import {
+  useCancelTourRequest,
+  useConfirmTourRequest,
+  useFetchTourRequests,
+} from '../../../hooks/useTourActions';
+import Container from '../../../components/Container/Container';
+import { FaCalendarDays } from 'react-icons/fa6';
+import BackToTopButton from '../../../components/BackToTopButton/BackToTopButton';
 const TourRequest = () => {
-  const [tourSchedules, setTourSchedules] = useState<TourType[]>([]);
-  const [tourDates, setTourDates] = useState<Date[]>([]);
-  const [loading, setLoading] = useState(true);
   const [loadingTourId, setLoadingTourId] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>('All');
+  const [showCalendar, setShowCalendar] = useState<boolean>(false);
+  const { data, isLoading, error } = useFetchTourRequests();
+  const confirmMutation = useConfirmTourRequest();
+  const cancelMutation = useCancelTourRequest();
 
-  useEffect(() => {
-    const fetchTourSchedules = async () => {
-      setLoading(true);
-      try {
-        const response = await axiosPrivate.get('/tour/requests');
-        setTourSchedules(response.data.tours);
-        const fetchedTourDates = response.data.tourDates.map(
-          (date: string) => new Date(date)
-        );
-        setTourDates(fetchedTourDates);
-        console.log(response);
-      } catch (error) {
-        console.log(error);
-        if (axios.isAxiosError(error)) {
-          setError(
-            error.response?.data.message || 'Failed to load tour schedules'
-          );
-        } else {
-          setError('Failed to load tour schedules');
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTourSchedules();
-  }, []);
-
-  const confirmTourRequest = async (tourId: string): Promise<void> => {
-    try {
-      const response = await axiosPrivate.patch(`/tour/confirm/${tourId}`);
-      console.log(response.data);
-      return response.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error(
-          error.response?.data.message || 'Failed to confirm tour.'
-        );
-        throw new Error(
-          error.response?.data.message || 'Failed to confirm tour.'
-        );
-      } else {
-        console.error('Error confirming tour:', error);
-        throw new Error('Error confirming tour.');
-      }
-    }
-  };
-
-  const cancelTourRequest = async (tourId: string): Promise<void> => {
-    try {
-      const response = await axiosPrivate.patch(`/tour/cancel/${tourId}`);
-      console.log(response);
-      return response.data;
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error(error.response?.data.message || 'Failed to cancel tour.');
-        throw new Error(
-          error.response?.data.message || 'Failed to cancel tour.'
-        );
-      } else {
-        console.error('Error canceling tour:', error);
-        throw new Error('Error canceling tour.');
-      }
-    }
-  };
+  const tourRequests = data?.tours || [];
+  const tourDates = data?.tourDates || [];
   const handleConfirm = async (tourId: string) => {
     try {
       setLoadingTourId(tourId);
-      await confirmTourRequest(tourId);
-      setTourSchedules((prevSchedules) =>
-        prevSchedules.map((tour) =>
-          tour.tourId === tourId ? { ...tour, status: 'Confirmed' } : tour
-        )
-      );
+      await confirmMutation.mutateAsync(tourId);
     } catch (error) {
-      if (error instanceof Error) {
-        if (error instanceof Error) {
-          console.error(error.message);
-        } else {
-          console.error('An unknown error occurred.');
-        }
-        setError(error.message);
-      } else {
-        console.error('An unknown error occurred.');
-        setError('An unknown error occurred.');
-      }
+      console.error('Error confirming tour:', error);
     } finally {
       setLoadingTourId(null);
     }
   };
-
+  const toggleCalendar = () => {
+    setShowCalendar(!showCalendar);
+  };
   const handleCancel = async (tourId: string) => {
     try {
       setLoadingTourId(tourId);
-
-      await cancelTourRequest(tourId);
-      setTourSchedules((prevSchedules) =>
-        prevSchedules.map((tour) =>
-          tour.tourId === tourId ? { ...tour, status: 'Canceled' } : tour
-        )
-      );
+      await cancelMutation.mutateAsync(tourId);
     } catch (error) {
-      if (error instanceof Error) {
-        console.error(error.message);
-        setError(error.message);
-      } else {
-        console.error('An unknown error occurred.');
-        setError('An unknown error occurred.');
-      }
+      console.error('Error canceling tour:', error);
     } finally {
       setLoadingTourId(null);
     }
   };
-
   const getNoToursMessage = () => {
     if (statusFilter === 'All') {
       return 'You have no tour requests.';
@@ -143,51 +59,66 @@ const TourRequest = () => {
   };
   const filteredTours =
     statusFilter === 'All'
-      ? tourSchedules
-      : tourSchedules.filter((tour) => tour.status === statusFilter);
+      ? tourRequests
+      : tourRequests.filter(
+          (tour: { status: string }) => tour.status === statusFilter
+        );
   return (
-    <>
+    <Container>
+      {!showCalendar && (
+        <button className="caledar_btn" onClick={toggleCalendar}>
+          <FaCalendarDays />
+          Show Calendar
+        </button>
+      )}
       <div className="tour_request_cntnt">
-        {tourDates && tourDates.length > 0 && (
+        {tourDates.length > 0 && (
           <span className="request_count">
             {tourDates.length}
             <BiSolidMessageEdit />
           </span>
         )}
-        {tourDates.length > 0 && (
+
+        {showCalendar && tourDates.length > 0 && (
           <aside className="tour_request_dates">
-            <div className="calendar_note">
-              {' '}
-              <IoMdInformationCircleOutline />
-              <small>
-                Dates marked in <span> orange </span>are tour requests.
-              </small>
+            <div>
+              <button className="caledar_btn hide" onClick={toggleCalendar}>
+                {showCalendar ? 'Hide ' : 'Show '}Calendar
+              </button>
+              <div className="calender_wrapper">
+                <div className="calendar_note">
+                  {' '}
+                  <IoMdInformationCircleOutline />
+                  <small>
+                    Dates marked in <span> Green </span>are tour requests.
+                  </small>
+                </div>
+                <Calendar
+                  tileClassName={({ date, view }) =>
+                    view === 'month' &&
+                    tourDates.some(
+                      (d: { toDateString: () => string }) =>
+                        d.toDateString() === date.toDateString()
+                    )
+                      ? 'highlight'
+                      : ''
+                  }
+                />
+              </div>
             </div>
-            <Calendar
-              tileClassName={({ date, view }) => {
-                if (
-                  view === 'month' &&
-                  tourDates.find(
-                    (d) => d.toDateString() === date.toDateString()
-                  )
-                ) {
-                  return 'highlight';
-                }
-              }}
-            />
           </aside>
         )}
 
-        {loading ? (
+        {isLoading ? (
           <GridLoader
             color="#13ccbb"
-            margin={40}
+            margin={20}
             size={35}
             className="my_pty_loading"
           />
         ) : error ? (
-          <ErrorDisplay message={error} />
-        ) : tourSchedules.length > 0 || filteredTours.length > 0 ? (
+          <ErrorDisplay message={error.message} />
+        ) : tourRequests.length > 0 || filteredTours.length > 0 ? (
           <div className="tours_display">
             <div className="tour_filter_controls">
               <label htmlFor="statusFilter">Filter Requests </label>
@@ -202,7 +133,7 @@ const TourRequest = () => {
                 <option value="Confirmed">Confirmed</option>
                 <option value="Canceled">Canceled</option>
               </select>
-            </div>
+            </div> 
             {filteredTours.length > 0 ? (
               <TourList
                 tours={filteredTours}
@@ -220,8 +151,9 @@ const TourRequest = () => {
             <p className="zero_msg">You have no tour requests.</p>
           </div>
         )}
+        <BackToTopButton />
       </div>
-    </>
+    </Container>
   );
 };
 

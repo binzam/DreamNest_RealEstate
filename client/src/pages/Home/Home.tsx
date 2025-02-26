@@ -1,6 +1,8 @@
 import Hero from '../../components/Hero/Hero';
 import { Suspense, lazy, useEffect } from 'react';
 import { GridLoader } from 'react-spinners';
+import { PropertyFilterProvider } from '../../context/PropertyFilterContext';
+import BackToTopButton from '../../components/BackToTopButton/BackToTopButton';
 const PropertyCategory = lazy(
   () => import('../../components/PropertyCategory/PropertyCategory')
 );
@@ -37,14 +39,18 @@ const Home = () => {
           />
         }
       >
-        <Hero />
-        <PropertyCategory />
+        <PropertyFilterProvider>
+          <Hero />
+          <PropertyListing />
+          <PropertyCategory />
+        </PropertyFilterProvider>
+
         <CallToAction />
-        <PropertyListing category="recommended" title="recommended homes" />
         <LocationHighlights />
         <QuickStats />
         <Testimonials />
         <NewsletterSignup />
+        <BackToTopButton />
       </Suspense>
     </>
   );

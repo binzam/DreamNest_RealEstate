@@ -1,4 +1,4 @@
-import { UserDataType } from "./userTypes";
+import { UserData } from './userTypes';
 
 export interface PhotoType {
   title: string;
@@ -7,7 +7,7 @@ export interface PhotoType {
 
 export interface PropertyDataType {
   _id: string;
-  owner: string | UserDataType;
+  owner: string | UserData;
   address: {
     street: string;
     city: string;
@@ -16,15 +16,16 @@ export interface PropertyDataType {
     longitude: number;
     latitude: number;
   };
-  price: number;
-  bed: number;
-  bath: number;
-  sqft: number;
+  price:  number;
+  bed:  number;
+  bath:  number;
+  sqft:  number;
+  sizeUnit: 'sqft' | 'sqm';
   uniqueId?: string;
   photos: PhotoType[];
   category: string;
   detail: string;
-  propertyFor: string;
+  propertyFor: 'sale' | 'rent';
   yearBuilt: number;
   propertyType: string;
   title: string;
@@ -34,6 +35,8 @@ export interface PropertyDataType {
   videoUrl?: string;
   contactInfo?: string;
   dateListed?: string;
+  priority: string;
+  isAvailable: boolean;
 }
 
 export interface PropertyCategoryType {
@@ -49,7 +52,6 @@ export interface PropertySliderProps {
   propertyFor: string;
 }
 export interface PropertyListingProps {
-  category: string;
   title: string;
 }
 export interface CategorizedProperty {
@@ -66,28 +68,60 @@ export interface PropertyFormData {
     latitude: number;
     longitude: number;
   };
-  price: number;
-  bed: number;
-  bath: number;
-  sqft: number;
+  price: number | null;
+  bed: number | null;
+  bath: number | null;
+  sqft: number | null;
   sizeUnit: 'sqft' | 'sqm';
-  photos: { title: string; image: File | null; previewUrl: string }[];
+  photos: { title: string; image: File | null; previewUrl?: string }[];
 
   propertyFor: 'sale' | 'rent';
   propertyType: string;
   detail: string;
-  yearBuilt: number;
+  yearBuilt: number | null;
   isAvailable: boolean;
   currency: string;
   features?: string[];
   videoUrl?: string;
   contactInfo?: string;
   dateListed?: string;
-  tempPropertyId: string | null;
+  tempPropertyId?: string;
+  priority?: string;
 }
 export interface ContactFormData {
   fullName: string;
   email: string;
   phone: string;
   message: string;
+}
+
+export interface PropertyEditFormData {
+  title: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    country: string;
+    latitude: number;
+    longitude: number;
+  };
+  price: number;
+  bed: number;
+  bath: number;
+  sqft: number;
+  sizeUnit: 'sqft' | 'sqm';
+  photos: { title: string; image: string; previewUrl?: string }[];
+
+  propertyFor: 'sale' | 'rent';
+  propertyType: string;
+  detail: string;
+  yearBuilt: number;
+  isAvailable?: boolean;
+  currency: string;
+  features?: string[];
+  videoUrl?: string;
+  priority: string;
+  contactInfo?: string;
+  dateListed?: string;
+  // tempPropertyId?: string;
 }

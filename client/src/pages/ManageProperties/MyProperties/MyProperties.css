@@ -1,33 +1,40 @@
 .admn_view_ptys_hdr {
   background-color: rgb(11, 83, 17);
-  padding: 0.5rem 2rem;
+}
+.admn_view_ptys_hdr_inner {
+  padding: 0.5rem 3rem;
   display: flex;
   align-items: center;
   gap: 4rem;
 }
-
-.admn_view_ptys_hdr div {
+.admn_view_ptys_hdr_inner div {
   text-align: left;
-  font-size: 0.8rem;
-  letter-spacing: 1px;
   color: #ffffff;
   display: flex;
   gap: 1rem;
   align-items: center;
 }
-.admn_view_ptys_hdr svg {
+.admn_view_ptys_hdr_inner svg {
   font-size: 1.2rem;
   color: #fff;
 }
+.admn_view_ptys_hdr_inner p {
+  color: #fff;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  line-height: 1.1;
+}
 
 .my_pts_cntnt {
-  padding: 1rem 5rem;
+  padding: 1rem 4rem;
+  position: relative;
+  min-height: 50vh;
 }
 
 .my_pty_count {
   position: absolute;
-  left: 5rem;
-  top: 10%;
+  left: 0rem;
+  top: 0rem;
   padding: 0.2rem 0.5rem;
   border-radius: 4px;
   font-size: 0.8rem;
@@ -38,6 +45,7 @@
   align-items: center;
   justify-content: center;
   gap: 4px;
+  z-index: 10;
 }
 .my_ptys_grid {
   display: grid;
@@ -46,6 +54,7 @@
 }
 .my_ptys_grid .pty_box {
   width: 100%;
+  /* max-width: 300px; */
 }
 .my_pty_loading {
   position: absolute;
@@ -72,4 +81,27 @@
 .add_pty_link:hover {
   background-color: #000;
   color: #fff;
+}
+.zero_msg {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .my_pts_cntnt {
+    padding: 1rem 0;
+  }
+  .my_pty_count {
+    left: -0.2rem;
+  }
+  .add_pty_link {
+    width: max-content;
+  }
+  .admn_view_ptys_hdr_inner {
+    gap: 2rem;
+    padding: 0.5rem 1rem;
+  }
 }

@@ -1,5 +1,11 @@
 .listing_section {
-  padding: 1rem 5rem 3rem;
+  background-color: #fff;
+  width: 100%;
+}
+.listing_section_inner {
+  padding: 1rem 3rem 3rem;
+  background-color: #fff;
+  width: 100%;
 }
 .listing_ttl {
   color: #333;
@@ -16,4 +22,37 @@
 }
 .listing .pty_box {
   width: 100%;
+  max-width: 100%;
+  margin: auto;
+}
+
+@media (max-width: 1000px) {
+  .listing_section_inner {
+    padding: 1rem 1rem 3rem;
+  }
+  .listing {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+}
+@media (max-width: 768px) {
+  .listing_section_inner {
+    padding: 1rem 0rem 3rem;
+  }
+  .listing_ttl {
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 0.2rem 1rem;
+  }
+  .listing {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .listing {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    padding: 0 0.5rem;
+  }
 }

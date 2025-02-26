@@ -61,6 +61,7 @@
   color: #fff;
   text-align: center;
   position: relative;
+  border: 1px solid #ddd;
 }
 .auth_loading {
   position: absolute;
@@ -76,26 +77,42 @@
   text-transform: uppercase;
 }
 
-.form_group {
-  margin-bottom: 15px;
+.login_form_group {
+  margin-bottom: 1rem;
   text-align: left;
 }
+.login_form_group.login {
+  margin-bottom: 1.5rem;
+  position: relative;
+}
 
-.form_group label {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #5c5c5c;
+.password_toggle_icon {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #7c7f83;
+}
+.password_toggle_icon svg {
+  width: 20px;
+  height: 20px;
+}
+.password_toggle_icon:hover {
+  color: #333;
 }
 
 .login_input {
   width: 100%;
-  padding: 10px;
+  padding: 0.5rem 2rem 0.5rem 1rem;
   border: none;
   border-radius: 5px;
   outline: none;
   background-color: #ffffffde;
+}
+.login_input:focus {
+  outline: 2px solid blue;
+  outline-offset: 2px;
 }
 
 .login_btn {
@@ -116,6 +133,7 @@
 }
 .google_login_btn {
   width: 100%;
+  box-sizing: border-box;
   padding: 0.6rem 0;
   display: flex;
   align-items: center;
@@ -128,10 +146,10 @@
   border-radius: 100vw;
   border: 1px solid transparent;
 }
-.google_login_btn svg{
+.google_login_btn svg {
   font-size: 1.3rem;
 }
-.google_login_btn:hover{
+.google_login_btn:hover {
   border: 1px dashed #bdbdbd;
   background-color: #f1f1f1;
 }
@@ -150,4 +168,15 @@
   color: #00584d;
   text-decoration: underline;
   font-weight: 600;
+}
+@media only screen and (max-width: 768px) {
+  .auth_page_login {
+    padding: 2rem 0;
+  }
+  .backto_home_btn {
+    top: 10%;
+  }
+  .login_form {
+    padding: 2rem 1.5rem;
+  }
 }

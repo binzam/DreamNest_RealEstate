@@ -3,7 +3,30 @@ import Joi from 'joi';
 export const validatePropertyData = (data, files) => {
   console.log('data---', data);
   console.log('FILES---', files);
-
+  // if (!files || files.length === 0) {
+  //   return {
+  //     isValid: false,
+  //     errors: [
+  //       {
+  //         field: 'photos',
+  //         message: `At least 4 photos are required.`,
+  //       },
+  //     ],
+  //   };
+  // }
+  // if (files.length < 4) {
+  //   return {
+  //     isValid: false,
+  //     errors: [
+  //       {
+  //         field: 'photos',
+  //         message: `At least 4 photos are required, but only ${
+  //           files.length || 0
+  //         } provided.`,
+  //       },
+  //     ],
+  //   };
+  // }
   // Schema for photos
   const photosSchema = Joi.array()
     .items(
@@ -12,7 +35,7 @@ export const validatePropertyData = (data, files) => {
         image: Joi.string().required(),
       })
     )
-    .min(1)
+    .min(4)// change to 4
     .required();
 
   // Schema for main property fields
@@ -61,13 +84,22 @@ export const validatePropertyData = (data, files) => {
   const photos = files.map((file, index) => {
     const titleKey = `photos${index}`; // Key for the photo title object
     const titleObject = data[titleKey]; // Access the object ({ title: 'photo-title' })
+    // if (!titleObject || !titleObject.title) {
+    //   throw new Error(`Missing title for photo at index ${index}`);
+    // }
     if (!titleObject || !titleObject.title) {
-      throw new Error(`Missing title for photo at index ${index}`);
+      return {
+        field: `photos[${index}].title`,
+        message: `Missing title for photo at index ${index}`,
+      };
     }
-
     return { title: titleObject.title, image: file.filename };
   });
-
+  // If any title errors exist, return them immediately
+  const titleErrors = photos.filter((photo) => photo.field);
+  if (titleErrors.length > 0) {
+    return { isValid: false, errors: titleErrors };
+  }
   const { error: photosError } = photosSchema.validate(photos);
 
   if (photosError) {

@@ -2,13 +2,13 @@
   width: 100%;
   min-height: 100vh;
   background-color: #fff;
-  padding: 0rem 5rem 2rem;
+  padding: 0rem 0rem 2rem;
   position: relative;
 }
 .pty_listing_hdr {
   display: flex;
-  align-items: flex-start;
-  padding: 0.4rem;
+  align-items: center;
+  padding: 0.4rem 0;
 }
 .listing-type-buttons {
   display: flex;
@@ -16,18 +16,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .listing-type-button {
-  padding: 0.5rem 2rem;
+  padding: 0.2rem 1.5rem;
   border: 2px solid #ccc;
   background-color: #fff;
   color: #333;
   border-radius: 5px;
   cursor: pointer;
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 600;
   transition: all 0.3s ease;
 }
 
@@ -40,16 +40,17 @@
   background-color: #13ccbb;
   color: #fff;
   border-color: #13ccbb;
-  font-weight: bold;
+  font-weight: 700;
 }
 .pty_listing_ttl {
   color: #041c50;
   text-transform: capitalize;
   letter-spacing: 4px;
-  text-align: center;
   line-height: 1.1;
-  margin-bottom: 0.3rem;
+  flex: 1;
+  text-align: center;
 }
+
 .pty_listing_contnt {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -65,9 +66,14 @@
   color: #555;
   margin-top: 3rem;
 }
-.listing_p_loading {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+
+@media (max-width: 768px) {
+  .pty_listing_contnt {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+
+  .pty_listing_ttl {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+  }
 }

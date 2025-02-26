@@ -6,9 +6,17 @@
   text-decoration: underline;
   /* margin-bottom: 0.5rem; */
   transition: all 0.2s ease;
+  padding: 0.5rem;
+  padding-left: 0;
 }
-.back_btn.white{
+.back_btn.white {
   color: #fff;
+}
+.back_btn.black {
+  color: #333;
+}
+.back_btn.blue {
+  color: #00c8ff;
 }
 .back_btn:hover {
   color: #c2a500;
@@ -16,12 +24,10 @@
 .icon_left {
   width: 14px;
   height: 14px;
-  margin-top: 2px;
+  /* margin-top: 2px; */
 }
 .btn_txt {
   font-size: 1rem;
   font-weight: 500;
   line-height: 1;
-  padding: 0.5rem;
-  padding-left: 0;
 }

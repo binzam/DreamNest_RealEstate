@@ -55,7 +55,17 @@ const propertySchema = new Schema(
     yearBuilt: { type: Number, required: true },
     discount: { type: Number, required: true, default: 0 },
     views: { type: Number, default: 0 },
-    tempPropertyId: { type: String, required: true },
+    tempPropertyId: { type: String },
+    priority: {
+      type: String,
+      enum: ['standard', 'featured'],
+      default: 'standard',
+    },
+    isAvailable: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
   },
   {
     timestamps: true,

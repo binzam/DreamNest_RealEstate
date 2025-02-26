@@ -1,0 +1,26 @@
+.slider_section_inner {
+  width: 100%;
+  padding: 0 1rem;
+}
+.slider_section_inner h1 {
+  text-transform: uppercase;
+  margin: 0.3rem 0 0.3rem 1rem;
+}
+.slider_section_inner .pty_box {
+  min-width: auto;
+  width: 100%;
+}
+@media (max-width: 600px) {
+  .slider_section_inner h1 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+  .slider_section_inner .pty_box {
+    min-width: auto;
+    margin: 0;
+    max-width: 100%;
+  }
+  .slider_section_inner {
+    padding: 0 1rem;
+  }
+}

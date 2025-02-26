@@ -49,7 +49,7 @@ const MapDisplay = ({
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
         {onMapClick && <MapClick onMapClick={onMapClick} />}
         <Marker icon={customIcon} position={[latitude, longitude]}>
-          <Popup>Property Location</Popup>
+          <Popup>Location selected here</Popup>
         </Marker>
       </MapContainer>
     </div>

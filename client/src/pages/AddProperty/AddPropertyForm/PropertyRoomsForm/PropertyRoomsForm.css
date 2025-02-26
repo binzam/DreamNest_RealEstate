@@ -1,0 +1,95 @@
+.bed_bath_sqft_inputs{
+  width: 100%;
+}
+
+.bed_bath_sqft_inputs p {
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 600;
+  display: block;
+  text-align: center;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+.add_pty_size_inputs {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 auto;
+}
+
+.add_pty_size_input {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.size_input_grp {
+ /* flex: 1; */
+ width: 100%;
+}
+.size_input_grp label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #000;
+  gap: 0.5rem;
+}
+
+.rounded_input {
+  width: 100%;
+  padding: 0.3rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  border: 1px solid #006986;
+  background-color: #ffffff;
+  border-radius: 100vw;
+}
+.rounded_input.error{
+  border: 1px solid red;
+}
+.rounded_input:focus {
+  outline: 2px solid blue;
+  outline-offset: 2px;
+  border: 1px solid #00c8ff;
+  background-color: #d8f6ffbb;
+}
+.size_input_grp .rounded_input::placeholder {
+  font-size: 0.8rem;
+}
+.add_pty_unit_select {
+  padding: 0.3rem 1rem;
+  background-color: #333;
+  color: #ffffff;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  border-radius: 10px 10px 0 0;
+  cursor: pointer;
+}
+@media only screen and (max-width: 768px) {
+  .add_pty_size_inputs {
+    gap: 0.5rem;
+  }
+  .add_pty_size_input {
+    gap: 0.5rem;
+  }
+  .rounded_input {
+    padding: 0.2rem 1rem;
+  }
+  .size_input_grp label{
+    font-size: 0.8rem;
+  }
+  .add_pty_unit_select{
+    padding: 0.2rem 1rem;
+    font-size: 0.9rem;
+  }
+}

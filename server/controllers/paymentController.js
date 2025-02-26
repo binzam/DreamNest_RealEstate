@@ -11,6 +11,7 @@ const createPaymentIntent = async (req, res) => {
     paymentReason,
     tempPropertyId,
     tempTourId,
+    paymentTier,
   } = req.body;
   console.log(amount, currency, customerName, customerEmail, paymentReason);
 
@@ -24,6 +25,7 @@ const createPaymentIntent = async (req, res) => {
         customerEmail,
         tempPropertyId,
         tempTourId, 
+        paymentTier,
       },
     });
     const transaction = new Transaction({
@@ -36,6 +38,7 @@ const createPaymentIntent = async (req, res) => {
       paymentReason,
       tempPropertyId,
       tempTourId, 
+      paymentTier,
       status: 'succeeded',
     });
     await transaction.save();
@@ -50,26 +53,4 @@ const createPaymentIntent = async (req, res) => {
   }
 };
 
-// const updateTransaction = async (req, res) => {
-//   const { tempPropertyId, propertyId } = req.body;
-
-//   try {
-//     const transaction = await Transaction.findOneAndUpdate(
-//       { tempPropertyId },
-//       { propertyId },
-//       { new: true }
-//     );
-
-//     if (!transaction) {
-//       return res.status(404).json({ error: 'Transaction not found' });
-//     }
-
-//     res
-//       .status(200)
-//       .json({ message: 'Transaction updated successfully', transaction });
-//   } catch (error) {
-//     console.error('Error updating transaction:', error);
-//     res.status(500).json({ error: 'Failed to update transaction' });
-//   }
-// };
 export { createPaymentIntent };

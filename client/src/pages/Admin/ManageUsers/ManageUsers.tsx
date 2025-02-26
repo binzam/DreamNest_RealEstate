@@ -1,50 +1,37 @@
-import { useEffect, useState } from 'react';
-import { axiosPrivate } from '../../../api/axiosInstance';
-import { UserDataType } from '../../../types/userTypes';
+import { useState } from 'react';
 import UserCard from '../../../components/UserCard/UserCard';
 import './ManageUsers.css';
-import { Loader } from '../../../components/Loader';
+import { useUsers } from '../../../hooks/useUsers';
+import ErrorDisplay from '../../../components/ErrorDisplay/ErrorDisplay';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
 const ManageUsers = () => {
-  const [users, setUsers] = useState<UserDataType[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [filterRole, setFilterRole] = useState('all');
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
   const [hasListedProperty, setHasListedProperty] = useState(false);
-  useEffect(() => {
-    const fetchUsers = async () => {
-      setLoading(true);
-      try {
-        const response = await axiosPrivate.get('/admin/users', {
-          params: {
-            search: searchQuery,
-            role: filterRole,
-            sort: sortOrder,
-            hasListedProperty: hasListedProperty,
-          },
-        });
-        setUsers(response.data);
-        console.log(response);
-      } catch (error) {
-        setError('Failed to fetch users data.');
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const {
+    data: users = [],
+    isLoading,
+    isError,
+    error,
+  } = useUsers({
+    searchQuery,
+    filterRole,
+    sortOrder,
+    hasListedProperty,
+  });
 
-    fetchUsers();
-  }, [searchQuery, filterRole, sortOrder, hasListedProperty]);
-
-  if (error) {
-    return <div>{error}</div>;
+  if (isError) {
+    return <ErrorDisplay message={error.message} />;
   }
+
   return (
     <div className="manage_usrs">
       <div className="manage_contnet">
         <div className="usr_filters">
-          <h1>Manage users</h1>
+          <h2>Manage users</h2>
           <input
             className="usr_search"
             type="text"
@@ -54,6 +41,7 @@ const ManageUsers = () => {
           />
           <div className="user_sorters">
             <select
+              className="usr_slct"
               value={filterRole}
               onChange={(e) => setFilterRole(e.target.value)}
             >
@@ -62,6 +50,7 @@ const ManageUsers = () => {
               <option value="admin">Admin</option>
             </select>
             <select
+              className="usr_slct"
               value={sortOrder}
               onChange={(e) =>
                 setSortOrder(e.target.value as 'newest' | 'oldest')
@@ -71,7 +60,7 @@ const ManageUsers = () => {
               <option value="oldest">Oldest First</option>
             </select>
           </div>
-          <label>
+          <label className="usr_chkbox_filter">
             <input
               type="checkbox"
               checked={hasListedProperty}
@@ -81,13 +70,21 @@ const ManageUsers = () => {
           </label>
         </div>
         <div className="usrs_cntnr">
-          {loading && <Loader />}
-          {users.length > 0 ? (
+          {isLoading ? (
+            <>
+              <Skeleton height={160} width={`${100}%`} />
+              <Skeleton height={160} width={`${100}%`} />
+              <Skeleton height={160} width={`${100}%`} />
+              <Skeleton height={160} width={`${100}%`} />
+              <Skeleton height={160} width={`${100}%`} />
+              <Skeleton height={160} width={`${100}%`} />
+            </>
+          ) : users.length > 0 ? (
             users.map((user) => (
               <UserCard user={user} key={user._id} className="shadow" />
             ))
           ) : (
-            <div>No users found.</div>
+            <p className="no_users_msg">No users found.</p>
           )}
         </div>
       </div>

@@ -1,28 +1,31 @@
-import { useSelector } from 'react-redux';
-import {
-  PropertyDataType,
-  PropertyListingProps,
-} from '../../types/propertyTypes';
+import { useFetchFeaturedProperties } from '../../hooks/useProperties';
+import { PropertyDataType } from '../../types/propertyTypes';
+import Container from '../Container/Container';
+import { Loader } from '../Loader';
 import PropertyCard from '../PropertyCard/PropertyCard';
 import './PropertyListing.css';
-import { RootState } from '../../store/store';
 
-const PropertyListing = ({ category, title }: PropertyListingProps) => {
-  const properties = useSelector(
-    (state: RootState) => state.properties.properties
-  );
+const PropertyListing = () => {
+  const { data: properties = [], isLoading } = useFetchFeaturedProperties();
 
-  const filteredProperties = properties.filter(
-    (property: PropertyDataType) => property.category === category
-  );
+  if (isLoading || !properties) {
+    return <Loader />;
+  }
+  if (properties.length === 0) {
+    return null;
+  }
   return (
     <section className="listing_section">
-      <h1 className="listing_ttl">{title}</h1>
-      <div className="listing">
-        {filteredProperties.map((property: PropertyDataType) => (
-          <PropertyCard key={property._id} property={property} />
-        ))}
-      </div>
+      <Container>
+        <div className="listing_section_inner">
+          <h1 className="listing_ttl">Featured Properties</h1>
+          <div className="listing">
+            {properties.map((property: PropertyDataType) => (
+              <PropertyCard key={property._id} property={property} />
+            ))}
+          </div>
+        </div>
+      </Container>
     </section>
   );
 };

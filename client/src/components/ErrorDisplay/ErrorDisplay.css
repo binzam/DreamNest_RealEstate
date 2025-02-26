@@ -1,0 +1,21 @@
+.error_display {
+  background-color: red;
+  width: 100%;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0.5rem 0;
+}
+.error_display p {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+@media only screen and (max-width: 600px) {
+  .error_display {
+    padding: 3px 8px;
+  }
+  .error_display p {
+    font-size: 0.8rem;
+  }
+}

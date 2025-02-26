@@ -1,6 +1,7 @@
 .loading_skeleton {
-  margin-top: 2rem;
+  margin-top: 1rem;
   margin-bottom: 5rem;
+  padding: 2rem 2rem;
   width: 100%;
 }
 
@@ -8,5 +9,5 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem 1rem;
+  gap: 1rem;
 }

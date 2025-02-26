@@ -1,6 +1,8 @@
-import { FaBath, FaBed, FaLocationDot, FaRulerCombined } from 'react-icons/fa6';
+import { FaBath, FaBed, FaRulerCombined } from 'react-icons/fa6';
 import './PropertyCard.css';
 import PriceDisplay from '../PriceDisplay/PriceDisplay';
+import PropertyAddressTag from '../PropertyAddressTag/PropertyAddressTag';
+import { IoMdInformationCircleOutline } from 'react-icons/io';
 interface PropertyCardBodyProps {
   propertyFor: string;
   propertyType: string;
@@ -13,10 +15,12 @@ interface PropertyCardBodyProps {
   street: string;
   state: string;
   className: string;
+  isAvailable?: boolean;
 }
 
 const PropertyCardBody = ({
   propertyFor,
+  isAvailable,
   propertyType,
   bed,
   bath,
@@ -31,18 +35,24 @@ const PropertyCardBody = ({
   return (
     <div className={className}>
       <div className="pty_purpose">
-        <span className="dot"></span>
+        <span
+          className={`dot ${
+            isAvailable && isAvailable === true ? '' : 'dot red'
+          }`}
+        ></span>
         {propertyType === 'Single family' || propertyType === 'Mobile'
           ? `${propertyType} House`
           : propertyType}{' '}
         for {propertyFor}
       </div>
-     
+      {isAvailable !== undefined && isAvailable === false && (
+        <p className="red_txt">  <IoMdInformationCircleOutline />Not Available</p>
+      )}
       <PriceDisplay
         amount={price}
         currency={currency}
         propertyFor={propertyFor}
-        className='sml'
+        className="sml"
       />
       <div className="pty_specs">
         <div className="pty_spec">
@@ -59,15 +69,7 @@ const PropertyCardBody = ({
         </div>
       </div>
       <div className="pty_box_btm">
-        <div className="pty_location">
-          <FaLocationDot />
-          <div className="pty_loc_detail">
-            <small className="pty_street">{street}</small>
-            <div className="pty_state">
-              {city}, {state}
-            </div>
-          </div>
-        </div>
+        <PropertyAddressTag city={city} street={street} state={state} />
       </div>
     </div>
   );

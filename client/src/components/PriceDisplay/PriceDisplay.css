@@ -21,7 +21,23 @@
   align-items: center;
   justify-content: flex-start;
 }
+
+.price_display.center {
+  font-size: 1.2rem;
+  color: #008000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 .price_display.lrg small {
   font-size: 0.7rem;
   margin-left: 3px;
+}
+@media (max-width: 500px) {
+  .price_display.lrg {
+    font-size: 1.2rem;
+    min-height: 26px;
+  }
+
 }

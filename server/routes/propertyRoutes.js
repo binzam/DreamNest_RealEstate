@@ -7,50 +7,59 @@ import {
   getPropertyById,
   updateProperty,
   deleteProperty,
+  validateProperty,
+  getTopPropertyLocations,
+  getFeaturedProperties,
+  uploadPropertyImages,
 } from '../controllers/propertyController.js';
 import authenticateToken from '../middleware/authenticateToken.js';
 import multer from 'multer';
 import fs from 'fs';
+import authenticateOptional from '../middleware/authenticateOptional.js';
 const router = express.Router();
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadPath = 'uploads/';
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true });
+    const uploadPath = 'uploads/properties';
+    try {
+      if (!fs.existsSync(uploadPath)) {
+        fs.mkdirSync(uploadPath, { recursive: true });
+      }
+      cb(null, uploadPath);
+    } catch (err) {
+      cb(err, null);
     }
-    cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
     cb(null, `${Date.now()}-${file.originalname}`);
   },
 });
-// const fileFilter = (req, file, cb) => {
-//   const allowedFileTypes = ['image/jpeg', 'image/png'];
-//   if (!allowedFileTypes.includes(file.mimetype)) {
-//     return cb(
-//       new Error('Invalid file type. Only JPEG and PNG files are allowed.'),
-//       false
-//     );
-//   }
-//   cb(null, true);
-// };
-// const upload = multer({
-//   storage,
-//   fileFilter,
-//   limits: { fileSize: 8000000 },
-// });
 const upload = multer({
   storage,
 });
-router.get('/list', getProperties);
-router.get('/list/categorized', getPropertiesByCategory); // should be defined frst or itll cause objid error
-router.get('/list/:id', getPropertyById);
+
+router.get('/list', authenticateOptional, getProperties);
+
+router.get('/featured', getFeaturedProperties);
+router.get('/top-locations', getTopPropertyLocations);
+router.get('/list/categorized', authenticateOptional, getPropertiesByCategory); // should be defined frst or itll cause objid error
+router.get('/list/:id', authenticateOptional, getPropertyById);
 router.get('/my-properties', authenticateToken, getPropertiesOwnedByUser);
 router.put('/list/:id/update', authenticateToken, updateProperty);
+router.post(
+  '/list/:id/upload-images',
+  authenticateToken,
+  upload.array('photos'),
+  uploadPropertyImages
+);
+router.post(
+  '/validate',
+  authenticateToken,
+  upload.array('photos'),
+  validateProperty
+);
 router.delete('/list/:id/delete', authenticateToken, deleteProperty);
 router.post(
-  '/add-property', 
+  '/add-property',
   authenticateToken,
   upload.array('photos'),
   addProperty

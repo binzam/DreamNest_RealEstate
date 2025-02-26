@@ -3,7 +3,7 @@ export const categorizeProperties = (properties) => {
   const categoryMap = {};
 
   properties.forEach((property) => {
-    const category = property.category;
+    const category = property.propertyType;
 
     if (!categoryMap[category]) {
       categoryMap[category] = [];

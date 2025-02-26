@@ -1,0 +1,142 @@
+.location_input {
+  /* position: relative; */
+  width: 100%;
+}
+/* .location_input h3{
+
+} */
+
+.adress_inputs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.adress_input {
+  flex: 1 1 150px;
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #333;
+}
+.adress_input label {
+  color: #333;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.rounded_input {
+  width: 100%;
+  padding: 0.3rem 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  border: 1px solid #006986;
+  background-color: #ffffff;
+  border-radius: 100vw;
+}
+.rounded_input.error {
+  border: 1px solid red;
+}
+.rounded_input:focus {
+  outline: 2px solid blue;
+  outline-offset: 2px;
+  border: 1px solid #00c8ff;
+  background-color: #d8f6ffbb;
+}
+.confirm_adrs_btn {
+  padding: 0.3rem 1rem;
+  background-color: #00c9ff;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 2px dashed #006986;
+  border-radius: 100vw;
+  font-size: 1rem;
+  font-weight: 600;
+  width: fit-content;
+  margin: 0 auto;
+  color: #000000;
+}
+.change_location_btn {
+  padding: 0.2rem 1rem;
+  background-color: rgb(136, 136, 0);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 5px;
+  display: block;
+  width: max-content;
+  margin-left: auto;
+}
+.change_location_btn:hover {
+  background-color: #000000;
+}
+
+.confirm_adrs_btn:hover {
+  background-color: #ffffff;
+  color: #000000;
+}
+.add_pty_map_container {
+  width: 100%;
+  position: relative;
+  min-height: 250px;
+}
+
+.leaflet-container {
+  height: 100%;
+}
+.add_pty_map_input {
+  width: 100%;
+  height: auto;
+  margin-top: 0.5rem;
+}
+.add_pty_map_input p {
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1;
+  color: #333;
+  font-weight: 600;
+}
+.add_pty_map_input small {
+  font-size: 0.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: #006986;
+}
+.map_loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+@media only screen and (max-width: 768px) {
+  .adress_inputs {
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .adress_input {
+    max-width: 100%;
+  }
+  .adress_input label {
+    font-size: 0.9rem;
+  }
+  .rounded_input {
+    padding: 0.2rem 1rem;
+  }
+  .confirm_adrs_btn {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.9rem;
+  }
+  .change_location_btn {
+    font-size: 0.7rem;
+  }
+}

@@ -12,12 +12,19 @@
 }
 .tour_schd_hdr {
   background-color: #444;
-  padding: 1rem 2rem;
-  display: flex;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 1rem 5rem;
 }
+.tour_schd_hdr_inner {
+  padding: 0.5rem 2rem;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+.hdr_back_wrap {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
 .tour_schdl_ttl {
   display: flex;
   align-items: center;
@@ -33,6 +40,8 @@
   color: #ffffff;
 }
 .tours_sub_ttl {
+  max-width: 400px;
+  margin: auto;
   text-align: left;
   font-size: 0.8rem;
   letter-spacing: 1px;
@@ -47,13 +56,47 @@
 }
 
 .tour_schdl_cntnt {
-  padding: 1rem 5rem;
+  padding: 1rem 3rem;
 }
 
-.zero_msg {
+.tour_zero_msg {
   font-size: 1.2rem;
   font-weight: 600;
   color: #333;
   text-align: center;
   margin-top: 2rem;
+}
+@media only screen and (max-width: 1000px) {
+  .tour_schd_hdr_inner {
+    padding: 0.5rem 1rem;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .tour_schd_hdr_inner {
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.5rem 0;
+  }
+  .hdr_back_wrap {
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .tour_schdl_ttl {
+    flex: 1;
+    justify-content: center;
+  }
+  .tours_sub_ttl {
+    max-width: 100%;
+    line-height: 1.2;
+   justify-content: center;
+    letter-spacing: 0;
+    gap: 0.2rem;
+    font-size: 0.75rem;
+  }
+  .tour_schdl_cntnt {
+    padding: 1rem 0rem;
+  }
+  .tour_zero_msg{
+    font-size: 1rem;
+  }
 }

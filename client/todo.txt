@@ -1,0 +1,44 @@
+to tanstack  UserProfile:done /user mutateasync
+to tanstack  TourRequest: done/ test it tho
+to tanstack  UserTourSchedule:done
+to tanstack  admindasg:done
+to tanstack  managetxns:done
+to tanstack  manageysers:done
+propertylist to edit and delete:done
+messagecomopennet:done
+when i logout the wishlisted card are still marked as wishlisted:done
+
+switch to zustland
+
+fix admin grid:done
+newest properties a slider of 2:done
+on useUsers hook: user userId as param ? or not 
+
+react icon "amount" for filter and sort
+way to remove schedules/notification/ wishlists that have undefined property or user
+add property photos to add and check their index
+upload image hook
+
+fix the search and clear serach function
+
+an error context that wrapps the whole app
+
+MAKE IT RESPONSIVE AND DEPLOY!!!
+MAKE IT RESPONSIVE AND DEPLOY!!!
+MAKE IT RESPONSIVE AND DEPLOY!!!
+MAKE IT RESPONSIVE AND DEPLOY!!!
+detail page:DONE
+login signup responsiveness: DONE
+error and succes messagecomopennet responsiveness:done
+
+
+
+tour schedules:done
+notification on usermode
+add property
+
+tour schedulecheckout:done
+dont schedule your own properties
+checkout pages:done
+notification for every thing for the admin
+admin dash responsiveness

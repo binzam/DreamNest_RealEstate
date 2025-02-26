@@ -1,7 +1,7 @@
 import { User } from '../models/userModel.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { OAuth2Client, UserRefreshClient } from 'google-auth-library';
+import { OAuth2Client } from 'google-auth-library';
 // import validator from 'validator';
 
 const generateAccessToken = (user) => {

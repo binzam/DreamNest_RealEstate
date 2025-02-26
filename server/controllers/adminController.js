@@ -1,8 +1,28 @@
 import { Property } from '../models/propertyModel.js';
 import { TourSchedule } from '../models/tourScheduleModel.js';
+import { TransactionMetrics } from '../models/transactionMetricsModel.js';
 import { Transaction } from '../models/transactionModel.js';
 import { User } from '../models/userModel.js';
 
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log('userid', id);
+
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    await Property.deleteMany({ owner: id });
+
+    await User.findByIdAndDelete(id);
+
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting User:', error);
+    res.status(500).json({ message: 'Failed to delete User' });
+  }
+};
 const getDashBoard = async (req, res) => {
   try {
     const totalProperties = await Property.countDocuments();
@@ -11,19 +31,42 @@ const getDashBoard = async (req, res) => {
     const latestProperties = await Property.find()
       .sort({ createdAt: -1 })
       .limit(2)
-      .populate('owner', 'firstName lastName email profilePicture createdAt');
-    const latestUsers = await User.find().sort({ createdAt: -1 }).limit(5);
+      .populate('owner', 'firstName lastName email profilePicture createdAt')
+      .lean();
+    const latestUsers = await User.find()
+      .sort({ createdAt: -1 })
+      .limit(3)
+      .lean();
+    const latestTransactions = await Transaction.find()
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .populate({
+        path: 'propertyId',
+        select: 'photos address',
+      })
+      .populate({
+        path: 'tourId',
+        select: 'addressOfTour propertyImage',
+      })
+      .lean();
 
+    const metrics = await TransactionMetrics.find().lean();
+    const totalRevenue = metrics.length > 0 ? metrics[0].totalRevenue : 0;
+    const totalTransactions =
+      metrics.length > 0 ? metrics[0].totalTransactions : 0;
     return res.status(200).json({
       data: {
-        totalProperties,
-        totalUsers,
-        latestProperties,
-        latestUsers,
+        totalProperties: totalProperties || 0, 
+        totalUsers: totalUsers || 0,
+        latestProperties: latestProperties || [],
+        latestUsers: latestUsers || [],
+        latestTransactions: latestTransactions || [],
+        totalRevenue,
+        totalTransactions,
       },
     });
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching dashboard data:', error);
     return res.status(500).json({
       message: 'Server error, unable to fetch dashboard data.',
     });
@@ -47,7 +90,16 @@ const getLatestProperties = async (req, res) => {
 };
 const getAllTransactions = async (req, res) => {
   try {
-    const transactions = await Transaction.find().sort({ createdAt: -1 }); // Sort by latest first
+    const transactions = await Transaction.find()
+      .sort({ createdAt: -1 })
+      .populate({
+        path: 'propertyId',
+        select: 'photos address',
+      })
+      .populate({
+        path: 'tourId',
+        select: 'addressOfTour propertyImage',
+      });
     res.status(200).json(transactions);
   } catch (error) {
     console.error('Error fetching transactions:', error);
@@ -57,6 +109,8 @@ const getAllTransactions = async (req, res) => {
 const getUserById = async (req, res) => {
   try {
     const { userId } = req.params;
+    console.log('user id', userId);
+
     const user = await User.findById(userId);
     if (!user) {
       return res.status(400).json({
@@ -67,6 +121,7 @@ const getUserById = async (req, res) => {
     const tourSchedules = await TourSchedule.find({ userId: userId });
 
     const userProfile = {
+      _id: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
@@ -136,9 +191,14 @@ const getTourSchedulesByUserId = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const tours = await TourSchedule.find({ userId }).sort({
-      createdAt: -1,
-    });
+    const tours = await TourSchedule.find({ userId })
+      .sort({
+        createdAt: -1,
+      })
+      .populate({
+        path: 'userId',
+        select: 'email',
+      });
 
     if (tours.length === 0) {
       return res.status(200).json({ tours: [] });
@@ -155,6 +215,8 @@ const getTourSchedulesByUserId = async (req, res) => {
       status: tour.status,
       propertyImage: tour.propertyImage,
       createdAt: tour.createdAt,
+      schedulerEmail: tour.userId.email,
+      schedulerId: tour.userId._id,
     }));
 
     res.json({ tours: formattedTours.length > 0 ? formattedTours : [] });
@@ -181,6 +243,20 @@ const getPropertiesByUser = async (req, res) => {
     return res.status(500).json({ message: 'Server error' });
   }
 };
+const getWishlistByUser = async (req, res) => {
+  const { userId } = req.params;
+  console.log('getWishlistByUser CALLED');
+  try {
+    const user = await User.findById(userId).populate('wishlist');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json({ wishlist: user.wishlist });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
 export {
   getDashBoard,
   getLatestProperties,
@@ -189,4 +265,6 @@ export {
   getUserById,
   getTourSchedulesByUserId,
   getPropertiesByUser,
+  getWishlistByUser,
+  deleteUser,
 };

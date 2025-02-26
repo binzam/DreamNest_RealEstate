@@ -1,0 +1,23 @@
+.own_pty_tag {
+  position: absolute;
+  padding: 0.2rem 1rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background-color: #3bd100;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  text-transform: uppercase;
+  z-index: 10;
+}
+.own_pty_tag.top_left {
+  top: 110%;
+  left: 0;
+}
+.own_pty_tag.card {
+  top: 170px;
+  right: 5px;
+}

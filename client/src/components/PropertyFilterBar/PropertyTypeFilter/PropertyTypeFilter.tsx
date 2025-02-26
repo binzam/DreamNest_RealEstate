@@ -1,11 +1,6 @@
-import {
-  FaChevronDown,
-  FaChevronUp,
-  FaTrailer,
-  FaXmark,
-} from 'react-icons/fa6';
-import './PropertyTypeFilter.css';
 import { useEffect, useMemo, useState } from 'react';
+import './PropertyTypeFilter.css';
+import { FaTrailer } from 'react-icons/fa6';
 import { MdCabin, MdTerrain, MdVilla } from 'react-icons/md';
 import { PiFarm } from 'react-icons/pi';
 import { HiHomeModern } from 'react-icons/hi2';
@@ -14,20 +9,25 @@ import { LiaCitySolid } from 'react-icons/lia';
 import { BsFillHousesFill } from 'react-icons/bs';
 import { IoSearch } from 'react-icons/io5';
 import { useSearchParams } from 'react-router-dom';
-
+import { usePropertyFilters } from '../../../context/usePropertyFilters';
+import FilterButton from '../../FilterButton/FilterButton';
 type PropertyTypeFilterProps = {
-  onPropertyTypeChange: (propertyType: string) => void;
+  isOpen: boolean;
+  onToggle: () => void;
 };
 
 const PropertyTypeFilter: React.FC<PropertyTypeFilterProps> = ({
-  onPropertyTypeChange,
+  isOpen,
+  onToggle,
 }) => {
   const [searchParams] = useSearchParams();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedType, setSelectedType] = useState('Any');
 
   const [displayText, setDisplayText] = useState('Property Type');
   const [isTypeSelected, setIsTypeSelected] = useState(false);
+  const { handlePropertyTypeChange, clearSpecificFilter } =
+    usePropertyFilters();
+
   const propertyTypes = useMemo(
     () => [
       { title: 'Any', icon: <BiSolidBuildingHouse /> },
@@ -45,51 +45,47 @@ const PropertyTypeFilter: React.FC<PropertyTypeFilterProps> = ({
   useEffect(() => {
     const urlType = searchParams.get('propertyType') || 'Any';
     setSelectedType(urlType);
-    setDisplayText(urlType === "Any" ? "Property Type" : urlType);
+    setDisplayText(urlType === 'Any' ? 'Property Type' : urlType);
     setIsTypeSelected(urlType !== 'Any');
   }, [searchParams]);
 
-  const toggleDropdown = () => setIsDropdownOpen((prev) => !prev);
+  const toggleDropdown = () => {
+    onToggle(); 
+  };
 
   const handleSelect = (type: string) => {
     setSelectedType(type);
   };
   const clearSelection = () => {
     setSelectedType('Any');
-    setIsDropdownOpen(!isDropdownOpen);
+    onToggle()
+
     setIsTypeSelected(false);
-    onPropertyTypeChange('');
+    handlePropertyTypeChange('');
+    clearSpecificFilter('propertyType');
   };
   const handleDone = () => {
     const type = selectedType === 'Any' ? '' : selectedType;
-    setIsDropdownOpen(false);
+    onToggle()
+
     setDisplayText(type);
     setIsTypeSelected(true);
-    onPropertyTypeChange(type);
+    handlePropertyTypeChange(type);
   };
 
   return (
     <div className="lp_pty_type_sorter">
-      <button
-        className={`type_filter_btn ${isTypeSelected ? 'selected' : ''}`}
-        onClick={toggleDropdown}
-        aria-expanded={isDropdownOpen}
-        aria-label="Property type filter"
-      >
-        <span className="type_sorting_btn_txt">{displayText}</span>
-        <span className="type_btn_icon">
-          {isTypeSelected ? (
-            <span className="clear_type_btn" onClick={clearSelection}>
-              <FaXmark className="icon_clear" />
-            </span>
-          ) : isDropdownOpen ? (
-            <FaChevronUp />
-          ) : (
-            <FaChevronDown />
-          )}
-        </span>
-      </button>
-      {isDropdownOpen && (
+      <FilterButton
+        className="filter_btn"
+        isSelected={isTypeSelected}
+        isDropdownOpen={isOpen}
+        toggleDropdown={toggleDropdown}
+        clearSelection={clearSelection}
+        displayText={displayText}
+        title="Property Type"
+        ariaLabel="Property type filter"
+      />
+      {isOpen && (
         <div className="type_dropdown">
           <div className="type_dd_hdr">
             <span>Property type</span>

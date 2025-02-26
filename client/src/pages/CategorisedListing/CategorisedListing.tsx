@@ -3,69 +3,49 @@ import { PropertyDataType } from '../../types/propertyTypes';
 import PropertyCard from '../../components/PropertyCard/PropertyCard';
 import './CategorisedListing.css';
 import BackButton from '../../components/BackButton/BackButton';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import SortingControl from '../../components/SortingControl/SortingControl';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../store/store';
-import { fetchProperties } from '../../store/slices/propertySlice';
 import { GridLoader } from 'react-spinners';
+import { useFetchProperties } from '../../hooks/useProperties';
+import ErrorDisplay from '../../components/ErrorDisplay/ErrorDisplay';
+import { useSortedProperties } from '../../hooks/useSortedProperties';
+import { usePropertyFilters } from '../../context/usePropertyFilters';
+import Container from '../../components/Container/Container';
 const CategorisedListing = () => {
   const { category } = useParams<{ category?: string }>();
-  const dispatch = useDispatch<AppDispatch>();
-  const { properties, loading, error } = useSelector(
-    (state: RootState) => state.properties
-  );
+  const categoryValue = category || '';
+
+  const { data: properties, isLoading, isError, error } = useFetchProperties();
+
   const propertyCategories = [
     'recommended',
     'open-houses',
     'new-listings',
     'price-reduced',
+    'siingle-family',
     'recently-sold',
     'land',
   ];
-  const categoryValue = category || '';
   const isCategory = propertyCategories.includes(categoryValue);
-  const [sortParam, setSortParam] = useState<string>('relevance');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-  useEffect(() => {
-    if (properties.length === 0) {
-      dispatch(fetchProperties());
-    }
-  }, [dispatch, properties.length]);
+  const { sortParam, sortOrder } = usePropertyFilters();
   const filteredProperties = useMemo(() => {
-    return properties.filter((property: PropertyDataType) => {
-      return isCategory ? property.category === categoryValue : true;
-    });
+    if (!properties) return [];
+    return properties.filter((property: PropertyDataType) =>
+      isCategory ? property.category === categoryValue : true
+    );
   }, [categoryValue, isCategory, properties]);
-  const sortedProperties = useMemo(() => {
-    return [...filteredProperties].sort((a, b) => {
-      const order = sortOrder === 'asc' ? 1 : -1;
-      switch (sortParam) {
-        case 'price':
-          return (a.price - b.price) * order;
-        case 'bed':
-          return (a.bed - b.bed) * order;
-        case 'bath':
-          return (a.bath - b.bath) * order;
-        case 'sqft':
-          return (a.sqft - b.sqft) * order;
-        default:
-          return 0;
-      }
-    });
-  }, [filteredProperties, sortParam, sortOrder]);
+
+  const sortedProperties = useSortedProperties(
+    filteredProperties,
+    sortParam,
+    sortOrder
+  );
+
   const title = isCategory
     ? `Listings for "${categoryValue.replace('-', ' ')}"`
     : 'No matching properties';
-  const handleSortChange = (param: string) => {
-    setSortParam(param);
-  };
 
-  const toggleSortOrder = () => {
-    setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'));
-  };
-  if (loading) {
+  if (isLoading || !properties) {
     return (
       <GridLoader
         color="#13ccbb"
@@ -75,37 +55,35 @@ const CategorisedListing = () => {
       />
     );
   }
-  if (error) {
-    return <p>Error: {error}</p>;
+  if (isError) {
+    return <ErrorDisplay message={error.message} />;
   }
-
   return (
-    <div className="cat_listing_page">
-      <BackButton />
-      <div className="cat_lising_pge_hdr">
-        <h2 className="list_ttl">{title}</h2>
+    <Container>
+      <div className="cat_listing_page">
+        <BackButton />
+        <div className="cat_lising_pge_hdr">
+          <h2 className="list_ttl">{title}</h2>
 
-        <SortingControl
-          type={categoryValue}
-          count={filteredProperties.length}
-          sortParam={sortParam}
-          sortOrder={sortOrder}
-          onSortParamChange={handleSortChange}
-          onSortOrderToggle={toggleSortOrder}
-        />
+          <SortingControl
+          
+            type={categoryValue}
+            count={filteredProperties.length}
+          />
+        </div>
+        {filteredProperties.length === 0 ? (
+          <div className="cat_no_properties_found">
+            No matching properties found.
+          </div>
+        ) : (
+          <div className="cat_listing_pge_content">
+            {sortedProperties.map((property: PropertyDataType) => (
+              <PropertyCard key={property._id} property={property} />
+            ))}
+          </div>
+        )}
       </div>
-      {filteredProperties.length === 0 ? (
-        <div className="cat_no_properties_found">
-          No matching properties found.
-        </div>
-      ) : (
-        <div className="cat_listing_pge_content">
-          {sortedProperties.map((property: PropertyDataType) => (
-            <PropertyCard key={property._id} property={property} />
-          ))}
-        </div>
-      )}
-    </div>
+    </Container>
   );
 };
 

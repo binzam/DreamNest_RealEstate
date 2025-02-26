@@ -4,18 +4,29 @@
   background-color: #ffffff;
 }
 .prfl_hdr {
-  padding: 0.5rem 2rem;
-  background-color: #f3f3f3;
+  background-color: #f2f5f5;
   border-bottom: 1px solid #ddd;
+}
+.prfl_hdr_inner {
+  padding: 0.5rem 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 3rem;
+}
+.back_prfl_wrap {
   display: flex;
   align-items: center;
-  gap: 4rem;
+  gap: 3rem;
+}
+.prfl_hdr_main {
+  display: flex;
+  flex-direction: column;
 }
 .prfl_hdr_main h2 {
   color: #000000;
   letter-spacing: 1px;
-  margin-bottom: 0.5rem;
   font-size: 1.3rem;
+  line-height: 1;
 }
 .prfl_hdr_main p {
   color: #333;
@@ -24,8 +35,15 @@
   letter-spacing: 1px;
   display: flex;
   align-items: center;
+  gap: 0.5rem;
+}
+.prfl_hdr_main svg {
+  font-size: 1.2rem;
+  color: #0e7900;
 }
 .usr_prl_hdr_info {
+  max-width: 390px;
+  margin: auto;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -35,7 +53,7 @@
   color: #000000;
 }
 .usr_prl_hdr_info p {
-  max-width: 500px;
+  width: 90%;
   color: #333;
   font-size: 0.8rem;
   font-weight: 600;
@@ -46,6 +64,7 @@
   justify-content: center;
   margin: 1rem auto;
   gap: 4rem;
+  padding: 0 1rem;
 }
 .usr_prf_acts {
   position: relative;
@@ -80,10 +99,10 @@
   min-height: 20px;
 }
 .prfl_cntnt {
-  padding: 1rem 5rem 4rem;
+  padding: 0rem 2rem 2rem;
   display: flex;
   align-items: flex-start;
-  gap: 5rem;
+  gap: 1rem;
 }
 .prfl_cntn_top {
   display: flex;
@@ -189,7 +208,10 @@
 
 /* END PROFILE PICTURE */
 .prfl_cntn_btm {
-  width: 400px;
+  flex: 1;
+
+  max-width: 500px;
+  margin: auto;
 }
 .edit_prfl_btn,
 .cancel_edit_btn {
@@ -272,4 +294,93 @@
   cursor: pointer;
   outline: none;
   width: 100%;
+}
+.del_usr_btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fff;
+  background-color: rgb(179, 0, 0);
+  padding: 0.2rem 2rem;
+  z-index: 10;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  margin: 0 5rem;
+}
+.del_usr_btn svg {
+  font-size: 1.3rem;
+}
+.del_usr_btn:hover {
+  background-color: darkred;
+}
+@media only screen and (max-width: 1000px) {
+  .prfl_hdr_inner {
+    padding: 0.5rem 1rem;
+    gap: 1rem;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .prfl_hdr_inner {
+    padding: 0.5rem 0rem;
+    gap: 0.1rem;
+    flex-direction: column;
+  }
+  .back_prfl_wrap {
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .prfl_hdr_main {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+  }
+  .usr_prl_hdr_info {
+    gap: 0.3rem;
+  }
+  .usr_prl_hdr_info p {
+    line-height: 1.2;
+    font-size: 0.75rem;
+  }
+  .hdr_actions {
+    gap: 3rem;
+  }
+  .usr_prf_acts a {
+    font-size: 0.9rem;
+  }
+  .usr_prf_act_count {
+    font-size: 0.75rem;
+    top: -13px;
+    right: -10px;
+  }
+  .prfl_cntnt {
+    padding: 0 0 2rem;
+  }
+  .prfl_cntn_top {
+    padding: 0 1rem 5rem 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .hdr_actions {
+    gap: 0.5rem;
+    justify-content: space-between;
+  }
+  .usr_prf_acts a {
+    font-size: 0.8rem;
+  }
+  .prfl_cntnt {
+    flex-direction: column;
+  }
+  .prfl_cntn_top {
+    width: 100%;
+    padding: 0;
+    border:none ;
+  }
+  .prfl_cntn_btm{
+    max-width: 100%;
+    width: 100%;
+    margin: 0 ;
+    padding: 1rem;
+  }
 }

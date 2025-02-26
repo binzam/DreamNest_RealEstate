@@ -1,25 +1,95 @@
+.user_card_link {
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+}
+.user_card_link.dash {
+  height: 33.333%;
+}
+
 .user_card {
   display: flex;
   width: 100%;
+  /* max-width: 300px; */
+  height: 100%;
+  margin: auto;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background-color: #fff9f9;
-  padding: 1rem;
+  background-color: #ffffff;
+  padding: 1.5rem 1rem;
   border-radius: 5px;
+  position: relative;
 }
 .user_card.shadow {
   box-shadow: 0px 0px 10px #8383838e;
 }
+.user_card.admin {
+  scale: 1.02;
+  box-shadow: 0px 0px 10px #838383;
+  border: 3px dashed #003566;
+  background-color: #f7f7f7;
+}
+.admin_tag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  /* font-size: 30px; */
+  color: #003566;
+}
+.admin_tag svg {
+  font-size: 30px;
+  margin: 0 auto;
+}
+.user_card:hover {
+  background-color: #eef4f7;
+  scale: 1.01;
+}
+
 .user_card h3 {
   color: #444444;
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+}
+
+.user_card img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid #333;
+  object-fit: cover;
+  object-position: center;
+}
+.user_pp_icon {
+  width: 40px;
+  height: 40px;
+  color: #003566;
 }
 .user_card p {
-  color: #b1b1b1;
+  color: #8f8f8f;
   font-size: 0.8rem;
   font-weight: 700;
   text-align: center;
+}
+.usr_pty_count{
+  display: flex;
+  align-items: flex-start;
+  gap: 1px;
+}
+.usr_pty_count svg{
+  font-size: 1.3rem;
+  color: #333;
+}
+.usr_pty_count span{
+  color: #ffffff;
+  padding: 0px 4px;
+  background-color: #003566;
+  border-radius: 4px;
+  font-size: 0.77rem;
+  font-weight: 700;
 }

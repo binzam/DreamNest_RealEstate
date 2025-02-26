@@ -1,5 +1,5 @@
 .card_input {
-  width: 50%;
+  max-width: 550px;
   margin: 2rem auto;
   position: relative;
   padding: 1rem 2rem;
@@ -18,7 +18,7 @@
   text-align: center;
   font-size: 1.2rem;
   color: #333;
-  margin-bottom: 1rem ;
+  margin-bottom: 1rem;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -58,4 +58,22 @@
   background-color: #fff;
   color: #000;
   box-shadow: none;
+}
+@media only screen and (max-width: 768px) {
+  .card_input {
+    max-width: 100%;
+    width: 100%;
+    padding: 1rem 0.2rem;
+    margin: 1rem auto;
+  }
+  .fee_msg {
+    font-size: 1rem;
+  }
+  .fee_amount {
+    font-size: 0.9rem;
+  }
+  .payment_btn {
+    font-size: 0.9rem;
+    padding: 0.3rem 1.5rem;
+  }
 }

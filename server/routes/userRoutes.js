@@ -17,7 +17,7 @@ const router = express.Router();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadPath = 'uploads/';
+    const uploadPath = 'uploads/profilePictures';
     if (!fs.existsSync(uploadPath)) {
       fs.mkdirSync(uploadPath, { recursive: true });
     }
@@ -40,7 +40,7 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 100000 },
+  limits: { fileSize: 1000000 },
 });
 
 router.get('/wishlist', authenticateToken, userWishlist);

@@ -1,0 +1,117 @@
+.txn_card {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #e0e0e0;
+  color: #333;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.date_txn{
+  position: absolute;
+  top: 0;
+  right: 0.5rem;
+}
+.txn_cstmer,
+.txn_rsn,
+.txn_detail,
+.txn_status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.txn_cstmer {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-decoration: underline;
+  color: #007bff;
+  display: flex;
+  flex-direction: column;
+  width: 80px;
+}
+.txn_cstmer div {
+  width: 100%;
+  text-wrap: pretty;
+  text-align: center;
+}
+.txn_cstmer svg {
+  font-size: 1.6rem;
+}
+.txn_rsn {
+  color: rgb(0, 72, 100);
+  width: max-content;
+  font-size: 1rem;
+  font-weight: 700;
+  gap: 0.3rem;
+}
+.txn_rsn svg {
+  font-size: 1.3rem;
+}
+.txn_detail {
+  color: blueviolet;
+  gap: 1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 260px;
+  padding-right: 0.5rem;
+}
+.txn_detail_pty {
+  width: 100%;
+  padding-right: 0.5rem;
+  border-right: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.txn_pty_img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 0 4px #007bff;
+}
+.txn_pty_img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+.txn_status {
+  padding: 0.2rem 1rem;
+  background-color: green;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+@media only screen and (max-width: 1000px) {
+  .txn_status {
+    padding: 0.2rem 0.5rem;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .txn_card {
+    padding: 0.3rem 0.5rem;
+  }
+  .txn_pty_img{
+    display: none;
+  }
+  .txn_detail{
+    width: 140px;
+  }
+  .txn_status {
+    padding: 0.2rem 0.3rem;
+    font-size: 0.7rem;
+  }
+ .txn_rsn{
+    font-size: 0.8rem;
+  }
+}

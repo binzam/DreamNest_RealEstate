@@ -1,11 +1,13 @@
 import express from 'express';
 import {
+  deleteUser,
   getAllTransactions,
   getAllUsers,
   getDashBoard,
   getPropertiesByUser,
   getTourSchedulesByUserId,
   getUserById,
+  getWishlistByUser,
 } from '../controllers/adminController.js';
 import authenticateToken from '../middleware/authenticateToken.js';
 import { authorizeRole } from '../middleware/authorizeRole.js';
@@ -19,6 +21,12 @@ router.get(
   getDashBoard
 );
 router.get('/users', authenticateToken, authorizeRole('admin'), getAllUsers);
+router.delete(
+  '/users/:id/delete',
+  authenticateToken,
+  authorizeRole('admin'),
+  deleteUser
+);
 router.get(
   '/users/:userId',
   authenticateToken,
@@ -42,6 +50,12 @@ router.get(
   authenticateToken,
   authorizeRole('admin'),
   getPropertiesByUser
+);
+router.get(
+  '/users/:userId/wishlist',
+  authenticateToken,
+  authorizeRole('admin'),
+  getWishlistByUser
 );
 
 export default router;

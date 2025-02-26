@@ -46,12 +46,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 0.5rem;
   color: #007bff;
   width: 100%;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.3rem;
   border-bottom: 1px solid #ccc;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 .schedule_hdr svg {
   font-size: 1.5rem;
@@ -60,36 +60,40 @@
   font-size: 1.5rem;
   letter-spacing: 2px;
   text-align: center;
+  text-transform: uppercase;
   color: #333;
 }
-.contact_pty_img {
+
+.schedul_pty_address {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0.2rem;
+}
+.schedul_pty_address svg {
+  width: 20px;
+  height: 20px;
+  color: red;
+}
+.schedul_pty_address p {
+  font-size: 0.9rem;
+  color: #333;
+  font-weight: 700;
+}
+.schedule_pty_img {
   width: 100%;
-  height: 156px;
+  height: 150px;
   border-radius: 10px;
   overflow: hidden;
-  margin-bottom: 1rem;
+  margin: 0.5rem 0;
 }
-.contact_pty_img img {
+.schedule_pty_img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-}
-.schedul_pty_address {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  gap: 0.5rem;
-}
-.schedul_pty_address svg {
-  font-size: 1.2rem;
-  color: red;
-}
-.schedul_pty_address p {
-  font-size: 0.8rem;
-  color: #333;
-  font-weight: 800;
+  border-radius: 10px;
+  border: 3px solid #333;
 }
 .scheduling_form {
   display: flex;
@@ -97,16 +101,23 @@
   gap: 1rem;
 }
 .date_time_label {
-  color: #000000;
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 2px;
   text-align: center;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+}
+.date_time_label span {
+  color: #000000;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
 }
 .date_time_input {
-  padding: 0.6rem 1rem;
+  padding: 0.3rem 1rem;
   font-size: 1rem;
   font-weight: 500;
   border: 1px solid #ccc;
@@ -120,22 +131,27 @@
   color: #9b0000;
 }
 .date_time_input:focus {
-  border-color: #007bff;
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
 }
 .selected_date_time {
-  color: #333;
   font-size: 0.9rem;
+  color: #333;
   font-weight: 600;
   display: flex;
-  /* flex-direction: column; */
-  justify-content: center;
-  gap: 0.5rem;
+  flex-direction: column;
+}
+
+.selected_date_time svg {
+  font-size: 1rem;
+  color: #00a5a5;
 }
 .selected_date_time div {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
+
 .schedule_btn {
   padding: 0.5rem 1.2rem;
   border: 1px dashed #13ccbb;
@@ -145,8 +161,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  margin-top: 1rem;
+  gap: 0.5rem;
   border-radius: 100vw;
   background-color: #007bff;
   color: #fff;
@@ -155,24 +170,23 @@
   background-color: #ffffff;
   color: rgb(0, 0, 0);
   border-color: #000;
+  border-radius: 10px;
 }
-.schedule_success {
-  text-align: center;
-  color: #007bff;
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 2px;
-}
-.schedule_success button {
-  padding: 0.5rem 1rem;
-  border: 1px dashed #13ccbb;
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: 700;
-  margin: auto;
-  gap: 6px;
-  margin-top: 1rem;
-  border-radius: 100vw;
-  background-color: #007bff;
-  color: #fff;
+@media only screen and (max-width: 768px) {
+  .schedule_modal_content {
+    width: 320px;
+  }
+  .scedule_ttl {
+    font-size: 1.2rem;
+  }
+  .schedule_pty_img {
+    height: 120px;
+  }
+  .scheduling_form {
+    gap: 0.5rem;
+  }
+  .schedule_btn {
+    padding: 0.3rem 1rem;
+    font-size: 1.2rem;
+  }
 }

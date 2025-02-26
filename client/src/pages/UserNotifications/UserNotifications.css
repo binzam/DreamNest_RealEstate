@@ -4,23 +4,25 @@
 }
 .notf_hdr {
   background-color: #333;
-  padding: 0.5rem 5rem;
+}
+.notf_hdr_inner {
+  background-color: #333;
+  padding: 0.5rem 3rem;
   display: flex;
   align-items: center;
   gap: 5rem;
 }
-.notf_hdr_sub_ttl{
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #fff;
-  font-size: 0.9rem;
-}
-.notf_hdr h2 {
+.notf_hdr_ttl {
   font-weight: 700;
   font-size: 1.2rem;
   color: #fff;
   letter-spacing: 3px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.notf_hdr_ttl svg {
+  font-size: 2.4rem;
 }
 .notf_filter_controls {
   margin: 0.5rem;
@@ -38,7 +40,7 @@
   border: 1px dashed #000;
   transition: all 0.3s ease;
 }
-.notf_fltr_btn:hover{
+.notf_fltr_btn:hover {
   background-color: #dbdbdb;
 }
 .notf_fltr_btn.active {
@@ -46,7 +48,7 @@
   color: #fff;
 }
 .notf_contnt {
-  padding: 1rem 5rem;
+  padding: 1rem 3rem;
 }
 
 .notf_loading {
@@ -123,7 +125,7 @@
   color: #fff;
 }
 .mark_read_btn {
-  background-color: #0095a8;
+  background-color: #006674;
   color: #fff;
   padding: 0.5rem 1rem;
   border-radius: 5px;
@@ -132,6 +134,7 @@
   position: absolute;
   right: 1rem;
   top: 1rem;
+  box-shadow: 0 2px 5px #3333337e;
   font-size: 0.9rem;
 }
 .mark_read_btn:hover {
@@ -143,4 +146,77 @@
   font-weight: 700;
   text-align: center;
   margin-top: 2rem;
+}
+
+@media (max-width: 1000px) {
+  .notf_hdr_inner {
+    padding: 0.5rem 1rem;
+    gap: 0;
+    justify-content: space-between;
+  }
+  .notf_contnt {
+    padding: 1rem 1rem;
+  }
+  .mark_read_btn{
+    top: 0.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .notf_hdr_inner {
+    padding: 0.5rem 0rem;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .notf_contnt {
+    padding: 1rem 0rem;
+  }
+  .notf_item {
+    padding: 0.5rem;
+  }
+  .mark_read_btn{
+    padding: 0.3rem 0.5rem;
+    font-size: 0.8rem;
+    top: 0;
+    right: 0;
+  }
+  .notf_detail {
+    gap: 0.5rem;
+    /* align-items: center; */
+  }
+  .notf_img {
+    width: 150px;
+    height: 80px;
+  }
+
+  .notf_ttl {
+    font-size: 1rem;
+  }
+  .notf_msg {
+    font-size: 0.8rem;
+    line-height: 1.2;
+  }
+  .view_tour_detail_link {
+    padding: 0.2rem 0.5rem;
+    margin-left: 158px;
+  }
+}
+@media (max-width: 500px) {
+  .notf_img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  .notf_img img {
+    min-width: 40px;
+    min-height: 40px;
+    border-radius: 50%;
+  }
+  .notf_ttl {
+    font-size: 0.9rem;
+  }
+  .notf_msg {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+  }
 }

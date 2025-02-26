@@ -10,12 +10,6 @@ export interface MobileNavbarProps {
 export interface SortingControlProps {
   type: string;
   count: number;
-  sortParam: string;
-  sortOrder: 'asc' | 'desc';
-  onSortParamChange: (param: string) => void;
-  onSortOrderToggle: () => void;
-  searchKey?: string;
-  searchValue?: string;
 }
 export interface TestimonialType {
   id: number;

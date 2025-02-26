@@ -1,59 +1,66 @@
 .transactions {
-  padding: 20px;
-  font-family: Arial, sans-serif;
-}
-
-.transactions h1 {
-  font-size: 24px;
-  margin-bottom: 20px;
+  padding: 0.5rem 3rem 3rem;
+  min-height: calc(100vh - 50px);
+  background-color: #fff;
 }
 
 .filter-buttons {
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
 }
 
 .filter-buttons button {
-  padding: 10px 15px;
-  margin-right: 10px;
+  padding: 0.5rem 1.2rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 100vw;
   background-color: #f0f0f0;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
 }
 
 .filter-buttons button.active {
   background-color: #007bff;
   color: white;
 }
-
-.transactions-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+.txns_list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
-
-.transactions-table th,
-.transactions-table td {
-  padding: 12px;
-  text-align: left;
+.txns_list_hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
   border-bottom: 1px solid #ddd;
 }
-
-.transactions-table th {
-  background-color: #f8f9fa;
-  font-weight: bold;
+.txns_list_hdr div {
+ 
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #333;
+}
+.txns_list_hdr div.rsn{
+  width: 260px;
+}
+.txns_list_hdr div.cust{
+  width: 130px;
+}
+@media only screen and (max-width: 1100px) {
+.transactions{
+  padding: 0.5rem 2rem 3rem;
 }
 
-.transactions-table tbody tr:hover {
-  background-color: #f1f1f1;
 }
-
-.transactions-table a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.transactions-table a:hover {
-  text-decoration: underline;
+@media only screen and (max-width: 768px) {
+  .transactions{
+    padding: 0.5rem 0rem 3rem;
+  }
 }

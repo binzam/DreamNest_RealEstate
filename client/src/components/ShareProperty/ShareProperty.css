@@ -17,20 +17,31 @@
   border-radius: 100vw;
   border: 1px solid #0df5de;
 }
-.share_btn.open{
+.share_btn svg {
+  font-size: 1rem;
+}
+.share_btn_txt {
+  display: flex;
+}
+.share_btn.open {
   border: 1px solid #007267;
   background-color: #007267;
 }
 .share_buttons {
-  margin-top: 10px;
+  margin-top: 1rem;
   z-index: 3;
   display: flex;
   flex-direction: column;
   gap: 10px;
   position: absolute;
-  top: 100%;
+  top: 110%;
   right: 0;
-  padding: 10px;
+  padding: 0.6rem 0.6rem;
+  background: rgba(255, 255, 255, 0.863);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 5px #000000;
+  border-radius: 20px;
+  border: 1px dashed #333;
 }
 
 .share_buttons button {
@@ -44,7 +55,9 @@
   width: 30px;
   height: 30px;
   font-size: 1.2rem;
-  border: 1px solid #007267;
+  /* border: 1px solid #007267; */
+  box-shadow: 0 0px 2px #000000;
+
 
   transition: background-color 0.3s;
 }
@@ -52,4 +65,22 @@
 .share_buttons button:hover {
   background-color: #13ccbb;
   color: white;
+  box-shadow: none;
+}
+@media (max-width: 768px) {
+  .share_btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+}
+@media (max-width: 500px) {
+ 
+  .share_btn_txt {
+    display: none;
+  }
+  .share_buttons {
+    gap: 8px;
+    padding: 0.6rem 0.3rem;
+  }
 }

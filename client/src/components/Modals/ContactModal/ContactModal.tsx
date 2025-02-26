@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import './ContactModal.css';
 import { FaXmark } from 'react-icons/fa6';
 import { ContactFormData } from '../../../types/propertyTypes';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../../store/store';
+import { useUser } from '../../../context/useUser';
 interface ContactModalProps {
   propertyImage: string;
   propertyAddress: string;
@@ -14,7 +13,9 @@ const ContactModal: React.FC<ContactModalProps> = ({
   propertyAddress,
   onClose,
 }) => {
-  const email = useSelector((state: RootState) => state.user.user?.email);
+  const { state } = useUser();
+  const { user } = state;
+  const email = user?.email;
   const [formData, setFormData] = useState<ContactFormData>({
     fullName: '',
     email: `${email ? email : ''}`,

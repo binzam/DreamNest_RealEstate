@@ -5,20 +5,38 @@
   position: relative;
 }
 .wl_hdr {
-  padding: 1rem 4rem;
+  background-color: rgb(255, 182, 182);
+}
+.wl_hdr_inner {
+  padding: 0.5rem 3rem;
   color: #fff;
-  background-color: rgb(255, 156, 156);
+  background-color: rgb(255, 182, 182);
+  display: flex;
+  align-items: flex-start;
+  gap: 4rem;
+}
+.wl_hdr h2 {
+  font-size: 1.2rem;
+}
+.hdr_flex {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.wl_hdr p {
+  font-size: 0.8rem;
 }
 .wl_cntnt {
-  padding: 1rem 4rem;
+  padding: 1rem 3rem;
 }
 .wishlist_items {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
 }
 .wishlist_items .pty_box {
   width: 100%;
+  /* max-width: 300px; */
 }
 .no_val {
   color: #ddd;
@@ -27,4 +45,17 @@
   text-align: center;
   margin-top: 2rem;
   font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .wl_hdr_inner {
+    padding: 0.5rem 1rem;
+    gap: 2rem;
+  }
+  .wl_cntnt {
+    padding: 1rem 0;
+  }
+  .wishlist_items .pty_box {
+    max-width: 300px;
+  }
 }

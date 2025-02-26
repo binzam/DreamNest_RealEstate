@@ -1,0 +1,93 @@
+.add_pty_payment_cntnt {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.listing_payment h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  color: #333;
+  margin-bottom: 0.1rem;
+}
+.new_lsting_box {
+  border-radius: 5px;
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background-color: #fff;
+}
+.new_lsting_box .new_pty {
+  flex: 1;
+  min-width: 300px;
+  height: 200px;
+  justify-content: space-around;
+}
+.new_pty_imgs {
+  flex: 1;
+  min-width: 400px;
+  height: 200px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.3rem;
+}
+.new_pty_imgs img {
+  width: 49%;
+  height: 49%;
+  border-radius: 5px;
+  object-fit: cover;
+  object-position: center;
+}
+.tier_selection {
+  max-width: 600px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.tier_selection label {
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: 500;
+}
+.tier_select {
+  margin: 0 auto;
+  max-width: 340px;
+  padding: 0.3rem 1rem;
+  background-color: #006986;
+  color: #fff;
+  border-radius: 5px 5px 0 0;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.tier_select:focus {
+  outline: 2px solid blue;
+  outline-offset: 2px;
+}
+@media only screen and (max-width: 768px) {
+  .listing_payment h2 {
+    font-size: 1.2rem;
+  }
+  .new_pty_imgs {
+    height: 150px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .new_pty_imgs {
+    min-width: 300px;
+  }
+  .new_lsting_box .new_pty {
+    height: auto;
+  }
+  .tier_selection label {
+    font-size: 1rem;
+  }
+  .tier_select {
+    font-size: 0.9rem;
+    padding: 0.2rem 0.5rem;
+  }
+}

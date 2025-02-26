@@ -1,7 +1,7 @@
 .tour_payment_page {
   width: 100%;
   min-height: calc(100vh - 50px);
-  padding: 1rem 5rem;
+  padding: 1rem 2rem;
   background-color: #fff;
 }
 .tour_payment_page h2 {
@@ -9,6 +9,7 @@
   letter-spacing: 2px;
   text-align: center;
   margin-bottom: 1rem;
+  text-transform: uppercase;
 }
 .tour_payment_page .tour_body {
   border: 1px solid yellow;
@@ -18,3 +19,15 @@
   box-shadow: 0px 2px 12px #3333338f;
 }
 
+@media only screen and (max-width: 768px) {
+  .tour_payment_page {
+    padding: 1rem 0;
+  }
+  .tour_payment_page h2 {
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+  .tour_payment_page .tour_body {
+    width: 100%;
+  }
+}

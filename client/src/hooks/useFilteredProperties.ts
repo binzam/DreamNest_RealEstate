@@ -29,10 +29,11 @@ const useFilteredProperties = (
   }: FilterCriteria
 ) => {
   const filteredProperties = useMemo(() => {
+    if (!properties || properties.length === 0) return [];
     const trimmedSearchTerm =
       Object.keys(searchTerm).length === 0
         ? ''
-        : searchTerm[Object.keys(searchTerm)[0]].toLowerCase();
+        : searchTerm[Object.keys(searchTerm)[0]]?.toLowerCase() || '';
     return properties.filter((property) => {
       if (trimmedSearchTerm) {
         const searchKey = Object.keys(
@@ -40,12 +41,19 @@ const useFilteredProperties = (
         )[0] as keyof typeof property.address;
         const searchValue = trimmedSearchTerm;
 
-        const matchesSearch = property.address[searchKey]
-          ?.toString()
-          .toLowerCase()
-          .includes(searchValue);
+        // const matchesSearch = property.address[searchKey]
+        //   ?.toString()
+        //   .toLowerCase()
+        //   .includes(searchValue);
 
-        if (!matchesSearch) return false;
+        // if (!matchesSearch) return false;
+
+        const propertyValue = property.address[searchKey]
+          ?.toString()
+          .toLowerCase();
+        if (!propertyValue || !propertyValue.includes(searchValue)) {
+          return false;
+        }
       }
 
       if (type && property.propertyFor.toLowerCase() !== type.toLowerCase()) {

@@ -1,24 +1,23 @@
-import { FaBath, FaChevronDown, FaChevronUp, FaXmark } from 'react-icons/fa6';
+import { FaBath, FaChevronDown, FaChevronUp } from 'react-icons/fa6';
 import './PropertyRoomFilter.css';
 import { useEffect, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
 import { useSearchParams } from 'react-router-dom';
+import { usePropertyFilters } from '../../../context/usePropertyFilters';
+import FilterButton from '../../FilterButton/FilterButton';
 
 const roomMinValues = ['No Min', '1', '2', '3', '4', '5', '6'];
 const roomMaxValues = ['No Max', '1', '2', '3', '4', '5', '6'];
-
 type BathroomFilterProps = {
-  onBathRoomsRangeChange: (
-    bathroomMin: number | null,
-    bathroomMax: number | null
-  ) => void;
+  isOpen: boolean;
+  onToggle: () => void;
 };
 
 const BathroomFilter: React.FC<BathroomFilterProps> = ({
-  onBathRoomsRangeChange,
+  isOpen,
+  onToggle,
 }) => {
   const [searchParams] = useSearchParams();
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownState, setDropdownState] = useState({
     bathroomMin: false,
     bathroomMax: false,
@@ -31,6 +30,8 @@ const BathroomFilter: React.FC<BathroomFilterProps> = ({
 
   const [displayText, setDisplayText] = useState('Bathroom');
   const [isRangeSelected, setIsRangeSelected] = useState(false);
+  const { handleBathRoomsRangeChange, clearSpecificFilter } =
+    usePropertyFilters();
   useEffect(() => {
     const urlBathMin = searchParams.get('bathroomMin');
     const urlBathMax = searchParams.get('bathroomMax');
@@ -52,7 +53,9 @@ const BathroomFilter: React.FC<BathroomFilterProps> = ({
     setDisplayText(bathroomText);
     setIsRangeSelected(!isDefaultRange);
   }, [searchParams]);
-  const toggleDropdown = () => setDropdownOpen((prev) => !prev);
+  const toggleDropdown = () => {
+    onToggle(); 
+  };
   const toggleSpecificDropdown = (key: keyof typeof dropdownState) =>
     setDropdownState((prev) => ({ ...prev, [key]: !prev[key] }));
 
@@ -61,8 +64,10 @@ const BathroomFilter: React.FC<BathroomFilterProps> = ({
       bathroomMin: null,
       bathroomMax: null,
     });
-    onBathRoomsRangeChange(null, null);
-    setDropdownOpen(!isDropdownOpen);
+    handleBathRoomsRangeChange(null, null);
+    clearSpecificFilter('bath');
+    onToggle()
+
     setDisplayText('Bathrooms');
     setIsRangeSelected(false);
   };
@@ -74,9 +79,9 @@ const BathroomFilter: React.FC<BathroomFilterProps> = ({
       ? 'Bedrooms'
       : `${bathroomMin ?? 'No Min'} - ${bathroomMax ?? 'No Max'} Baths`;
     setDisplayText(bathroomText);
-    setDropdownOpen(false);
+    onToggle()
 
-    onBathRoomsRangeChange(bathroomMin, bathroomMax);
+    handleBathRoomsRangeChange(bathroomMin, bathroomMax);
     setIsRangeSelected(!isDefaultRange);
   };
 
@@ -113,27 +118,18 @@ const BathroomFilter: React.FC<BathroomFilterProps> = ({
   };
 
   return (
-    <div className="lp_room_sorter">
-      <button
-        className={`room_filter_btn ${isRangeSelected ? 'selected' : ''} `}
-        onClick={toggleDropdown}
-      >
-        <span className="room_sorting_btn_txt">{displayText}</span>
-        <span className="room_btn_icon">
-          {isRangeSelected ? (
-            <span className="clear_room_btn" onClick={clearSelection}>
-              <FaXmark className="icon_clear" />
-            </span>
-          ) : isDropdownOpen ? (
-            <FaChevronUp />
-          ) : (
-            <FaChevronDown />
-          )}
-        </span>
-      </button>
-
-      {isDropdownOpen && (
-        <div className="room_dropdown">
+    <div className="lp_bath_room_sorter">
+      <FilterButton
+        className="filter_btn"
+        isSelected={isRangeSelected}
+        isDropdownOpen={isOpen}
+        toggleDropdown={toggleDropdown}
+        clearSelection={clearSelection}
+        displayText={displayText}
+        title="Bathroom Range"
+      />
+      {isOpen && (
+        <div className="bath_room_dropdown">
           <div className="room_dd_hdr">
             <span>Bathrooms</span>{' '}
             <span className="done_btn" onClick={handleDone}>

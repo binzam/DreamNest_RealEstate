@@ -1,18 +1,24 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 import './App.css';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './Layout/Layout';
+import AdminLayout from './Layout/AdminLayout';
 import NotificationListener from './components/NotificationListener';
 import ScrollToTop from './components/ScrollToTop';
-import TourScheduleCheckout from './pages/TourScheduleCheckout/TourScheduleCheckout';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import AdminLayout from './Layout/AdminLayout';
-import AdminDashboard from './pages/Admin/AdminDashboard';
-import ManageListings from './pages/Admin/ManageListings/ManageListings';
-import ManageUsers from './pages/Admin/ManageUsers/ManageUsers';
-import ManageTransactions from './pages/Admin/ManageTransactions/ManageTransactions';
+import { Loader } from './components/Loader';
+import { PropertyFilterProvider } from './context/PropertyFilterContext';
 
+const TourScheduleCheckout = lazy(
+  () => import('./pages/TourScheduleCheckout/TourScheduleCheckout')
+);
+const AdminDashboard = lazy(() => import('./pages/Admin/AdminDashboard'));
+
+const ManageUsers = lazy(() => import('./pages/Admin/ManageUsers/ManageUsers'));
+const ManageTransactions = lazy(
+  () => import('./pages/Admin/ManageTransactions/ManageTransactions')
+);
 const UserProfile = lazy(() => import('./pages/UserProfile/UserProfile'));
 const UserNotifications = lazy(
   () => import('./pages/UserNotifications/UserNotifications')
@@ -54,89 +60,119 @@ function App() {
     <BrowserRouter>
       <ScrollToTop />
       <NotificationListener />
-      <Routes>
-        <Route
-          path="login"
-          element={
-            <GoogleOAuthProvider
-              clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
-            >
-              <Login />
-            </GoogleOAuthProvider>
-          }
-        />
-        <Route
-          path="signup"
-          element={
-            <GoogleOAuthProvider
-              clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
-            >
-              <Signup />
-            </GoogleOAuthProvider>
-          }
-        />
-        <Route path="*" element={<NotFound />} />
-        <Route element={<ProtectedRoute />}>
-          <Route path="add-property" element={<AddProperty />} />
-        </Route>
-
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="listings" element={<Listings />}>
-            <Route index element={<Listings />} />
-            <Route path=":category" element={<CategorisedListing />} />
-          </Route>
-          <Route path="properties/:type" element={<PropertyList />} />
-
-          <Route path="property-detail/:id" element={<PropertyDetail />} />
-          <Route path="about" element={<About />} />
-
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route
+            path="login"
+            element={
+              <GoogleOAuthProvider
+                clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+              >
+                <Login />
+              </GoogleOAuthProvider>
+            }
+          />
+          <Route
+            path="signup"
+            element={
+              <GoogleOAuthProvider
+                clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
+              >
+                <Signup />
+              </GoogleOAuthProvider>
+            }
+          />
+          <Route path="*" element={<NotFound />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="manage-properties" element={<ManageProperties />}>
-              <Route path="" element={<Navigate to="my-properties" />} />
-              <Route path="my-properties" element={<MyProperties />} />
-              <Route path="tour-requests" element={<TourRequest />} />
-            </Route>
-            <Route path="my-properties/edit/:id" element={<EditProperty />} />
+            <Route path="add-property" element={<AddProperty />} />
+          </Route>
 
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="listings" element={<Listings />} />
             <Route
-              path="tour-schedule/payment"
-              element={<TourScheduleCheckout />}
+              path="listings/:category"
+              element={
+                <PropertyFilterProvider>
+                  <CategorisedListing />
+                </PropertyFilterProvider>
+              }
             />
-            <Route path="wishlist" element={<Wishlist />} />
-            <Route path="user-profile" element={<UserProfile />} />
-            <Route path="notifications" element={<UserNotifications />} />
-            <Route path="tour-schedules" element={<UserTourSchedule />}>
-              <Route path=":tourId" element={<TourScheduleDetail />} />
+            <Route
+              path="properties/:type?"
+              element={
+                <PropertyFilterProvider>
+                  <PropertyList />
+                </PropertyFilterProvider>
+              }
+            />
+
+            <Route path="property-detail/:id" element={<PropertyDetail />} />
+            <Route path="about" element={<About />} />
+
+            <Route element={<ProtectedRoute />}>
+              <Route path="manage-properties" element={<ManageProperties />}>
+                <Route path="" element={<Navigate to="my-properties" />} />
+                <Route path="my-properties" element={<MyProperties />} />
+                <Route path="tour-requests" element={<TourRequest />} />
+              </Route>
+              <Route path="my-properties/edit/:id" element={<EditProperty />} />
+
+              <Route
+                path="tour-schedule/payment"
+                element={<TourScheduleCheckout />}
+              />
+              <Route path="wishlist" element={<Wishlist />} />
+              <Route path="user-profile" element={<UserProfile />} />
+              <Route path="notifications" element={<UserNotifications />} />
+              <Route path="tour-schedules" element={<UserTourSchedule />}>
+                <Route path=":tourId" element={<TourScheduleDetail />} />
+              </Route>
             </Route>
           </Route>
-        </Route>
-        <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
-          <Route path="admin" element={<AdminLayout />}>
-            <Route path="" element={<Navigate to="dashboard" />} />
-            <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="manage-users" element={<ManageUsers />} />
-            <Route
-              path="users/:userId/profile"
-              element={<UserProfile isAdminView />}
-            />
-            <Route
-              path="users/:userId/tour-schedules"
-              element={<UserTourSchedule isAdminView />}
-            />
-            <Route
-              path="users/:userId/properties"
-              element={<MyProperties isAdminView />}
-            />
-            <Route path="manage-listings" element={<ManageListings />} />
-            <Route
-              path="manage-transactions"
-              element={<ManageTransactions />}
-            />
-            <Route path="edit-property/:id" element={<EditProperty />} />
+          <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+            <Route path="admin" element={<AdminLayout />}>
+              <Route path="" element={<Navigate to="dashboard" />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="manage-users" element={<ManageUsers />} />
+              <Route
+                path="users/:userId/profile"
+                element={<UserProfile isAdminView />}
+              />
+              <Route path="profile" element={<UserProfile isAdminView />} />
+              <Route
+                path="users/:userId/tour-schedules/:tourId?"
+                element={<UserTourSchedule isAdminView />}
+              />
+              <Route
+                path="users/:userId/properties"
+                element={<MyProperties isAdminView />}
+              />
+              <Route
+                path="users/:userId/wishlist"
+                element={<Wishlist isAdminView />}
+              />
+              <Route
+                path="manage-listings"
+                element={
+                  <PropertyFilterProvider>
+                    <PropertyList adminMode />
+                  </PropertyFilterProvider>
+                }
+              />
+              <Route
+                path="manage-transactions"
+                element={<ManageTransactions />}
+              />
+              <Route
+                path="edit-property/:id"
+                element={<EditProperty isAdminView />}
+              />
+              <Route path="notifications" element={<UserNotifications />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

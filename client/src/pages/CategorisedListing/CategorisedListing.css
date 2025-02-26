@@ -1,7 +1,7 @@
 .cat_listing_page {
   width: 100%;
   margin: auto;
-  padding: 0.5rem 5rem 2rem;
+  padding: 0.5rem 3rem 2rem;
   background-color: #fcfdfd;
   position: relative;
 }
@@ -47,4 +47,13 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+@media (max-width: 768px) {
+  .cat_listing_page {
+    padding: 0.5rem 0rem 2rem;
+  }
+  .list_ttl {
+    font-size: 1.1rem;
+  }
+  
 }

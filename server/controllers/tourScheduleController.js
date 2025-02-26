@@ -48,7 +48,7 @@ const schedulePropertyTour = async (req, res) => {
       propertyImage:
         property.photos && property.photos.length > 0
           ? property.photos[0].image
-          : 'locaal',
+          : 'local', 
     });
 
     await newTourSchedule.save();
@@ -173,7 +173,6 @@ const getUserTourRequests = async (req, res) => {
     res.json({
       tours: formattedTours,
       tourDates,
-      toursCount: tours.length,
     });
   } catch (error) {
     console.error('Error fetching user tour schedules:', error);
